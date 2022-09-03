@@ -1,13 +1,11 @@
 ---
 layout: post
 author: zoo
-categories: [clojure]
+categories: [jekyll]
 ---
-A banana is an edible fruit – botanically a berry – produced by several kinds
-of large herbaceous flowering plants in the genus Musa.
 
-In some countries, bananas used for cooking may be called "plantains",
-distinguishing them from dessert bananas. The fruit is variable in size, color,
-and firmness, but is usually elongated and curved, with soft flesh rich in
-starch covered with a rind, which may be green, yellow, red, purple, or brown
-when ripe.
+테마를 안쓰고 직접 만들려니 참 이것 저것 세팅할 것이 많군요..!
+그래도 정적사이트는 이런식으로 만드는구나.. ruby는 이런게 참 잘 되어 있구나
+
+역시 깃헙의 창시자가 만든 것은 다르구나 등등을 생각하게 됩니다.
+
