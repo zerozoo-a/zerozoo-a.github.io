@@ -35,6 +35,7 @@ source 'https://rubygems.org'
 gem "jekyll", "~> 4.2.2"
 gem 'webrick'
 gem 'jekyll-feed'
+gem 'rouge'
 
 group :jekyll_plugins do
   gem 'jekyll-sitemap'
@@ -45,4 +46,3 @@ group :jekyll_plugins do
   gem "jekyll-assets"
   gem "jekyll-paginate"
 end
-#
