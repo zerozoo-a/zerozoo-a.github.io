@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<h1>{{ page.title }}</h1>
+<h1>{{ page.title | smartify }}</h1>
     <p>
         {{ page.date | date_to_string }}
         {% assign author = site.authors | where: 'short_name', page.author | first%}
@@ -9,14 +9,10 @@ layout: default
         - <a href="{{ author.url }}" class="text-black-50 fs-6 fst-italic"> 👨‍🎨 {{ author.name }}</a>
         {% endif %}
     </p>
-    {{ content }}
-<div>
+<div class="content">
+    {{ content | markdownify }}
+</div>
+<div class="g-col-4">
     <div class="pt-4"></div>
-    {% for post in site.posts %}
-        <ul class="list-group list-group-flush pt-1">
-            <li class="list-group-item">
-                ️ <a href="{{ post.url }}" class="text-black-50 fs-6 fst-italic">⚓ {{ post.title }}</a>
-            </li>
-        </ul>
-    {% endfor %}
+    {% include pagenavigation.html %}
 </div>
