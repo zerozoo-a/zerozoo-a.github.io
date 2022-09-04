@@ -42,5 +42,6 @@ group :jekyll_plugins do
   gem 'jekyll-seo-tag'
   gem 'jekyll-algolia', '~> 1.0'
   gem 'jekyll-compose'
+  gem "jekyll-assets"
 end
-# gem 'jekyll-compose', group: [:jekyll_plugins]
+#
