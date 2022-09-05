@@ -14,6 +14,8 @@ tags: [4ever-clojure]
 [피보나치수열이란?](https://ko.wikipedia.org/wiki/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98_%EC%88%98)
 
 > 🧨 주의! 제가 작성한 코드는 틀릴(아주 구릴) 가능성이 있습니다...!!
+
+
 ```clojure
 Write a function which returns the first X fibonacci numbers.
 
