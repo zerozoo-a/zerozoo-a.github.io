@@ -5,6 +5,7 @@ date: 2022-09-05 21:40 +0900
 categories: [clojure]
 tags: [4ever-clojure]
 ---
+> lazy-seq를 사용한 풀이법
 ### TOC
 1. [피보나치수열](#피보나치수열)
 2. [자바스크립트의 풀이법](#자바스크립트의-풀이법)
