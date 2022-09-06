@@ -47,8 +47,7 @@ function memoizedFib(n, memo){
         memo[n] = fib(n-2) + fib(n-1);
     }
     
-    memo[n];
-    return;
+    return memo[n];
 }
 ```
 
