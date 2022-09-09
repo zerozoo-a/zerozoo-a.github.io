@@ -21,7 +21,7 @@ TOC
 https://stackblitz.com/edit/js-rxtul7?file=index.js
 )
 
-예제로 나온 코드는 크게 두가이다.
+예제로 나온 코드는 크게 두 가지입니다.
 
 기본 js의 object를 사용한 것과
 ```js
