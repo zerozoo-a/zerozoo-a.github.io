@@ -6,11 +6,19 @@ categories: [js]
 tags: [architectures, singleton, jest]
 ---
 
+TOC
+---
+1. [JS로 하는 singleton](#JS로-하는-singleton)
+2. [TEST](#TEST)
+
+
+### JS로 하는 singleton
+
 이 포스트들은 [이 사이트](https://www.patterns.dev/)를 보고 학습하며
 깨달은 점들을 모아놓습니다.
 
-[예시코드](
-https://stackblitz.com/edit/js-rxtul7?file=src/singleton.js
+[따라 해본 코드](
+https://stackblitz.com/edit/js-rxtul7?file=index.js
 )
 
 예제로 나온 코드는 크게 두가이다.
@@ -78,13 +86,9 @@ export default singletonCounter
 이게 전부이다. 새로 생성하는 만큼 메모리를 차지하니 재생성해서 사용해도 되는 경우에 대해서는
 원래 생성했던 그 객체를 돌려준다.
 
+### TEST
 
-이제 구현을 해보자
-
-[⚓️link](https://stackblitz.com/edit/js-rxtul7?file=src%2Fcounter.js,style.css,index.html,index.js,package.json)
-
-위 링크의 코드처럼 구현할 수 있게 된다.
-
+---
 jest로 테스트까지 해보자.
 
 물론 환경이 js => node.js로 옮겨가기 때문에 DOM 관련은 빼주거나 주석처리를 해주어야 한다.
