@@ -4,7 +4,7 @@ title: pipe 함수에 대해
 date: 2022-09-30 00:26 +0900
 categories: ["Beginning Functional JavaScript"]
 ---
-## 파이프라인에 대해
+## pipe 함수란
 
 함수형 페러다임이 멀리서 보았을 때는 모두 비슷해보이지만 가까이서 지켜보게 되면 서로 추구하는
 디자인이 다르다는걸 느낄 수 있습니다.
