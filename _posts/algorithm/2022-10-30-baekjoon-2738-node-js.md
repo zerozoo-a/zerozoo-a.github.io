@@ -2,6 +2,7 @@
 layout: post
 title: baekjoon 2738 node.js
 date: 2022-10-30 14:35 +0900
+categories: ["algorithm"]
 tags: ["BAEKJOON", "NODE.JS", "2738"]
 ---
 
