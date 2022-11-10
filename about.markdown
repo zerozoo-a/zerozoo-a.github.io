@@ -27,7 +27,7 @@ title: About
  ---
 
 
-제게 연락하실 수 있는 방법은 📮 e-mail을 주시면 감사하겠습니다.
+제게 연락하실 수 있는 방법은 📮 e-mail을 통해 연락주시길 바랍니다.
 <address>
 <a href="mailto:zerozoo385@gmail.com">zerozoo385@gmail.com</a>입니다.<br> 
 </address>
@@ -39,16 +39,4 @@ title: About
 
 
 별로 차린 것은 없지만 제 블로그에 방문해주셔서 감사합니다.
-<br>
-<div id="now-time"></div>
-<script>
-    const now = new Date()
-    const year = now.getFullYear()
-    const month = now.getMonth()
-    const date = now.getDate()
-    document.getElementById("now-time").innerText = `${year} 년 ${month} 월 ${date} 일에 방문해주신 모든 분들께..`
-
-</script>
-
-<br>
 <iframe src="https://media.tenor.com/pSuK_En8qoIAAAAC/jerry-thanks.gif" width="480" height="260" frameBorder="0" class=""></iframe><p>
