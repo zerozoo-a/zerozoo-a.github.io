@@ -2,9 +2,10 @@ console.log("안녕하세요? zerozoo-a의 블로그에 방문해주셔서 감�
 
 console.log("오늘은..", new Date());
 console.log(
-  "오늘 당신에게 어울리는 행운의 컬러는..",
-  toColor(Math.random() * 100)
+  "%c오늘 당신에게 어울리는 행운의 컬러는..",
+  `#${toColor(Math.random() * 100)}`
 );
+
 function toColor(num) {
   num >>>= 0;
   const b = num & 0xff,

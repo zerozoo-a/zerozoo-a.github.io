@@ -1,7 +1,10 @@
 ---
 layout: post
-title: baekjoon 1157 node.js
+title: baekjoon 1157 node.js 풀이
 date: 2022-11-11 00:39 +0900
+lang: ko
+categories: ["algorithm"]
+tags: ["BAEKJOON", "NODE.JS"]
 ---
 
 ###  1157 단어 공부 node.js 
