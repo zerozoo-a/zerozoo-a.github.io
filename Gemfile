@@ -44,4 +44,5 @@ group :jekyll_plugins do
   gem 'jekyll-compose'
   gem "jekyll-assets"
   gem "jekyll-paginate"
+  gem 'jekyll-timeago', '~> 0.13.1'
 end
