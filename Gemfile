@@ -35,8 +35,10 @@ source 'https://rubygems.org'
 gem "jekyll", "~> 4.2.2"
 gem 'webrick'
 gem 'rouge'
+gem 'coderay', '~> 1.1.0'
 
 group :jekyll_plugins do
+  gem 'jekyll-asciidoc', '~> 2.1.1'
   gem 'jekyll-sitemap'
   gem 'jekyll-feed'
   gem 'jekyll-seo-tag'
