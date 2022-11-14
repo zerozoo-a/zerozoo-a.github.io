@@ -7,12 +7,8 @@ tags: ["insertion sort","sort"]
 ---
 
 
-## bubble sort
+## insertion sort
 ---
-아래의 구현은 그냥 제 생각나는 대로 마구 구현을 한 것이라. 일반적으로 웹에 나와있는
-정석 구현과는 많이 다릅니다.
-
-따라서 어차피 안좋은 속도가 좀 더 안좋을 수 있습니다.
 
 ```js
 const insertionSorts = {};
