@@ -39,7 +39,6 @@ gem 'coderay', '~> 1.1.0'
 
 group :jekyll_plugins do
   gem 'jekyll-asciidoc', '~> 2.1.1'
-  gem 'jekyll-sitemap'
   gem 'jekyll-feed'
   gem 'jekyll-seo-tag'
   gem 'jekyll-algolia', '~> 1.0'
