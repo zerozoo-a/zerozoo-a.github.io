@@ -76,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/cache@v3.0.11
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
@@ -84,27 +84,4 @@ jobs:
             ${{ runner.os }}-gems-
       - uses: helaili/jekyll-action@2.4.0   # Choose any one of the Jekyll Actions
         with:                                # Some relative inputs of your action
-          gh: ${{ secrets.gh-pages }}
-# name: Jekyll CI
-
-# on:
-#   push
-
-# jobs:
-#   jekyll:
-#     runs-on: ubuntu-16.04
-#     steps:
-#     - uses: actions/checkout@v2
-
-#     # Use GitHub Actions' cache to shorten build times and decrease load on servers
-#     - uses: actions/cache@v1
-#       with:
-#         path: vendor/bundle
-#         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-#         restore-keys: |
-#           ${{ runner.os }}-gems-
-
-#     # Standard usage
-#     - uses:  helaili/jekyll-action@2.0.3
-#       env:
-#         gh: ${{ secrets.gh }}
+          gh: ${{ secrets.gh }}
