@@ -14,9 +14,15 @@ tags: ["BAEKJOON", "NODE.JS"]
 #### 문제 
 
 무한히 큰 배열에 다음과 같이 분수들이 적혀있다.
-****
-![SCR-20221117-vk4](https://user-images.githubusercontent.com/80259925/202482097-3affa138-06c9-43b6-a0ed-1706659cbe11.png)
 
+---
+<img 
+class="bannerImg"
+alt="분수 배열 이미지"
+src="https://user-images.githubusercontent.com/80259925/202482097-3affa138-06c9-43b6-a0ed-1706659cbe11.png">
+
+
+---
 이와 같이 나열된 분수들을 1/1 → 1/2 → 2/1 → 3/1 → 2/2 → … 과 같은 지그재그 순서로 차례대로 1번, 2번, 3번, 4번, 5번, … 분수라고 하자.
 
 X가 주어졌을 때, X번째 분수를 구하는 프로그램을 작성하시오.
