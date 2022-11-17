@@ -2,6 +2,9 @@
 layout: post
 title: baekjoon 1712 node.js 문제 풀이
 date: 2022-11-15 02:22 +0900
+lang: ko
+categories: ["algorithm"]
+tags: ["BAEKJOON", "NODE.JS"]
 ---
 ###  1712 손익분기점 node.js 
 
