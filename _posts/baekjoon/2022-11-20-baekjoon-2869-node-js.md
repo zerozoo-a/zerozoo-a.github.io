@@ -4,7 +4,7 @@ title: baekjoon-2869-node-js
 date: 2022-11-20 18:08 +0900
 lang: ko
 categories: ["algorithm"]
-tags: ["BAEKJOON", "NODE.JS"]
+tags: ["BAEKJOON", "NODE.JS","2869","달팽이는 올라가고 싶다"]
 ---
 
 ###  2869 달팽이는 올라가고 싶다 정답 및 풀이 node.js 
