@@ -7,7 +7,7 @@ categories: ["algorithm"]
 tags: ["BAEKJOON", "NODE.JS"]
 ---
 
-###  1193 분수찾기 node.js 
+###  1193 분수찾기 정답 및 풀이 node.js 
 
 --- 
 

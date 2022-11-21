@@ -6,7 +6,7 @@ lang: ko
 categories: ["algorithm"]
 tags: ["BAEKJOON", "NODE.JS"]
 ---
-###  1712 손익분기점 node.js 
+###  1712 손익분기점 정답 및 풀이 node.js 
 
 --- 
 

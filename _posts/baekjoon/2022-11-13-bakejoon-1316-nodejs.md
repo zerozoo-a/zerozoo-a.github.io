@@ -6,7 +6,7 @@ lang: ko
 categories: ["algorithm"]
 tags: ["BAEKJOON", "NODE.JS"]
 ---
-### 1316 그룹 단어 체커 node.js 풀이
+### 1316 그룹 단어 체커 정답 및 풀이 node.js 풀이
 
 --- 
 

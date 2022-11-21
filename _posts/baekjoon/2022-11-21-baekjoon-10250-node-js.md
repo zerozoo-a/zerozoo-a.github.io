@@ -7,7 +7,7 @@ tags: ["BAEKJOON", "NODE.JS","10250","ACM 호텔"]
 ---
 
 
-### ACM 호텔 node.js 문제 풀이
+### 10250 ACM 호텔 정답 및 풀이 node.js
 
 <img width="350" alt="https://www.imdb.com/title/tt2278388/ 출처" src="https://user-images.githubusercontent.com/80259925/202912660-d6e16d1e-2bea-4ae5-ba92-28b97b0672af.png">
 --- 

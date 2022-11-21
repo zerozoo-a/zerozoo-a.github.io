@@ -7,7 +7,7 @@ categories: ["algorithm"]
 tags: ["BAEKJOON", "NODE.JS"]
 ---
 
-###  node.js 
+###  2908 상수 정답 및 풀이 node.js 
 
 --- 
 

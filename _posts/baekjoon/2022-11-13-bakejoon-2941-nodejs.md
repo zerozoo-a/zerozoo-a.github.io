@@ -7,7 +7,7 @@ categories: ["algorithm"]
 tags: ["BAEKJOON", "NODE.JS"]
 ---
 
-###  2941 크로아티아 알파벳 node.js 
+###  2941 크로아티아 알파벳 정답 및 풀이 node.js 
 
 --- 
 

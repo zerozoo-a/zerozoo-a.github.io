@@ -7,7 +7,7 @@ categories: ["algorithm"]
 tags: ["BAEKJOON", "NODE.JS"]
 ---
 
-### baekjoon 다이얼 5622 node.js 
+### 5622 다이얼 정답 및 풀이 node.js 풀이
 
 --- 
 
