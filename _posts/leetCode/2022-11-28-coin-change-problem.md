@@ -183,31 +183,19 @@ dp 함수에 `amount - coin[i]`를 인자로 콜스택을 쌓아갑니다. (하�
 그러면 아래와 같은 모양의 함수 호출들이 쌓이게 됩니다.
 `fn_3`에서 `_3`에 대해 `3` 은 인자라고 생각해주세요
 
-```mermaid
-graph LR
-
-A[fn_3] --> B[fn_2] --> C[fn_1] --> D[fn_0]
-```
+<img width="379" alt="image" src="https://user-images.githubusercontent.com/80259925/204324161-1a6b27db-7f30-40ef-ac86-125642615a7f.png">
 이제 스택이 기저조건인 0에 닿았으므로 아래와 같이 반환합니다.
 
-```mermaid
-graph LR
+<img width="197" alt="image" src="https://user-images.githubusercontent.com/80259925/204324177-07e77424-a186-44dd-92d4-1f6ea5ac48ef.png">
 
-C[fn_1] --> D[fn_0]
-D --0--> C[fn_1]
-```
 `fn_1` 함수는 인자를 받고 0이 아니므로 res에 + 1을 하여 초기화를 하게 됩니다. 이는 바로 이전 함수에서 0을 받으면 정상적으로 끝나 갯수를 헤아릴 가치가 있다고 판단하는 것입니다. 만약 -1을 받았다면 해당 코인들의 합은 amount를 초과하는 경우의 수의 접근이였다는 것을 알 수 있기 때문이죠.
 
 
 `fn_1` 함수는 res에 1 을 초기화하고 반복문을 다음 반복문으로 넘기게 됩니다. 이제 다음 코인인 2를 기반으로 dp 재귀를 시작합니다.
 
 
-```mermaid
-graph LR
+<img width="181" alt="image" src="https://user-images.githubusercontent.com/80259925/204324189-3b3d8533-fb1b-4d94-a495-3f27e631dab6.png">
 
-C[fn_-1] --> D[fn]
-D -- -1 --> C
-```
 `fn_-1`함수는 `fn_1`함수에 다음 코인인 2 를 대입한 값을 반환합니다. 기저조건에 정의된 대로 -1 을 반환 받은 `fn_-1` 함수는 반복문에 작성되어 있는 대로 `continue`를 실행하게 됩니다. res를 초기화 하지 않고 반복문을 종료하게 됩니다. 더 이상 진행 할 수 없기에 -1을 반환하였고 이를 memo에 저장합니다.
 
 그럼 이 -1을 받은 상위 스택의 `subproblem` 값은 이를 어떻게 처리할까요? 놀랍게도 다시 continue를 통해 반복문을 뛰어 넘어버립니다.
