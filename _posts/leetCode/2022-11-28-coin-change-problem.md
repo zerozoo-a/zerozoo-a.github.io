@@ -182,7 +182,7 @@ dp 함수에 `amount - coin[i]`를 인자로 콜스택을 쌓아갑니다. (하�
 그러면 아래와 같은 모양의 함수 호출들이 쌓이게 됩니다.
 `fn_3`에서 `_3`에 대해 `3` 은 인자라고 생각해주세요
 
-<img width="379" alt="image" src="https://user-images.githubusercontent.com/80259925/204324161-1a6b27db-7f30-40ef-ac86-125642615a7f.png">
+<img width="200" alt="image" src="https://user-images.githubusercontent.com/80259925/204324161-1a6b27db-7f30-40ef-ac86-125642615a7f.png">
 이제 스택이 기저조건인 0에 닿았으므로 아래와 같이 반환합니다.
 
 <img width="197" alt="image" src="https://user-images.githubusercontent.com/80259925/204324177-07e77424-a186-44dd-92d4-1f6ea5ac48ef.png">
