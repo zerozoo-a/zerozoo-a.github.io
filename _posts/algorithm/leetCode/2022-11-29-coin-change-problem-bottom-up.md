@@ -3,17 +3,19 @@ layout: post
 title: coin change problem bottom-up
 date: 2022-11-29 22:38 +0900
 categories: ["algorithm"]
+tags: ["dp"]
 ---
 
-
+# coin change bottom up 알고리즘
 
 ## 📇 Table of Contents 
 ---
-- [📇 Table of Contents](#-table-of-contents)
-  - [문제](#문제)
-  - [코드](#코드)
-  - [설명](#설명)
-  - [recap](#recap)
+- [coin change bottom up 알고리즘](#coin-change-bottom-up-알고리즘)
+  - [📇 Table of Contents](#-table-of-contents)
+    - [문제](#문제)
+    - [코드](#코드)
+    - [설명](#설명)
+    - [recap](#recap)
 
 
 
