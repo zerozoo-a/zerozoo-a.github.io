@@ -223,3 +223,5 @@ res를 초기화 하지 않고 반복문을 종료하게 됩니다.
 자주 보고 자주 이해하는 방법을 통해 체득하는게 좋겠습니다.
 
 무차별 재귀는 모든 알고리즘 문제를 푸는데 중요한 열쇠이기도 하니까요
+
+  [bottom-up 문제풀이는 이쪽입니다요. 🐟](https://zerozoo-a.github.io/algorithm/2022/11/29/coin-change-problem-bottom-up.html)

@@ -168,3 +168,4 @@ coin 문제에서는 코인 6 개 짜리를 만드는 경우의 수에 대해 4 
 
 이런 의도를 먼저 이해하고 코드를 보면 좀 더 이해가 쉬워질 것 같습니다. 
 
+[재귀를 이용한 coin change 문제풀이는 이쪽입니다요. 🐟](https://zerozoo-a.github.io/algorithm/2022/11/28/coin-change-problem.html)
