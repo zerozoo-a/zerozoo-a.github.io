@@ -2,6 +2,7 @@
 layout: post
 title: 피보나치 수열을 구현하는 여러 방법
 date: 2022-11-24 01:33 +0900
+categories: ["algorithm"]
 ---
 
 # 피보나치 수열

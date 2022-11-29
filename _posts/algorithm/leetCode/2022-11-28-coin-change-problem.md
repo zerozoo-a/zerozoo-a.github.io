@@ -2,6 +2,7 @@
 layout: post
 title: coin change problem
 date: 2022-11-28 23:46 +0900
+categories: ["algorithm"]
 ---
 
 ###  leet code 322 coin change node.js 
@@ -195,7 +196,10 @@ dp 함수에 `amount - coin[i]`를 인자로 콜스택을 쌓아갑니다. (하�
 
 <img width="181" alt="image" src="https://user-images.githubusercontent.com/80259925/204324189-3b3d8533-fb1b-4d94-a495-3f27e631dab6.png">
 
-`fn_-1`함수는 `fn_1`함수에 다음 코인인 2 를 대입한 값을 반환합니다. 기저조건에 정의된 대로 -1 을 반환 받은 `fn_-1` 함수는 반복문에 작성되어 있는 대로 `continue`를 실행하게 됩니다. res를 초기화 하지 않고 반복문을 종료하게 됩니다. 더 이상 진행 할 수 없기에 -1을 반환하였고 이를 memo에 저장합니다.
+`fn_-1`함수는 `fn_1`함수에 다음 코인인 2 를 대입한 값을 반환합니다. 기저조건에 정의된 대로 -1 을 반환 받은 `fn_-1` 함수는 반복문dml `continue`를 실행하게 됩니다. 
+
+res를 초기화 하지 않고 반복문을 종료하게 됩니다. 
+반복과 재귀가 종료되었으므로 -1을 memo에 저장하고 반환합니다.
 
 그럼 이 -1을 받은 상위 스택의 `subproblem` 값은 이를 어떻게 처리할까요? 놀랍게도 다시 continue를 통해 반복문을 뛰어 넘어버립니다.
 
