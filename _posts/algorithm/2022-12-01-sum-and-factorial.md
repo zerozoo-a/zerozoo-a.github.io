@@ -3,13 +3,14 @@ layout: post
 title: sum and factorial
 date: 2022-12-01 00:45 +0900
 ---
-
+# sum and factorial의 재귀 함수 구현
 
 ## index 
-- [index](#index)
-- [문제](#문제)
-- [풀이](#풀이)
-- [recap](#recap)
+- [sum and factorial의 재귀 함수 구현](#sum-and-factorial의-재귀-함수-구현)
+  - [index](#index)
+  - [문제](#문제)
+  - [풀이](#풀이)
+  - [recap](#recap)
 
 <br>
 <br>
