@@ -2,8 +2,10 @@
 layout: post
 title: sum and factorial
 date: 2022-12-01 00:45 +0900
+categories: ["algorithm"]
 ---
 
+# Sum, factorial을 재귀함수로 구현, 및 재귀를 사용한 문제 풀이
 
 ## index 
 - [index](#index)
