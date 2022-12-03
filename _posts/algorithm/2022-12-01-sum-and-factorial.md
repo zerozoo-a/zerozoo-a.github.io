@@ -4,10 +4,11 @@ title: sum and factorial
 date: 2022-12-01 00:45 +0900
 categories: ["algorithm"]
 ---
-# sum and factorial의 재귀 함수 구현
+
+# Sum, factorial을 재귀함수로 구현, 및 재귀를 사용한 문제 풀이
 
 ## index 
-- [sum and factorial의 재귀 함수 구현](#sum-and-factorial의-재귀-함수-구현)
+- [Sum, factorial을 재귀함수로 구현, 및 재귀를 사용한 문제 풀이](#sum-factorial을-재귀함수로-구현-및-재귀를-사용한-문제-풀이)
   - [index](#index)
   - [문제](#문제)
   - [풀이](#풀이)
@@ -36,6 +37,7 @@ categories: ["algorithm"]
 
 
 ```js
+// node.js
 /**
  * # 1 
  * 
@@ -59,6 +61,36 @@ const sum2 = (n) => {
         result += i;
     }
     return result;
+}
+```
+
+```c++
+// c++
+#include<iostream>
+
+int sum0(int n) {
+    if(n <= 0) return 0;
+    return n == 1 ? 1 : n + sum0(n - 1);
+}
+
+int sum1(int n) {
+    if(n <= 0) return 0;
+
+    int res = 0, i = 0;
+
+    for(; i <= n; i++){
+        res += i;
+    }
+
+    return res;
+}
+
+
+int main (void) {
+    int s0 = sum0(5);
+    int s1 = sum1(5);
+   std::cout << "s0: " << s0 << "\n";
+   std::cout << "s1: " << s1;
 }
 ```
 
@@ -101,6 +133,35 @@ console.log(factorial2(N));
 
 ```
 
+```c++
+// c++
+#include<iostream>
+int fac0(int n) {
+    if (n <= 1) return 1;
+
+    return n * fac0(n - 1);
+}
+
+int fac1(int n) {
+    if ( n <= 1 ) return 1;
+
+    int res = 1, i = 2;
+
+    for(; i <= n ; i++){
+        res *= i;
+    }
+
+    return res;
+}
+
+int main(void){
+    int s0 = fac0(5);
+    int s1 = fac1(5);
+
+    std::cout << "s0: " << s0 << "\n";
+    std::cout << "s1: " << s1;
+}
+```
 
 ```js
 /**
