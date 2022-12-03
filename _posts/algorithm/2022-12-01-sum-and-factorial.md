@@ -2,6 +2,7 @@
 layout: post
 title: sum and factorial
 date: 2022-12-01 00:45 +0900
+categories: ["algorithm"]
 ---
 # sum and factorial의 재귀 함수 구현
 
