@@ -11,10 +11,13 @@ categories: ["algorithm"]
 
 
 ## index 
---- 
-<br>
-<br>
+- [하노이의 탑](#하노이의-탑)
+  - [index](#index)
+  - [문제](#문제)
+  - [풀이](#풀이)
+  - [recap](#recap)
 
+---
  
 ## 문제 
 --- 
