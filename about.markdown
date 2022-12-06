@@ -22,6 +22,7 @@ title: About
 
 만약 이 블로그가 행여라도 마음에 드셨다면 제가 작성해놓은 포스트나 개인적인 글들은 모두 삭제하고 사용해주시길 바랍니다.
 
+
 <br>
 #### **연락처**
  ---
@@ -38,5 +39,16 @@ title: About
 ---
 
 
+
 별로 차린 것은 없지만 제 블로그에 방문해주셔서 감사합니다.
-<iframe src="https://media.tenor.com/pSuK_En8qoIAAAAC/jerry-thanks.gif" width="480" height="260" frameBorder="0" class=""></iframe><p>
+<iframe src="https://media.tenor.com/pSuK_En8qoIAAAAC/jerry-thanks.gif" width="380" height="260" frameBorder="0" class=""></iframe><p>
+
+
+
+#### 도움이 되는 말
+![@ProfFeynman](https://pbs.twimg.com/media/E5WPQW9WEAACCax.jpg)
+ i) write down the problem
+
+ ii) think very hard 
+
+ iii) write down the answer.
