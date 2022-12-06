@@ -2,7 +2,7 @@
 layout: post
 title: jest object property matcher
 date: 2022-09-25 17:42 +0900
-categories: [jest]
+categories: [test]
 ---
 
 아래의 테스트는 objectAssign 함수에 대한 테스트이다.
