@@ -47,6 +47,9 @@ title: About
 
 #### 도움이 되는 말
 
+파인만은 어떤 문제를 해결할 때 아래와 같이 문제를 접하고 푸는데 까지에 있어 순서를 정하고 각 순서를 실행하는 알고리즘을 만들었다. (이는 반은 유머이다.)
+
+
 ![@ProfFeynman](https://pbs.twimg.com/media/E5WPQW9WEAACCax.jpg)
  i) write down the problem
 
