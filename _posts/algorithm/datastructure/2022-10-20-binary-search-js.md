@@ -3,7 +3,7 @@ layout: post
 title: binary search js
 date: 2022-10-20 21:32 +0900
 categories: ["algorithm"]
-tags: ["binary search"]
+tags: ["binary search","data-structure"]
 ---
 
 binary search 의 방식은 간단해서 외울 수 있을 정도이다.
