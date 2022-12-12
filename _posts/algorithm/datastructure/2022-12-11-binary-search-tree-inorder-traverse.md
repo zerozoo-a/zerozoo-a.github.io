@@ -157,9 +157,13 @@ class Node {
 const printInOrder = (node) => {
   if (!node) return;
 
-  printInOrder(node.left);
+  if (node.left !== null) {
+    printInOrder(node.left);
+  }
   console.log(node.data);
-  printInOrder(node.right);
+  if (node.right !== null) {
+    printInOrder(node.right);
+  }
 };
 
 const main = (() => {
@@ -194,9 +198,15 @@ Node* newNode(int data) {
 void printInOrder(struct Node* node) {
     if(node == NULL) return;
 
-    printInOrder(node -> left);
+    if(node -> left != NULL){
+        printInOrder(node -> left);
+    }
+
     std::cout << node -> data << " ";
-    printInOrder(node -> right);
+
+    if(node -> right != NULL){
+        printInOrder(node -> right);
+    }
 }
 
 int main() {
@@ -213,6 +223,8 @@ int main() {
 }
 ```
 
+위에서 말하지 않은게 트리에 붙은 노드보다 항상 null pointer가 더 많다는 사실입니다.
+null pointer를 함수를 호출하기 전에 체크하게 되어 콜스택을 쌓지 않고 끝낸다면 더 빠른 속도로 실행이 가능합니다.
 
 
 <br>
@@ -245,6 +257,7 @@ inorder, in-order가 무작위하게 사용되고 있어서 더 혼란스러운�
 <br>
 이를 코드로 구현하는 방법이야 당연히 있지만 이를 구현하는데는 시간이 오래걸리기도 하고,
 목적인 중위 순회를 알아보는 것과는 관련이 없다 판단하여 생략하였습니다.
+
 
 <br>
 <br>
