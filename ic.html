@@ -2,113 +2,169 @@
 layout: default
 title: convert image to webp
 ---
+
 <div>
-    <h1>Convert image to webp format</h1>
-    <div>
-      <input 
-      type="file" 
+  <h1>Convert image to webp format</h1>
+  <div>
+    <input
+      type="file"
       multiple
       accept="image/*"
       onchange="convertFileToWebp(event)"
-      >
-    </div>
-    <div id="previews"></div>
-    <canvas 
-    id="webp-canvas"></canvas>
-    <button onclick="handle()">hi</button>
+    />
+
+    <button data-i18n onclick="clearAll()">CLEAR ALL</button>
+  </div>
+  <div>
+    <br />
+    <br />
+    <br />
+  </div>
+  <ul>
+    <li>
+      <div>
+        <h3 data-i18n>before 👇</h3>
+        <div id="before-size">size:</div>
+      </div>
+      <canvas id="webp-canvas"></canvas>
+    </li>
+    <li>
+      <div>
+        <h3 data-i18n>after: click to download👇</h3>
+        <div id="after-size">size:</div>
+        <a id="download-here"></a>
+      </div>
+    </li>
+  </ul>
 </div>
-
-
 <script>
-  const handle = () => {console.log('hhhh')}
-    function drawImageProp (ctx, img, x, y, w, h, offsetX, offsetY) {
-      if (arguments.length === 2) {
-          x = y = 0;
-          w = ctx.canvas.width;
-          h = ctx.canvas.height;
-      }
+  const elements = document.querySelectorAll("[data-i18n]");
 
-      // default offset is center
-      offsetX = typeof offsetX === "number" ? offsetX : 0.5;
-      offsetY = typeof offsetY === "number" ? offsetY : 0.5;
+  const krConfig = new Map([
+    ["CLEAR ALL", "초기화"],
+    ["before 👇", "변경전"],
+    ["after: click to download👇", "변경후: 아래의 이미지 클릭시 다운로드 👇"],
+    ["Convert image to webp format", "이미지를 webp 형식으로 변경합니다."],
+  ]);
 
-      // keep bounds [0.0, 1.0]
-      if (offsetX < 0) offsetX = 0;
-      if (offsetY < 0) offsetY = 0;
-      if (offsetX > 1) offsetX = 1;
-      if (offsetY > 1) offsetY = 1;
+  const replaceText = (el) => {
+    const key = el.innerText;
+    el.innerText = krConfig.has(key) ? krConfig.get(key) : key;
+  };
 
-      var iw = img.width,
-          ih = img.height,
-          r = Math.min(w / iw, h / ih),
-          nw = iw * r,   // new prop. width
-          nh = ih * r,   // new prop. height
-          cx, cy, cw, ch, ar = 1;
-
-          // decide which gap to fill    
-          if (nw < w) ar = w / nw;                             
-          if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
-          nw *= ar;
-          nh *= ar;
-
-          // calc source rectangle
-          cw = iw / (nw / w);
-          ch = ih / (nh / h);
-
-          cx = (iw - cw) * offsetX;
-          cy = (ih - ch) * offsetY;
-
-          // make sure source rectangle is valid
-          if (cx < 0) cx = 0;
-          if (cy < 0) cy = 0;
-          if (cw > iw) cw = iw;
-          if (ch > ih) ch = ih;
-
-          // fill image in dest. rectangle
-          ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
-    }
-
-  /**
-   * 
-   * */
-  const convertFileToWebp = (event) => {
-    const loadImage = (file) => new Promise((res,rej) => {
-      const image = new Image();
-      image.addEventListener("load",()=>{
-        res({file,image});
-      });
-      image.src = URL.createObjectURL(file);
-    })
-
-    const drawImage = ({file, image})=> new Promise((res,rej) => {
-      const canvas = document.querySelector('#webp-canvas');
-      const context = canvas.getContext("2d");
-
-      drawImageProp(context, image);
-      canvas.toBlob((blob) => res({file, imageURL: URL.createObjectURL(blob)}),"image/webp");
-    });
-
-    const scaleImage = ({file, imageURL}) => new Promise((res,rej)=>{
-      const image = new Image();
-      image.setAttribute("src", imageURL);
-      image.addEventListener("load",()=>res({file, imageURL, image}));
-    })
-
-    const downloadImage = ({file, imageURL, image}) => new Promise((res, rej) => {
-      const imageLink = document.createElement("a");
-      imageLink.setAttribute("href", imageURL);
-      imageLink.setAttribute("download",`${file.name}.webp`)
-      imageLink.appendChild(image);
-    })
-
-    console.log('evnet',event.target.files)
-
-    for(const file of event.target.files) {
-      loadImage(file).then(drawImage).then(downloadImage);
-    }
-  }
-
-
+  elements.forEach((el) => replaceText(el));
 </script>
 
+<script>
+  function drawImageProp(ctx, img, x, y, w, h, offsetX, offsetY) {
+    if (arguments.length === 2) {
+      x = y = 0;
+      w = ctx.canvas.width;
+      h = ctx.canvas.height;
+    }
 
+    // default offset is center
+    offsetX = typeof offsetX === "number" ? offsetX : 0.5;
+    offsetY = typeof offsetY === "number" ? offsetY : 0.5;
+
+    // keep bounds [0.0, 1.0]
+    if (offsetX < 0) offsetX = 0;
+    if (offsetY < 0) offsetY = 0;
+    if (offsetX > 1) offsetX = 1;
+    if (offsetY > 1) offsetY = 1;
+
+    var iw = img.width,
+      ih = img.height,
+      r = Math.min(w / iw, h / ih),
+      nw = iw * r, // new prop. width
+      nh = ih * r, // new prop. height
+      cx,
+      cy,
+      cw,
+      ch,
+      ar = 1;
+
+    // decide which gap to fill
+    if (nw < w) ar = w / nw;
+    if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh; // updated
+    nw *= ar;
+    nh *= ar;
+
+    // calc source rectangle
+    cw = iw / (nw / w);
+    ch = ih / (nh / h);
+
+    cx = (iw - cw) * offsetX;
+    cy = (ih - ch) * offsetY;
+
+    // make sure source rectangle is valid
+    if (cx < 0) cx = 0;
+    if (cy < 0) cy = 0;
+    if (cw > iw) cw = iw;
+    if (ch > ih) ch = ih;
+
+    // fill image in dest. rectangle
+    ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+  }
+
+  /**
+   *
+   * */
+  const convertFileToWebp = (event) => {
+    const loadImage = (file) =>
+      new Promise((res, rej) => {
+        const image = new Image();
+        image.addEventListener("load", () => {
+          res({ file, image });
+        });
+        image.src = URL.createObjectURL(file);
+
+        const beforeSize = document.querySelector("#before-size");
+        beforeSize.innerHTML = `Before file size: ${file.size} bytes`;
+        console.log("before-file", file);
+      });
+
+    const drawImage = ({ file, image }) =>
+      new Promise((res, rej) => {
+        const canvas = document.querySelector("#webp-canvas");
+        const context = canvas.getContext("2d");
+
+        drawImageProp(context, image);
+        canvas.toBlob(
+          (blob) => res({ file, imageURL: URL.createObjectURL(blob), blob }),
+          "image/webp"
+        );
+      });
+
+    const scaleImage = ({ file, imageURL, blob }) =>
+      new Promise((res, rej) => {
+        const image = new Image();
+        image.setAttribute("src", imageURL);
+        image.addEventListener("load", () => res({ file, imageURL, image }));
+
+        const afterSize = document.querySelector("#after-size");
+        afterSize.innerHTML = `🥳 After file size: ${blob.size} bytes 
+        (saved: ${file.size - blob.size} bytes)`;
+      });
+
+    const downloadImage = ({ file, imageURL, image }) =>
+      new Promise((res, rej) => {
+        const imageLink = document.querySelector("#download-here");
+        imageLink.setAttribute("href", imageURL);
+        imageLink.setAttribute("download", `${file.name}.webp`);
+        imageLink.appendChild(image);
+      });
+
+    for (const file of event.target.files) {
+      loadImage(file).then(drawImage).then(scaleImage).then(downloadImage);
+    }
+  };
+
+  const clearAll = () => {
+    const canvas = document.querySelector("#webp-canvas");
+    const afterImages = document.querySelector("#download-here");
+    afterImages.innerHTML = "";
+    const context = canvas.getContext("2d");
+    context.reset(); // clear context
+  };
+</script>
