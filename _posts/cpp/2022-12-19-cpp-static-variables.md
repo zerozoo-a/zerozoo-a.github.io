@@ -1,0 +1,70 @@
+---
+layout: post
+title: cpp의 static
+date: 2022-12-19 23:13 +0900
+categories: ["cpp"]
+---
+
+## index 
+--- 
+- [index](#index)
+- [문제](#문제)
+- [풀이](#풀이)
+- [recap](#recap)
+
+<br>
+<br>
+<br>
+ 
+## 문제 
+--- 
+cpp에서 지역변수에 사용된 static의 의미를 설명하라.
+<br>
+<br>
+
+## 풀이 
+--- 
+`static` 키워드가 지역변수로 사용되는 경우에는 아래와 같은 특별한 속성이 붙는다.
+
+`static 키워드가 붙은 변수는 스코프를 벗어나도 소멸하지 않는다.`
+
+따라서 아래와 같은 사용이 가능합니다.
+
+```cpp
+#include<iostream>
+void printStaticVar(){
+    static int value = 1;
+    value++;
+    std::cout << value << std::endl;
+}
+
+int main(){
+    printStaticVar(); // 2
+    printStaticVar(); // 3
+    printStaticVar(); // 4
+    return 0;
+}
+```
+다음은 오피셜은 아니지만 뇌피셜로 이해한 내용이다.
+
+1. 한번 생성된 변수를 죽이지 않고 살려 둔다.
+2. 동일한 함수가 재실행 되면 같은 이름의 변수를 새로 생성하지 않고 `1.`에서 기억해둔 메모리 주소를 사용한다.
+
+이를 위해서 여러가지로 무언가 장치가 있겠고 불가능한 이야기도 아니겠지만 
+
+어떤 방법을 사용하는지 지금 알아내는건 중요하지 않기 때문에 넘어간다.
+
+
+<br>
+<br>
+
+## recap 
+--- 
+
+node나 js 진영에서는 이런 기능이 없다.
+
+인터프리터와 컴파일 언어의 특장점을 모두 이해하기란 쉽지 않지만 좋은 공부가 된다.
+
+<br>
+<br>
+
