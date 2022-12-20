@@ -4,8 +4,12 @@ title: cpp의 static
 date: 2022-12-19 23:13 +0900
 categories: ["cpp"]
 ---
+#CPP의 Static 알아보기
+<img src="https://images.unsplash.com/photo-1519658422992-0c8495f08389?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1710&q=80"
+alt="pointing">
 
-## index 
+
+## index기
 --- 
 - [index](#index)
 - [문제](#문제)
