@@ -18,7 +18,7 @@ categories: ["cpp"]
  
 ## 문제 
 --- 
-cpp에서 지역변수에 사용된 static의 의미를 설명하라.
+> cpp에서 지역변수에 사용된 static의 의미를 설명하라.
 <br>
 <br>
 
