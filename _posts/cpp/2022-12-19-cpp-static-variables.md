@@ -4,17 +4,18 @@ title: cpp의 static
 date: 2022-12-19 23:13 +0900
 categories: ["cpp"]
 ---
-#CPP의 Static 알아보기
+# CPP의 Static 알아보기
 <img src="https://images.unsplash.com/photo-1519658422992-0c8495f08389?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1710&q=80"
 alt="pointing">
 
 
 ## index기
 --- 
-- [index](#index)
-- [문제](#문제)
-- [풀이](#풀이)
-- [recap](#recap)
+- [CPP의 Static 알아보기](#cpp의-static-알아보기)
+  - [index기](#index기)
+  - [문제](#문제)
+  - [풀이](#풀이)
+  - [recap](#recap)
 
 <br>
 <br>
@@ -65,9 +66,28 @@ int main(){
 ## recap 
 --- 
 
-node나 js 진영에서는 이런 기능이 없다.
+js 진영에서는 class의 static method를 사용하여 위와 비슷한 기능을 구현 할 수 있다.
 
-인터프리터와 컴파일 언어의 특장점을 모두 이해하기란 쉽지 않지만 좋은 공부가 된다.
+예를 들면
+
+```js
+class JsStatic {
+    static number = 0;
+
+    add1(){
+        JsStatic.number++;
+    }
+}
+
+const a = new JsStatic();
+JsStatic.number // 0;
+a.add1(); // undefined;
+JsStatic.number // 1;
+```
+위처럼 class 자체에 속성이 붙어있게 되다보니(실질적으로는 prototype)
+위 클래스의 다른 인스턴스도 JsStatic class가 가지고 있는 memory 주소를 바라보게 된다.
+
+따라서 js에서의 구현은 위와 같다고 볼 수 있다.
 
 <br>
 <br>
