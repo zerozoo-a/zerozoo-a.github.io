@@ -4,9 +4,7 @@ title: optimal-substructure-example
 date: 2022-12-19 23:54 +0900
 categories: ["DP"]
 ---
-
 # DP 문제인지 구분 할 수 있을까? (😱)
-
 ![마트료시카 이미지 출처 unsplash](https://images.unsplash.com/photo-1613981948475-6e2407d8b589?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80)
 <a href="https://unsplash.com/photos/PB80D_B4g7c">이미지 출처</a>
 
