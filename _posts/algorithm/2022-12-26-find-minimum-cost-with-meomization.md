@@ -2,9 +2,9 @@
 layout: post
 title: find-minimum-cost-with-meomization
 date: 2022-12-26 14:10 +0900
+categories: [math]
 ---
 # 📝 최저비용을 찾는 문제에 대한 최적화
-
 ## index 
 --- 
 - [📝 최저비용을 찾는 문제에 대한 최적화](#-최저비용을-찾는-문제에-대한-최적화)
