@@ -75,115 +75,79 @@ title: convert image to webp
 </script>
 
 <script>
-  function drawImageProp(ctx, img, x, y, w, h, offsetX, offsetY) {
-    if (arguments.length === 2) {
-      x = y = 0;
-      w = ctx.canvas.width;
-      h = ctx.canvas.height;
-    }
-
-    // default offset is center
-    offsetX = typeof offsetX === "number" ? offsetX : 0.5;
-    offsetY = typeof offsetY === "number" ? offsetY : 0.5;
-
-    // keep bounds [0.0, 1.0]
-    if (offsetX < 0) offsetX = 0;
-    if (offsetY < 0) offsetY = 0;
-    if (offsetX > 1) offsetX = 1;
-    if (offsetY > 1) offsetY = 1;
-
-    var iw = img.width,
-      ih = img.height,
-      r = Math.min(w / iw, h / ih),
-      nw = iw * r, // new prop. width
-      nh = ih * r, // new prop. height
-      cx,
-      cy,
-      cw,
-      ch,
-      ar = 1;
-
-    // decide which gap to fill
-    if (nw < w) ar = w / nw;
-    if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh; // updated
-    nw *= ar;
-    nh *= ar;
-
-    // calc source rectangle
-    cw = iw / (nw / w);
-    ch = ih / (nh / h);
-
-    cx = (iw - cw) * offsetX;
-    cy = (ih - ch) * offsetY;
-
-    // make sure source rectangle is valid
-    if (cx < 0) cx = 0;
-    if (cy < 0) cy = 0;
-    if (cw > iw) cw = iw;
-    if (ch > ih) ch = ih;
-
-    // fill image in dest. rectangle
-    ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+  function drawImageProp(e, t, n, o, r, i, a, s) {
+    2 === arguments.length &&
+      ((n = o = 0), (r = e.canvas.width), (i = e.canvas.height)),
+      (a = "number" == typeof a ? a : 0.5) < 0 && (a = 0),
+      (s = "number" == typeof s ? s : 0.5) < 0 && (s = 0),
+      a > 1 && (a = 1),
+      s > 1 && (s = 1);
+    var c,
+      l,
+      d,
+      m,
+      b = t.width,
+      f = t.height,
+      g = Math.min(r / b, i / f),
+      u = b * g,
+      w = f * g,
+      h = 1;
+    u < r && (h = r / u),
+      Math.abs(h - 1) < 1e-14 && w < i && (h = i / w),
+      (c = (b - (d = b / ((u *= h) / r))) * a) < 0 && (c = 0),
+      (l = (f - (m = f / ((w *= h) / i))) * s) < 0 && (l = 0),
+      d > b && (d = b),
+      m > f && (m = f),
+      e.drawImage(t, c, l, d, m, n, o, r, i);
   }
-
-  /**
-   *
-   * */
-  const convertFileToWebp = (event) => {
-    const loadImage = (file) =>
-      new Promise((res, rej) => {
-        const image = new Image();
-        image.addEventListener("load", () => {
-          res({ file, image });
-        });
-        image.src = URL.createObjectURL(file);
-
-        const beforeSize = document.querySelector("#before-size");
-        beforeSize.innerHTML = `Before file size: ${file.size} bytes`;
-        console.log("before-file", file);
-      });
-
-    const drawImage = ({ file, image }) =>
-      new Promise((res, rej) => {
-        const canvas = document.querySelector("#webp-canvas");
-        const context = canvas.getContext("2d");
-
-        drawImageProp(context, image);
-        canvas.toBlob(
-          (blob) => res({ file, imageURL: URL.createObjectURL(blob), blob }),
-          "image/webp"
-        );
-      });
-
-    const scaleImage = ({ file, imageURL, blob }) =>
-      new Promise((res, rej) => {
-        const image = new Image();
-        image.setAttribute("src", imageURL);
-        image.addEventListener("load", () => res({ file, imageURL, image }));
-
-        const afterSize = document.querySelector("#after-size");
-        afterSize.innerHTML = `🥳 After file size: ${blob.size} bytes 
-        (saved: ${file.size - blob.size} bytes)`;
-      });
-
-    const downloadImage = ({ file, imageURL, image }) =>
-      new Promise((res, rej) => {
-        const imageLink = document.querySelector("#download-here");
-        imageLink.setAttribute("href", imageURL);
-        imageLink.setAttribute("download", `${file.name}.webp`);
-        imageLink.appendChild(image);
-      });
-
-    for (const file of event.target.files) {
-      loadImage(file).then(drawImage).then(scaleImage).then(downloadImage);
-    }
-  };
-
-  const clearAll = () => {
-    const canvas = document.querySelector("#webp-canvas");
-    const afterImages = document.querySelector("#download-here");
-    afterImages.innerHTML = "";
-    const context = canvas.getContext("2d");
-    context.reset(); // clear context
-  };
+  const convertFileToWebp = (e) => {
+      const t = (e) =>
+          new Promise((t, n) => {
+            const o = new Image();
+            o.addEventListener("load", () => {
+              t({ file: e, image: o });
+            }),
+              (o.src = URL.createObjectURL(e)),
+              (document.querySelector(
+                "#before-size"
+              ).innerHTML = `Before file size: ${e.size} bytes`),
+              console.log("before-file", e);
+          }),
+        n = ({ file: e, image: t }) =>
+          new Promise((n, o) => {
+            const r = document.querySelector("#webp-canvas");
+            drawImageProp(r.getContext("2d"), t),
+              r.toBlob(
+                (t) =>
+                  n({ file: e, imageURL: URL.createObjectURL(t), blob: t }),
+                "image/webp"
+              );
+          }),
+        o = ({ file: e, imageURL: t, blob: n }) =>
+          new Promise((o, r) => {
+            const i = new Image();
+            i.setAttribute("src", t),
+              i.addEventListener("load", () =>
+                o({ file: e, imageURL: t, image: i })
+              ),
+              (document.querySelector(
+                "#after-size"
+              ).innerHTML = `🥳 After file size: ${
+                n.size
+              } bytes \n        (saved: ${e.size - n.size} bytes)`);
+          }),
+        r = ({ file: e, imageURL: t, image: n }) =>
+          new Promise((o, r) => {
+            const i = document.querySelector("#download-here");
+            i.setAttribute("href", t),
+              i.setAttribute("download", `${e.name}.webp`),
+              i.appendChild(n);
+          });
+      for (const i of e.target.files) t(i).then(n).then(o).then(r);
+    },
+    clearAll = () => {
+      const e = document.querySelector("#webp-canvas");
+      (document.querySelector("#download-here").innerHTML = ""),
+        e.getContext("2d").reset();
+    };
 </script>
