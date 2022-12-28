@@ -2,5 +2,13 @@ export default {
   data() {
     return { count: 0 };
   },
-  template: `<div>숫자 세기: {{count}}</div>`,
+  template: `
+  <div>
+  <button @click="count++">count up</button>
+    <div>
+        {{count}}
+    </div>
+  <button @click="count--">count down</button>
+  </div>
+  `,
 };
