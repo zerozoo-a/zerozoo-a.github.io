@@ -2,11 +2,27 @@
 title: Tags
 ---
 
-{% for tag in site.tags %}
-<h3>{{ tag[0] }}</h3>
-<ul>
-    {% for post in tag[1] %}
-    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+<div class="accordion" id="accordion" data-bs-theme="dark" >
+    {% for tag in site.tags %}
+    {% capture number %}{{ forloop.length }}{% endcapture %}
+    {% assign index = forloop.index %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{index}}">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{index}}" aria-expanded="true" aria-controls="collapse{{index}}">
+                    {{ tag[0] }}
+                </button>
+            </h2>
+            <div id="collapse{{index}}" class="accordion-collapse collapse show" aria-labelledby="heading{{index}}" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    {% for post in tag[1] %}
+                    <a class="ay-list" href="{{ site.baseurl }}{{ post.url }}">
+                    <li>
+                        {{ post.title }}
+                    </li>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     {% endfor %}
-</ul>
-{% endfor %}
+</div>
