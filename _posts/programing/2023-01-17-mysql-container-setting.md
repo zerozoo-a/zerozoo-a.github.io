@@ -67,8 +67,9 @@ microdnf install git
 ## github의 특정 레포의 특정 파일을 다운로드 받는 방법
 원하는 파일의 raw 주소로 들어간 후 해당 주소를 통해 다운로드
 
+```bash
 curl https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql -o employees.sql
-
+```
 emloyees.sql이 다운로드 받아짐
 위 링크는 특정 레포의 특정 파일의 raw 파일 접근 url임
 
