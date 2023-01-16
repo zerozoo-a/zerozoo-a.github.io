@@ -3,6 +3,7 @@ layout: post
 title: 터미널로 vscode를 키는 방법
 date: 2023-01-17 01:31 +0900
 ---
+<img src="https://images.unsplash.com/photo-1611172062119-05251ea06de8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" alt="running car in the city at night">
 
 <!--break-->
 ## index 
