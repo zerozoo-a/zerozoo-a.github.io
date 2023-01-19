@@ -156,6 +156,8 @@ function somePredicateFunction(){
 하지만 위의 방법으로는 그 것을 가능케한다.
 
 
+
+
 <br>
 <br>
 
