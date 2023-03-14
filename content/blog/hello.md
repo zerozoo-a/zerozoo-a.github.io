@@ -6,6 +6,8 @@ draft: true
 
 뭐!
 
+{{page.url}}
+
 ```js
 const hi = () => {
     console.log('hi world!')
