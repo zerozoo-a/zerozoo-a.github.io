@@ -1,6 +1,6 @@
 module.exports = {
 	title: "log4zerozoo-a",
-	url: "https://zerozoo-a",
+	url: "https://zerozoo-a.github.io/",
 	language: "kr",
 	description: "not to day",
 	author: {
