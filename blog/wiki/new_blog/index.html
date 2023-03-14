@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>This is my fourth post.</title>
-		<meta name="description" content="This is a post on My Blog about touchpoints and circling wagons.">
+		<title>11ty를 통해 블로그를 새로 단장하기</title>
+		<meta name="description" content="not to day">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="log4zerozoo-a">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="log4zerozoo-a">
 		
@@ -420,6 +420,10 @@ header {
 	padding: 0;
 	margin: 0;
 }
+
+.post-content {
+	font-size: large;
+}
 .post-metadata time {
 	margin-right: 1em;
 }
@@ -465,19 +469,63 @@ h2 + .header-anchor {
 
 		<main id="skip">
 			
-<h1>This is my fourth post.</h1>
+<h1>11ty를 통해 블로그를 새로 단장하기</h1>
 
 <ul class="post-metadata">
-	<li><time datetime="2018-09-30">30 September 2018</time></li>
-	<li><a href="/tags/second-tag/" class="post-tag">second tag</a></li>
+	<li><time datetime="2023-03-14">14 March 2023</time></li>
 </ul>
 
-<p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
-<p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
+<section class="post-content">
 <p><picture><source type="image/avif" srcset="/img/IdthKOzqFA-350.avif 350w"><source type="image/webp" srcset="/img/IdthKOzqFA-350.webp 350w"><img alt="A possum parent and two possum kids hanging from the iconic red balloon" loading="lazy" decoding="async" src="/img/IdthKOzqFA-350.png" width="350" height="685"></picture></p>
-<h2 id="section-header" tabindex="-1">Section Header <a class="header-anchor" href="#section-header">#</a></h2>
-<p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
+<p>jekyll은 충분히 훌륭한 정적생성기이지만..</p>
+<p>💎 루비도 아주 좋은 언어이지만.. 내 숙련도가 부족하고 해당 언어의 환경을 능숙하게
+또 지속적으로 그 언어를 사용 할 여건이 되질 않아 늘 불만이 존재했다.</p>
+<p>이번에 javascript 기반의 정적생성기로 블로그를 전환하면서 해당 내용을 정리한 한글 블로그가
+눈에 띄질 않아 정리해보기로 했다.</p>
+<p>GH-Pages에 11ty SSG 블로그를 올리려면..</p>
+<ol>
+<li>
+<p>우선 적당히 github repo를 생성해줍니다.</p>
+</li>
+<li>
+<p>자신의 repo에서 settings에 들어갑니다.</p>
+</li>
+<li>
+<p>좌측의 pages 메뉴를 클릭하면 github pages에 대한 config를 할 수 있습니다.</p>
+</li>
+<li>
+<p>Source를 눌러 deploy from a branch로 변경합니다.</p>
+</li>
+<li>
+<p>branch는 gh-pages로 변경 폴더는 root로 둡시다.</p>
+</li>
+</ol>
+<p>이게 기본적인 github의 세팅입니다.</p>
+<p>11ty의 세팅은</p>
+<ol>
+<li>eleventy.config.js의 pathPrefix에 자신의 브랜치 이름을 적어주는 것입니다.</li>
+<li>그리고 모든 링크의 href에 대해 <code>url</code> 필터를 추가해줍시다.</li>
+</ol>
+<p>만약 본인이 생성한 브랜치가 특별한 브랜치인 github.io라고 한다면 pathPrefix를 굳이 해줄 필요가 없습니다.</p>
+<p>기본적으로 빌드와 배포는 github actions를 통해 이루어집니다.</p>
+<pre class="language-yml" tabindex="0"><code class="language-yml"><span class="token key atrule">name</span><span class="token punctuation">:</span> Build Eleventy <span class="token comment"># /root/.github/worflows/build.yml</span><br><br><span class="token key atrule">on</span><span class="token punctuation">:</span><br>  <span class="token key atrule">push</span><span class="token punctuation">:</span><br>    <span class="token key atrule">branches</span><span class="token punctuation">:</span><br>      <span class="token punctuation">-</span> main <span class="token comment"># 원하는 브랜치를 선택해주세요</span><br><br><span class="token key atrule">jobs</span><span class="token punctuation">:</span><br>  <span class="token key atrule">build</span><span class="token punctuation">:</span><br>    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest <span class="token comment"># 높은 버전을 씁시다.</span><br><br>    <span class="token key atrule">strategy</span><span class="token punctuation">:</span><br>      <span class="token key atrule">matrix</span><span class="token punctuation">:</span><br>        <span class="token key atrule">node-version</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>19.x<span class="token punctuation">]</span> <span class="token comment"># 마찬가지로 높은 버전이 좋겠습니다.</span><br><br>    <span class="token key atrule">steps</span><span class="token punctuation">:</span><br>      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v3 <span class="token comment"># 높은 버전을 써줍시다.</span><br><br>      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Use Node.js $NaN<br>        <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>node@v3<br>        <span class="token key atrule">with</span><span class="token punctuation">:</span><br>          <span class="token key atrule">node-version</span><span class="token punctuation">:</span> $NaN<br><br>      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Install dependencies &amp; build <span class="token comment"># yarn을 쓰던 pnpm을 쓰던 상관 없겠죠?</span><br>        <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string"><br>          npm ci <br>          npm run build-ghpages          </span><br><br>      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Deploy<br>        <span class="token key atrule">uses</span><span class="token punctuation">:</span> peaceiris/actions<span class="token punctuation">-</span>gh<span class="token punctuation">-</span>pages@v3<br>        <span class="token key atrule">with</span><span class="token punctuation">:</span><br>          <span class="token key atrule">publish_dir</span><span class="token punctuation">:</span> ./_site <span class="token comment"># 원하는대로 빌드 결과물이 생성 될 곳을 정해주세요</span><br>          <span class="token key atrule">github_token</span><span class="token punctuation">:</span> $</code></pre>
+<p>이제 11ty 사이트에 방문해 적당한 starter project를 클론 받아와 올려줍니다.</p>
+<p>방금 생성한 repo에 올리면 됩니다
+클론받은 프로젝트마다 약간의 차이점이 존재하게 됩니다.</p>
+<h2 id="11ty" tabindex="-1">11ty <a class="header-anchor" href="#11ty">#</a></h2>
+<p>11ty는 jekyll의 node.js 버전이라고 생각하면 좋다.
+hugo 또한 비슷하다.</p>
+<h2 id="deploy" tabindex="-1">deploy <a class="header-anchor" href="#deploy">#</a></h2>
+<p>gh-pages를 통해 내보낸다.</p>
+<h2 id="jekyll" tabindex="-1">jekyll에 비해 장점 <a class="header-anchor" href="#jekyll">#</a></h2>
+<p>장점은 node.js를 사용할 수 있다는 점이다.
+js npm 생태계를 좀 더 활용 할 수 있다.</p>
+<h2 id="jekyll-1" tabindex="-1">jekyll에 비해 단점 <a class="header-anchor" href="#jekyll-1">#</a></h2>
+<p>커뮤니티나 역사가 오래되질 못하고 docs가 부실하다는 점이다.
+튜토리얼이 많이 부족해보이고 지속적인 관리가 될지 의문이다.
+회사가 붙어서 이를 체계적으로 강하게 관리해주지 않으면 jekyll + ruby3로 다시 갈아탈지도 모르겠다..</p>
 
+</section>
 <ul class="links-nextprev"><li>Previous: <a href="/blog/thirdpost/">This is my third post.</a></li>
 </ul>
 
@@ -485,6 +533,6 @@ h2 + .header-anchor {
 
 		<footer></footer>
 
-		<!-- Current page: /blog/fourthpost/ -->
+		<!-- Current page: /blog/wiki/new_blog/ -->
 	</body>
 </html>
