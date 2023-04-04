@@ -37,10 +37,6 @@ module.exports = function (eleventyConfig) {
 	// Filters
 	eleventyConfig.addFilter("readableDate", (dateObj, format, zone) => {
 		// Formatting tokens for Luxon: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
-		// return DateTime.now()
-		// 	.setLocale("ko-KR")
-		// 	.toFormat("yyyy년 L월 dd일 HH 시 MM 분");
-
 		return DateTime.fromJSDate(dateObj, { zone: zone || "utc" }).toFormat(
 			format || "dd LLLL yyyy"
 		);
@@ -48,9 +44,6 @@ module.exports = function (eleventyConfig) {
 
 	eleventyConfig.addFilter("htmlDateString", (dateObj) => {
 		// dateObj input: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
-		// return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
-		// return DateTime.now().setLocale("kr").toFormat("yyyy LLLL dd");
-
 		return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
 	});
 
