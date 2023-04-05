@@ -102,7 +102,7 @@ module.exports = function (eleventyConfig) {
 	// to emulate the file copy on the dev server. Learn more:
 	// https://www.11ty.dev/docs/copy/#emulate-passthrough-copy-during-serve
 
-	// eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
+	eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
 
 	return {
 		// Control which files Eleventy will process
