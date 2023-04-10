@@ -1,5 +1,6 @@
 ---
 title: 11ty post에 css 적용하기
+date: 2023-04-01
 ---
 
 
