@@ -3,29 +3,179 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>log4zerozoo-a</title>
+		<title>문제풀이 과정을 나누자</title>
 		<meta name="description" content="not to day">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="log4zerozoo-a">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="log4zerozoo-a">
 		<meta name="google-site-verification" content="FzIp87nE_pk-4x5nXeKcIX-x1rqYcjlabzuH1EqXFYs" />
 		
-		<style>/* Message Box */
-.message-box {
-	--color-message-box: #ffc;
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
 
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
 	display: block;
-	background-color: var(--color-message-box);
-	color: var(--color-gray-90);
-	padding: 1em 0.625em; /* 16px 10px /16 */
-}
-.message-box ol {
-	margin-top: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-	.message-box {
-		--color-message-box: #082840;
-	}
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
 }
 * { box-sizing: border-box; }
 /* Defaults */
@@ -360,7 +510,7 @@ xhr.onreadystatechange = function () {
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/">Home</a></li>
-					<li class="nav-item"><a href="/posts/" aria-current="page">Posts</a></li>
+					<li class="nav-item"><a href="/posts/">Posts</a></li>
 					<li class="nav-item"><a href="/about/">About Me</a></li>
 					<li class="nav-item"><a href="/tags/">Tags</a></li>
 				</ul>
@@ -369,65 +519,72 @@ xhr.onreadystatechange = function () {
 		</header>
 
 		<main id="skip">
-			<!-- Delete this message, it will also remove the component CSS from the bundle -->
+			
+<h1>문제풀이 과정을 나누자</h1>
 
-<!-- Stop deleting -->
+<ul class="post-metadata pt-2">
+	<li><time datetime="2023-04-14">14 April 2023</time></li>
+	<li><a href="/tags/jongman/" class="post-tag">JONGMAN</a></li>
+</ul>
 
-
-
-<h1>Posts</h1>
-
-
-<ol reversed class="postlist" style="counter-reset: start-from 9">
-
-	<li class="postlist-item">
-		<a href="/blog/CS/ALGORITHMS/BOOKS/JONGMAN/문제풀이_과정을_나누자/" class="postlist-link">문제풀이 과정을 나누자</a>
-		<time class="postlist-date" datetime="2023-04-14">Created at: 2023년 04월 14일 12시 51분 28초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm/" class="postlist-link">Richard_Feynman_alogorithm</a>
-		<time class="postlist-date" datetime="2023-04-12">Created at: 2023년 04월 12일 11시 36분 22초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/BOOK/JONGMAN/입문자를_위한_커리큘럼/" class="postlist-link">입문자를 위한 커리큘럼</a>
-		<time class="postlist-date" datetime="2023-04-12">Created at: 2023년 04월 12일 11시 20분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/DATA_STRUCTURE/TREE/BST/" class="postlist-link">BST</a>
-		<time class="postlist-date" datetime="2023-04-10">Created at: 2023년 04월 10일 12시 00분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/JS/libs/flat/" class="postlist-link">중첩 배열을 평탄화하기</a>
-		<time class="postlist-date" datetime="2023-04-03">Created at: 2023년 04월 03일 12시 00분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/wiki/11ty/css_config/" class="postlist-link">11ty post에 css 적용하기</a>
-		<time class="postlist-date" datetime="2023-04-01">Created at: 2023년 04월 01일 12시 00분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/wiki/11ty/new_blog/" class="postlist-link">11ty를 통해 블로그를 새로 단장하기</a>
-		<time class="postlist-date" datetime="2023-03-28">Created at: 2023년 03월 28일 12시 00분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/wiki/11ty/folder_and_config/" class="postlist-link">폴더 단위로 layout 명시하기</a>
-		<time class="postlist-date" datetime="2023-03-27">Created at: 2023년 03월 27일 12시 00분 00초</time>
-	</li>
-
+<section class="post-content">
+<p>종만북에서는 문제 풀이 과정을 나누길 강력하게 권장한다.</p>
+<p>이유는 단순하다.</p>
+<p>우선 알고리즘 문제는 보통 어렵고 지문 자체를 이해하는데 많은 시간이 걸릴 수 있다.
+따라서 당황하기 쉽다.</p>
+<p>당당하게 문제에 맞서기 위해서는 문제를 통과해 답에 접근하기까지 순서가 필요하다.</p>
+<ol>
+<li>
+<p>문제를 읽고 이해한다.</p>
+<ul>
+<li>많은 경우가 문제를 잘못 이해하고 쉐도우 복싱을 하는 경우가 많다. 이를 방지하자</li>
+</ul>
+</li>
+<li>
+<p>재정의와 추상화</p>
+<ul>
+<li>재정의를 한다는 것은 자신이 이해하기 쉬운 형태로 받아들인다는 것이다.</li>
+<li>추상화는 잘 이해한 문제에서 정답을 끌어내기 위한 부분을 수학적/전산학적 개념으로 재정의하는 것을 말한다.</li>
+<li>이 두가지가 완료되었다면 문제를 풀 수 있을지 없을지가 결정된다고 본다.
+이유는 간단한데 사실상 알고리즘 문제를 수학문제로 치환하였기 때문이다.
+수학 문제가 된 이상 당신이 이에 대한 이해와 개념 어느정도의 연습이 되어 있다면 당연하게 문제가 풀릴 것이고 그렇지 않다면 백날 풀어도 풀 수 있을지 없을지 모른다.</li>
+</ul>
+</li>
+<li>
+<p>계획 세우기</p>
+<ul>
+<li>여러 해법이 떠올랐다면 어떤 방법을 선택할지 계획을 세운다. 만약 아이디어가 하나 뿐이라면 자동적으로 스킵된다.</li>
+</ul>
+</li>
+<li>
+<p>계획 검증하기</p>
+<ul>
+<li>해당 계획을 머리속으로 굴려보자 실제 구현을 하기 전 마지막 전검을 하는 것인데 계획이 결과적으로 정답을 도출 할 수 있는지를 생각해보라는 것이다.</li>
+</ul>
+</li>
+<li>
+<p>계획 수행하기</p>
+<ul>
+<li>잘 구현을 하라는 말이다.</li>
+</ul>
+</li>
+<li>
+<p>회고하기</p>
+<ul>
+<li>알고리즘 문제는 꼴보기 싫어지는 속성이 있어서 한 번 풀어본 문제를 또 풀기 싫은 경우가 100% 이다.
+하지만 이런 문제를 또 풀어보거나 내 풀이와 다른 사람의 풀이를 비교해 본다면 해당 알고리즘을 더 능숙하게 사용 할 수 있을 뿐 아니라 다른 문제에도 자연히 손이가게 되는 능숙한 무기가 될 수 있다.</li>
+</ul>
+</li>
 </ol>
 
-
+</section>
+<ul class="links-nextprev"><li>Previous: <a href="/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm/">Richard_Feynman_alogorithm</a></li>
+</ul>
 
 		</main>
 
 		<footer></footer>
 
-		<!-- Current page: /posts/ -->
+		<!-- Current page: /blog/CS/ALGORITHMS/BOOKS/JONGMAN/문제풀이_과정을_나누자/ -->
 	</body>
 </html>
