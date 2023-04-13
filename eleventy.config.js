@@ -17,7 +17,6 @@ module.exports = function (eleventyConfig) {
 	require("dotenv").config();
 	eleventyConfig.addPassthroughCopy({
 		"./public/": "/",
-		"./public/img/favicon.ico": "/",
 		"./node_modules/prismjs/themes/prism-okaidia.css": "/css/prism-okaidia.css",
 	});
 
