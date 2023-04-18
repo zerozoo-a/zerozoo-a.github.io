@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>문제풀이 과정을 나누자</title>
+		<title>Tree preorder</title>
 		<meta name="description" content="not to day">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="log4zerozoo-a">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="log4zerozoo-a">
@@ -520,71 +520,24 @@ xhr.onreadystatechange = function () {
 
 		<main id="skip">
 			
-<h1>문제풀이 과정을 나누자</h1>
+<h1>Tree preorder</h1>
 
 <ul class="post-metadata pt-2">
-	<li><time datetime="2023-04-14">14 April 2023</time></li>
-	<li><a href="/tags/jongman/" class="post-tag">JONGMAN</a></li>
+	<li><time datetime="2023-04-18">18 April 2023</time></li>
 </ul>
 
 <section class="post-content">
-<p>종만북에서는 문제 풀이 과정을 나누길 강력하게 권장한다.</p>
-<p>이유는 단순하다.</p>
-<p>우선 알고리즘 문제는 보통 어렵고 지문 자체를 이해하는데 많은 시간이 걸릴 수 있다.
-따라서 당황하기 쉽다.</p>
-<p>당당하게 문제에 맞서기 위해서는 문제를 통과해 답에 접근하기까지 순서가 필요하다.</p>
-<ol>
-<li>
-<p>문제를 읽고 이해한다.</p>
-<ul>
-<li>많은 경우가 문제를 잘못 이해하고 쉐도우 복싱을 하는 경우가 많다. 이를 방지하자</li>
-</ul>
-</li>
-<li>
-<p>재정의와 추상화</p>
-<ul>
-<li>재정의를 한다는 것은 자신이 이해하기 쉬운 형태로 받아들인다는 것이다.</li>
-<li>추상화는 잘 이해한 문제에서 정답을 끌어내기 위한 부분을 수학적/전산학적 개념으로 재정의하는 것을 말한다.</li>
-<li>이 두가지가 완료되었다면 문제를 풀 수 있을지 없을지가 결정된다고 본다.
-이유는 간단한데 사실상 알고리즘 문제를 수학문제로 치환하였기 때문이다.
-수학 문제가 된 이상 당신이 이에 대한 이해와 개념 어느정도의 연습이 되어 있다면 당연하게 문제가 풀릴 것이고 그렇지 않다면 백날 풀어도 풀 수 있을지 없을지 모른다.</li>
-</ul>
-</li>
-<li>
-<p>계획 세우기</p>
-<ul>
-<li>여러 해법이 떠올랐다면 어떤 방법을 선택할지 계획을 세운다. 만약 아이디어가 하나 뿐이라면 자동적으로 스킵된다.</li>
-</ul>
-</li>
-<li>
-<p>계획 검증하기</p>
-<ul>
-<li>해당 계획을 머리속으로 굴려보자 실제 구현을 하기 전 마지막 점검을 하는 것인데 계획이 결과적으로 정답을 도출 할 수 있는지를 생각해보라는 것이다.</li>
-</ul>
-</li>
-<li>
-<p>계획 수행하기</p>
-<ul>
-<li>잘 구현을 하라는 말이다.</li>
-</ul>
-</li>
-<li>
-<p>회고하기</p>
-<ul>
-<li>알고리즘 문제는 꼴보기 싫어지는 속성이 있어서 한 번 풀어본 문제를 또 풀기 싫은 경우가 100% 이다.
-하지만 이런 문제를 또 풀어보거나 내 풀이와 다른 사람의 풀이를 비교해 본다면 해당 알고리즘을 더 능숙하게 사용 할 수 있을 뿐 아니라 다른 문제에도 자연히 손이가게 되는 능숙한 무기가 될 수 있다.</li>
-</ul>
-</li>
-</ol>
+<p>~ 재미있는 전위순회 이야기 ~</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">N</span> <span class="token punctuation">{</span><br>  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<br>    <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">null</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">null</span><br>  <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br><span class="token comment">/**<br> * @param {N} root <br> * @returns <br> * <br> */</span><br><span class="token keyword">function</span> <span class="token function">preorderTraversal</span><span class="token punctuation">(</span><span class="token parameter">root</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span><br>  <span class="token punctuation">}</span><br>  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>root<span class="token punctuation">.</span>val<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><br>  <span class="token function">preorderTraversal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>left<span class="token punctuation">)</span><br>  <span class="token function">preorderTraversal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>right<span class="token punctuation">)</span><br><span class="token punctuation">}</span><br><br><span class="token comment">/**<br> * @param {N} root<br> * <br> * stack: [N{root}]<br> * root 노드가 왼쪽 자식 오른쪽 자식이 존재한다면<br> * <br> * 오른쪽 자식 노드를 stack에 push하고 <br> * 왼쪽 자식 노드를 stack에 push하면<br> * <br> * 왼쪽 자식 노드가 항상 stack의 위쪽에 위치하게 된다.<br> * stack: [N{오른쪽 자식}, N{왼쪽 자식}]<br> * 위와 같은 형태로 stack은 쌓이게 된다.<br> * <br> * 이제 반복문이 실행되면서 stack을 pop하게 되면 왼쪽 자식은 pop 되고<br> * node = N{왼쪽 자식}이 된다. 이 상태로 다시 push를 하게 되면<br> * <br> * stack: [N{오른쪽 자식}, N{왼쪽 자식의 오른쪽 자식}, N{왼쪽 자식의 왼쪽 자식}]<br> * 이를 반복하게 되는데 참으로 영리한 것이 pop은 O(1)연산으로 매우 빠르고<br> * pop을 통해 계속 valuable한 왼쪽 자식을 DFS로 계속 찾아간다는 것이다.<br> * <br> * 또한 읽는 재미가 있다. (이해하기 위해선 잠깐 멈춰서 생각해야 하지만)<br> * 더군다나 한 메모리 주소를 반복적으로 쓰고 지우기만 하기 때문에 메모리 효율성과 stack이 넘쳐 망해버릴 일이 없다는 것이 좋다.<br> */</span><br><span class="token keyword">function</span> <span class="token function">preorderTraversal2</span><span class="token punctuation">(</span><span class="token parameter">root</span><span class="token punctuation">)</span><span class="token punctuation">{</span><br>  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span><br><br>  <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span>root<span class="token punctuation">]</span><br>  <span class="token keyword">while</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">const</span> node <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br>    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span><br>    <span class="token keyword">if</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">)</span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">)</span><br>    <span class="token keyword">if</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">)</span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">)</span><br>  <span class="token punctuation">}</span>  <br><span class="token punctuation">}</span><br><br><span class="token keyword">const</span> root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">N</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><br>root<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">N</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><br>root<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">N</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><br>root<span class="token punctuation">.</span>left<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">N</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><br>root<span class="token punctuation">.</span>left<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">N</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><br><br><span class="token comment">/*<br>      1<br>     / \<br>    2   3<br>   / \<br>  4   5<br>*/</span><br><br><span class="token function">preorderTraversal</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><br><span class="token function">preorderTraversal2</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><br></code></pre>
 
 </section>
-<ul class="links-nextprev"><li>Previous: <a href="/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm/">Richard_Feynman_alogorithm</a></li><li>Next: <a href="/blog/CS/DATA_STRUCTURE/TREE/Tree_preorder/">Tree preorder</a></li>
+<ul class="links-nextprev"><li>Previous: <a href="/blog/CS/ALGORITHMS/BOOKS/JONGMAN/문제풀이_과정을_나누자/">문제풀이 과정을 나누자</a></li>
 </ul>
 
 		</main>
 
 		<footer></footer>
 
-		<!-- Current page: /blog/CS/ALGORITHMS/BOOKS/JONGMAN/문제풀이_과정을_나누자/ -->
+		<!-- Current page: /blog/CS/DATA_STRUCTURE/TREE/Tree_preorder/ -->
 	</body>
 </html>
