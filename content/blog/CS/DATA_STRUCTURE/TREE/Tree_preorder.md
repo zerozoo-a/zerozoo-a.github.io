@@ -1,6 +1,6 @@
 ---
-title: Tree preorder 
-date: 2023-04-19 14:21:28
+title: Tree preorder (stack)
+date: 2023-04-19 14:00:28
 ---
 ~ 재미있는 전위순회 이야기 ~
 

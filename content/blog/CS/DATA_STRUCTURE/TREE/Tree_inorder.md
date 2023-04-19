@@ -1,5 +1,5 @@
 ---
-title: Tree preorder 
+title: Tree inorder (stack)
 date: 2023-04-18 15:02:24
 ---
 ~ 재미있는 중위순회 이야기 ~
