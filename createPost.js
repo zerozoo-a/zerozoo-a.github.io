@@ -18,7 +18,7 @@ function getKoreanDateTime() {
 
 /**
  *
- * @param {string} title
+ * @param {string[]} title
  */
 const main = async (title) => {
 	console.log(`create file name: ${title}`);
@@ -28,4 +28,4 @@ const main = async (title) => {
 	await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
 };
 
-main(process.argv.splice(2)[0]);
+main(process.argv.splice(2).join(" "));
