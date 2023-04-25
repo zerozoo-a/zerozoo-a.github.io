@@ -3,8 +3,14 @@ layout: layouts/home.njk
 eleventyNavigation:
   key: Posts
   order: 2
+pagination:
+  data: collections.posts
+  size: 2
+permalink: posts/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html
+
 ---
 <h1>Posts</h1>
+
 
 {% set postslist = collections.posts %}
 {% include "postslist.njk" %}
