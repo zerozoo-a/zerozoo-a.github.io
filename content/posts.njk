@@ -9,12 +9,17 @@ pagination:
 permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{% endif %}index.html
 
 ---
+{{ pagination | tap }}
 <h1>Posts</h1>
 <ol>
-{%- for item in pagination.items %}
-  <li>{{ item.data.title }}</li>
-{% endfor -%}
+{% for item in pagination.items %}
+  <li>
+    <div> 
+      <h4>
+        {{ item.data.title }} 
+      </h4>
+    </div>
+  </li>
+{% endfor %}
 </ol>
 
-{# {% set postslist = collections.posts %}
-{% include "postslist.njk" %} #}
