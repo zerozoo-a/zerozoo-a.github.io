@@ -5,12 +5,16 @@ eleventyNavigation:
   order: 2
 pagination:
   data: collections.posts
-  size: 2
-permalink: posts/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html
+  size: 5
+permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{% endif %}index.html
 
 ---
 <h1>Posts</h1>
+<ol>
+{%- for item in pagination.items %}
+  <li>{{ item.data.title }}</li>
+{% endfor -%}
+</ol>
 
-
-{% set postslist = collections.posts %}
-{% include "postslist.njk" %}
+{# {% set postslist = collections.posts %}
+{% include "postslist.njk" %} #}
