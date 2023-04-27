@@ -80,6 +80,26 @@ module.exports = function (eleventyConfig) {
 		return Array.from(tagSet);
 	});
 
+	eleventyConfig.addFilter("getAllPosts", (collection) => {
+		let tagSet = new Set();
+		for (let item of collection) {
+			(item.data.tags || []).forEach((tag) => tagSet.add(tag));
+		}
+		return Array.from(tagSet);
+	});
+
+	eleventyConfig.addFilter("filterPostList", function filterPostList(posts) {
+		return (posts || []).filter(
+			(post) => ["all", "nav", "post", "posts"].indexOf(post) === -1
+		);
+	});
+
+	eleventyConfig.addFilter("tap", (a) => {
+		console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		console.log(a);
+		return a;
+	});
+
 	eleventyConfig.addFilter("filterTagList", function filterTagList(tags) {
 		return (tags || []).filter(
 			(tag) => ["all", "nav", "post", "posts"].indexOf(tag) === -1
