@@ -440,6 +440,7 @@ header {
 	padding:2rem;
 }
 
+
 /* Direct Links / Markdown Headers */
 .header-anchor {
 	text-decoration: none;
@@ -462,42 +463,61 @@ a[href].header-anchor:focus,
 
 h2 + .header-anchor {
 	font-size: 1.5em;
+}
+
+.flex-list {
+	display: flex;
+    list-style: none;
+    justify-content: space-between;
+    max-width: 20%;
+    margin: 0 auto;
+}
+
+.pagination-links {
+	text-decoration: none;
+	font-style: normal;
+	font-size: 1.4em;
+	margin-left: .1em;
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-top
+ * ----------------------------------------
+ */
+ @-webkit-keyframes slide-top {
+	0% {
+	  -webkit-transform: translateY(0);
+			  transform: translateY(0);
+	}
+	100% {
+	  -webkit-transform: translateY(-7px);
+			  transform: translateY(-7px);
+	}
+  }
+  @keyframes slide-top {
+	0% {
+	  -webkit-transform: translateY(0);
+			  transform: translateY(0);
+	}
+	100% {
+	  -webkit-transform: translateY(-7px);
+			  transform: translateY(-7px);
+	}
+  }
+
+.slide-top {
+	color:#2F81F7;
+	font-size: large;
+	-webkit-animation: slide-top 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) 500ms both;
+	        animation: slide-top 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) 500ms both;
+}
+.a-tag {
+	text-decoration: none;
 }</style>
 
 		<script>
-			const url =
-	"http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"; /*URL*/
-const queryParams = new URLSearchParams({
-	serviceKey: "",
-	pageNo: "1",
-	numOfRows: "1000",
-	dataType: "XML",
-	base_date: "20230410",
-	base_time: "0600",
-	nx: "55",
-	ny: "127",
-});
-
-const xhr = new XMLHttpRequest();
-xhr.open("GET", `${url}?${queryParams.toString()}`);
-xhr.onreadystatechange = function () {
-	if (this.readyState === XMLHttpRequest.DONE) {
-		if (this.status === 200) {
-			// 요청이 성공한 경우
-			// this.responseText로 응답 데이터에 접근할 수 있습니다.
-			// console.log("200! 성공이네요", this.responseText);
-			// console.log(JSON.stringify(this.getAllResponseHeaders()));
-			console.log("response", this.responseText);
-		} else {
-			// 요청이 실패한 경우
-			// this.status로 HTTP 상태 코드에 접근할 수 있습니다.
-			console.log("실패", this);
-		}
-	}
-};
-
-// xhr.send();
-
+			
 		</script>
 	</head>
 	<body>
@@ -511,8 +531,8 @@ xhr.onreadystatechange = function () {
 				<ul class="nav">
 					<li class="nav-item"><a href="/">Home</a></li>
 					<li class="nav-item"><a href="/posts/">Posts</a></li>
-					<li class="nav-item"><a href="/about/">About Me</a></li>
 					<li class="nav-item"><a href="/tags/">Tags</a></li>
+					<li class="nav-item"><a href="/about/">About Me</a></li>
 				</ul>
 			</nav>
 			<div id="event_result"></div>
