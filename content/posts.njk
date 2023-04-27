@@ -9,17 +9,33 @@ pagination:
 permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{% endif %}index.html
 
 ---
-{{ pagination | tap }}
-<h1>Posts</h1>
-<ol>
-{% for item in pagination.items %}
-  <li>
-    <div> 
-      <h4>
-        {{ item.data.title }} 
-      </h4>
-    </div>
+{% set postsCount = collections.posts | length %}
+{% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
+{% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
+{% set postslistCounter = postsCount %}
+
+<h1> > SELECT COUNT(*) FROM POSTS </h1>
+<h1> > {{postslistCounter}}</h1>
+<div class="links-nextprev"></div>
+<ol reversed class="postlist" style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}">
+{% for item in pagination.items | reverse %}
+  <li class="postlist-item postlist-item-active">
+      <a href="{{ item.page.url }}" class="postlist-link">{% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}</a>
+      <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">Created at: {{ item.page.date | readableDate("yyyy년 LL월 dd일 hh시 mm분 ss초") }}</time>
   </li>
 {% endfor %}
 </ol>
 
+<div class="flex-list">
+{% for i in range(1, pagination.pageLinks.length) %}
+{% set condition = pagination.pageNumber === i %}
+  <li>
+    <a 
+    href="{{ pagination['links'][i] }}" 
+    class="{% if condition %}slide-top2{% endif %}"
+    >
+      {{ i }}
+    </a>
+  </li>
+{% endfor %}
+</div>
