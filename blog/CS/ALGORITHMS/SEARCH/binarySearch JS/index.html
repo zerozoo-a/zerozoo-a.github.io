@@ -207,11 +207,13 @@ pre[class*="language-diff-"] {
 		--color-gray-90: #dad8d8;
 
 		/* --text-color is assigned to --color-gray-_ above */
-		--text-color-link: #2F81F7;
+		--text-color-link: #0a3065;
 		--text-color-link-active: #E6EDF3;
 		--text-color-link-visited: #7D8590;
 
 		--background-color: RGB(14,17,22);
+		--button: #0a306a;
+		--button-hover: #2662bb;
 	}
 }
 
@@ -469,7 +471,6 @@ h2 + .header-anchor {
 	display: flex;
     list-style: none;
     justify-content: space-between;
-    max-width: 20%;
     margin: 0 auto;
 }
 
@@ -480,45 +481,47 @@ h2 + .header-anchor {
 	margin-left: .1em;
 }
 
-/**
- * ----------------------------------------
- * animation slide-top
- * ----------------------------------------
- */
- @-webkit-keyframes slide-top {
-	0% {
-	  -webkit-transform: translateY(0);
-			  transform: translateY(0);
-	}
-	100% {
-	  -webkit-transform: translateY(-7px);
-			  transform: translateY(-7px);
-	}
-  }
-  @keyframes slide-top {
-	0% {
-	  -webkit-transform: translateY(0);
-			  transform: translateY(0);
-	}
-	100% {
-	  -webkit-transform: translateY(-7px);
-			  transform: translateY(-7px);
-	}
-  }
-
 .dodger-blue {
 	color: dodgerblue;
 }
 
-.slide-top {
-	color:#2F81F7;
-	font-size: large;
-	-webkit-animation: slide-top 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) 500ms both;
-	        animation: slide-top 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) 500ms both;
-}
 .a-tag {
 	text-decoration: none;
-}</style>
+}
+
+.sticky-bottom-nav {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: var(--button);
+	color: var(--text-color-link);
+  }
+  
+  .sticky-bottom-nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+  }
+  
+  .sticky-bottom-nav li {
+	margin: 0;
+	padding: 0;
+	flex-grow: 1;
+	text-align: center;
+  }
+  
+  .sticky-bottom-nav a {
+	display: block;
+	padding: 1em;
+	text-decoration: none;
+	color: inherit;
+  }
+  
+  .sticky-bottom-nav a:hover {
+	background-color: var(--button-hover);
+  }</style>
 
 		<script>
 			
@@ -557,7 +560,7 @@ h2 + .header-anchor {
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">binarySearch</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">,</span> x</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><br>  <span class="token keyword">let</span> mid <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span><br>  <span class="token keyword">if</span><span class="token punctuation">(</span>right <span class="token operator">>=</span> left<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    mid <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><br><br>    <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">===</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>      <span class="token keyword">return</span> mid<span class="token punctuation">;</span><br>    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>      <span class="token keyword">return</span> <span class="token function">binarySearch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> mid<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><br>    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><br>      <span class="token keyword">return</span> <span class="token function">binarySearch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">,</span> x<span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br>  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span> mid<span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br><span class="token keyword">const</span> answer <span class="token operator">=</span> <span class="token function">binarySearch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">answer: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>answer<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token comment">/**<br> * <br> * @param {number[]} arr <br> * @param {number} x <br> * @returns <br> */</span><br><span class="token keyword">const</span> <span class="token function-variable function">binarySearch2</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> x</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><br>  <span class="token keyword">let</span> left <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> right <span class="token operator">=</span> arr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><br><br>  <span class="token keyword">while</span><span class="token punctuation">(</span>left <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">let</span> mid <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><br><br>    <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">===</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> mid <span class="token punctuation">}</span><br>    <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span> <br>      left <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><br>    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><br>      right <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><br>    <span class="token punctuation">}</span><br>  <span class="token punctuation">}</span><br>  <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">const</span> answer2 <span class="token operator">=</span> <span class="token function">binarySearch2</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><br>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">answer2: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>answer2<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
 
 </section>
-<ul class="links-nextprev"><li>Previous: <a href="/blog/CS/ALGORITHMS/SEARCH/findMaxDivideAndConquer/">findMax divide and conquer</a></li><li>Next: <a href="/blog/temp/a/"></a></li>
+<ul class="links-nextprev"><li>Previous: <a href="/blog/CS/ALGORITHMS/SEARCH/findMaxDivideAndConquer/">findMax divide and conquer</a></li>
 </ul>
 
 		</main>
