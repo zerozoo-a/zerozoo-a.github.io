@@ -82,7 +82,6 @@ module.exports = function (eleventyConfig) {
 
 	// Return the smallest number argument
 	eleventyConfig.addFilter("min", (...numbers) => {
-		console.log("n??", numbers);
 		return Math.min.apply(null, numbers);
 	});
 

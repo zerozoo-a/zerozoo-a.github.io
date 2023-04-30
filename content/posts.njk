@@ -12,7 +12,7 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
 
 
 
-{# {% set postsCount = collections.posts | length %}
+{% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
 {% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
 {% set postslistCounter = postsCount %}
@@ -20,7 +20,7 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
 <h1> > 총 {{postslistCounter}} 개의 글이 있습니다.</h1>
 <div class="links-nextprev"></div>
   
-<ol reversed class="postlist" style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}">
+{# <ol reversed class="postlist" style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}">
 {%- for item in pagination.items -%}
   <li class="postlist-item postlist-item-active">
       <a href="{{ item.page.url }}" class="postlist-link">{% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}</a>
@@ -30,7 +30,7 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
 </ol> #}
 
 <div>
-  <ol>
+  <olclass="postlist" style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}" >
     {% for item in pagination.items %}
       <li class="postlist-item postlist-item-active">
           <a href="{{ item.page.url }}" class="postlist-link">{% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}</a>
