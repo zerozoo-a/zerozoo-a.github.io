@@ -4,7 +4,7 @@ eleventyNavigation:
   key: Posts
   order: 2
 pagination:
-  data: collections.posts
+  data: collections.myCustomSort
   size: 5
 permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{% endif %}index.html
 
@@ -18,12 +18,12 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
 <div class="links-nextprev"></div>
   
 <ol reversed class="postlist" style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}">
-{% for item in pagination.items | reverse %}
+{%- for item in pagination.items -%}
   <li class="postlist-item postlist-item-active">
       <a href="{{ item.page.url }}" class="postlist-link">{% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}</a>
       <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">Created at: {{ item.page.date | readableDate("yyyy년 LL월 dd일 hh시 mm분 ss초") }}</time>
   </li>
-{% endfor %}
+{%- endfor -%}
 </ol>
 <div class="flex-list">
 {# {% for i in range(0, pagination.pageLinks.length) %} #}

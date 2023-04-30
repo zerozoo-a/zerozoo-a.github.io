@@ -100,6 +100,14 @@ module.exports = function (eleventyConfig) {
 		return a;
 	});
 
+	/**
+	 * @param {Array<any>} a
+	 */
+	eleventyConfig.addFilter("sortByDate", (/** @type {Array<any>} a */ a) => {
+		if (!Array.isArray(a)) return a;
+		return a.reverse();
+	});
+
 	eleventyConfig.addFilter("filterTagList", function filterTagList(tags) {
 		return (tags || []).filter(
 			(tag) => ["all", "nav", "post", "posts"].indexOf(tag) === -1
@@ -118,6 +126,21 @@ module.exports = function (eleventyConfig) {
 			level: [1, 2, 3, 4],
 			slugify: eleventyConfig.getFilter("slugify"),
 		});
+	});
+
+	eleventyConfig.addCollection("myCustomSort", function (collectionApi) {
+		return collectionApi
+			.getAll()
+			.filter((a) => {
+				console.log("a", a);
+				return a.inputPath.includes("blog");
+			})
+			.sort(function (a, b) {
+				//return a.date - b.date; // sort by date - ascending
+				return b.date - a.date; // sort by date - descending
+				//return a.inputPath.localeCompare(b.inputPath); // sort by path - ascending
+				//return b.inputPath.localeCompare(a.inputPath); // sort by path - descending
+			});
 	});
 
 	// Features to make your build faster (when you need them)
