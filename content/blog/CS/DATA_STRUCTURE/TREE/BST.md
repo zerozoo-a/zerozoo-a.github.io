@@ -1,5 +1,5 @@
 ---
-title: Binary t
+title: BST
 date: 2023-04-10
 ---
 
