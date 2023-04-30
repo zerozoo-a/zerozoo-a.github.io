@@ -9,7 +9,10 @@ pagination:
 permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{% endif %}index.html
 
 ---
-{% set postsCount = collections.posts | length %}
+
+
+
+{# {% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
 {% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
 {% set postslistCounter = postsCount %}
@@ -24,69 +27,31 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
       <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">Created at: {{ item.page.date | readableDate("yyyy년 LL월 dd일 hh시 mm분 ss초") }}</time>
   </li>
 {%- endfor -%}
-</ol>
-{% set add0 = pagination.pageNumber + 1 %}
-{% set add1 = add0 + 1%}
-{% set add2 = add0 + 2%}
-{% set add3 = add0 + 3%}
-{% set add4 = add0 + 4%}
-{% set condition = 0 %}
+</ol> #}
 
-{% set conditionOfAdd0 = pagination['links'][add0 - 1] | isAvailable %}
-{% set conditionOfAdd1 = pagination['links'][add1 - 1] | isAvailable %}
-{% set conditionOfAdd2 = pagination['links'][add2 - 1] | isAvailable %}
-{% set conditionOfAdd3 = pagination['links'][add3 - 1] | isAvailable %}
-{% set conditionOfAdd4 = pagination['links'][add4 - 1] | isAvailable %}
-{% set lastPage = pagination['links'] | length - 1 %}
-{# {% set selectedPage = %} #}
-{{pagination | tap}}
+<div>
+  <ol>
+    {% for item in pagination.items %}
+      <li class="postlist-item postlist-item-active">
+          <a href="{{ item.page.url }}" class="postlist-link">{% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}</a>
+          <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">Created at: {{ item.page.date | readableDate("yyyy년 LL월 dd일 hh시 mm분 ss초") }}</time>
+      </li>
+    {% endfor %}
+    </ol>
+</div>
 
-<ul>
-  <div class="flex-list">
+
+<div>
+  <ul class="flex-list sticky-bottom-nav">
     <li>
-        <a href="{{ pagination.firstPageLink }}" class="a-tag">
-          <div class="{% if condition %} dodger-blue {% endif %}">go to first </div>
-        </a>
+      {% if pagination.href.previous %}
+        <a href="{{ pagination.href.previous }}">Prev</a>
+      {% endif %}
     </li>
-    {% if conditionOfAdd0 %}
-      <li>
-        <a href="{{ pagination['links'][add0 - 1] }}" class="a-tag">
-          <div class="{% if condition %} dodger-blue {% endif %}">{{ add0 }}</div>
-        </a>
-      </li>
-    {% endif %}
-    {% if conditionOfAdd1 %}
-      <li>
-        <a href="{{ pagination['links'][add1 - 1] }}" class="a-tag">
-          <div class="{% if condition %} dodger-blue {% endif %}">{{ add1 }}</div>
-        </a>
-      </li>
-    {% endif %}
-    {% if conditionOfAdd2 %}
-      <li>
-        <a href="{{ pagination['links'][add2 - 1] }}" class="a-tag">
-          <div class="{% if condition %} dodger-blue {% endif %}">{{ add2 }}</div>
-        </a>
-      </li>
-    {% endif %}
-    {% if conditionOfAdd3 %}
-      <li>
-        <a href="{{ pagination['links'][add3 - 1] }}" class="a-tag">
-          <div class="{% if condition %} dodger-blue {% endif %}">{{ add3 }}</div>
-        </a>
-      </li>
-    {% endif %}
-    {% if conditionOfAdd4 %}
-      <li>
-        <a href="{{ pagination['links'][add4 - 1] }}" class="a-tag">
-          <div class="{% if condition %} dodger-blue {% endif %}">{{ add4 }}</div>
-        </a>
-      </li>
-    {% endif %}
-      <li>
-        <a href="{{ pagination.lastPageLink }}" class="a-tag">
-          <div class="{% if condition %} dodger-blue {% endif %}">go to last</div>
-        </a>
-      </li>
-  </div>
-</ul>
+    <li>
+      {% if pagination.href.next %}
+        <a href="{{ pagination.href.next }}">Next</a>
+      {% endif %}
+    </li>
+  </ul>
+</div>
