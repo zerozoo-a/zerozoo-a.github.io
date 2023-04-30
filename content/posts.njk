@@ -25,20 +25,68 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
   </li>
 {%- endfor -%}
 </ol>
-<div class="flex-list">
-{# {% for i in range(0, pagination.pageLinks.length) %} #}
-{# 3 -> 3 * 15
-한 페이지에 5개 씩 끊어 놓았음
+{% set add0 = pagination.pageNumber + 1 %}
+{% set add1 = add0 + 1%}
+{% set add2 = add0 + 2%}
+{% set add3 = add0 + 3%}
+{% set add4 = add0 + 4%}
+{% set condition = 0 %}
 
-페이지 넘버가 3인 경우 1 ~ 5 사잇값이므로 pagination은 1 ~ 5이면 됨
-다음 페이지는 6 ~ 10으로 설정 됨#}
+{% set conditionOfAdd0 = pagination['links'][add0 - 1] | isAvailable %}
+{% set conditionOfAdd1 = pagination['links'][add1 - 1] | isAvailable %}
+{% set conditionOfAdd2 = pagination['links'][add2 - 1] | isAvailable %}
+{% set conditionOfAdd3 = pagination['links'][add3 - 1] | isAvailable %}
+{% set conditionOfAdd4 = pagination['links'][add4 - 1] | isAvailable %}
+{% set lastPage = pagination['links'] | length - 1 %}
+{# {% set selectedPage = %} #}
+{{pagination | tap}}
 
-{% for i in range(1, pagination.pageLinks.length + 1) %}
-  {% set condition = pagination.pageNumber === i - 1 %}
-  <li>
-    <a href="{{ pagination['links'][i - 1] }}" class="a-tag">
-      <div class="{% if condition %} slide-top {% endif %}">{{ i }}</div>
-    </a>
-  </li>
-{% endfor %}
-</div>
+<ul>
+  <div class="flex-list">
+    <li>
+        <a href="{{ pagination.firstPageLink }}" class="a-tag">
+          <div class="{% if condition %} dodger-blue {% endif %}">go to first </div>
+        </a>
+    </li>
+    {% if conditionOfAdd0 %}
+      <li>
+        <a href="{{ pagination['links'][add0 - 1] }}" class="a-tag">
+          <div class="{% if condition %} dodger-blue {% endif %}">{{ add0 }}</div>
+        </a>
+      </li>
+    {% endif %}
+    {% if conditionOfAdd1 %}
+      <li>
+        <a href="{{ pagination['links'][add1 - 1] }}" class="a-tag">
+          <div class="{% if condition %} dodger-blue {% endif %}">{{ add1 }}</div>
+        </a>
+      </li>
+    {% endif %}
+    {% if conditionOfAdd2 %}
+      <li>
+        <a href="{{ pagination['links'][add2 - 1] }}" class="a-tag">
+          <div class="{% if condition %} dodger-blue {% endif %}">{{ add2 }}</div>
+        </a>
+      </li>
+    {% endif %}
+    {% if conditionOfAdd3 %}
+      <li>
+        <a href="{{ pagination['links'][add3 - 1] }}" class="a-tag">
+          <div class="{% if condition %} dodger-blue {% endif %}">{{ add3 }}</div>
+        </a>
+      </li>
+    {% endif %}
+    {% if conditionOfAdd4 %}
+      <li>
+        <a href="{{ pagination['links'][add4 - 1] }}" class="a-tag">
+          <div class="{% if condition %} dodger-blue {% endif %}">{{ add4 }}</div>
+        </a>
+      </li>
+    {% endif %}
+      <li>
+        <a href="{{ pagination.lastPageLink }}" class="a-tag">
+          <div class="{% if condition %} dodger-blue {% endif %}">go to last</div>
+        </a>
+      </li>
+  </div>
+</ul>
