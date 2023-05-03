@@ -1,5 +1,5 @@
 const File = require("fs/promises");
-
+const fs = require("fs");
 function getKoreanDateTime() {
 	const now = new Date();
 	const year = now.getFullYear().toString();
@@ -25,7 +25,14 @@ const main = async (title) => {
 	if (title.length < 1) throw new Error("파일 이름을 입력하지 않았습니다.");
 	const FRONTMATTER = `---\ntitle: ${title}\ndate: ${getKoreanDateTime()}\n---`;
 
-	await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
+	const isDirExists = fs.existsSync(`./content/blog/temp`);
+
+	if (isDirExists) {
+		await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
+	} else {
+		await File.mkdir(`./content/blog/temp`);
+		await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
+	}
 };
 
 main(process.argv.splice(2).join(" "));
