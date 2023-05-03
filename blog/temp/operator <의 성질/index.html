@@ -3,29 +3,179 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Tagged “myCustomSort”</title>
+		<title>operator &lt;의 성질</title>
 		<meta name="description" content="not to day">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="log4zerozoo-a">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="log4zerozoo-a">
 		<meta name="google-site-verification" content="FzIp87nE_pk-4x5nXeKcIX-x1rqYcjlabzuH1EqXFYs" />
 		
-		<style>/* Message Box */
-.message-box {
-	--color-message-box: #ffc;
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
 
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
 	display: block;
-	background-color: var(--color-message-box);
-	color: var(--color-gray-90);
-	padding: 1em 0.625em; /* 16px 10px /16 */
-}
-.message-box ol {
-	margin-top: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-	.message-box {
-		--color-message-box: #082840;
-	}
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
 }
 * { box-sizing: border-box; }
 /* Defaults */
@@ -409,102 +559,22 @@ h2 + .header-anchor {
 		</header>
 
 		<main id="skip">
-			<!-- Delete this message, it will also remove the component CSS from the bundle -->
+			
+<h1>operator &lt;의 성질</h1>
 
-<!-- Stop deleting -->
+<ul class="post-metadata pt-2">
+	<li><time datetime="2023-05-03">03 May 2023</time></li>
+</ul>
 
+<section class="post-content">
+<p>operator를 알게 모르게 자주 사용하는데
+cs에서 어떻게 이 operator를 사용하는지 보자. 아래는 js의 예제이다.</p>
+<p>다른 언어(c++)등은 이 operator overloading을 통해 해당 로직을 최적화 한다 ;;;;</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><br><span class="token keyword">const</span> b <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><br><span class="token keyword">const</span> c <span class="token operator">=</span> <span class="token number">2</span><br><br>a <span class="token operator">&lt;</span> a <span class="token comment">// false 비반사성 (irreflexivity)</span><br>a <span class="token operator">></span> a <span class="token comment">// false 비대칭성 (asymmertry)</span><br><br><span class="token comment">// a &lt; b가 참이고 b &lt; c가 참이면 a &lt; c가 참이다. 이는 전이성(transitivity)이라한다.</span><br><span class="token punctuation">(</span>a <span class="token operator">&lt;</span> b <span class="token operator">&amp;&amp;</span> b <span class="token operator">&lt;</span> c<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// true</span><br><span class="token punctuation">(</span>a <span class="token operator">&lt;</span> c<span class="token punctuation">)</span> <span class="token comment">// true</span><br><br><span class="token comment">// a &lt; b, b &lt; a가 모두 거짓이면 a와 b는 같은 값으로 간주한다 (숫자 한정)</span><br>a <span class="token operator">&lt;</span> b <span class="token comment">// false</span><br>b <span class="token operator">></span> a <span class="token comment">// false</span><br>a <span class="token operator">==</span> b <span class="token comment">// 간주한다</span><br><br><span class="token comment">// a == b &amp;&amp; b == c 이므로 a == c라 한다. 이는 상등 관계의 전이성(transitivity of equivalence)</span></code></pre>
 
-
-<h1>Tagged “myCustomSort”</h1>
-
-
-<ol reversed class="postlist" style="counter-reset: start-from 17">
-
-	<li class="postlist-item">
-		<a href="/blog/wiki/11ty/folder_and_config/" class="postlist-link">폴더 단위로 layout 명시하기</a>
-		<time class="postlist-date" datetime="2023-03-27">Created at: 2023년 03월 27일 12시 00분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/wiki/11ty/new_blog/" class="postlist-link">11ty를 통해 블로그를 새로 단장하기</a>
-		<time class="postlist-date" datetime="2023-03-28">Created at: 2023년 03월 28일 12시 00분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/wiki/11ty/css_config/" class="postlist-link">11ty post에 css 적용하기</a>
-		<time class="postlist-date" datetime="2023-04-01">Created at: 2023년 04월 01일 12시 00분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/JS/libs/flat/" class="postlist-link">중첩 배열을 평탄화하기</a>
-		<time class="postlist-date" datetime="2023-04-03">Created at: 2023년 04월 03일 12시 00분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/DATA_STRUCTURE/TREE/BST/" class="postlist-link">BST</a>
-		<time class="postlist-date" datetime="2023-04-10">Created at: 2023년 04월 10일 12시 00분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/BOOK/JONGMAN/입문자를_위한_커리큘럼/" class="postlist-link">입문자를 위한 커리큘럼</a>
-		<time class="postlist-date" datetime="2023-04-12">Created at: 2023년 04월 12일 11시 20분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm/" class="postlist-link">Richard_Feynman_alogorithm</a>
-		<time class="postlist-date" datetime="2023-04-12">Created at: 2023년 04월 12일 11시 36분 22초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/ALGORITHMS/BOOKS/JONGMAN/문제풀이_과정을_나누자/" class="postlist-link">문제풀이 과정을 나누자</a>
-		<time class="postlist-date" datetime="2023-04-14">Created at: 2023년 04월 14일 12시 51분 28초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/DATA_STRUCTURE/TREE/Tree_inorder/" class="postlist-link">Tree inorder (stack)</a>
-		<time class="postlist-date" datetime="2023-04-18">Created at: 2023년 04월 18일 03시 02분 24초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/DATA_STRUCTURE/TREE/Tree_preorder/" class="postlist-link">Tree preorder (stack)</a>
-		<time class="postlist-date" datetime="2023-04-19">Created at: 2023년 04월 19일 02시 00분 28초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/DATA_STRUCTURE/TREE/recursive_traversal/" class="postlist-link">재귀 순회를 통해 트리 구조 돌아다니기 (recursive)</a>
-		<time class="postlist-date" datetime="2023-04-19">Created at: 2023년 04월 19일 02시 20분 00초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/ALGORITHMS/SEARCH/leetcode 704. binarySearch/" class="postlist-link">leetcode 704. binarySearch</a>
-		<time class="postlist-date" datetime="2023-04-21">Created at: 2023년 04월 21일 12시 15분 42초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/ALGORITHMS/OPTIMIZATION/TOC in kotlin/" class="postlist-link">TOC in kotlin</a>
-		<time class="postlist-date" datetime="2023-04-21">Created at: 2023년 04월 21일 03시 17분 42초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/ALGORITHMS/SEARCH/findMaxDivideAndConquer/" class="postlist-link">findMax divide and conquer</a>
-		<time class="postlist-date" datetime="2023-04-24">Created at: 2023년 04월 24일 11시 04분 46초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/CS/ALGORITHMS/SEARCH/binarySearch JS/" class="postlist-link">leetcode 704. binarySearch</a>
-		<time class="postlist-date" datetime="2023-04-25">Created at: 2023년 04월 25일 03시 15분 05초</time>
-	</li>
-
-	<li class="postlist-item">
-		<a href="/blog/temp/operator &lt;의 성질/" class="postlist-link">operator &lt;의 성질</a>
-		<time class="postlist-date" datetime="2023-05-03">Created at: 2023년 05월 03일 11시 05분 33초</time>
-	</li>
-
-</ol>
-
-
-<p>See <a href="/tags/">all tags</a>.</p>
-
+</section>
+<ul class="links-nextprev"><li>Previous: <a href="/blog/CS/ALGORITHMS/SEARCH/binarySearch JS/">leetcode 704. binarySearch</a></li>
+</ul>
 
 		</main>
 		<footer></footer>
