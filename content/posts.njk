@@ -9,26 +9,11 @@ pagination:
 permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{% endif %}index.html
 
 ---
-
-
-
 {% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
 {% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
 {% set postslistCounter = postsCount %}
-
-<h1> > 총 {{postslistCounter}} 개의 글이 있습니다.</h1>
-<div class="links-nextprev"></div>
-  
-{# <ol reversed class="postlist" style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}">
-{%- for item in pagination.items -%}
-  <li class="postlist-item postlist-item-active">
-      <a href="{{ item.page.url }}" class="postlist-link">{% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}</a>
-      <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">Created at: {{ item.page.date | readableDate("yyyy년 LL월 dd일 hh시 mm분 ss초") }}</time>
-  </li>
-{%- endfor -%}
-</ol> #}
-
+{% set pageNumber = pagination.pageNumber %}
 <div>
   <ol class="postlist" style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}" >
     {% for item in pagination.items %}
@@ -39,24 +24,85 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
     {% endfor %}
     </ol>
 </div>
-
-
 <div class="space"></div>
-<div>
-  <ul class="flex-list sticky-bottom-nav">
-    <li>
-      {% if pagination.href.previous %}
-        <a href="{{ pagination.href.previous }}">Prev</a>
-      {% else %}
-        <a class="disabled"></a>
-      {% endif %}
-    </li>
-    <li>
-      {% if pagination.href.next %}
-        <a href="{{ pagination.href.next }}">Next</a>
-      {% else %}
-        <a class="disabled"></a>
-      {% endif %}
-    </li>
-  </ul>
+<div class="wrapper">
+  <ul id="pagination"></ul>
 </div>
+
+{% set _pagination =  pagination.links | dump %}
+{% set paginationLinks = pagination.links %}
+
+<script type="text/javascript">
+  const pageLinks = `{{_pagination}}`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
+  const postsCount = {{postsCount}}
+  let allPages = pageLinks.length
+  const pagination = document.getElementById("pagination")
+  const NOTHING_HERE = 'nothing_here'
+  const NOTHING_BUTTON = `<li class="btn">${NOTHING_HERE}</li>`
+
+  function elem(allPages = pageLinks.length, page) {
+    let li = "";
+    let beforePages = page - 1;
+    let afterPages = page + 1;
+    let liActive;
+
+
+  if (page > 0) {
+    li += `<li class="btn" onclick="elem(allPages, ${
+      page - 1
+    })" >left</li>`;
+  } else {
+    li += NOTHING_BUTTON
+  }
+
+  for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
+
+    if (currentPage > allPages ) {
+      continue;
+    }
+
+    if (currentPage == -1) {
+      currentPage = currentPage + 1;
+    }
+
+    if (page == currentPage) {
+      liActive = "active";
+    } else {
+      liActive = "";
+    }
+
+    /**
+    * 마지막 페이지의 pagination
+    */
+    if(page == allPages - 1) {
+    li += `
+      <a href="${pageLinks[currentPage]}">
+      <li class="numb active" onclick="elem(allPages, ${currentPage})" ><span>
+      ${afterPages}
+      </span></li>
+      </a>
+      `;
+      break;
+    }
+
+    li += `
+      <a href="${pageLinks[currentPage]}">
+      <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" ><span>
+      ${currentPage + 1}
+      </span></li>
+      </a>
+      `;
+  }
+
+  if (page < allPages && page !== allPages - 1) {
+    li += `<li class="btn" onclick="elem(allPages, ${
+      page + 1
+    })" >right</li>`;
+  } else {
+    li += NOTHING_BUTTON
+  }
+
+  pagination.innerHTML = li;
+}
+elem(allPages, {{pageNumber}});
+</script>
