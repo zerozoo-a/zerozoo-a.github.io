@@ -37,8 +37,7 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
   const postsCount = {{postsCount}}
   let allPages = pageLinks.length
   const pagination = document.getElementById("pagination")
-  const NOTHING_HERE = 'nothing_here'
-  const NOTHING_BUTTON = `<li class="btn">${NOTHING_HERE}</li>`
+  const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
 
   function elem(allPages = pageLinks.length, page) {
     let li = "";
@@ -50,9 +49,9 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
   if (page > 0) {
     li += `<li class="btn" onclick="elem(allPages, ${
       page - 1
-    })" >left</li>`;
+    })" > < </li>`;
   } else {
-    li += NOTHING_BUTTON
+    li += NOTHING_BUTTON('<')
   }
 
   for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
@@ -97,9 +96,9 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
   if (page < allPages && page !== allPages - 1) {
     li += `<li class="btn" onclick="elem(allPages, ${
       page + 1
-    })" >right</li>`;
+    })" > > </li>`;
   } else {
-    li += NOTHING_BUTTON
+    li += NOTHING_BUTTON('>')
   }
 
   pagination.innerHTML = li;
