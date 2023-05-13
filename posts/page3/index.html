@@ -110,6 +110,9 @@ li {
 	line-height: 1.5;
 }
 
+a {
+	text-decoration: none;
+}
 a[href] {
 	color: var(--text-color-link);
 }
@@ -389,7 +392,36 @@ h2 + .header-anchor {
 	height: auto;
 	justify-content: center;
 	margin:0 auto;
-  }</style>
+  }
+
+
+
+/* pagination */
+.wrapper ul{
+	display: flex;
+	padding: 8px;
+}
+.wrapper ul a {
+	text-decoration: none;
+}
+.wrapper ul li{
+	list-style-type: none;
+	line-height: 55px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: 600;
+	cursor: pointer;
+	margin: 10px;
+	border-radius: 50px;
+	padding: 10px;
+}
+.wrapper ul li.btn{
+	line-height: 60px;
+	font-size: 22px;
+}
+.wrapper ul li.active{
+	color: var(--text-color-link);
+}</style>
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
@@ -420,14 +452,6 @@ h2 + .header-anchor {
 
 
 
-
-
-
-<h1> > 총 18 개의 글이 있습니다.</h1>
-<div class="links-nextprev"></div>
-  
-
-
 <div>
   <ol class="postlist" style="counter-reset: start-from 4" >
     
@@ -448,23 +472,88 @@ h2 + .header-anchor {
     
     </ol>
 </div>
-
-
 <div class="space"></div>
-<div>
-  <ul class="flex-list sticky-bottom-nav">
-    <li>
-      
-        <a href="/posts/page2/">Prev</a>
-      
-    </li>
-    <li>
-      
-        <a class="disabled"></a>
-      
-    </li>
-  </ul>
+<div class="wrapper">
+  <ul id="pagination"></ul>
 </div>
+
+
+
+
+<script type="text/javascript">
+  const pageLinks = `[&quot;/posts/index.html&quot;,&quot;/posts/page1/index.html&quot;,&quot;/posts/page2/index.html&quot;,&quot;/posts/page3/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
+  const postsCount = 18
+  let allPages = pageLinks.length
+  const pagination = document.getElementById("pagination")
+  const NOTHING_HERE = 'nothing_here'
+  const NOTHING_BUTTON = `<li class="btn">${NOTHING_HERE}</li>`
+
+  function elem(allPages = pageLinks.length, page) {
+    let li = "";
+    let beforePages = page - 1;
+    let afterPages = page + 1;
+    let liActive;
+
+
+  if (page > 0) {
+    li += `<li class="btn" onclick="elem(allPages, ${
+      page - 1
+    })" >left</li>`;
+  } else {
+    li += NOTHING_BUTTON
+  }
+
+  for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
+
+    if (currentPage > allPages ) {
+      continue;
+    }
+
+    if (currentPage == -1) {
+      currentPage = currentPage + 1;
+    }
+
+    if (page == currentPage) {
+      liActive = "active";
+    } else {
+      liActive = "";
+    }
+
+    /**
+    * 마지막 페이지의 pagination
+    */
+    if(page == allPages - 1) {
+    li += `
+      <a href="${pageLinks[currentPage]}">
+      <li class="numb active" onclick="elem(allPages, ${currentPage})" ><span>
+      ${afterPages}
+      </span></li>
+      </a>
+      `;
+      break;
+    }
+
+    li += `
+      <a href="${pageLinks[currentPage]}">
+      <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" ><span>
+      ${currentPage + 1}
+      </span></li>
+      </a>
+      `;
+  }
+
+  if (page < allPages && page !== allPages - 1) {
+    li += `<li class="btn" onclick="elem(allPages, ${
+      page + 1
+    })" >right</li>`;
+  } else {
+    li += NOTHING_BUTTON
+  }
+
+  pagination.innerHTML = li;
+}
+elem(allPages, 3);
+</script>
 
 		</main>
 		<footer></footer>
