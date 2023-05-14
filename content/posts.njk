@@ -26,7 +26,7 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
 </div>
 <div class="space"></div>
 <div class="wrapper">
-  <ul id="pagination"></ul>
+  <ul id="pagination" class="sticky-bottom-nav"></ul>
 </div>
 
 {% set _pagination =  pagination.links | dump %}
@@ -38,20 +38,30 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
   let allPages = pageLinks.length
   const pagination = document.getElementById("pagination")
   const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
+  const pageNumber = {{pageNumber}}
 
   function elem(allPages = pageLinks.length, page) {
+    console.log('pageNumber', pageNumber)
     let li = "";
     let beforePages = page - 1;
     let afterPages = page + 1;
     let liActive;
 
+    let spaceStack = [];
+
 
   if (page > 0) {
-    li += `<li class="btn" onclick="elem(allPages, ${
+    li += `
+    <a href="${pageLinks[page-1]}">
+    <li class="btn" onclick="elem(allPages, ${
       page - 1
-    })" > < </li>`;
+    })" > < </li>
+    </a>
+    `;
+    spaceStack.push(1)
   } else {
     li += NOTHING_BUTTON('_')
+    spaceStack.push(1)
   }
 
   for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
@@ -76,17 +86,17 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
     if(page == allPages - 1) {
     li += `
       <a href="${pageLinks[currentPage]}">
-      <li class="numb active" onclick="elem(allPages, ${currentPage})" ><span>
+      <li class="numb active" onclick="elem(allPages, ${currentPage})"><span>
       ${afterPages}
       </span></li>
       </a>
       `;
+      spaceStack.push(1)
       break;
     }
     /**
      * 첫 페이지의 pagination
      */
-    
     li += `
       <a href="${pageLinks[currentPage]}">
       <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" ><span>
@@ -94,6 +104,7 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
       </span></li>
       </a>
       `;
+    spaceStack.push(1)
   }
 
   if(page == 0) {
@@ -104,14 +115,23 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
       </span></li>
       </a>
       `;
+    spaceStack.push(1)
   }
 
   if (page < allPages && page !== allPages - 1) {
-    li += `<li class="btn" onclick="elem(allPages, ${
-      page + 1
-    })" > > </li>`;
+    li += `
+    <a href="${pageLinks[afterPages]}">
+      <li class="btn" onclick="elem(allPages, ${
+        page + 1
+      })" > > </li>
+    </a>
+    `;
+    spaceStack.push(1)
   } else {
-    li += NOTHING_BUTTON('_')
+    while(spaceStack.length < 5) {
+      li += NOTHING_BUTTON('_')
+      spaceStack.push(1)
+    }
   }
 
   pagination.innerHTML = li;

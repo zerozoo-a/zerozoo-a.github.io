@@ -2,6 +2,7 @@
 title: 중첩 배열을 평탄화하기
 tags: [lib]
 date: 2023-04-03
+coverUrl: https://images.unsplash.com/photo-1617398759497-261b35e621fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80
 ---
 
 ## 중첩 배열을 평탄화 한다는 것의 의미
