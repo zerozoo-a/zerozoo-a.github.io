@@ -233,9 +233,12 @@ header {
 	list-style: none;
 	padding: 0;
 	padding-left: 1.5rem;
+	overflow: hidden;
+	
 }
 .postlist-item {
 	display: flex;
+	text-overflow: ellipsis;
 	flex-wrap: wrap;
 	align-items: baseline;
 	counter-increment: start-from -1;
@@ -363,31 +366,6 @@ h2 + .header-anchor {
 	background-color: var(--background-color);
   }
   
-  .sticky-bottom-nav ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
-  }
-  
-  .sticky-bottom-nav li {
-	margin: 0;
-	padding: 0;
-	flex-grow: 1;
-	text-align: center;
-  }
-  
-  .sticky-bottom-nav a {
-	display: block;
-	padding: 1em;
-	text-decoration: none;
-	color: var(--color-gray-50);
-  }
-  
-  .sticky-bottom-nav a:hover {
-	background-color: var(--text-color-link);
-  }
-
 
   a.disabled {
 	pointer-events: none;
@@ -431,6 +409,15 @@ h2 + .header-anchor {
 .wrapper ul a li.active{
 	color: var(--text-color);
 	background-color: #32323a;
+}
+
+.post-cover {
+	position: relative;
+	padding: 0;
+	margin: 0;
+	max-height: 500px;
+	background-color: #fafafa;
+	overflow: hidden;
 }</style>
 	</head>
 	<body>
@@ -494,7 +481,7 @@ h2 + .header-anchor {
 </div>
 <div class="space"></div>
 <div class="wrapper">
-  <ul id="pagination"></ul>
+  <ul id="pagination" class="sticky-bottom-nav"></ul>
 </div>
 
 
@@ -506,20 +493,30 @@ h2 + .header-anchor {
   let allPages = pageLinks.length
   const pagination = document.getElementById("pagination")
   const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
+  const pageNumber = 1
 
   function elem(allPages = pageLinks.length, page) {
+    console.log('pageNumber', pageNumber)
     let li = "";
     let beforePages = page - 1;
     let afterPages = page + 1;
     let liActive;
 
+    let spaceStack = [];
+
 
   if (page > 0) {
-    li += `<li class="btn" onclick="elem(allPages, ${
+    li += `
+    <a href="${pageLinks[page-1]}">
+    <li class="btn" onclick="elem(allPages, ${
       page - 1
-    })" > < </li>`;
+    })" > < </li>
+    </a>
+    `;
+    spaceStack.push(1)
   } else {
     li += NOTHING_BUTTON('_')
+    spaceStack.push(1)
   }
 
   for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
@@ -544,17 +541,17 @@ h2 + .header-anchor {
     if(page == allPages - 1) {
     li += `
       <a href="${pageLinks[currentPage]}">
-      <li class="numb active" onclick="elem(allPages, ${currentPage})" ><span>
+      <li class="numb active" onclick="elem(allPages, ${currentPage})"><span>
       ${afterPages}
       </span></li>
       </a>
       `;
+      spaceStack.push(1)
       break;
     }
     /**
      * 첫 페이지의 pagination
      */
-    
     li += `
       <a href="${pageLinks[currentPage]}">
       <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" ><span>
@@ -562,6 +559,7 @@ h2 + .header-anchor {
       </span></li>
       </a>
       `;
+    spaceStack.push(1)
   }
 
   if(page == 0) {
@@ -572,14 +570,23 @@ h2 + .header-anchor {
       </span></li>
       </a>
       `;
+    spaceStack.push(1)
   }
 
   if (page < allPages && page !== allPages - 1) {
-    li += `<li class="btn" onclick="elem(allPages, ${
-      page + 1
-    })" > > </li>`;
+    li += `
+    <a href="${pageLinks[afterPages]}">
+      <li class="btn" onclick="elem(allPages, ${
+        page + 1
+      })" > > </li>
+    </a>
+    `;
+    spaceStack.push(1)
   } else {
-    li += NOTHING_BUTTON('_')
+    while(spaceStack.length < 5) {
+      li += NOTHING_BUTTON('_')
+      spaceStack.push(1)
+    }
   }
 
   pagination.innerHTML = li;
