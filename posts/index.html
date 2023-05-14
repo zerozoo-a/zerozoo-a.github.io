@@ -543,11 +543,24 @@ h2 + .header-anchor {
       `;
       break;
     }
-
+    /**
+     * 첫 페이지의 pagination
+     */
+    
     li += `
       <a href="${pageLinks[currentPage]}">
       <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" ><span>
       ${currentPage + 1}
+      </span></li>
+      </a>
+      `;
+  }
+
+  if(page == 0) {
+    li += `
+      <a href="${pageLinks[afterPages + 1]}">
+      <li class="numb" onclick="elem(allPages, ${afterPages + 1})" ><span>
+        ${afterPages + 2}
       </span></li>
       </a>
       `;
