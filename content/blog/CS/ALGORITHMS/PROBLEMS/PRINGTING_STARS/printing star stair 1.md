@@ -7,7 +7,7 @@ date: 2023-05-19 23:26:54
 
 
 ```java
-public class stair {
+public class Stair {
 	public static void main(String[] args) {
 		int rows = 5;
 		for (int i = 0; i <= rows; i++) {
