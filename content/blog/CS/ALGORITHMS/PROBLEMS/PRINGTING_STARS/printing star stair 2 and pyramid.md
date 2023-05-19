@@ -38,6 +38,7 @@ public class Stair2 {
 
 바로 별찍기를 담당하는 반복문의 print 함수에 공백 문자가 하나 추가되었다는 것입니다.
 이는 역방향 계단을 피라미드로 바꿔놓습니다.
+
 ```java
 public class Pyramid {
 
@@ -66,7 +67,12 @@ _* * * * *
 
 {% image "./starTable.png", "startable 예시 이미지" %}
 
-이런 별찍기 문제를 푸는 경우 그림을 그려보는 것이 아주 좋은 풀이법이 된다.
+이런 별찍기 문제를 푸는 경우 그림을 그려보는 것이 아주 좋은 풀이법이 됩니다.
+
+
+반복문이 중첩 구조를 이루고 있고, 
+중첩 내부에 다시 반복문이 여러개 들어가기 시작하면 아무래도 머리속으로 
+그려내기가 쉽지 않습니다. 🤯
 
 ```java
 	public static void main(String[] args) {
@@ -83,10 +89,10 @@ _* * * * *
 	}
 
 ```
-이런 코드만 보고 바로 이해를 한다는건 쉽지 않기 때문이다.
-무엇을 뜻하는지도 모르겠고 변수명도 의미가 없기 때문이다.
+이런 코드만 보고 바로 이해를 한다는건 쉽지 않습니다.
+무엇을 뜻하는지도 모르겠고 변수명도 의미가 없기 때문이죠
 
-코드를 좀 수정해보자.
+코드를 좀 수정해봅시다.
 
 ```java
 	public static void main(String[] args) {
@@ -97,7 +103,7 @@ _* * * * *
 				System.out.print("_");
 			}
 			// 별을 찍는다.
-			for (int printStar = 0; printStar <= row; printStar++) {
+			for (int star = 0; star <= row; star++) {
 				System.out.print("* ");
 			}
 			// 다 찍었으니 다음 줄로 넘어간다.
