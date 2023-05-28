@@ -3,6 +3,9 @@ title: Deque
 date: 2023-05-28 22:04:24
 ---
 
+{% image "./Structure_definition-Deque.webp", "Deque " %}
+
+
 자바에서 Deque의 구현은 두 가지로 나뉘게 된다.
 
 Array를 통한 구현,
