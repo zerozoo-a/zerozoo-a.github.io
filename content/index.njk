@@ -15,8 +15,11 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
         <a href="{{ item.page.url }}">
         <div class="p-3 d-flex color-bg-default Box m-3">
           {% if(item.data.cover) %}
-          <img class="cover-img" src="/covers/{{item.data.cover}}" alt="cover image" height="auto" loading="lazy" decoding="async"/>
+            <img class="cover-img" src="/covers/{{item.data.cover}}" alt="cover image" height="auto" loading="lazy" decoding="async"/>
+          {% elif(item.data.coverURL) %}
+            <img class="cover-img" src="{{item.data.coverURL}}" alt="cover image" height="auto" loading="lazy" decoding="async"/>
           {% endif %}
+
           <div class="d-flex p-3 flex-direction-col">
             <h5 class="d-flex flex-items-center">
                 {% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}
