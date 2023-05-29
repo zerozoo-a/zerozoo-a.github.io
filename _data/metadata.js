@@ -1,5 +1,5 @@
 module.exports = {
-	title: "zerozoo의 블로그",
+	title: "zerozoo-a의 블로그",
 	url: "https://zerozoo-a.github.io/",
 	env: process.env.NODE_ENV === "development" ? "development" : "production",
 	env2: process.env.NODE_ENV,
