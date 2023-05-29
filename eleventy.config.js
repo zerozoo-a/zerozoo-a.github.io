@@ -20,6 +20,7 @@ module.exports = function (eleventyConfig) {
 		"./favicon/": "/",
 		"./node_modules/prismjs/themes/prism-okaidia.css": "/css/prism-okaidia.css",
 	});
+	eleventyConfig.addPassthroughCopy("./covers");
 
 	eleventyConfig.addGlobalData("env", process.env);
 

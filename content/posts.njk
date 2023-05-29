@@ -15,16 +15,26 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
 {% set postslistCounter = postsCount %}
 {% set pageNumber = pagination.pageNumber %}
 <div>
-  <ol class="postlist" style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}" >
+  <ol class="" style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}" >
     {% for item in pagination.items %}
-      <li class="postlist-item postlist-item-active">
-          <a href="{{ item.page.url }}" class="postlist-link">{% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}</a>
-          <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">Created at: {{ item.page.date | readableDate("yyyy년 LL월 dd일 hh시 mm분 ss초") }}</time>
-      </li>
+        <a href="{{ item.page.url }}">
+        <div class="p-3 d-flex flex-justify-between color-bg-default Box m-3">
+          {% if(item.data.cover) %}
+          <img class="cover-img" src="/covers/{{item.data.cover}}" alt="cover image" height="auto" loading="lazy" decoding="async"/>
+          {% endif %}
+          <div class="d-flex flex-direction-col">
+            <h5 class="d-flex flex-items-center">
+                {% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}
+              </h5>
+            <div>
+              <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">Created at: {{ item.page.date | readableDate("yyyy년 LL월 dd일 hh시 mm분 ss초") }}</time>
+            </div>
+          </div>
+        </div>
+        </a>
     {% endfor %}
     </ol>
 </div>
-<div class="space"></div>
 <div class="wrapper">
   <ul id="pagination" class="sticky-bottom-nav"></ul>
 </div>
@@ -41,7 +51,6 @@ permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber 
   const pageNumber = {{pageNumber}}
 
   function elem(allPages = pageLinks.length, page) {
-    console.log('pageNumber', pageNumber)
     let li = "";
     let beforePages = page - 1;
     let afterPages = page + 1;
