@@ -1,5 +1,5 @@
-let w = window.innerWidth;
-let h = window.innerHeight;
+let w = 500;
+let h = 500;
 let columns;
 let rows;
 let board;
