@@ -1,27 +1,23 @@
 ---
 layout: layouts/home.njk
-eleventyNavigation:
-  key: Home
-  order: 1
 pagination:
   data: collections.myCustomSort
   size: 5
-permalink: posts/{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{% endif %}index.html
+permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{% endif %}index.html
 ---
 {% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
-{% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
 {% set postslistCounter = postsCount %}
 {% set pageNumber = pagination.pageNumber %}
 <div>
   <ol style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}" >
     {% for item in pagination.items %}
         <a href="{{ item.page.url }}">
-        <div class="p-3 d-flex flex-justify-between color-bg-default Box m-3">
+        <div class="p-3 d-flex color-bg-default Box m-3">
           {% if(item.data.cover) %}
           <img class="cover-img" src="/covers/{{item.data.cover}}" alt="cover image" height="auto" loading="lazy" decoding="async"/>
           {% endif %}
-          <div class="d-flex flex-direction-col">
+          <div class="d-flex p-3 flex-direction-col">
             <h5 class="d-flex flex-items-center">
                 {% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}
               </h5>
@@ -150,15 +146,3 @@ elem(allPages, {{pageNumber}});
 
 
 
-{# {% set postsCount = collections.posts | length %}
-{% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
-<h1>Latest {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h1>
-
-{% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
-{% set postslistCounter = postsCount %}
-{% include "postslist.njk" %}
-
-{% set morePosts = postsCount - numberOfLatestPostsToShow %}
-{% if morePosts > 0 %}
-<p>{{ morePosts }} more post{% if morePosts != 1 %}s{% endif %} can be found in <a href="/posts/">the archive</a>.</p>
-{% endif %} #}
