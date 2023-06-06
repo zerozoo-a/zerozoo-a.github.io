@@ -5,11 +5,12 @@ coverURL: https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0
 ---
 {% image "circuit.avif", "https://unsplash.com/ko/%EC%82%AC%EC%A7%84/EUsVwEOsblE"%}
 
-# volatile keyword
 
+## cpu cache에 대해
 
-cpu와 memory간의 속도차는 상당합니다. 이 간극을 줄이기 위해
-cpu는 cache 영역을 가집니다.
+cpu와 memory간의 속도차는 상당합니다. 
+
+이 간극을 줄이기 위해 cpu는 cache 영역을 가집니다.
 
 cpu는 main memory의 값을 계속 조회하는 대신
 동일한 변수에 대한 조회 요청에는 cpu cache를 조회합니다.
@@ -17,8 +18,9 @@ cpu는 main memory의 값을 계속 조회하는 대신
 {% image "cpu-cache.png", "cpu-cache" %}
 
 이미지로는 위와 같은 이미지가 그려지게 됩니다.
+cpu는 어셈블리어로 변환된 코드를 읽고 그대로 실행하게 되는데요
 
-CPU는 어셈블리어로 변환된 코드를 읽고 그대로 실행하게 되는데요
+아래와 같은 순서를 따릅니다.
 
 
 1️⃣ LOAD(ldr)를 통해 cpu cache의 값을 읽어옵니다.
@@ -27,41 +29,37 @@ CPU는 어셈블리어로 변환된 코드를 읽고 그대로 실행하게 되�
 
 3️⃣ STORE(str)를 통해 메모리에 값을 저장하게 됩니다.
 
-이때 메모리에 접근하는 thread가 하나라면 그대로 메모리가 업데이트 되는데요
 
-만약 thread가 둘이라면 이 상황에 변수가 발생합니다.
+이때 메모리에 접근하는 thread가 하나라면 그대로 메모리가 업데이트 됩니다.
+
+## 멀티 thread의 memory 접근
+
+multi thread라면 공유 자원에 접근할 때 문제가 발생합니다.
 바로 아래 이미지와 같은 상황입니다.
 
 {% image "cpu-cache2.png", "cpu-cache2" %}
 
-다른 thread에서 공유 자원인 foo에 접근하는 것입니다.
-foo에 접근한 다음 cpu-cache에 값을 저장하고
-cpu2는 foo의 값을 주시합니다.
+cpuA가 LOAD 한 값은 foo 변수의 false입니다.
 
-예를 들어 아래와 같은 코드는 foo의 값의 변경을 알아차릴 수 있습니다.
+cpuB가 LOAD 한 값은 foo 변수의 false입니다.
 
-```java
-while(!foo) {
-    /** 대기 */
-}
-```
-위와 같이 무한루프를 돌면서 foo의 값을 확인하는 방법이 가장 간단하겠네요
+cpuA은 cpu cache에 값을 저장하고 변수를 true로 변경합니다.
 
-그런데 cpu2는 cpu-cache에 저장한 값인 false 값을 계속 주시하게 됩니다.
+cpuB는 cpu cache에 값을 저장하고 해당 변수를 조건으로 반복문을 실행합니다.
 
-cpu1이 값을 변경하면 cpu2가 가지고 있던 foo의 값이 변경될 것을 기대할 수 있겠지만
-기대와는 다르게 동작합니다.
+cpuB는 cpuA에 의해 변경된 값을 조회하지 않고 cpu cache에 저장된 값을 조회하므로
+값의 공유가 이루어지지 않습니다.
 
-cpu2는 무한루프에 빠지게 됩니다.
+즉 main memory를 바라보고 있지 않은 상태입니다.
 
-> ## cpu2가 바라보고 있는 것은 cpu-cache에 저장된 값이고
-> **_main memory에 있는 값의 변경을 알 수 없습니다._**
+따라서 가시성이 없다고 할 수 있습니다.
+
 
 설명이 길었습니다만 위의 상황을 방지해주는 키워드가
 
 공용 메모리에 사용하는 volatile 키워드입니다.
 
-해당 키워드는 공용 메모리로 사용될 값이 cpu-cache에 저장되는 것을 방지해줍니다.
+해당 키워드는 공용 메모리로 사용될 값이 cpu cache에 저장되는 것을 방지해줍니다.
 
 계속 main memory에서 값을 조회해오도록 코드가 변경되어집니다.
 
