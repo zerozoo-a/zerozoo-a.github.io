@@ -780,12 +780,6 @@ header:after {
 	clear: both;
 }
 
-.links-nextprev {
-	list-style: none;
-	border-top: 1px dashed var(--color-gray-20);
-	padding: 1em 0;
-}
-
 table {
 	margin: 1em 0;
 }
@@ -1152,8 +1146,10 @@ h2 + .header-anchor {
 	<li><time datetime="2023-04-21">21 April 2023</time></li>
 </ul>
 
-<section class="post-content">
-<pre class="language-md" tabindex="0"><code class="language-md">Given an array of integers nums <br>which is sorted in ascending order,<br>and an integer target, <br>write a function to search target in nums.<br>오름차순으로 정렬된 배열과 배열에서 찾으려는 숫자를 입력으로 받는다.<br> <br>If target exists, then return its index. <br>Otherwise, return -1.<br>You must write an algorithm <br>with O(log n) runtime complexity.<br><br>있으면 index 값을 없으면 -1을 반환하라.<br>제한은 O(log n) runtime complexity를 가진다.</code></pre>
+
+
+	<section class="post-content">
+		<pre class="language-md" tabindex="0"><code class="language-md">Given an array of integers nums <br>which is sorted in ascending order,<br>and an integer target, <br>write a function to search target in nums.<br>오름차순으로 정렬된 배열과 배열에서 찾으려는 숫자를 입력으로 받는다.<br> <br>If target exists, then return its index. <br>Otherwise, return -1.<br>You must write an algorithm <br>with O(log n) runtime complexity.<br><br>있으면 index 값을 없으면 -1을 반환하라.<br>제한은 O(log n) runtime complexity를 가진다.</code></pre>
 <pre class="language-md" tabindex="0"><code class="language-md"><span class="token bold"><span class="token punctuation">**</span><span class="token content">Example 1:</span><span class="token punctuation">**</span></span><br><br><span class="token code-snippet code keyword">`Input: nums = [-1,0,3,5,9,12], target = 9`</span><br><span class="token code-snippet code keyword">`Output: 4`</span><br><br>Explanation: 9 exists in nums and its index is 4<br>Example 2:<br><br>Input: nums = [-1,0,3,5,9,12], target = 2<br>Output: -1<br>Explanation: 2 does not exist in nums so return -1</code></pre>
 <pre class="language-kts" tabindex="0"><code class="language-kts"><span class="token comment">// 해답코드는 아래와 같다</span><br><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>math<span class="token punctuation">.</span>floor<br><span class="token keyword">class</span> Solution <span class="token punctuation">{</span><br>    <span class="token keyword">fun</span> <span class="token function">search</span><span class="token punctuation">(</span>nums<span class="token operator">:</span> IntArray<span class="token punctuation">,</span> target<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> Int <span class="token punctuation">{</span><br>        <span class="token keyword">var</span> left <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><br>        <span class="token keyword">var</span> right <span class="token operator">=</span> nums<span class="token punctuation">.</span>size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span><br>        <br>        <span class="token keyword">while</span><span class="token punctuation">(</span>left <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>            <span class="token keyword">var</span> pivot <span class="token operator">=</span> <span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><br><br>            <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>pivot<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>                <span class="token keyword">return</span> pivot<span class="token punctuation">;</span><br>            <span class="token punctuation">}</span><br><br>            <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>pivot<span class="token punctuation">]</span> <span class="token operator">&lt;</span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>                left <span class="token operator">=</span> pivot <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span><br>            <span class="token punctuation">}</span><br><br>            <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>pivot<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>                right <span class="token operator">=</span> pivot <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span><br>            <span class="token punctuation">}</span><br>        <span class="token punctuation">}</span><br><br>        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
 <p>위 문제의 핵심은 정렬 되어진 값을 받는다는 것이다.</p>
@@ -1169,8 +1165,9 @@ h2 + .header-anchor {
 <p>이렇게 찾는 범위를 반씩 툭툭 잘라 버리기 때문에 O(log n)이라는 효율이 나올 수 있다.
 c like언어들은 전부 위의 방법을 통해 문제를 풀 수 있다.</p>
 
-</section>
-<ul class="links-nextprev"><li>Previous: <a href="/blog/CS/DATA_STRUCTURE/TREE/recursive_traversal/">재귀 순회를 통해 트리 구조 돌아다니기 (recursive)</a></li><li>Next: <a href="/blog/CS/ALGORITHMS/OPTIMIZATION/TOC in kotlin/">TOC in kotlin</a></li>
+	</section>
+<hr></hr>
+<ul><li>Previous: <a href="/blog/CS/DATA_STRUCTURE/TREE/recursive_traversal/">재귀 순회를 통해 트리 구조 돌아다니기 (recursive)</a></li><li>Next: <a href="/blog/CS/ALGORITHMS/OPTIMIZATION/TOC in kotlin/">TOC in kotlin</a></li>
 </ul>
 
 		</main>

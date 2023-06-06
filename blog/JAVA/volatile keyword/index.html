@@ -780,12 +780,6 @@ header:after {
 	clear: both;
 }
 
-.links-nextprev {
-	list-style: none;
-	border-top: 1px dashed var(--color-gray-20);
-	padding: 1em 0;
-}
-
 table {
 	margin: 1em 0;
 }
@@ -1152,8 +1146,18 @@ h2 + .header-anchor {
 	<li><time datetime="2023-06-06">06 June 2023</time></li>
 </ul>
 
-<section class="post-content">
-<img src="/img/1froeAPKw4-600.webp" width="100%" height="auto" alt="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/EUsVwEOsblE" loading="lazy" decoding="async">
+
+	<hr></hr>
+		<aside>
+			<nav class="toc" >
+        <ol><li><a href="#cpu-cache">cpu cache에 대해</a></li><li><a href="#thread-memory">멀티 thread의 memory 접근</a></li><li><a href="#-1">요약</a></li></ol>
+      </nav>
+		</aside>
+	<hr></hr>
+
+
+	<section class="post-content">
+		<img src="/img/1froeAPKw4-600.webp" width="100%" height="auto" alt="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/EUsVwEOsblE" loading="lazy" decoding="async">
 <h2 id="cpu-cache" tabindex="-1">cpu cache에 대해 <a class="header-anchor" href="#cpu-cache">#</a></h2>
 <p>cpu와 memory간의 속도차는 상당합니다.</p>
 <p>이 간극을 줄이기 위해 cpu는 cache 영역을 가집니다.</p>
@@ -1173,12 +1177,13 @@ cpu는 어셈블리어로 변환된 코드를 읽고 그대로 실행하게 되�
 <img src="/img/ZBhCEE6TSg-600.webp" width="100%" height="auto" alt="cpu-cache2" loading="lazy" decoding="async">
 <p>cpuA가 LOAD 한 값은 foo 변수의 false입니다.</p>
 <p>cpuB가 LOAD 한 값은 foo 변수의 false입니다.</p>
-<p>cpuA은 cpu cache에 값을 저장하고 변수를 true로 변경합니다.</p>
+<p>cpuA는 cpu cache에 값을 저장하고 변수를 true로 변경합니다.</p>
 <p>cpuB는 cpu cache에 값을 저장하고 해당 변수를 조건으로 반복문을 실행합니다.</p>
 <p>cpuB는 cpuA에 의해 변경된 값을 조회하지 않고 cpu cache에 저장된 값을 조회하므로
 값의 공유가 이루어지지 않습니다.</p>
 <p>즉 main memory를 바라보고 있지 않은 상태입니다.</p>
 <p>따라서 가시성이 없다고 할 수 있습니다.</p>
+<h2 id="" tabindex="-1">예시 <a class="header-anchor" href="#">#</a></h2>
 <p>설명이 길었습니다만 위의 상황을 방지해주는 키워드가</p>
 <p>공용 메모리에 사용하는 volatile 키워드입니다.</p>
 <p>해당 키워드는 공용 메모리로 사용될 값이 cpu cache에 저장되는 것을 방지해줍니다.</p>
@@ -1192,9 +1197,15 @@ thread는 공용자원의 변경을 확인하고 루프를 빠져나옵니다.</
 <p>thread는 무한 루프를 빠져나올 수 있고 없고가 결정됩니다.</p>
 <p>감사합니다.</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// 예시 코드</span><br><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Ex001_Missile</span> <span class="token punctuation">{</span><br>	<span class="token keyword">public</span> <span class="token keyword">volatile</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> hasMissileLaunched <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span><br><br>	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">MissileInterceptor</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span> <span class="token punctuation">{</span><br>		<span class="token annotation punctuation">@Override</span><br>		<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>			<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>hasMissileLaunched<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>				<span class="token comment">/** 대기중... */</span><br>			<span class="token punctuation">}</span><br>			<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"요격 미사일 발사"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token punctuation">}</span><br><br>	<span class="token punctuation">}</span><br><br>	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">launchMissile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> hasMissileLaunched <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><br><br>	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">{</span><br>		<span class="token keyword">final</span> <span class="token class-name">MissileInterceptor</span> missileInterceptor <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MissileInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		missileInterceptor<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token function">launchMissile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		missileInterceptor<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>	<span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<h2 id="-1" tabindex="-1">요약 <a class="header-anchor" href="#-1">#</a></h2>
+<p>cpu cache를 사용하는 공용 변수는
+각 thread가 값을 LOAD할 때 cpu cache에 값을 저장하게 된다.</p>
+<p>main memory의 값 변경이 다른 thread에 의해 이루어지는 경우
+cpu cache의 값과 main memory의 값이 달라져 예상과 다르게 작동할 수 있다.</p>
 
-</section>
-<ul class="links-nextprev"><li>Previous: <a href="/blog/JAVA/lambda식과 어노테이션/">lambda식과 어노테이션</a></li>
+	</section>
+<hr></hr>
+<ul><li>Previous: <a href="/blog/JAVA/lambda식과 어노테이션/">lambda식과 어노테이션</a></li>
 </ul>
 
 		</main>
