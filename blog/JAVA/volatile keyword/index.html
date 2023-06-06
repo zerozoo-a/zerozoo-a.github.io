@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>zerozoo-a의 블로그</title>
+		<title>volatile keyword와 가시성 feat.cpu-cache</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -18,23 +18,173 @@
 		<meta name="google-site-verification" content="FzIp87nE_pk-4x5nXeKcIX-x1rqYcjlabzuH1EqXFYs" />
     	<meta name="naver-site-verification" content="6cf39493d46e888e46dfc3a608270980215dbca5" />
 		
-		<style>/* Message Box */
-.message-box {
-	--color-message-box: #ffc;
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
 
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
 	display: block;
-	background-color: var(--color-message-box);
-	color: var(--color-gray-90);
-	padding: 1em 0.625em; /* 16px 10px /16 */
-}
-.message-box ol {
-	margin-top: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-	.message-box {
-		--color-message-box: #082840;
-	}
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
 }
 * { box-sizing: border-box; }
 /* reset */
@@ -988,213 +1138,68 @@ h2 + .header-anchor {
 		</header>
 
 		<main id="skip">
-			<!-- Delete this message, it will also remove the component CSS from the bundle -->
+			
 
-<!-- Stop deleting -->
+<figure>
+	
+	
+	
+</figure>
 
+<h1>volatile keyword와 가시성 feat.cpu-cache</h1>
 
+<ul class="post-metadata pt-2">
+	<li><time datetime="2023-06-06">06 June 2023</time></li>
+</ul>
 
+<section class="post-content">
+<img src="/img/1froeAPKw4-600.webp" width="100%" height="auto" alt="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/EUsVwEOsblE" loading="lazy" decoding="async">
+<h1 id="volatile-keyword" tabindex="-1">volatile keyword <a class="header-anchor" href="#volatile-keyword">#</a></h1>
+<p>cpu와 memory간의 속도차는 상당합니다. 이 간극을 줄이기 위해
+cpu는 cache 영역을 가집니다.</p>
+<p>cpu는 main memory의 값을 계속 조회하는 대신
+동일한 변수에 대한 조회 요청에는 cpu cache를 조회합니다.</p>
+<img src="/img/UXmA9ZZlag-600.webp" width="100%" height="auto" alt="cpu-cache" loading="lazy" decoding="async">
+<p>이미지로는 위와 같은 이미지가 그려지게 됩니다.</p>
+<p>CPU는 어셈블리어로 변환된 코드를 읽고 그대로 실행하게 되는데요</p>
+<p>1️⃣ LOAD(ldr)를 통해 cpu cache의 값을 읽어옵니다.</p>
+<p>2️⃣ 특정 명령어를 실행합니다.</p>
+<p>3️⃣ STORE(str)를 통해 메모리에 값을 저장하게 됩니다.</p>
+<p>이때 메모리에 접근하는 thread가 하나라면 그대로 메모리가 업데이트 되는데요</p>
+<p>만약 thread가 둘이라면 이 상황에 변수가 발생합니다.
+바로 아래 이미지와 같은 상황입니다.</p>
+<img src="/img/ZBhCEE6TSg-600.webp" width="100%" height="auto" alt="cpu-cache2" loading="lazy" decoding="async">
+<p>다른 thread에서 공유 자원인 foo에 접근하는 것입니다.
+foo에 접근한 다음 cpu-cache에 값을 저장하고
+cpu2는 foo의 값을 주시합니다.</p>
+<p>예를 들어 아래와 같은 코드는 foo의 값의 변경을 알아차릴 수 있습니다.</p>
+<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>foo<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token comment">/** 대기 */</span><br><span class="token punctuation">}</span></code></pre>
+<p>위와 같이 무한루프를 돌면서 foo의 값을 확인하는 방법이 가장 간단하겠네요</p>
+<p>그런데 cpu2는 cpu-cache에 저장한 값인 false 값을 계속 주시하게 됩니다.</p>
+<p>cpu1이 값을 변경하면 cpu2가 가지고 있던 foo의 값이 변경될 것을 기대할 수 있겠지만
+기대와는 다르게 동작합니다.</p>
+<p>cpu2는 무한루프에 빠지게 됩니다.</p>
+<blockquote>
+<h2 id="cpu2-cpu-cache" tabindex="-1">cpu2가 바라보고 있는 것은 cpu-cache에 저장된 값이고 <a class="header-anchor" href="#cpu2-cpu-cache">#</a></h2>
+<p><strong><em>main memory에 있는 값의 변경을 알 수 없습니다.</em></strong></p>
+</blockquote>
+<p>설명이 길었습니다만 위의 상황을 방지해주는 키워드가</p>
+<p>공용 메모리에 사용하는 volatile 키워드입니다.</p>
+<p>해당 키워드는 공용 메모리로 사용될 값이 cpu-cache에 저장되는 것을 방지해줍니다.</p>
+<p>계속 main memory에서 값을 조회해오도록 코드가 변경되어집니다.</p>
+<p>예시 코드는 아래와 같습니다.</p>
+<p>아래의 코드는</p>
+<p>공용 자원의 값을 기준으로 while문을 도는 thread를 시작시킵니다.
+공용 자원의 값을 변경하면 위의 thread의 while문 조건이 변경됩니다.
+thread는 공용자원의 변경을 확인하고 루프를 빠져나옵니다.</p>
+<p>여기서 공용자원에 사용된 volatile 키워드가 있고 없고에 따라</p>
+<p>thread는 무한 루프를 빠져나올 수 있고 없고가 결정됩니다.</p>
+<p>감사합니다.</p>
+<pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// 예시 코드</span><br><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Ex001_Missile</span> <span class="token punctuation">{</span><br>	<span class="token keyword">public</span> <span class="token keyword">volatile</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> hasMissileLaunched <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span><br><br>	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">MissileInterceptor</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span> <span class="token punctuation">{</span><br>		<span class="token annotation punctuation">@Override</span><br>		<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>			<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>hasMissileLaunched<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>				<span class="token comment">/** 대기중... */</span><br>			<span class="token punctuation">}</span><br>			<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"요격 미사일 발사"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token punctuation">}</span><br><br>	<span class="token punctuation">}</span><br><br>	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">launchMissile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> hasMissileLaunched <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><br><br>	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">{</span><br>		<span class="token keyword">final</span> <span class="token class-name">MissileInterceptor</span> missileInterceptor <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MissileInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		missileInterceptor<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token function">launchMissile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		missileInterceptor<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>	<span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
 
-
-
-
-<div>
-  <ol style="counter-reset: start-from 12" >
-    
-        <a href="/blog/CS/DATA_STRUCTURE/TREE/recursive_traversal/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                재귀 순회를 통해 트리 구조 돌아다니기 (recursive)
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-04-19">Created at: 2023년 04월 19일 02시 20분 00초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/CS/DATA_STRUCTURE/TREE/Tree_preorder/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                Tree preorder (stack)
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-04-19">Created at: 2023년 04월 19일 02시 00분 28초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/CS/DATA_STRUCTURE/TREE/Tree_inorder/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                Tree inorder (stack)
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-04-18">Created at: 2023년 04월 18일 03시 02분 24초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/CS/ALGORITHMS/BOOKS/JONGMAN/문제풀이_과정을_나누자/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                문제풀이 과정을 나누자
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-04-14">Created at: 2023년 04월 14일 12시 51분 28초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                Richard_Feynman_alogorithm
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-04-12">Created at: 2023년 04월 12일 11시 36분 22초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-    </ol>
-</div>
-<div class="wrapper">
-  <ul id="pagination" class="sticky-bottom-nav"></ul>
-</div>
-
-
-
-
-<script type="text/javascript">
-  const pageLinks = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
-  const postsCount = 31
-  let allPages = pageLinks.length
-  const pagination = document.getElementById("pagination")
-  const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
-  const pageNumber = 4
-
-  function elem(allPages = pageLinks.length, page) {
-    let li = "";
-    let beforePages = page - 1;
-    let afterPages = page + 1;
-    let liActive;
-
-    let spaceStack = [];
-
-
-  if (page > 0) {
-    li += `
-    <a href="${pageLinks[page-1]}">
-    <li class="btn" onclick="elem(allPages, ${
-      page - 1
-    })" > < </li>
-    </a>
-    `;
-    spaceStack.push(1)
-  } else {
-    li += NOTHING_BUTTON('_')
-    spaceStack.push(1)
-  }
-
-  for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
-
-    if (currentPage > allPages ) {
-      continue;
-    }
-
-    if (currentPage == -1) {
-      currentPage = currentPage + 1;
-    }
-
-    if (page == currentPage) {
-      liActive = "active";
-    } else {
-      liActive = "";
-    }
-
-    /**
-    * 마지막 페이지의 pagination
-    */
-    if(page == allPages - 1) {
-    li += `
-      <a href="${pageLinks[currentPage]}">
-      <li class="numb active" onclick="elem(allPages, ${currentPage})"><span>
-      ${afterPages}
-      </span></li>
-      </a>
-      `;
-      spaceStack.push(1)
-      break;
-    }
-    /**
-     * 첫 페이지의 pagination
-     */
-    li += `
-      <a href="${pageLinks[currentPage]}">
-      <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" ><span>
-      ${currentPage + 1}
-      </span></li>
-      </a>
-      `;
-    spaceStack.push(1)
-  }
-
-  if(page == 0) {
-    li += `
-      <a href="${pageLinks[afterPages + 1]}">
-      <li class="numb" onclick="elem(allPages, ${afterPages + 1})" ><span>
-        ${afterPages + 2}
-      </span></li>
-      </a>
-      `;
-    spaceStack.push(1)
-  }
-
-  if (page < allPages && page !== allPages - 1) {
-    li += `
-    <a href="${pageLinks[afterPages]}">
-      <li class="btn" onclick="elem(allPages, ${
-        page + 1
-      })" > > </li>
-    </a>
-    `;
-    spaceStack.push(1)
-  } else {
-    while(spaceStack.length < 5) {
-      li += NOTHING_BUTTON('_')
-      spaceStack.push(1)
-    }
-  }
-
-  pagination.innerHTML = li;
-}
-elem(allPages, 4);
-</script>
-
-
-
-
-
+</section>
+<ul class="links-nextprev"><li>Previous: <a href="/blog/JAVA/lambda식과 어노테이션/">lambda식과 어노테이션</a></li>
+</ul>
 
 		</main>
 		<footer></footer>
