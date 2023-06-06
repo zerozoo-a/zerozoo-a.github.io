@@ -1154,38 +1154,34 @@ h2 + .header-anchor {
 
 <section class="post-content">
 <img src="/img/1froeAPKw4-600.webp" width="100%" height="auto" alt="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/EUsVwEOsblE" loading="lazy" decoding="async">
-<h1 id="volatile-keyword" tabindex="-1">volatile keyword <a class="header-anchor" href="#volatile-keyword">#</a></h1>
-<p>cpu와 memory간의 속도차는 상당합니다. 이 간극을 줄이기 위해
-cpu는 cache 영역을 가집니다.</p>
+<h2 id="cpu-cache" tabindex="-1">cpu cache에 대해 <a class="header-anchor" href="#cpu-cache">#</a></h2>
+<p>cpu와 memory간의 속도차는 상당합니다.</p>
+<p>이 간극을 줄이기 위해 cpu는 cache 영역을 가집니다.</p>
 <p>cpu는 main memory의 값을 계속 조회하는 대신
 동일한 변수에 대한 조회 요청에는 cpu cache를 조회합니다.</p>
 <img src="/img/UXmA9ZZlag-600.webp" width="100%" height="auto" alt="cpu-cache" loading="lazy" decoding="async">
-<p>이미지로는 위와 같은 이미지가 그려지게 됩니다.</p>
-<p>CPU는 어셈블리어로 변환된 코드를 읽고 그대로 실행하게 되는데요</p>
+<p>이미지로는 위와 같은 이미지가 그려지게 됩니다.
+cpu는 어셈블리어로 변환된 코드를 읽고 그대로 실행하게 되는데요</p>
+<p>아래와 같은 순서를 따릅니다.</p>
 <p>1️⃣ LOAD(ldr)를 통해 cpu cache의 값을 읽어옵니다.</p>
 <p>2️⃣ 특정 명령어를 실행합니다.</p>
 <p>3️⃣ STORE(str)를 통해 메모리에 값을 저장하게 됩니다.</p>
-<p>이때 메모리에 접근하는 thread가 하나라면 그대로 메모리가 업데이트 되는데요</p>
-<p>만약 thread가 둘이라면 이 상황에 변수가 발생합니다.
+<p>이때 메모리에 접근하는 thread가 하나라면 그대로 메모리가 업데이트 됩니다.</p>
+<h2 id="thread-memory" tabindex="-1">멀티 thread의 memory 접근 <a class="header-anchor" href="#thread-memory">#</a></h2>
+<p>multi thread라면 공유 자원에 접근할 때 문제가 발생합니다.
 바로 아래 이미지와 같은 상황입니다.</p>
 <img src="/img/ZBhCEE6TSg-600.webp" width="100%" height="auto" alt="cpu-cache2" loading="lazy" decoding="async">
-<p>다른 thread에서 공유 자원인 foo에 접근하는 것입니다.
-foo에 접근한 다음 cpu-cache에 값을 저장하고
-cpu2는 foo의 값을 주시합니다.</p>
-<p>예를 들어 아래와 같은 코드는 foo의 값의 변경을 알아차릴 수 있습니다.</p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>foo<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token comment">/** 대기 */</span><br><span class="token punctuation">}</span></code></pre>
-<p>위와 같이 무한루프를 돌면서 foo의 값을 확인하는 방법이 가장 간단하겠네요</p>
-<p>그런데 cpu2는 cpu-cache에 저장한 값인 false 값을 계속 주시하게 됩니다.</p>
-<p>cpu1이 값을 변경하면 cpu2가 가지고 있던 foo의 값이 변경될 것을 기대할 수 있겠지만
-기대와는 다르게 동작합니다.</p>
-<p>cpu2는 무한루프에 빠지게 됩니다.</p>
-<blockquote>
-<h2 id="cpu2-cpu-cache" tabindex="-1">cpu2가 바라보고 있는 것은 cpu-cache에 저장된 값이고 <a class="header-anchor" href="#cpu2-cpu-cache">#</a></h2>
-<p><strong><em>main memory에 있는 값의 변경을 알 수 없습니다.</em></strong></p>
-</blockquote>
+<p>cpuA가 LOAD 한 값은 foo 변수의 false입니다.</p>
+<p>cpuB가 LOAD 한 값은 foo 변수의 false입니다.</p>
+<p>cpuA은 cpu cache에 값을 저장하고 변수를 true로 변경합니다.</p>
+<p>cpuB는 cpu cache에 값을 저장하고 해당 변수를 조건으로 반복문을 실행합니다.</p>
+<p>cpuB는 cpuA에 의해 변경된 값을 조회하지 않고 cpu cache에 저장된 값을 조회하므로
+값의 공유가 이루어지지 않습니다.</p>
+<p>즉 main memory를 바라보고 있지 않은 상태입니다.</p>
+<p>따라서 가시성이 없다고 할 수 있습니다.</p>
 <p>설명이 길었습니다만 위의 상황을 방지해주는 키워드가</p>
 <p>공용 메모리에 사용하는 volatile 키워드입니다.</p>
-<p>해당 키워드는 공용 메모리로 사용될 값이 cpu-cache에 저장되는 것을 방지해줍니다.</p>
+<p>해당 키워드는 공용 메모리로 사용될 값이 cpu cache에 저장되는 것을 방지해줍니다.</p>
 <p>계속 main memory에서 값을 조회해오도록 코드가 변경되어집니다.</p>
 <p>예시 코드는 아래와 같습니다.</p>
 <p>아래의 코드는</p>
