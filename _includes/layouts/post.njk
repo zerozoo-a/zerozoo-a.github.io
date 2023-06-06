@@ -23,14 +23,26 @@ layout: layouts/base.njk
 	{%- endfor %}
 </ul>
 
-<section class="post-content">
-{{ content | safe }}
-</section>
+{% if content | toc %}
+	<hr></hr>
+		<aside>
+			{{ content | toc | safe }}
+		</aside>
+	<hr></hr>
+{% endif %}
+
+	<section class="post-content">
+		{{ content | safe }}
+	</section>
+<hr></hr>
+
+
+
 {%- if collections.posts %}
 {%- set previousPost = collections.posts | getPreviousCollectionItem %}
 {%- set nextPost = collections.posts | getNextCollectionItem %}
 {%- if nextPost or previousPost %}
-<ul class="links-nextprev">
+<ul>
 	{%- if previousPost %}<li>Previous: <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></li>{% endif %}
 	{%- if nextPost %}<li>Next: <a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></li>{% endif %}
 </ul>

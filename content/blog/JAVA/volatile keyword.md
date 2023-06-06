@@ -43,7 +43,7 @@ cpuA가 LOAD 한 값은 foo 변수의 false입니다.
 
 cpuB가 LOAD 한 값은 foo 변수의 false입니다.
 
-cpuA은 cpu cache에 값을 저장하고 변수를 true로 변경합니다.
+cpuA는 cpu cache에 값을 저장하고 변수를 true로 변경합니다.
 
 cpuB는 cpu cache에 값을 저장하고 해당 변수를 조건으로 반복문을 실행합니다.
 
@@ -54,6 +54,7 @@ cpuB는 cpuA에 의해 변경된 값을 조회하지 않고 cpu cache에 저장�
 
 따라서 가시성이 없다고 할 수 있습니다.
 
+## 예시
 
 설명이 길었습니다만 위의 상황을 방지해주는 키워드가
 
@@ -106,3 +107,12 @@ public class Ex001_Missile {
 	}
 }
 ```
+
+
+## 요약
+
+cpu cache를 사용하는 공용 변수는 
+각 thread가 값을 LOAD할 때 cpu cache에 값을 저장하게 된다.
+
+main memory의 값 변경이 다른 thread에 의해 이루어지는 경우
+cpu cache의 값과 main memory의 값이 달라져 예상과 다르게 작동할 수 있다.

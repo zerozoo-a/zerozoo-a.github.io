@@ -9,6 +9,7 @@ const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 
 const pluginDrafts = require("./eleventy.config.drafts.js");
 const pluginImages = require("./eleventy.config.images.js");
+const pluginTOC = require("eleventy-plugin-toc");
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = function (eleventyConfig) {
@@ -21,6 +22,9 @@ module.exports = function (eleventyConfig) {
 		"./node_modules/prismjs/themes/prism-okaidia.css": "/css/prism-okaidia.css",
 	});
 	eleventyConfig.addPassthroughCopy("./covers");
+
+	// ADD TOC
+	eleventyConfig.addPlugin(pluginTOC);
 
 	eleventyConfig.addGlobalData("env", process.env);
 
