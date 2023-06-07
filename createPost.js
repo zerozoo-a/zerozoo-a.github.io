@@ -1,5 +1,10 @@
 const File = require("fs/promises");
 const fs = require("fs");
+
+/**
+ *
+ * @returns {string}
+ */
 function getKoreanDateTime() {
 	const now = new Date();
 	const year = now.getFullYear().toString();
@@ -17,13 +22,25 @@ function getKoreanDateTime() {
 }
 
 /**
+ * @param {string} title
+ * @returns {string}
+ */
+const TITLE = (title) => `title: ${title}`;
+
+/**
+ * @returns {string}
+ */
+const COVER_URL = () => `coverURL: `;
+/**
  *
  * @param {string[]} title
  */
 const main = async (title) => {
 	console.log(`create file name: ${title}`);
 	if (title.length < 1) throw new Error("파일 이름을 입력하지 않았습니다.");
-	const FRONTMATTER = `---\ntitle: ${title}\ndate: ${getKoreanDateTime()}\n---`;
+	const FRONTMATTER = `---\n${TITLE(
+		title
+	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---`;
 
 	const isDirExists = fs.existsSync(`./content/blog/temp`);
 
