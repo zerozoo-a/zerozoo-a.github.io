@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>zerozoo-a의 블로그</title>
+		<title>thread pool의 기초 2</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -18,23 +18,173 @@
 		<meta name="google-site-verification" content="FzIp87nE_pk-4x5nXeKcIX-x1rqYcjlabzuH1EqXFYs" />
     	<meta name="naver-site-verification" content="6cf39493d46e888e46dfc3a608270980215dbca5" />
 		
-		<style>/* Message Box */
-.message-box {
-	--color-message-box: #ffc;
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
 
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
 	display: block;
-	background-color: var(--color-message-box);
-	color: var(--color-gray-90);
-	padding: 1em 0.625em; /* 16px 10px /16 */
-}
-.message-box ol {
-	margin-top: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-	.message-box {
-		--color-message-box: #082840;
-	}
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
 }
 * { box-sizing: border-box; }
 /* reset */
@@ -1015,215 +1165,78 @@ blockquote {
 		</header>
 
 		<main id="skip">
-			<!-- Delete this message, it will also remove the component CSS from the bundle -->
+			
 
-<!-- Stop deleting -->
+<figure>
+	
+	
+	
+</figure>
 
+<h1>thread pool의 기초 2</h1>
 
-
-
-
-
-
-<div>
-  <ol style="counter-reset: start-from 29" >
-    
-        <a href="/blog/JAVA/Deque/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-            <img class="cover-img" src="/covers/Structure_definition-Deque.webp" alt="cover image" height="auto" loading="lazy" decoding="async"/>
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                Deque
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-05-28">Created at: 2023년 05월 28일 10시 04분 24초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JAVA/List로 구현된 queue의 특징/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                List로 구현된 queue의 특징
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-05-28">Created at: 2023년 05월 28일 09시 33분 53초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JAVA/JCF의 tree set의 비교연산자를 바꾸기/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                JCF의 tree set의 비교연산자를 바꾸기
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-05-28">Created at: 2023년 05월 28일 05시 57분 26초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JAVA/java hash set/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                java hash set
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-05-28">Created at: 2023년 05월 28일 02시 16분 51초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JAVA/java bubble sort/">
-        <div class="p-3 d-flex color-bg-default Box m-3">
-          
-
-          <div class="d-flex p-3 flex-direction-col">
-            <h5 class="d-flex flex-items-center">
-                java bubble, insert sort
-              </h5>
-            <div>
-              <time class="postlist-date" datetime="2023-05-28">Created at: 2023년 05월 28일 12시 15분 12초</time>
-            </div>
-          </div>
-        </div>
-        </a>
-    
-    </ol>
-</div>
-<div class="wrapper">
-  <ul id="pagination" class="sticky-bottom-nav"></ul>
-</div>
+<ul class="post-metadata pt-2">
+	<li><time datetime="2023-06-08">08 June 2023</time></li>
+</ul>
 
 
+	<hr></hr>
+		<aside>
+			<nav class="toc" >
+        <ol><li><a href="#executors">Executors에 대해</a></li><li><a href="#thread-pool">thread pool들의 종류를 가볍게 알아보자</a></li><li><a href="#thread-pool-queue">thread pool의 queue에 대해</a></li><li><a href="#-1">정리</a></li></ol>
+      </nav>
+		</aside>
+	<hr></hr>
 
 
-<script type="text/javascript">
-  const pageLinks = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
-  const postsCount = 33
-  let allPages = pageLinks.length
-  const pagination = document.getElementById("pagination")
-  const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
-  const pageNumber = 1
+	<section class="post-content">
+		<img src="/img/aMlYm0ioX3-600.webp" width="100%" height="auto" alt="pool" loading="lazy" decoding="async">
+<h2 id="executors" tabindex="-1">Executors에 대해 <a class="header-anchor" href="#executors">#</a></h2>
+<p>Executors란 무엇일까요?</p>
+<blockquote>
+<p>Factory and utility methods for Executor, ExecutorService, ScheduledExecutorService, ThreadFactory, and Callable classes defined in this package.</p>
+</blockquote>
+<p>바로 이전 글에서 살펴본 Executor의 Factory와 utility methods라고 합니다.</p>
+<p>Executor는 execute method의 interface였습니다.
+execute method의 반환값은 void입니다.</p>
+<p>Executors는 Executor를 확장한 ExecutorService 타입의 pool을 반환합니다.</p>
+<pre class="language-java" tabindex="0"><code class="language-java"> <span class="token class-name">ExecutorService</span> pool <span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>위의 Executors의 method는 Executor interface를 확장한 ExecutorService pool을 반환하고</p>
+<p>이를 이용해 스레드 pool을 사용 할 수 있습니다.</p>
+<h2 id="thread-pool" tabindex="-1">thread pool들의 종류를 가볍게 알아보자 <a class="header-anchor" href="#thread-pool">#</a></h2>
+<pre class="language-java" tabindex="0"><code class="language-java">	<span class="token class-name">ExecutorService</span> pool <span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<br>    <br>    <span class="token class-name">ExecutorService</span> pool2 <span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newSingleThreadExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br></code></pre>
+<p>위의 <code>newFixedThreadPool(2);</code>라는 method는
+<code>ExecutorService pool</code>을 반환하고 pool을 사용 할 수 있게 됩니다.</p>
+<p>평소처럼 jdk 설명을 읽어봅시다.</p>
+<blockquote>
+<p>Creates a thread pool that reuses a fixed number of threads operating off a shared unbounded queue.</p>
+</blockquote>
+<blockquote>
+<p>pool을 생성하고 integer를 인자로 받아 unbounded queue를 생성합니다.</p>
+</blockquote>
+<h2 id="thread-pool-queue" tabindex="-1">thread pool의 queue에 대해 <a class="header-anchor" href="#thread-pool-queue">#</a></h2>
+<p>여기서 queue가 나왔습니다.</p>
+<p>thread pool은 두가지 queue를 제공합니다.</p>
+<p>크기의 제한이 있는 bounded queue와 unbounded queue입니다.</p>
+<p>예상 할 수 있듯이 bounded는 queue에 최대치를 걸어 그 이상을 넘는 요청은 thread를 대기시킵니다.</p>
+<p>unbounded는 제한이 없지만 memory를 넘쳐버릴 수 있다는 점에 주의해야 합니다.</p>
+<h2 id="" tabindex="-1">예제 <a class="header-anchor" href="#">#</a></h2>
+<p>예제에서는 pool의 사용법과
+ExecutorService class를 가지는 pool 객체를 생성하여
+pool을 실행해봅니다.</p>
+<p>위의 설명을 통해 알 수 있듯이 자신이 사용하는 pool이
+어떤 로직을 통해 실행되는 것인지 알아두어야 합니다.</p>
+<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>example<span class="token punctuation">.</span></span><span class="token class-name">Chapter25</span><span class="token punctuation">;</span><br><br><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">ExecutorService</span></span><span class="token punctuation">;</span><br><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">Executors</span></span><span class="token punctuation">;</span><br><br><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Ex10_ThreadPool3</span> <span class="token punctuation">{</span><br>	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>		<span class="token class-name">Runnable</span> task1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">{</span><br>			<span class="token class-name">String</span> name <span class="token operator">=</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>			<span class="token keyword">try</span> <span class="token punctuation">{</span><br>				<span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>			<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><br>			<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>name <span class="token operator">+</span> <span class="token string">": 5초 후 실행"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token punctuation">}</span><span class="token punctuation">;</span><br><br>		<span class="token class-name">ExecutorService</span> pool <span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token class-name">ExecutorService</span> pool2 <span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newSingleThreadExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>		pool<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span>task1<span class="token punctuation">)</span><span class="token punctuation">;</span><br>		pool2<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span>task1<span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>		pool<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		pool2<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>	<span class="token punctuation">}</span><br><span class="token punctuation">}</span><br></code></pre>
+<h2 id="-1" tabindex="-1">정리 <a class="header-anchor" href="#-1">#</a></h2>
+<p>thread pool은 ExecutorService 클래스를 가집니다.
+ExecutorService는 Executor를 확장하여 execute 메서드가 있습니다.</p>
+<p>pool은 제한이 있는 큐와 없는 큐가 있습니다.
+당연히 제한이 없는 큐는 사용에 주의해야겠습니다.</p>
 
-  function elem(allPages = pageLinks.length, page) {
-    let li = "";
-    let beforePages = page - 1;
-    let afterPages = page + 1;
-    let liActive;
-
-    let spaceStack = [];
-
-
-  if (page > 0) {
-    li += `
-    <a href="${pageLinks[page-1]}">
-    <li class="btn" onclick="elem(allPages, ${
-      page - 1
-    })" > < </li>
-    </a>
-    `;
-    spaceStack.push(1)
-  } else {
-    li += NOTHING_BUTTON('_')
-    spaceStack.push(1)
-  }
-
-  for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
-
-    if (currentPage > allPages ) {
-      continue;
-    }
-
-    if (currentPage == -1) {
-      currentPage = currentPage + 1;
-    }
-
-    if (page == currentPage) {
-      liActive = "active";
-    } else {
-      liActive = "";
-    }
-
-    /**
-    * 마지막 페이지의 pagination
-    */
-    if(page == allPages - 1) {
-    li += `
-      <a href="${pageLinks[currentPage]}">
-      <li class="numb active" onclick="elem(allPages, ${currentPage})"><span>
-      ${afterPages}
-      </span></li>
-      </a>
-      `;
-      spaceStack.push(1)
-      break;
-    }
-    /**
-     * 첫 페이지의 pagination
-     */
-    li += `
-      <a href="${pageLinks[currentPage]}">
-      <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" ><span>
-      ${currentPage + 1}
-      </span></li>
-      </a>
-      `;
-    spaceStack.push(1)
-  }
-
-  if(page == 0) {
-    li += `
-      <a href="${pageLinks[afterPages + 1]}">
-      <li class="numb" onclick="elem(allPages, ${afterPages + 1})" ><span>
-        ${afterPages + 2}
-      </span></li>
-      </a>
-      `;
-    spaceStack.push(1)
-  }
-
-  if (page < allPages && page !== allPages - 1) {
-    li += `
-    <a href="${pageLinks[afterPages]}">
-      <li class="btn" onclick="elem(allPages, ${
-        page + 1
-      })" > > </li>
-    </a>
-    `;
-    spaceStack.push(1)
-  } else {
-    while(spaceStack.length < 5) {
-      li += NOTHING_BUTTON('_')
-      spaceStack.push(1)
-    }
-  }
-
-  pagination.innerHTML = li;
-}
-elem(allPages, 1);
-</script>
-
-
-
-
-
+	</section>
+<hr></hr>
+<ul><li>Previous: <a href="/blog/JAVA/thread pool의 기초 1/">thread pool의 기초 1</a></li>
+</ul>
 
 		</main>
 		<footer></footer>
