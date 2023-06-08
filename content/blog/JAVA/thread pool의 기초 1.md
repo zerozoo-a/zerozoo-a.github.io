@@ -43,7 +43,7 @@ ExecutorService는 대체 뭘까요?
 
 > ExecutorService를 종료하면 새 작업이 거부될 수 있습니다. ExecutorService를 종료하기 위해 두 가지 방법이 제공됩니다.
 
-또한 ExecutorService는 Executor를 부모로 갖는 interface입니다.
+또한 ExecutorService는 Executor interface를 부모로 갖는 class입니다.
 위 설명만으로는 전부 이해하기가 난해합니다 추가적으로 정보를 찾아봐야겠습니다. 🤔
 
 > ... Method submit extends base method Executor.execute(Runnable) by creating and returning a Future that can be used to cancel execution and/or wait for completion.
