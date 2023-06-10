@@ -150,7 +150,6 @@ module.exports = function (eleventyConfig) {
 		});
 	});
 
-	eleventyConfig.setLibrary("md", md);
 	eleventyConfig.addCollection("myCustomSort", function (collectionApi) {
 		return collectionApi
 			.getAll()
