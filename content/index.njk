@@ -17,7 +17,8 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
           {% if(item.data.cover) %}
             <img class="cover-img" src="/covers/{{item.data.cover}}" alt="cover image" height="auto" loading="lazy" decoding="async"/>
           {% elif(item.data.coverURL) %}
-            <img class="cover-img" src="{{item.data.coverURL}}" alt="cover image" height="auto" loading="lazy" decoding="async"/>
+            {# <img class="cover-img" src="{{item.data.coverURL}}" alt="cover image" height="auto" loading="lazy" decoding="async"/> #}
+            <img class="cover-img" src={% convert item.data.coverURL %} alt="cover image" height="auto" loading="lazy" decoding="async"/>
           {% endif %}
 
           <div class="d-flex p-3 flex-direction-col">

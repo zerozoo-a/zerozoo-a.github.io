@@ -1,5 +1,7 @@
 const path = require("path");
 const eleventyImage = require("@11ty/eleventy-img");
+const https = require("https");
+const fs = require("fs");
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = (eleventyConfig) => {
@@ -16,6 +18,45 @@ module.exports = (eleventyConfig) => {
 		const res = path.resolve(split.join(path.sep), relativeFilePath);
 		return res;
 	}
+
+	eleventyConfig.addAsyncShortcode(
+		"convert",
+		/**
+		 * @param {string} url
+		 */
+		async (url) => {
+			const convertedBase64 = new Promise((resolve, reject) => {
+				https.get(
+					url,
+					{
+						headers: {
+							"User-Agent": "Mozilla/5.0",
+						},
+					},
+					(res) => {
+						const chunks = [];
+
+						res.on("data", (chunk) => {
+							chunks.push(chunk);
+						});
+
+						res
+							.on("end", () => {
+								const buffer = Buffer.concat(chunks);
+								const base64 = buffer.toString("base64");
+								resolve(base64);
+							})
+							.on("error", (err) => {
+								console.error(err);
+								reject(err);
+							});
+					}
+				);
+			});
+
+			return `data:image/png;base64,${await convertedBase64}`;
+		}
+	);
 
 	// Eleventy Image shortcode
 	// https://www.11ty.dev/docs/plugins/image/
