@@ -36,11 +36,11 @@ const COVER_URL = () => `coverURL: `;
  * @param {string[]} title
  */
 const main = async (title) => {
-	console.log(`create file name: ${title}`);
+	console.log(`attempt create file name: ${title}`);
 	if (title.length < 1) throw new Error("파일 이름을 입력하지 않았습니다.");
 	const FRONTMATTER = `---\n${TITLE(
 		title
-	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---`;
+	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---\n<br />\n<br />\n<br />`;
 
 	const isDirExists = fs.existsSync(`./content/blog/temp`);
 

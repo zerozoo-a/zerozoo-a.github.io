@@ -1,10 +1,15 @@
 ---
-title: reduce의 활용 1
+title: reduce란 무엇인가
 date: 2023-06-10 09:22:10
 coverURL: https://us.123rf.com/450wm/kupparock/kupparock1302/kupparock130200033/17797534-%EC%A0%91%ED%9E%8C-%EC%88%98%EA%B1%B4.jpg
 ---
 
+<br>
+<br>
+<br>
+
 ## reduce란 무엇인가
+---
 
 수학을 배우다보면 정의 -> 활용의 순서로 배우게 됩니다.
 
@@ -27,7 +32,11 @@ reducer는 뭘까요?
 그렇습니다 reduce는 reducer함수를 실행하는 실행부이고 
 reducer는 concrete한 함수를 지니고 있는 구현체입니다.
 
+<br>
+<br>
+<br>
 ## 그래서 뭔말이야?
+---
 
 reduce 함수가 하고 싶은 일을 요약하자면 
 
@@ -65,7 +74,12 @@ reduce 함수는 reducer 함수의 인자가 3개일 때와 2개일 때 다르�
 
 위의 예를 들면 reducer 함수가 인자를 2개 받으므로 1이 위 reducer 함수의 시작값이 됩니다.
 
+<br>
+<br>
+<br>
+
 ## reduce를 사용해 압축하기 (접기)
+---
 
 하나의 상황을 가정해보죠 이런 일은 생각보다 현업에서도 있습니다.
 
@@ -125,7 +139,13 @@ const cars = [
 
 이제 여기서 reduce가 등장합니다.
 
+
+<br>
+<br>
+<br>
+
 ## 예제
+---
 
 ```js
 const cars = [{ make: 'audi', model: 'r8', year: '2012' }, { make: 'audi', model: 'rs5', year: '2013' }, { make: 'ford', model: 'mustang', year: '2012' }, { make: 'ford', model: 'fusion', year: '2015' }, { make: 'kia', model: 'optima', year: '2012' }];
@@ -141,7 +161,14 @@ cars.reduce((acc,cur)=>{
 },{}) // 빈 객체부터 시작
 ```
 
+
+<br>
+<br>
+<br>
+
 ## 예제의 설명
+---
+
 
 reduce에 친숙하지 않다면 위 코드는 살짝 머리아플 수 있습니다.
 하지만 괜찮습니다.
@@ -175,7 +202,14 @@ acc에는 빈 객체가 담겨 있습니다.
 
 따라서 배열이 하나의 객체로 "접히는" 압축되는 함수인 것이죠.
 
+
+<br>
+<br>
+<br>
+
 ## 마무리
+---
+
 
 > 보통 pipe나 go 함수를 통과해 시퀀스를 계산 및 필터링하고
 reduce를 통해 모두 접어 하나의 객체나 값으로 뽑아내어 주는 것
