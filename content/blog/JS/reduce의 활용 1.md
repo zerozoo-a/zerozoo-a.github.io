@@ -46,7 +46,7 @@ reduce 함수가 하고 싶은 일을 요약하자면
 
 ```js
 let sum = 0;
-[1, 2, 3, 4, 5, 6, 7, 8, 9].foreach(a => sum += a);
+[1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(a => sum += a);
 console.log(sum); // 45
 ```
 
@@ -65,21 +65,7 @@ reduce 함수는 reducer 함수의 인자가 3개일 때와 2개일 때 다르�
 
 위의 예를 들면 reducer 함수가 인자를 2개 받으므로 1이 위 reducer 함수의 시작값이 됩니다.
 
-## reduce가 좋은 이유를 모르겠어요
-
-reduce를 더하기에만 사용하는 경우가 비일비재합니다.
-
-왜일까요? reduce가 할 수 있는 일은 filter, map 등이 어느 정도는 대체 할 수 있기 때문입니다.
-결국 시퀀스를 돌면서 어떤 일을 하는 것이니 반복문만 있으면 사실 모두 필요없죠
-
-하지만 코드를 좀 더 유연하고 전달력있게 사용하지 않는다면 코드의 수명은 점점 짧아질 것입니다.
-
-위의 예에서 sum이라는 변수는 계속 값이 변하는 변수입니다. 프로그램에서 변수가
-많은 것은 좋을 것이 단 하나도 없습니다.
-js라면 그나마 상황이 좀 괜찮죠 멀티 쓰레드에서 여러 쓰레드가 값을 가져가려고 경쟁하지 않을테니까요.
-
-
-## reduce를 사용해 압축하기
+## reduce를 사용해 압축하기 (접기)
 
 하나의 상황을 가정해보죠 이런 일은 생각보다 현업에서도 있습니다.
 
@@ -90,7 +76,13 @@ js라면 그나마 상황이 좀 괜찮죠 멀티 쓰레드에서 여러 쓰레�
 
 ```js
 // cars라는 배열을
-const cars = [{ make: 'audi', model: 'r8', year: '2012' }, { make: 'audi', model: 'rs5', year: '2013' }, { make: 'ford', model: 'mustang', year: '2012' }, { make: 'ford', model: 'fusion', year: '2015' }, { make: 'kia', model: 'optima', year: '2012' }];
+const cars = [
+    { make: 'audi', model: 'r8', year: '2012' },
+    { make: 'audi', model: 'rs5', year: '2013' },
+    { make: 'ford', model: 'mustang', year: '2012' },
+    { make: 'ford', model: 'fusion', year: '2015' },
+    { make: 'kia', model: 'optima', year: '2012' }
+];
 
 // 이런 형태로 만들고 싶습니다.
 {
@@ -185,7 +177,7 @@ acc에는 빈 객체가 담겨 있습니다.
 
 ## 마무리
 
-보통 pipe나 go 함수를 통과해 시퀀스를 계산 및 필터링하고
+> 보통 pipe나 go 함수를 통과해 시퀀스를 계산 및 필터링하고
 reduce를 통해 모두 접어 하나의 객체나 값으로 뽑아내어 주는 것
 
 이게 핵심입니다.
