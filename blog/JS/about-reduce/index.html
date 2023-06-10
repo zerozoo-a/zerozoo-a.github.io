@@ -1192,7 +1192,7 @@ blockquote {
 	<hr></hr>
 		<aside>
 			<nav class="toc" >
-        <ol><li><a href="#reduce">reduce란 무엇인가</a></li><li><a href="#reduce-1">reduce를 사용해 압축하기 (접기)</a></li><li><a href="#-1">예제의 설명</a></li><li><a href="#-2">마무리</a></li></ol>
+        <ol><li><a href="#reduce">reduce란 무엇인가</a></li><li><a href="#reduce-1">reduce를 사용해 압축하기 (접기)</a></li><li><a href="#-1">예제</a></li><li><a href="#-2">예제의 설명</a></li><li><a href="#-3">마무리</a></li></ol>
       </nav>
 		</aside>
 	<hr></hr>
@@ -1227,8 +1227,8 @@ reducer는 concrete한 함수를 지니고 있는 구현체입니다.</p>
 <br>
 <br>
 <br>
-## 그래서 뭔말이야?
----
+<h2 id="" tabindex="-1">그래서 뭔말이야? <a class="header-anchor" href="#">#</a></h2>
+<hr>
 <p>reduce 함수가 하고 싶은 일을 요약하자면</p>
 <p>시퀀스들을 하나의 어떤 값으로 뽑아낸다는 것입니다.</p>
 <p>예를 들어보죠</p>
@@ -1261,13 +1261,13 @@ reducer는 concrete한 함수를 지니고 있는 구현체입니다.</p>
 <br>
 <br>
 <br>
-<h2 id="" tabindex="-1">예제 <a class="header-anchor" href="#">#</a></h2>
+<h2 id="-1" tabindex="-1">예제 <a class="header-anchor" href="#-1">#</a></h2>
 <hr>
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> cars <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span> <span class="token literal-property property">make</span><span class="token operator">:</span> <span class="token string">'audi'</span><span class="token punctuation">,</span> <span class="token literal-property property">model</span><span class="token operator">:</span> <span class="token string">'r8'</span><span class="token punctuation">,</span> <span class="token literal-property property">year</span><span class="token operator">:</span> <span class="token string">'2012'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">make</span><span class="token operator">:</span> <span class="token string">'audi'</span><span class="token punctuation">,</span> <span class="token literal-property property">model</span><span class="token operator">:</span> <span class="token string">'rs5'</span><span class="token punctuation">,</span> <span class="token literal-property property">year</span><span class="token operator">:</span> <span class="token string">'2013'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">make</span><span class="token operator">:</span> <span class="token string">'ford'</span><span class="token punctuation">,</span> <span class="token literal-property property">model</span><span class="token operator">:</span> <span class="token string">'mustang'</span><span class="token punctuation">,</span> <span class="token literal-property property">year</span><span class="token operator">:</span> <span class="token string">'2012'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">make</span><span class="token operator">:</span> <span class="token string">'ford'</span><span class="token punctuation">,</span> <span class="token literal-property property">model</span><span class="token operator">:</span> <span class="token string">'fusion'</span><span class="token punctuation">,</span> <span class="token literal-property property">year</span><span class="token operator">:</span> <span class="token string">'2015'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">make</span><span class="token operator">:</span> <span class="token string">'kia'</span><span class="token punctuation">,</span> <span class="token literal-property property">model</span><span class="token operator">:</span> <span class="token string">'optima'</span><span class="token punctuation">,</span> <span class="token literal-property property">year</span><span class="token operator">:</span> <span class="token string">'2012'</span> <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br><br><br>cars<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">acc<span class="token punctuation">,</span>cur</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">{</span><br>    <span class="token keyword">if</span><span class="token punctuation">(</span>acc<span class="token punctuation">[</span>cur<span class="token punctuation">.</span>make<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 누적 값에 make가 이미 있다면</span><br>        acc<span class="token punctuation">[</span>cur<span class="token punctuation">.</span>make<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 누적 값의 배열에 push</span><br>    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><br>        acc<span class="token punctuation">[</span>cur<span class="token punctuation">.</span>make<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 아니면 make를 key로 배열을 생성</span><br>    <span class="token punctuation">}</span><br>    <span class="token keyword">return</span> acc<span class="token punctuation">;</span> <span class="token comment">// 누적 값을 다음 시퀀스 인자에 넘겨준다.</span><br><span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// 빈 객체부터 시작</span></code></pre>
 <br>
 <br>
 <br>
-<h2 id="-1" tabindex="-1">예제의 설명 <a class="header-anchor" href="#-1">#</a></h2>
+<h2 id="-2" tabindex="-1">예제의 설명 <a class="header-anchor" href="#-2">#</a></h2>
 <hr>
 <p>reduce에 친숙하지 않다면 위 코드는 살짝 머리아플 수 있습니다.
 하지만 괜찮습니다.</p>
@@ -1285,7 +1285,7 @@ reducer는 concrete한 함수를 지니고 있는 구현체입니다.</p>
 <br>
 <br>
 <br>
-<h2 id="-2" tabindex="-1">마무리 <a class="header-anchor" href="#-2">#</a></h2>
+<h2 id="-3" tabindex="-1">마무리 <a class="header-anchor" href="#-3">#</a></h2>
 <hr>
 <blockquote>
 <p>보통 pipe나 go 함수를 통과해 시퀀스를 계산 및 필터링하고
