@@ -11,6 +11,7 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
 {% set pageNumber = pagination.pageNumber %}
 <div>
   <ol style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}" >
+    <li>
     {% for item in pagination.items %}
         <a href="{{ item.page.url }}">
         <div class="p-3 d-flex color-bg-default Box m-3">
@@ -33,6 +34,7 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
         </a>
     {% endfor %}
     </ol>
+    </li>
 </div>
 <div class="wrapper">
   <ul id="pagination" class="sticky-bottom-nav"></ul>
@@ -60,11 +62,20 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
 
   if (page > 0) {
     li += `
-    <a href="${pageLinks[page-1]}">
+    <li class="btn" onclick="elem(allPages, ${
+      0
+    })" >
+    <a href="${pageLinks.at(0)}">
+      <span> << </span>
+    </a>
+    </li>
     <li class="btn" onclick="elem(allPages, ${
       page - 1
-    })" > < </li>
+    })" >
+    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}">
+      <span> < </span>
     </a>
+    </li>
     `;
     spaceStack.push(1)
   } else {
@@ -93,11 +104,13 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
     */
     if(page == allPages - 1) {
     li += `
-      <a href="${pageLinks[currentPage]}">
-      <li class="numb active" onclick="elem(allPages, ${currentPage})"><span>
-      ${afterPages}
-      </span></li>
-      </a>
+    <li class="numb active" onclick="elem(allPages, ${currentPage})">
+        <a href="${pageLinks[currentPage]}">
+         <span>
+          ${afterPages}
+         </span>
+        </a>
+      </li>
       `;
       spaceStack.push(1)
       break;
@@ -106,33 +119,48 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
      * 첫 페이지의 pagination
      */
     li += `
+    <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" >
       <a href="${pageLinks[currentPage]}">
-      <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" ><span>
-      ${currentPage + 1}
-      </span></li>
+      <span>
+        ${currentPage + 1}
+      </span>
       </a>
+      </li>
       `;
     spaceStack.push(1)
   }
 
   if(page == 0) {
     li += `
+    <li class="numb" onclick="elem(allPages, ${afterPages + 1})">
       <a href="${pageLinks[afterPages + 1]}">
-      <li class="numb" onclick="elem(allPages, ${afterPages + 1})" ><span>
+      <span>
         ${afterPages + 2}
-      </span></li>
+      </span>
       </a>
+    </li>
       `;
     spaceStack.push(1)
   }
 
   if (page < allPages && page !== allPages - 1) {
     li += `
-    <a href="${pageLinks[afterPages]}">
-      <li class="btn" onclick="elem(allPages, ${
+    <li class="btn" onclick="elem(allPages, ${
         page + 1
-      })" > > </li>
-    </a>
+      })" >
+      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}">
+        <span> > </span>
+      </a>
+    </li>
+    `;
+    li += `
+    <li class="btn" onclick="elem(allPages, ${
+      allPages
+      })" >
+      <a href="${pageLinks.at(-1)}">
+        <span> >> </span>
+      </a>
+    </li>
     `;
     spaceStack.push(1)
   } else {
