@@ -1,7 +1,7 @@
 ---
-title: reflow 하지 않고 이미지를 제공하는게 좋은 이유
+title: 리사이즈 하지 않고 이미지를 제공하는게 좋은 이유
 date: 2023-06-11 10:35:50
-coverURL: 
+coverURL: https://images.unsplash.com/photo-1510193806518-f731c70a35bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
 ---
 
 <br />
@@ -49,7 +49,7 @@ reflow는 브라우저의 메인 쓰레드가 그려놓은 DOM의 레이아웃�
 <br>
 <br>
 
-3. 따라서 image의 사이즈를 resize(width, height값 조정)하여 레이아웃에 맞게 변경합니다.
+3. image의 사이즈를 resize(width, height값 조정)하여 레이아웃에 맞게 변경합니다.
 {% image "./explain-reflow.png", "reflow" %}
 
 **이 때 reflow가 발생합니다.**
@@ -60,9 +60,11 @@ reflow는 브라우저의 메인 쓰레드가 그려놓은 DOM의 레이아웃�
 1. 브라우저의 메인 쓰레드는 DOM(document object model)을 먼저 그려 
 DOM Tree를 생성합니다. (DOM Tree의 레이아웃이 확정됩니다.)
 
-2. 다시 메인 쓰레드는 CSS 파일을 parsing해 그려놓은 DOM Tree에 스타일을 입히게 됩니다. (DOM Tree의 레이아웃이 CSS의 width, height 속성에 의해 재정의 되며 레이아웃을 다시 정의하게 됩니다.)
+2. 다시 메인 쓰레드는 CSS 파일을 parsing해 그려놓은 DOM Tree에 스타일을 입히게 됩니다. 
 
-3. reflow에 의해 새로 그려진 화면을 유저가 봅니다. 👀
+3. **layout이 깨지게 되어 layout에 영향을 받은 모든 DOM 노드가 새로 계산됩니다.**
+
+4. reflow에 의해 새로 그려진 화면을 유저가 봅니다. 👀
 
 문제는 reflow를 유발하는 것이고
 해결방법은 reflow를 유발하지 않는 것입니다.
@@ -82,7 +84,7 @@ DOM Tree를 생성합니다. (DOM Tree의 레이아웃이 확정됩니다.)
 위의 예시로 든 보라색 사각형은 게시글의 cover 이미지로
 모든 게시글마다 같은 사이즈를 부여 할 것입니다.
 
-90 * 90의 사이즈를 정해놓고 해당 사이즈만 사용한다고 하면
+92 * 92의 사이즈를 정해놓고 해당 사이즈만 사용한다고 하면
 
 reflow를 방지 할 수 있습니다.
 
@@ -125,11 +127,8 @@ reflow를 방지 할 수 있습니다.
 ---
 
 예시 코드로 지금 이 블로그 게시글의 cover image를 리사이즈 한 코드입니다.
-node_modules가 커지는게 싫어서 node에서 기본 제공하는 https를 사용했습니다.
 
-이미지의 resize는 node.js 세계에선 <a target="_blank" href="https://www.npmjs.com/package/sharp?activeTab=readme">sharp</a>라는 라이브러리를 사용하겠습니다.
-(내부적으로 c++을 사용함)
-
+이미지의 resize를 위해 node.js의 <a target="_blank" href="https://www.npmjs.com/package/sharp?activeTab=readme">sharp</a>라는 라이브러리를 많이 사용하겠습니다.
 ```js
 			const convertedBase64 = new Promise((resolve, reject) => {
 				https.get( // url을 통해 image chunk를 받아옴
@@ -174,14 +173,19 @@ node_modules가 커지는게 싫어서 node에서 기본 제공하는 https를 �
 
 서버측에서 이미지를 리사이즈 했을 때와 아닐 때의 차이를 보면..
 
+- 🔽 882kb의 크기를 가진 이미지이며 css를 통해 사이즈를 줄여 92 * 92의 크기로 보여집니다.
+
 {% image "./image-size-compare-a.png", "image 882kb"%}
 
-- ⬆️ 882kb의 크기를 가진 이미지이며 css를 통해 사이즈를 줄여 90 * 90의 크기로 보여집니다.
+
+- ️🔽 서버에서 리사이즈 되어 그냥 렌더링만 했습니다. 마찬가지로 92 * 92 사이즈입니다.
 
 {% image "./image-size-compare-b.png", "image 18.3kb"%}
 
-- ⬆️ 서버에서 리사이즈 되어 그냥 렌더링만 했습니다. 마찬가지로 90 * 90 사이즈입니다.
 이미지 사이즈는 18.3kb입니다.
+
+리사이즈를 통해 이미지 자체도 화질과 크기가 변경되어
+이미지의 외곽이 잘릴 수 있다는 것을 명심해야합니다.
 
 
 <br>
