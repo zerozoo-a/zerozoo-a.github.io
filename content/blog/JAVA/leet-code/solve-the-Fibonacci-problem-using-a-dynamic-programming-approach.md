@@ -117,6 +117,58 @@ class Solution {
 <br>
 <br>
 
+## dp 배열을 통한 해결
+---
+
+
+dp를 통해 상향식으로 문제를 해결해보겠습니다.
+
+array를 생성하고 dp[1], dp[2]부터 값을 채워 나갑니다.
+초항과 그 다음 항은 피보나치 수열을 반복하는데 필수적인 요소이므로
+직접 넣어줍니다.
+
+그 다음은 반복문을 돌면서 dp[3], dp[4], ...dp[n]까지
+값을 채워줍니다.
+
+```java
+
+class Solution {
+    public int fib(int n) {
+        if(n == 0) return 0;
+        if(n == 1 || n == 2) return 1;
+        int[] dp = new int[n + 1];
+        dp[1] = dp[2] = 1;
+        for(int i = 3; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+}
+```
+
+{% image "./profile-fib-arrayDP.png", "profile solving memoization method" %}
+
+위 알고리즘은 실제 문제 구조를 나타내는 수학식인 상태 전이 방정식과 연결된다.
+
+$$f(n)=\begin{cases}
+\text{ if } 1,\space{1}(n = 1, 2) \\
+\text { if } f(n - 1) + f(n - 2),\space{1}(n > 2)
+\end{cases}$$
+
+상태 전이 방정식은 고급스러운 이름일 뿐이고 
+f(n)을 n으로 만들기 위해 $n - 1$과 $n - 2$를 더하고 옮기는 바로 이것을 상태 전이라 한다.
+
+
+(출처 알고리즘 치트시트 / 푸둥라이 저)
+
+아래의 마지막 예제는 상태 전이 방정식만을 사용한 방법이다.
+
+
+
+<br>
+<br>
+<br>
+
 ## 반복문을 통한 해결
 ---
 
