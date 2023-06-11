@@ -14,19 +14,17 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
     <li>
     {% for item in pagination.items %}
         <a href="{{ item.page.url }}">
-        <div class="p-3 d-flex color-bg-default Box m-3">
+        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
           {% if(item.data.cover) %}
             <img class="cover-img" src="/covers/{{item.data.cover}}" alt="cover image" height="auto" loading="lazy" decoding="async"/>
           {% elif(item.data.coverURL) %}
             <img class="cover-img" src={% convert item.data.coverURL %} alt="cover image" height="auto" />
           {% endif %}
-          <div class="d-flex pl-3 pb-3 pr-3 flex-direction-col">
-              <h3 class="d-flex flex-items-center">
+          <div class="d-flex pl-3 flex-direction-col post-title-container">
+              <h5 class="d-flex flex-items-center post-title">
                   {% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}
-              </h3>
-            <div>
-              <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">Created at: {{ item.page.date | readableDate("yyyy년 LL월 dd일 hh시 mm분 ss초") }}</time>
-            </div>
+              </h5>
+              <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">{{ item.page.date | readableDate("yyyy/LL/dd") }}</time>
           </div>
         </div>
         </a>

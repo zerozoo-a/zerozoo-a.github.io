@@ -2,6 +2,8 @@ const path = require("path");
 const eleventyImage = require("@11ty/eleventy-img");
 const https = require("https");
 const sharp = require("sharp");
+const File = require("fs/promises");
+const Fs = require("fs");
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = (eleventyConfig) => {
@@ -25,6 +27,23 @@ module.exports = (eleventyConfig) => {
 		 * @param {string} url
 		 */
 		async (url) => {
+			const PATH = "imageURL2base64Db.json";
+			const isFileExists = Fs.existsSync(PATH);
+			if (!isFileExists) {
+				await File.writeFile(PATH, JSON.stringify({ empty: "" })).catch((e) =>
+					console.error(e)
+				);
+			}
+			const cachedData = JSON.parse(
+				await File.readFile(PATH, { encoding: "utf-8" })
+			);
+
+			if (cachedData[url]) {
+				// use cached data
+				console.log("use cached data");
+				return cachedData[url];
+			}
+
 			const convertedBase64 = new Promise((resolve, reject) => {
 				https.get(
 					url,
@@ -44,7 +63,7 @@ module.exports = (eleventyConfig) => {
 							.on("end", () => {
 								const buffer = Buffer.concat(chunks);
 								new Promise((res) => {
-									res(sharp(buffer).resize(92, 92).toBuffer()); // image resize to 92, 92
+									res(sharp(buffer).resize(78, 78).toBuffer()); // image resize
 								}).then((res) => {
 									const base64 = res.toString("base64");
 									resolve(base64);
@@ -57,8 +76,15 @@ module.exports = (eleventyConfig) => {
 					}
 				);
 			});
+			const base64 = `data:image/png;base64,${await convertedBase64}`;
+			// update json object
+			cachedData[url] = base64;
+			const updatedJSON = JSON.stringify(cachedData, null, 2);
+			await File.writeFile(PATH, updatedJSON, "utf8", (err) => {
+				console.error(err);
+			});
 
-			return `data:image/png;base64,${await convertedBase64}`;
+			return base64;
 		}
 	);
 
