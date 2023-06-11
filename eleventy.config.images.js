@@ -1,7 +1,7 @@
 const path = require("path");
 const eleventyImage = require("@11ty/eleventy-img");
 const https = require("https");
-const fs = require("fs");
+const sharp = require("sharp");
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = (eleventyConfig) => {
@@ -43,8 +43,12 @@ module.exports = (eleventyConfig) => {
 						res
 							.on("end", () => {
 								const buffer = Buffer.concat(chunks);
-								const base64 = buffer.toString("base64");
-								resolve(base64);
+								new Promise((res) => {
+									res(sharp(buffer).resize(92, 92).toBuffer()); // image resize to 92, 92
+								}).then((res) => {
+									const base64 = res.toString("base64");
+									resolve(base64);
+								});
 							})
 							.on("error", (err) => {
 								console.error(err);
