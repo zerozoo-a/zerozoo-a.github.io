@@ -20,7 +20,7 @@ reflow는 브라우저의 메인 쓰레드가 그려놓은 DOM의 레이아웃�
 알아보도록 하겠습니다. 
 
 **자세한 기술적 내용은 링크를 참조해주세요**
-<a href="https://developers.google.com/speed/docs/insights/browser-reflow?hl=ko">브라우저 리플로우 최소화</a>
+<a target="_blank" href="https://developers.google.com/speed/docs/insights/browser-reflow?hl=ko">브라우저 리플로우 최소화</a>
 
 
 <br>
@@ -93,15 +93,17 @@ reflow를 방지 할 수 있습니다.
 1. 이미지를 서버에서 사이즈 width * height로 변환한다.
 2. client에서 css를 제거한다.
 
-(이렇게 말은 참 쉽습니다. 🙈)
+~~(이렇게 말은 참 쉽습니다. 🙈)~~
+
 
 서버 측에서 이미지를 고정해놓고 보내준다면 client 개발자는
 그저 사용하기만 하면 될 뿐입니다.
 
+
 반응형 사이트의 경우 small, medium, large등으로 사이즈를
 정해놓고 
 
-<a href="https://developer.mozilla.org/ko/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images">img태그에 srcset과 sizes을 제공하면 됩니다.</a>
+<a target="_blank" href="https://developer.mozilla.org/ko/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images">img태그에 srcset과 sizes을 제공하면 됩니다.</a>
 
 
 ```html
@@ -115,7 +117,80 @@ reflow를 방지 할 수 있습니다.
 
 이렇게 반응형에도 대응 할 수 있도록 작성한다면 불필요한 css를 제거 할 수 있습니다.
 
+<br>
+<br>
+<br>
+
+## 예시
+---
+
+예시 코드로 지금 이 블로그 게시글의 cover image를 리사이즈 한 코드입니다.
+node_modules가 커지는게 싫어서 node에서 기본 제공하는 https를 사용했습니다.
+
+이미지의 resize는 node.js 세계에선 <a target="_blank" href="https://www.npmjs.com/package/sharp?activeTab=readme">sharp</a>라는 라이브러리를 사용하겠습니다.
+(내부적으로 c++을 사용함)
+
+```js
+			const convertedBase64 = new Promise((resolve, reject) => {
+				https.get( // url을 통해 image chunk를 받아옴
+					url,
+					{
+						headers: {
+							"User-Agent": "Mozilla/5.0",
+						},
+					},
+					(res) => {
+						const chunks = []; // chunks가 쌓일 배열
+
+						res.on("data", (chunk) => { // data가 수신 될 경우 실행될 콜백 함수
+							chunks.push(chunk); // event로 data를 chunks에 밀어 넣어 줌
+						});
+
+						res
+							.on("end", () => { // 받아오는게 다 끝났다면 실행되는 콜백 함수
+								const buffer = Buffer.concat(chunks); // Buffer를 통해 합쳐 줍니다.
+								new Promise((res) => { // async await을 지원하지 않기 때문에 Promise 객체 사용
+									res(sharp(buffer).resize(92, 92).toBuffer()); // image resize to 92, 92 라이브러리를 통한 리사이즈
+								}).then((res) => {
+									const base64 = res.toString("base64");
+									resolve(base64); // base64 포멧으로 출력
+								});
+							})
+							.on("error", (err) => {
+								console.error(err);
+								reject(err); // 에러 처리는 이 곳에서..
+							});
+					}
+				);
+			});
+
+			return `data:image/png;base64,${await convertedBase64}`;
+```
+
+이런식으로 사용하게 되면 충분히 서버측에서도 이미지의 리사이즈가 가능합니다.
+서버는 browser render와는 무관하므로 열심히 리사이즈를 할 수 있습니다.
+
+이제 클라이언트는 이 이미지를 사용하기만 하면 됩니다.
+
+서버측에서 이미지를 리사이즈 했을 때와 아닐 때의 차이를 보면..
+
+{% image "./image-size-compare-a.png", "image 882kb"%}
+
+- ⬆️ 882kb의 크기를 가진 이미지이며 css를 통해 사이즈를 줄여 90 * 90의 크기로 보여집니다.
+
+{% image "./image-size-compare-b.png", "image 18.3kb"%}
+
+- ⬆️ 서버에서 리사이즈 되어 그냥 렌더링만 했습니다. 마찬가지로 90 * 90 사이즈입니다.
+이미지 사이즈는 18.3kb입니다.
+
+
+<br>
+<br>
+<br>
+
 ## 정리
+---
+
 
 CSS에 의해 reflow, repaint등이 일어나는 것은 
 버그도 에러도 아닙니다. 따라서 IDE나 compiler 등이 경고해주지 않죠
