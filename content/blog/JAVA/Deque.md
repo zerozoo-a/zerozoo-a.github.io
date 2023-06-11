@@ -1,7 +1,6 @@
 ---
 title: Deque
 date: 2023-05-28 22:04:24
-cover: Structure_definition-Deque.webp
 ---
 
 {% image "Structure_definition-Deque.webp", "Deque" %}

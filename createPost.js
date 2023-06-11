@@ -52,4 +52,4 @@ const main = async (title) => {
 	}
 };
 
-main(process.argv.splice(2).join(" "));
+main(process.argv.splice(2).join("-"));
