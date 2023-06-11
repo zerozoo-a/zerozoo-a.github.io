@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>리사이즈 하지 않고 이미지를 제공하는게 좋은 이유</title>
+		<title>리사이즈를 피하는 방법</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -1207,7 +1207,7 @@ blockquote {
 	
 </figure>
 
-<h1>리사이즈 하지 않고 이미지를 제공하는게 좋은 이유</h1>
+<h1>리사이즈를 피하는 방법</h1>
 
 <ul class="post-metadata pt-2">
 	<li><time datetime="2023-06-11">11 June 2023</time></li>
@@ -1281,8 +1281,7 @@ DOM Tree를 생성합니다. (DOM Tree의 레이아웃이 확정됩니다.)</p>
 </li>
 </ol>
 <p>문제는 reflow를 유발하는 것이고
-해결방법은 reflow를 유발하지 않는 것입니다.</p>
-<p>단순하죠?</p>
+해결방법은 reflow를 유발하지 않는 것입니다.😵‍💫</p>
 <br>
 <br>
 <br>
@@ -1294,7 +1293,7 @@ DOM Tree를 생성합니다. (DOM Tree의 레이아웃이 확정됩니다.)</p>
 모든 게시글마다 같은 사이즈를 부여 할 것입니다.</p>
 <p>92 * 92의 사이즈를 정해놓고 해당 사이즈만 사용한다고 하면</p>
 <p>reflow를 방지 할 수 있습니다.</p>
-<p>어떻게 하면 좋을까요?</p>
+<p>어떻게 하면 좋을까요? 🤔</p>
 <p>바로 리사이즈 작업을 클라이언트에서 서버로 옮기는 것입니다.</p>
 <ol>
 <li>이미지를 서버에서 사이즈 width * height로 변환한다.</li>
@@ -1314,7 +1313,9 @@ DOM Tree를 생성합니다. (DOM Tree의 레이아웃이 확정됩니다.)</p>
 <h2 id="-1" tabindex="-1">예시 <a class="header-anchor" href="#-1">#</a></h2>
 <hr>
 <p>예시 코드로 지금 이 블로그 게시글의 cover image를 리사이즈 한 코드입니다.</p>
-<p>이미지의 resize를 위해 node.js의 <a target="_blank" href="https://www.npmjs.com/package/sharp?activeTab=readme">sharp</a>라는 라이브러리를 많이 사용하겠습니다.</p>
+<p>이미지의 resize를 위해 node.js의 <a target="_blank" href="https://www.npmjs.com/package/sharp?activeTab=readme">sharp</a>라는 라이브러리를 사용하겠습니다.</p>
+<p>image address를 받기 위해서는 http 통신이 필요합니다.
+이는 node에서 제공하는 api인 https를 사용하겠습니다.</p>
 <pre class="language-js" tabindex="0"><code class="language-js">			<span class="token keyword">const</span> convertedBase64 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><br>				https<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span> <span class="token comment">// url을 통해 image chunk를 받아옴</span><br>					url<span class="token punctuation">,</span><br>					<span class="token punctuation">{</span><br>						<span class="token literal-property property">headers</span><span class="token operator">:</span> <span class="token punctuation">{</span><br>							<span class="token string-property property">"User-Agent"</span><span class="token operator">:</span> <span class="token string">"Mozilla/5.0"</span><span class="token punctuation">,</span><br>						<span class="token punctuation">}</span><span class="token punctuation">,</span><br>					<span class="token punctuation">}</span><span class="token punctuation">,</span><br>					<span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><br>						<span class="token keyword">const</span> chunks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// chunks가 쌓일 배열</span><br><br>						res<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"data"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">chunk</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token comment">// data가 수신 될 경우 실행될 콜백 함수</span><br>							chunks<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// event로 data를 chunks에 밀어 넣어 줌</span><br>						<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>						res<br>							<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"end"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token comment">// 받아오는게 다 끝났다면 실행되는 콜백 함수</span><br>								<span class="token keyword">const</span> buffer <span class="token operator">=</span> Buffer<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>chunks<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Buffer를 통해 합쳐 줍니다.</span><br>								<span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token comment">// async await을 지원하지 않기 때문에 Promise 객체 사용</span><br>									<span class="token function">res</span><span class="token punctuation">(</span><span class="token function">sharp</span><span class="token punctuation">(</span>buffer<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span><span class="token number">92</span><span class="token punctuation">,</span> <span class="token number">92</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// image resize to 92, 92 라이브러리를 통한 리사이즈</span><br>								<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><br>									<span class="token keyword">const</span> base64 <span class="token operator">=</span> res<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token string">"base64"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>									<span class="token function">resolve</span><span class="token punctuation">(</span>base64<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// base64 포멧으로 출력</span><br>								<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>							<span class="token punctuation">}</span><span class="token punctuation">)</span><br>							<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"error"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><br>								console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span><br>								<span class="token function">reject</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 에러 처리는 이 곳에서..</span><br>							<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>					<span class="token punctuation">}</span><br>				<span class="token punctuation">)</span><span class="token punctuation">;</span><br>			<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>			<span class="token keyword">return</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">data:image/png;base64,</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">await</span> convertedBase64<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span></code></pre>
 <p>이런식으로 사용하게 되면 충분히 서버측에서도 이미지의 리사이즈가 가능합니다.
 서버는 browser render와는 무관하므로 열심히 리사이즈를 할 수 있습니다.</p>
