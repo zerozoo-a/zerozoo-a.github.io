@@ -1,5 +1,5 @@
 ---
-title: 리사이즈 하지 않고 이미지를 제공하는게 좋은 이유
+title: 리사이즈를 피하는 방법 
 date: 2023-06-11 10:35:50
 coverURL: https://images.unsplash.com/photo-1510193806518-f731c70a35bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
 ---
@@ -67,9 +67,7 @@ DOM Tree를 생성합니다. (DOM Tree의 레이아웃이 확정됩니다.)
 4. reflow에 의해 새로 그려진 화면을 유저가 봅니다. 👀
 
 문제는 reflow를 유발하는 것이고
-해결방법은 reflow를 유발하지 않는 것입니다.
-
-단순하죠?
+해결방법은 reflow를 유발하지 않는 것입니다.😵‍💫
 
 <br>
 <br>
@@ -88,7 +86,7 @@ DOM Tree를 생성합니다. (DOM Tree의 레이아웃이 확정됩니다.)
 
 reflow를 방지 할 수 있습니다.
 
-어떻게 하면 좋을까요?
+어떻게 하면 좋을까요? 🤔
 
 바로 리사이즈 작업을 클라이언트에서 서버로 옮기는 것입니다.
 
@@ -128,7 +126,11 @@ reflow를 방지 할 수 있습니다.
 
 예시 코드로 지금 이 블로그 게시글의 cover image를 리사이즈 한 코드입니다.
 
-이미지의 resize를 위해 node.js의 <a target="_blank" href="https://www.npmjs.com/package/sharp?activeTab=readme">sharp</a>라는 라이브러리를 많이 사용하겠습니다.
+이미지의 resize를 위해 node.js의 <a target="_blank" href="https://www.npmjs.com/package/sharp?activeTab=readme">sharp</a>라는 라이브러리를 사용하겠습니다.
+
+image address를 받기 위해서는 http 통신이 필요합니다.
+이는 node에서 제공하는 api인 https를 사용하겠습니다.
+
 ```js
 			const convertedBase64 = new Promise((resolve, reject) => {
 				https.get( // url을 통해 image chunk를 받아옴
