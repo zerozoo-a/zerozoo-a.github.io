@@ -3,7 +3,7 @@ title: 비교하자 compareTo
 date: 2023-05-29 21:58:27
 coverURL: https://images.unsplash.com/photo-1528476625962-40d0763c921f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=830&q=80
 ---
-{% image "./Compare.avif", "compare image"%}
+{% image "./images/Compare.avif", "compare image"%}
 
 compareTo method는 유니코드(아스키보다 넓은 범위)까지 지원하는 비교 함수입니다.
 

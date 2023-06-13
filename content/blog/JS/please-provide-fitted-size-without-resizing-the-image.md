@@ -38,19 +38,19 @@ reflow는 브라우저의 메인 쓰레드가 그려놓은 DOM의 레이아웃�
 - 보라색 사각형은 유저가 입력한 imageURL을 기반으로 img 태그를 렌더링한 결과입니다.
 
 1. 사이트는 아래와 같은 레이아웃을 가지고 있습니다.
-{% image "./explain-reflow.png", "reflow" %}
+{% image "./images/explain-reflow.png", "reflow" %}
 
 <br>
 <br>
 
 2. 보라색 사각형은 유저들이 입력한 image로 사이즈가 제각기 다릅니다.
-{% image "./explain-reflow-2.png", "reflow" %}
+{% image "./images/explain-reflow-2.png", "reflow" %}
 
 <br>
 <br>
 
 3. image의 사이즈를 resize(width, height값 조정)하여 레이아웃에 맞게 변경합니다.
-{% image "./explain-reflow.png", "reflow" %}
+{% image "./images/explain-reflow.png", "reflow" %}
 
 **이 때 reflow가 발생합니다.**
 
@@ -177,12 +177,12 @@ image address를 받기 위해서는 http 통신이 필요합니다.
 
 - 🔽 882kb의 크기를 가진 이미지이며 css를 통해 사이즈를 줄여 92 * 92의 크기로 보여집니다.
 
-{% image "./image-size-compare-a.png", "image 882kb"%}
+{% image "./images/image-size-compare-a.png", "image 882kb"%}
 
 
 - ️🔽 서버에서 리사이즈 되어 그냥 렌더링만 했습니다. 마찬가지로 92 * 92 사이즈입니다.
 
-{% image "./image-size-compare-b.png", "image 18.3kb"%}
+{% image "./images/image-size-compare-b.png", "image 18.3kb"%}
 
 이미지 사이즈는 18.3kb입니다.
 

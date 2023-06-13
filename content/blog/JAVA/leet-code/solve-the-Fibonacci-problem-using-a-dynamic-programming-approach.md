@@ -39,7 +39,7 @@ class Solution {
 ```
 소모된 실행시간과 메모리 비트 수를 그래프로 나타낸 모습
 무려 런타임 8ms가 나왔다.
-{% image "./profile-fib-brute-force.png", "profile solving brute force method" %}
+{% image "../images/profile-fib-brute-force.png", "profile solving brute force method" %}
 
 - 단순 재귀 호출입니다. 
 
@@ -80,7 +80,7 @@ class Solution {
 ```
 속도는 0ms가 나왔습니다. 기존의 로직에 비하면 놀라운 발전이죠
 
-{% image "./profile-fib-memoization.png", "profile solving memoization method" %}
+{% image "../images/profile-fib-memoization.png", "profile solving memoization method" %}
 
 - 메모 전략을 통해 값을 구한적이 있다면 그냥 반환함
 - 아니라면 저장하고 반환 함
@@ -136,7 +136,7 @@ class Solution {
 ```
 수치가 준수합니다.
 
-{% image "./profile-fib-arrayDP.png", "profile solving memoization method" %}
+{% image "../images/profile-fib-arrayDP.png", "profile solving memoization method" %}
 
 아래는 책의 인용입니다.
 
@@ -180,7 +180,7 @@ class Solution {
 ```
 메모리와 사용된 비트수가 압도적인 이 방법은 뭘까요?
 
-{% image "./profile-fib-iterate.png", "profile solving iterate method" %}
+{% image "../images/profile-fib-iterate.png", "profile solving iterate method" %}
 
 이 방법은 하나의 아이디어를 통한 해결방법입니다.
 

@@ -4,7 +4,7 @@ date: 2023-06-08 22:59:02
 coverURL: https://images.unsplash.com/photo-1565495612491-a830ecb85626?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80
 ---
 
-{% image "basic_of_thread_pool2.avif", "pool"%}
+{% image "./images/basic_of_thread_pool2.avif", "pool"%}
 
 ## Executors에 대해
 

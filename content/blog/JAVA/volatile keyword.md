@@ -3,7 +3,7 @@ title: volatile keyword와 가시성 feat.cpu-cache
 date: 2023-06-06 17:59:23
 coverURL: https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
 ---
-{% image "circuit.avif", "https://unsplash.com/ko/%EC%82%AC%EC%A7%84/EUsVwEOsblE"%}
+{% image "./images/circuit.avif", "https://unsplash.com/ko/%EC%82%AC%EC%A7%84/EUsVwEOsblE"%}
 
 
 ## cpu cache에 대해
@@ -15,7 +15,7 @@ cpu와 memory간의 속도차는 상당합니다.
 cpu는 main memory의 값을 계속 조회하는 대신
 동일한 변수에 대한 조회 요청에는 cpu cache를 조회합니다.
 
-{% image "cpu-cache.png", "cpu-cache" %}
+{% image "./images/cpu-cache.png", "cpu-cache" %}
 
 이미지로는 위와 같은 이미지가 그려지게 됩니다.
 cpu는 어셈블리어로 변환된 코드를 읽고 그대로 실행하게 되는데요
@@ -37,7 +37,7 @@ cpu는 어셈블리어로 변환된 코드를 읽고 그대로 실행하게 되�
 multi thread라면 공유 자원에 접근할 때 문제가 발생합니다.
 바로 아래 이미지와 같은 상황입니다.
 
-{% image "cpu-cache2.png", "cpu-cache2" %}
+{% image "./images/cpu-cache2.png", "cpu-cache2" %}
 
 cpuA가 LOAD 한 값은 foo 변수의 false입니다.
 

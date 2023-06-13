@@ -1,6 +1,5 @@
 const { DateTime } = require("luxon");
 const markdownItAnchor = require("markdown-it-anchor");
-const md = require("markdown-it");
 const mk = require("@iktakahiro/markdown-it-katex");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
@@ -11,6 +10,7 @@ const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 const pluginDrafts = require("./eleventy.config.drafts.js");
 const pluginImages = require("./eleventy.config.images.js");
 const pluginTOC = require("eleventy-plugin-toc");
+// const { mermaidAPI } = require("mermaid/dist/mermaidAPI.js");
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = function (eleventyConfig) {
@@ -49,6 +49,20 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPlugin(pluginNavigation);
 	eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
 	eleventyConfig.addPlugin(pluginBundle);
+
+	// eleventyConfig.addFilter("mer", () => {
+	// 	mermaidAPI.render();
+	// });
+	eleventyConfig.addAsyncShortcode(
+		"uml",
+		/**
+		 *
+		 * @param {string} contents
+		 */
+		async (contents) => {
+			console.log(">>> contents: ", contents);
+		}
+	);
 
 	// Filters
 	eleventyConfig.addFilter("readableDate", (dateObj, format, zone) => {

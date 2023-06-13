@@ -4,7 +4,7 @@ date: 2023-05-31 22:43:29
 coverURL: https://images.unsplash.com/photo-1442570468985-f63ed5de9086?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1840&q=80
 ---
 
-{% image "train.avif", "ahaha"%}
+{% image "./images/train.avif", "ahaha"%}
 
 하나의 메서드를 구현하는데 자바는 이런 저런 수고가 든다.
 
