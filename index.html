@@ -37,7 +37,6 @@
 	}
 }
 * { box-sizing: border-box; }
-reset
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -49,12 +48,12 @@ body {
 ol, ul {
 	list-style: none;
 }
-.post-content > ol, .post-content > ul {
+/* .post-content > ol, .post-content > ul {
 	list-style: inside;
-}
-.post-content > ol > li > *, .post-content > ul > li > * {
+} */
+/* .post-content > ol > li > *, .post-content > ul > li > * {
     display: inline;
-}
+} */
 /* Defaults */
 :root {
 	--font-family: -apple-system, system-ui, sans-serif;
@@ -94,7 +93,16 @@ ol, ul {
 	--text-color-link: #082840;
 	--text-color-link-active: #5f2b48;
 	--text-color-link-visited: #17050F;
-
+    --adaptiveGrey50: #f9fafb;
+    --adaptiveGrey100: #f2f4f6;
+    --adaptiveGrey200: #e5e8eb;
+    --adaptiveGrey300: #d1d6db;
+    --adaptiveGrey400: #b0b8c1;
+    --adaptiveGrey500: #8b95a1;
+    --adaptiveGrey600: #6b7684;
+    --adaptiveGrey700: #4e5968;
+    --adaptiveGrey800: #333d4b;
+    --adaptiveGrey900: #191f28;
 	--syntax-tab-size: 2;
 	--color-canvas-default-transparent: rgba(13,17,23,0);
     --color-page-header-bg: #0d1117;
@@ -966,6 +974,7 @@ h2 + .header-anchor {
 }
 .cover-img {
 	border-radius:8px;
+    aspect-ratio: 1 / 1;
 }
 .flex-center {
     display: flex;
@@ -990,18 +999,6 @@ h2 + .header-anchor {
     text-align: center;
 }
 
-blockquote {
-    background-color: var(--color-checks-ansi-blue);
-    border-color: var(--color-border-default);
-    border-radius: var(--borderRadius-medium, 6px);
-    border-style: solid;
-    border-width: var(--borderWidth-thin, 1px);
-    box-shadow: var(--color-shadow-medium) !important;
-    padding: var(--base-size-16, 16px) !important;
-    margin-top: var(--base-size-24, 24px) !important;
-    margin-bottom: var(--base-size-24, 24px) !important;
-    color: var(--color-ansi-white-bright);
-}
 
 .numb {
     color: var(--color-btn-text);
@@ -1068,6 +1065,8 @@ blockquote {
     
         <a href="/blog/JAVA/leet-code/coin-change-problem/">
         <div class="p-3 d-flex color-bg-default Box m-3 post-container">
+          
+            <img class="cover-img" src=data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABOAE4DASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAAAAAAAgMEBQYHAQAI/8QAMhAAAgEDAgQFAQcFAQAAAAAAAQIDAAQRBSEGBxIxE0FRYYFxCBQiQpGhsSQyUmJy0f/EABkBAAMBAQEAAAAAAAAAAAAAAAABAgMEBf/EAB4RAAIDAAMBAQEAAAAAAAAAAAABAgMREiExBBNB/9oADAMBAAIRAxEAPwD5raIoxDAgjYg+VdVKsnGlkLTXZ0C9PUEkxjG7KCf5qDVKxjLVp1NCQjohHmnCptRqlMMOWGn3N/dx2tjby3NzIcJFEhZmPsBVh1Hl7xTp1k93d6JdpboOp2UK/QPVgpJFa3yT06107hM6mq/1l9K8bSAfiCocCNfqdz67elaLZRSws11LIY2QZVIyMKfT3Pv2H86KvV6cFv2OE+KXSPjYx0mY6vnNfTrWw45v1sYlhgmCXAiUYWMuuWUDyGc7e9V7QdMXVNYtrN5PCjkYmRwMlUAJYj3wD81n50dsZKUVJECyYoCta+umRWSmKLTrZYxnaRFY4x3YnfO+5qta7w7BdSiawQW3Ud1I/Cw9QPKo5lJb4J8w76DUuKr2a0x93UrDGR+ZUULn5wT81W1WjJ6jWs8uuDtMOlw3+sQrdXF0vVCjk9EI7gkeZPv61nOxUw1mkYc3iMoVdqICtv474Q4fk4Ne8sbYWmtRdUw8IBUaMfkYDYnAJBHpWJgU6rVYtQSjxZpXKrj+34btJtN1WLqtWcyQy4z4RbHUDjfBwDtV91LmnosFt1rci6JGfBgXGCBsBsB8mvnoCiA2rdTaWI5J/JXZLkx3xDqk2t6zd6jcgCSd+rpByFHYKPoABQaBcrZaxbTyHpjBKsfQEYz+9NSKErUnRmLDU72KeW0WLqVAWyCqkgqd85+B9c0hZ6Xc6jM9tpUCzsv4iScHAOMn5aqRYa/f2UCwK4lhXZUkyen2B7iktR1u+vIxF4ngQBuvw4cqC3qT3J3Pc+dRx77F2l0RKit85TapoOp8Oi3vrvwNTtIVi8AuEaYA4BXOxGMZ89vesDWjAB770rK1Z6XGTj4bhzP1vTNP02WG0u0lv7hDGIEcMYs7FmxsBjsO9YmBXlGBsKIUqqlWsRUpOXp4CpTh3SLjXNVisbUqrvlmd/7UUbljUZVt5Y3cdrxTEkrBBcxtArHt1EggfJGPmtUZWNqLaLhZcstKngVXur0yN2lRlx7Hpx+1UDjDhi54avzDLKlzbsSI7iMYVseRHkfatxtrSZbZI2VmwSnR6Nntj/2qTzUe3GjXKFlDfeo44VGMFlDdZHsBgE/7Cqa6OGi6cp43qMiIoWpQ0BFSegIqaUU03VqVU0CFxRedKafaXOoXkNpYwSXF1MwSOKNcszHyAqR4h4f1Thy9W01q0a2nZetQWDBh22IJB32PpRj9Dktwi6Jdtx3ocgV0NSGXKz5jcR21qsBu0nCr0q80YZwP+u5+p3qsatqd3qlz499MZHxgDGAo9AB2pmTQsaetkRrjF7FHiaA14mgZsUFjJHpZXpkppRWpkG5fZqs4m4gv9SdA89uixQ536WcNk/ouPmnX2ibmGRdKJI+8zXE0wX/FOlFP6sM/FZjy841vOC9Xa8tYEuYpFCywOxUNg5BBHYg/yab8a8V33F2vTapqIjjZh0RwxDCRIOyr+pJPmTWjmvz4/wBOb8Zv6P0fhF9VdDU16zXQ5rI69HJahLUiXoSxoDRVmpMtQlqAtQB//9k= alt="cover image" height="auto" />
           
           <div class="d-flex pl-3 flex-direction-col post-title-container">
               <h5 class="d-flex flex-items-center post-title">
