@@ -102,9 +102,9 @@ module.exports = (eleventyConfig) => {
 				formats,
 				outputDir: path.join(eleventyConfig.dir.output, "img"), // Advanced usage note: `eleventyConfig.dir` works here because we’re using addPlugin.
 			});
-			// return eleventyImage.generateHTML(metadata, imageAttributes);
+			
 			let data = metadata.webp[metadata.webp.length - 1];
-			return `<img src="${data.url}" width="100%" height="auto" alt="${alt}" loading="lazy" decoding="async">`;
+			return `<div class="img-container"><img src="${data.url}" width="100%" height="auto" alt="${alt}" loading="lazy" decoding="async"></div>`;
 		}
 	);
 
