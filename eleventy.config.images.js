@@ -124,7 +124,7 @@ module.exports = (eleventyConfig) => {
 				outputDir: "_site/covers",
 			});
 			let data = metadata.webp[metadata.webp.length - 1];
-			return `<img src="${data.url}" width="100%" height="auto" alt="${alt}" loading="lazy" decoding="async">`;
+			return `<img src="${data.url}" alt="${alt}" decoding="async">`;
 		}
 	);
 };
