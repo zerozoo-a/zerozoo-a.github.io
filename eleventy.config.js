@@ -1,6 +1,7 @@
 const { DateTime } = require("luxon");
 const markdownItAnchor = require("markdown-it-anchor");
 const mk = require("@iktakahiro/markdown-it-katex");
+const mu = require("markdown-it-textual-uml");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginBundle = require("@11ty/eleventy-plugin-bundle");
@@ -10,7 +11,6 @@ const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 const pluginDrafts = require("./eleventy.config.drafts.js");
 const pluginImages = require("./eleventy.config.images.js");
 const pluginTOC = require("eleventy-plugin-toc");
-// const { mermaidAPI } = require("mermaid/dist/mermaidAPI.js");
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = function (eleventyConfig) {
@@ -50,21 +50,6 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
 	eleventyConfig.addPlugin(pluginBundle);
 
-	// eleventyConfig.addFilter("mer", () => {
-	// 	mermaidAPI.render();
-	// });
-	eleventyConfig.addAsyncShortcode(
-		"uml",
-		/**
-		 *
-		 * @param {string} contents
-		 */
-		async (contents) => {
-			console.log(">>> contents: ", contents);
-		}
-	);
-
-	// Filters
 	eleventyConfig.addFilter("readableDate", (dateObj, format, zone) => {
 		// Formatting tokens for Luxon: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
 		return DateTime.fromJSDate(dateObj, { zone: zone || "utc" }).toFormat(
@@ -164,6 +149,7 @@ module.exports = function (eleventyConfig) {
 			slugify: eleventyConfig.getFilter("slugify"),
 		});
 		mdLib.use(mk);
+		mdLib.use(mu);
 	});
 
 	eleventyConfig.addCollection("myCustomSort", function (collectionApi) {
