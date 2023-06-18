@@ -1,5 +1,5 @@
 ---
-title: 동전 바꾸기 문제와 재귀
+title: 동전 교환 문제 - 재귀
 date: 2023-06-13 01:00:27
 coverURL: https://images.unsplash.com/photo-1587403335644-fa8fef06b261?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1772&q=80
 ---
