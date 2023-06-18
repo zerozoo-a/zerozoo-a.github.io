@@ -1,13 +1,15 @@
 ---
-title: coin-change-problem-bottom-up
+title: 동전 교환 문제 bottom-up
 date: 2023-06-18 15:14:21
-coverURL: 
+coverURL: https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
 ---
 <br />
 <br />
 <br />
 
 ## coin change 문제에서 bottom up의 접근
+
+<a href="https://leetcode.com/problems/coin-change">leet code</a>
 
 문제는 이전 게시글인 <a href="/blog/JAVA/leet-code/coin-change-problem/">재귀 트리를 통한 접근</a>에 있습니다.
 
@@ -179,6 +181,10 @@ public class CoinChangeIterate {
 }
 ```
 
+위 알고리즘의 성능입니다.
+
+{% image "../images/coin-change-1.png", "normal-dp"%}
+
 
 <br />
 <br />
@@ -192,14 +198,30 @@ bottom-up 방식의 핵심은 이전 값들에서 새로운 값을 뽑아낸다�
 보통 bottom-up 방식은 각 배열의 index에 해당하는 값이
 각 문제의 정답을 가지고 있습니다.
 
-각 문제의 정답을 가지고 있는 index는 이전 값이죠
-현재 값인 coin은 이전 값에서 뽑아낼 수 있는데요
-현재 index에서 coin의 값만큼 뒤로 이동해 값을 뽑아오는 것입니다.
+n번째 문제를 구하기 위해 n - coin번째의 값을 꺼내오는 것입니다.
+만약 n - coin번째의 값에 답이 없다면 처음 `Array.fill` 메서드로
+초기화한 값이 반환되게 되므로 해당 값은 amount + 1의 값이므로
+최대값을 항상 넘게 됩니다.
 
-즉 dp[5]에 값을 넣기 위해 현재 coin이 2라고 가정하죠 
-dp[3]은 이미 적절한 값으로 완성 되어 있다고 보고,(이 때 dp[3]은 amount 3을 만들기 위한 최소 동전 수)
-dp[3] + 1을 더하면 dp[3]에 2짜리 하나의 동전을 추가하면 dp[5]를 만족할 수 있다는 것을 나타내죠
+이렇게 적고 보니 너무 장황한 글이 되었습니다.
 
-하지만 만족한다는 것은 amount를 채울 수 있다는 것이지 최소값을 만족한다는 것이 아닙니다.
+퇴고를 반복해 글을 다듬어보겠습니다.
 
-그래서 Math.min으로 비교를 하는 것입니다.
+## 최적화
+
+중첩된 반복문을 아래와 같이 변경해보세요
+
+{% image "../images/coin-change-2.png", "normal-dp-optimized"%}
+
+```java
+		for (int coin : coins) {
+			for (int i = coin; i <= amount; i++) {
+				dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
+			}
+		}
+```
+
+위 반복문은 이전 풀이와 사뭇 다릅니다.
+
+dp[i]의 값이 가지는 의미는 같습니다만, 필요없는 초반 탐색을 많이 개선했습니다.
+
