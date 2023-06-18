@@ -2246,7 +2246,7 @@ h2 + .header-anchor {
 	<hr></hr>
 		<aside>
 			<nav class="toc" >
-        <ol><li><a href="#coin-change-bottom-up">coin change 문제에서 bottom up의 접근</a></li><li><a href="#coin">coin만큼 뒤로가 값을 꺼내오기</a></li><li><a href="#-1">최적화</a></li></ol>
+        <ol><li><a href="#bottom-up">bottom up</a></li><li><a href="#coin">coin만큼 뒤에서 값을 꺼내오기</a></li><li><a href="#-1">최적화</a></li></ol>
       </nav>
 		</aside>
 	<hr></hr>
@@ -2256,18 +2256,16 @@ h2 + .header-anchor {
 		<br />
 <br />
 <br />
-<h2 id="coin-change-bottom-up" tabindex="-1">coin change 문제에서 bottom up의 접근 <a class="header-anchor" href="#coin-change-bottom-up">#</a></h2>
+<h2 id="bottom-up" tabindex="-1">bottom up <a class="header-anchor" href="#bottom-up">#</a></h2>
 <p><a href="https://leetcode.com/problems/coin-change">leet code</a></p>
 <p>문제는 이전 게시글인 <a href="/blog/JAVA/leet-code/coin-change-problem/">재귀 트리를 통한 접근</a>에 있습니다.</p>
-<p>bottom-up 접근을 통해 call stack이 쌓이는 것을 방지하는 풀이를 해보겠습니다.
-이 문제 풀이 법은 접근 방식은 아래와 같습니다.</p>
 <ul>
 <li>amount보다 하나 큰 배열을 만든다.</li>
 <li>amount를 순회한다.
 <ul>
 <li>순회하면서 각 인덱스의 값을 가진 coins만큼 순회한다.</li>
 <li>이전 dp의 값에서 코인만큼 뒤에 있는 값을 꺼내와 하나를 더해 비교한다.</li>
-<li>더 작은 값을 취한다.</li>
+<li>더 작은 값을 반환한다.</li>
 <li>dp 배열에 저장한다.</li>
 <li>반복한다.</li>
 </ul>
@@ -2290,10 +2288,11 @@ dp[1] = 1이 되야합니다.</p>
 <p><strong>여기서 중복계산이 숨어있다는 것을 어렴풋이 느낄 수 있습니다.
 바로 dp[2]에는 dp[1]의 값을 활용 할 수 있다는 것입니다.</strong></p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// java</span><br><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> coins <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">;</span><br><span class="token keyword">int</span> amount <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span></code></pre>
-<p>아래와 같이 이중 반복문을 그려 봅시다.</p>
+<p>아래와 같이 이중 반복문을 만듭니다.</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> coins <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">;</span><br><span class="token keyword">int</span> amount <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span><br><br><br><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> coins<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i <span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> coin <span class="token operator">:</span> coins<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        <span class="token comment">// 아직 빈칸</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
 <p>amount는 3이네요.</p>
-<p>0을 만드는 경우를 포함하기 위해 3 보다 하나 큰 배열을 만들고 해당 배열을
+<p>소유한 코인으로 0을 만드는 경우를 포함하기 위해,
+3 보다 하나 큰 배열을 만들고 해당 배열을
 4로 초기화 하겠습니다.</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// java</span><br><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> coins <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">;</span><br><span class="token keyword">int</span> amount <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span><br><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> dp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>amount <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [0, 0, 0, 0]</span><br><br><span class="token class-name">Array</span><span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span>dp<span class="token punctuation">,</span> amount <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [4, 4, 4, 4]</span><br>dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// [0, 4, 4, 4]</span><br><br><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> coins<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i <span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> coin <span class="token operator">:</span> coins<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        <span class="token comment">// 아직 빈칸</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
 <p>dp[0]의 값은 아무 코인도 넣지 않으면 되고 이미 <code>dp[0] = 0;</code>을 통해 값을 초기화 했으므로
@@ -2302,7 +2301,7 @@ dp[1] = 1이 되야합니다.</p>
 <br />
 <br />
 <br />
-<h2 id="coin" tabindex="-1">coin만큼 뒤로가 값을 꺼내오기 <a class="header-anchor" href="#coin">#</a></h2>
+<h2 id="coin" tabindex="-1">coin만큼 뒤에서 값을 꺼내오기 <a class="header-anchor" href="#coin">#</a></h2>
 <p>dp 배열에 접근 할 수 있으려면 <code>i - coin</code>의 값은 0 이상이여야 합니다.
 <code>i - coin</code>은 외부 반복문이 dp를 순회하며 이전 <code>dp[i - coin]</code>의 값을 가져오는데도 사용됩니다.</p>
 <p><code>dp[i-coin]</code>은 dp 배열에 저장한 각 dp 배열의 index 만큼을 coins로 달성하기 위해
