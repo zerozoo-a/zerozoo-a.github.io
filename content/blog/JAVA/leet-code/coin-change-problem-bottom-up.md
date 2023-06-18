@@ -7,20 +7,17 @@ coverURL: https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?ixlib=rb-
 <br />
 <br />
 
-## coin change 문제에서 bottom up의 접근
+## bottom up
 
 <a href="https://leetcode.com/problems/coin-change">leet code</a>
 
 문제는 이전 게시글인 <a href="/blog/JAVA/leet-code/coin-change-problem/">재귀 트리를 통한 접근</a>에 있습니다.
 
-bottom-up 접근을 통해 call stack이 쌓이는 것을 방지하는 풀이를 해보겠습니다.
-이 문제 풀이 법은 접근 방식은 아래와 같습니다.
-
 - amount보다 하나 큰 배열을 만든다.
 - amount를 순회한다.
   - 순회하면서 각 인덱스의 값을 가진 coins만큼 순회한다.
   - 이전 dp의 값에서 코인만큼 뒤에 있는 값을 꺼내와 하나를 더해 비교한다.
-  - 더 작은 값을 취한다.
+  - 더 작은 값을 반환한다.
   - dp 배열에 저장한다.
   - 반복한다.
   
@@ -64,7 +61,7 @@ dp[2]는 index 2입니다. index 2 는 코인 1 짜리 두개 혹은 2 짜리 �
 int[] coins = {1, 2};
 int amount = 3;
 ```
-아래와 같이 이중 반복문을 그려 봅시다.
+아래와 같이 이중 반복문을 만듭니다.
 
 
 ```java
@@ -81,7 +78,8 @@ for(int i = 0; i < coins.length; i ++) {
 
 amount는 3이네요.
 
-0을 만드는 경우를 포함하기 위해 3 보다 하나 큰 배열을 만들고 해당 배열을
+소유한 코인으로 0을 만드는 경우를 포함하기 위해,
+3 보다 하나 큰 배열을 만들고 해당 배열을
 4로 초기화 하겠습니다.
 
 
@@ -117,7 +115,7 @@ for(int i = 0; i < coins.length; i ++) {
 <br />
 <br />
 
-## coin만큼 뒤로가 값을 꺼내오기
+## coin만큼 뒤에서 값을 꺼내오기
 
 dp 배열에 접근 할 수 있으려면 `i - coin`의 값은 0 이상이여야 합니다.
 `i - coin`은 외부 반복문이 dp를 순회하며 이전 `dp[i - coin]`의 값을 가져오는데도 사용됩니다.
