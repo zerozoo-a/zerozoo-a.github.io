@@ -1,5 +1,5 @@
 ---
-title: 동전 교환 문제 bottom-up
+title: 동전 교환 문제 - bottom-up
 date: 2023-06-18 15:14:21
 coverURL: https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
 ---
