@@ -4,12 +4,78 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-06-18T15:14:21Z</updated>
+	<updated>2023-06-24T00:23:37Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>자바스크립트 iterator의 특징</title>
+		<link href="https://zerozoo-a.github.io/blog/JS/iterator-protocol/"/>
+		<updated>2023-06-24T00:23:37Z</updated>
+		<id>https://zerozoo-a.github.io/blog/JS/iterator-protocol/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;iterator&quot; tabindex=&quot;-1&quot;&gt;iterator란 무엇일까? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/iterator-protocol/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols&quot;&gt;iterator란? &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;iterator의 개념 자체는 단순합니다.
+반복문을 사용하기 편하도록 규칙을 세워 이 규칙을 따르면 iterator이고
+그렇지 않으면 iterator가 아니다! 라는 것입니다.&lt;/p&gt;
+&lt;p&gt;즉 iterator 규칙을 따르는 반복문 생성자와 그 반복문입니다.&lt;/p&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;코드로 보기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/iterator-protocol/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;말로만 봐선 이해가 어려울 수 있습니다.
+MDN에서 보여주는 예시입니다, iterable protocol을 따르는 객체를 생성했습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; obj &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;br&gt;  &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Symbol&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;iterator&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 1&lt;/span&gt;&lt;br&gt;    &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; i &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;br&gt;      &lt;span class=&quot;token function&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 2&lt;/span&gt;&lt;br&gt;        i&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;        console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Returning&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; i&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;        &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;done&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; i &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;        &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;done&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; i &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;br&gt;      &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;br&gt;        console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Closing&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;        &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;done&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;br&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; a &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; obj&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Symbol&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;iterator&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// method를 지정함&lt;/span&gt;&lt;br&gt;a&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// {done: false, value: 1}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Symbol.iterator&lt;/code&gt;라는 Symbol.iterator로 객체의 메서드 키를 지정했습니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;return&lt;/code&gt;으로 next라는 함수를 반환합니다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;next()&lt;/code&gt;의 설명은
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;A function that accepts zero or one argument and returns an object conforming to the IteratorResult interface (see below). If a non-object value gets returned (such as false or undefined) when a built-in language feature (such as for...of) is using the iterator, a TypeError (&amp;quot;iterator.next() returned a non-object value&amp;quot;) will be thrown.&lt;/code&gt; next 함수는 저희가 제작한게 아닌 언어차원에서 제공됩니다. 예외는
+객체로 값을 반환해야 한다고 합니다.&lt;/li&gt;
+&lt;li&gt;예제에서는 i 값을 올려줍니다. 클로저가 적용되어 해당 스코프 내의 값은 외부에서 건들 수 없게 되었습니다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;가장 큰 특징으로 iterator는 &lt;strong&gt;반복문을 중간 저장&lt;/strong&gt;하고 done, value 값을 반환합니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;이외에도 한번 실행해서 done상태가 된 iterator는 객체를 새로 생성해야 다시 사용할 수 있습니다.
+이 외에도 여러 특징들이 있지만 한번에 다 설명하기 힘들정도입니다.&lt;/p&gt;
+&lt;h3 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;장황한 문법을 간단하게 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/iterator-protocol/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;위의 문법은 좀 장황합니다. 사용하기 힘들 정도이죠&lt;/p&gt;
+&lt;p&gt;그래서 문법설탕이 존재합니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;oddEven&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;br&gt;    &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;br&gt;        &lt;span class=&quot;token keyword&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;odd&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;        &lt;span class=&quot;token keyword&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;even&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; oddAndEven &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;oddEven&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;br&gt;&lt;br&gt;oddAndEven&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;token comment&quot;&gt;// {value: &#39;odd&#39;, done: false}&lt;/span&gt;&lt;br&gt;oddAndEven&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;value&lt;br&gt;&lt;span class=&quot;token comment&quot;&gt;// &#39;even&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;무한한 반복문을 사용 할 수 있다는 것도 큰 특징 중 하나입니다.
+무한루프나 무한수열은 개발언어에서 다루기 힘든 주제이거나
+어떤 특정 값 중 도달할 수 없는 값의 비교값 정도로 사용되는 것이 전부입니다.&lt;/p&gt;
+&lt;p&gt;하지만 이렇게 무한한 루프를 끊어서 사용 할 수 있다는 장점이 있습니다.&lt;/p&gt;
+&lt;p&gt;물론 iterable을 사용하지 않고도 구현 할 수 있는 방법은 많습니다.&lt;/p&gt;
+&lt;p&gt;단, iterable을 사용하면 좀 더 편리하다는 것이죠
+위 예제는 odd, even을 무한히 반환합니다.&lt;/p&gt;
+&lt;p&gt;하지만 여기에 2로 나누어 떨어지는가? 에 대한 연산은 없죠
+만약 숫자가 무한히 늘어나게 된다면 성능이나 개발 언어가 설정해둔 범위로 에러가 반환될 것입니다.&lt;/p&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/iterator-protocol/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;iterable protocol은 protocol이라는 이름답게 해당 조건이 맞으면
+iterable하다고 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;브라우저의 DOM이나 자바스크립트의 자료형등 이런 요구를 따라가고 있습니다.&lt;/p&gt;
+&lt;p&gt;iterable의 가장 큰 장점 중 하나에 대해 설명드렸습니다.
+바로 무한을 다룰 수 있다는 것,&lt;/p&gt;
+&lt;p&gt;나머지는...&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>동전 교환 문제 - bottom-up</title>
