@@ -102,9 +102,9 @@ module.exports = (eleventyConfig) => {
 				formats,
 				outputDir: path.join(eleventyConfig.dir.output, "img"), // Advanced usage note: `eleventyConfig.dir` works here because we’re using addPlugin.
 			});
-			
+
 			let data = metadata.webp[metadata.webp.length - 1];
-			return `<div class="img-container"><img src="${data.url}" width="100%" height="auto" alt="${alt}" loading="lazy" decoding="async"></div>`;
+			return `<div class="img-container"><img class="border-radius10" src="${data.url}" width="100%" height="auto" alt="${alt}" loading="lazy" decoding="async"></div>`;
 		}
 	);
 
@@ -124,7 +124,7 @@ module.exports = (eleventyConfig) => {
 				outputDir: "_site/covers",
 			});
 			let data = metadata.webp[metadata.webp.length - 1];
-			return `<div class="img-container"><img src="${data.url}" alt="${alt}" decoding="async"></div>`;
+			return `<div class="img-container"><img class="border-radius10" src="${data.url}" alt="${alt}" decoding="async"></div>`;
 		}
 	);
 };

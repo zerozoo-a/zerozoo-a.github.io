@@ -1,9 +1,10 @@
 ---
 title: backtracking 알고리즘
 date: 2023-06-24 13:44:34
-coverURL: https://images.unsplash.com/photo-1561229474-1f22e022dfd4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
+coverURL: https://images.unsplash.com/photo-1609631002724-572287d136bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80
 ---
-
+{% image "../images/photo-1609631002724-572287d136bb.avif","footsteps" %}
+<a href="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/QfV6AqEwNBw">이미지 출처</a>
 <br />
 <br />
 <br />
@@ -91,16 +92,18 @@ public class Backtracking {
 
 주어진 배열을 반복문으로 순회하면서 재귀 호출을 실행합니다.
 
-재귀 호출의 조건 중 기저조건에 닿으면 **값을 반환하고**,
-**해당 콜스택은 사라지고**,
-**tracking하던 값의 마지막 값을 삭제합니다.**
+재귀 호출의 조건 중 기저조건에 닿으면 
+
+- **값을 반환하고**,
+- **해당 콜스택은 사라지고**,
+- **tracking하던 값의 마지막 값을 삭제합니다.**
 
 
 UML을 그려보겠습니다.
 
 배열 `{1, 2}`를 입력받았다고 가정합니다.
 
-트리는 DFS조건을 따라 가장 왼쪽 리프노드까지 진행됩니다.
+트리는 DFS조건을 따라 가장 왼쪽 리프 노드 부터 진행됩니다.
 
 ```plantuml
 node "0" as n0
@@ -115,12 +118,16 @@ n1 --> n2
 n2 --> base
 ```
 
-리프노드에 도달해 base case에 닿은 경우가 발생했습니다.
+중복되는 track인 1 노드에 접근한 경우 `continue`를 통해 건너 뛰어줍니다.
+
+리프노드에 도달해 `base case`에 닿은 경우가 발생했습니다.
+
 2번 노드가 base case에 닿은 노드가 되었습니다.
 
 - base case에 도달한 경우 콜스택을 반환합니다.
 - track에서 마지막 값을 지웁니다.
 
+track의 상태는 `1 -> 2`에서 `1`이 됩니다.
 ```plantuml
 node "0" as n0
 node "1" as n1
@@ -139,7 +146,7 @@ base --> n2:return
 이 상황에서 레벨 1의 노드 1의 상태는 아래와 같습니다.
 
 - 하위 노드에게서 반환을 받음
-- 순회중인 반복문의 i 값은 0임
+- 순회중인 반복문의 i 값은 1임
 - 하위 노드에게 반환을 받는 위치는 정확히 backtrack함수를 호출한 시점임
 - 다음 명령어는 removeLast 함수임
 
@@ -148,10 +155,12 @@ base --> n2:return
 
 node1은 값을 반환받고 다음 명령어로 removeLast를 수행합니다.
 
-track은 `1->2`에서 순서대로 `1`이 되었고
+track은 `1`에서 순서대로 removeLast 함수에 의해 `1`이 삭제되어 
 이제 아무것도 가리키지 않게 됩니다.
 
-그리고 반복문의 `i` 값은 0이였으므로 1로 올라가게 됩니다.
+그리고 반복문의 `i` 값은 1이였으므로 반복문이 종료되고
+레벨 1의 노드 1은 할 일이 이제 없습니다. 스택은 사라지게 되고
+레벨 0의 노드는 다음 반복문을 실행합니다.
 
 nums의 배열에 다음 값은 2이므로 `i = 2`가 되고
 다음 track의 시작값은 2입니다.

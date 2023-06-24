@@ -10,8 +10,6 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
 {% set postslistCounter = postsCount %}
 {% set pageNumber = pagination.pageNumber %}
 <div class="posts-container">
-  <ol style="counter-reset: start-from {{ postslistCounter + 1 - (pagination.pageNumber * 5) }}" >
-    <li>
     {% for item in pagination.items %}
         <a href="{{ item.page.url }}">
         <div class="p-3 d-flex color-bg-default Box m-3 post-container">
@@ -29,8 +27,6 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
         </div>
         </a>
     {% endfor %}
-    </ol>
-    </li>
 </div>
 <div class="wrapper">
   <ul id="pagination" class="sticky-bottom-nav"></ul>
@@ -44,11 +40,11 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
   const postsCount = {{postsCount}}
   let allPages = pageLinks.length
   const pagination = document.getElementById("pagination")
-  const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
+  const NOTHING_BUTTON = (dir='<')=>`<div class="btn">${dir}</div>`
   const pageNumber = {{pageNumber}}
 
   function elem(allPages = pageLinks.length, page) {
-    let li = "";
+    let a = "";
     let beforePages = page - 1;
     let afterPages = page + 1;
     let liActive;
@@ -57,25 +53,22 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
 
 
   if (page > 0) {
-    li += `
-    <li class="btn" onclick="elem(allPages, ${
+    a += `
+    <a class="btn" 
+    onclick="elem(allPages, ${
       0
-    })" >
-    <a href="${pageLinks.at(0)}">
+    })"
+    href="${pageLinks.at(0)}">
       <span> << </span>
     </a>
-    </li>
-    <li class="btn" onclick="elem(allPages, ${
-      page - 1
-    })" >
-    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}">
+    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}" 
+     class="btn" onclick="elem(allPages, ${page - 1 })">
       <span> < </span>
     </a>
-    </li>
     `;
     spaceStack.push(1)
   } else {
-    li += NOTHING_BUTTON('_')
+    a += NOTHING_BUTTON('_')
     spaceStack.push(1)
   }
 
@@ -99,14 +92,12 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
     * 마지막 페이지의 pagination
     */
     if(page == allPages - 1) {
-    li += `
-    <li class="numb active" onclick="elem(allPages, ${currentPage})">
-        <a href="${pageLinks[currentPage]}">
+    a += `
+        <a href="${pageLinks[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
          <span>
           ${afterPages}
          </span>
         </a>
-      </li>
       `;
       spaceStack.push(1)
       break;
@@ -114,59 +105,51 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
     /**
      * 첫 페이지의 pagination
      */
-    li += `
-    <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" >
-      <a href="${pageLinks[currentPage]}">
+    a += `
+      <a href="${pageLinks[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
       <span>
         ${currentPage + 1}
       </span>
       </a>
-      </li>
       `;
     spaceStack.push(1)
   }
 
   if(page == 0) {
-    li += `
-    <li class="numb" onclick="elem(allPages, ${afterPages + 1})">
-      <a href="${pageLinks[afterPages + 1]}">
+    a += `
+      <a href="${pageLinks[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
       <span>
         ${afterPages + 2}
       </span>
       </a>
-    </li>
       `;
     spaceStack.push(1)
   }
 
   if (page < allPages && page !== allPages - 1) {
-    li += `
-    <li class="btn" onclick="elem(allPages, ${
+    a += `
+      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
         page + 1
       })" >
-      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}">
         <span> > </span>
       </a>
-    </li>
     `;
-    li += `
-    <li class="btn" onclick="elem(allPages, ${
+    a += `
+      <a href="${pageLinks.at(-1)}" class="btn" onclick="elem(allPages, ${
       allPages
       })" >
-      <a href="${pageLinks.at(-1)}">
         <span> >> </span>
       </a>
-    </li>
     `;
     spaceStack.push(1)
   } else {
     while(spaceStack.length < 5) {
-      li += NOTHING_BUTTON('_')
+      a += NOTHING_BUTTON('_')
       spaceStack.push(1)
     }
   }
 
-  pagination.innerHTML = li;
+  pagination.innerHTML = a;
 }
 elem(allPages, {{pageNumber}});
 </script>
