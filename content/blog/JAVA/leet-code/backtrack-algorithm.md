@@ -10,31 +10,16 @@ coverURL: https://images.unsplash.com/photo-1561229474-1f22e022dfd4?ixlib=rb-4.0
 
 ## backtracking 알고리즘이란?
 
-`backtracking` (이하 백트레킹이라 하겠습니다.) 이란 주어진 모든 문제의
-가능한 후보군을 탐색하면서 조건에 맞지 않는 후보를 즉시 포기하며 가능한 후보군들의
-집합을 모으는 알고리즘입니다.
+> Backtracking can be defined as a general algorithmic technique that considers searching every possible combination in order to solve a computational problem. -geeks for geeks-
+
+백트레킹 알고리즘은 문제 해결을 위해 가능한 모든 조합을 검색하는 일반적인 알고리즘 기법입니다.
 
 
 ## 구하는 것
 
-간단히 설명해보겠습니다.
+주어진 배열의 모든 중복되지 않은 조합을 찾습니다.
+int 배열 `int[] nums = {1, 2, 3}`이 주어졌을 때 아래의 답을 반환하면 됩니다.
 
-순열에서 <a href="https://ko.wikipedia.org/wiki/%EC%88%9C%EC%97%B4">permutation</a>을 찾는다고 합시다. 중복을 허용하지 않는 경우를 찾아야 하는데요
-
-언제나처럼 간단한 예로 설명해보겠습니다.
-
-$$_{n}P_{r} = \dfrac{n!}{(n - r)!}$$
-
-permutation은 보통 위와 같은 공식임을 알고 있습니다.
-
-숫자 1, 2, 3의 3 permutation을 찾는다고 합시다.
-
-$$_{3}P_{3} = \dfrac{3!}{(3-3)!} = 6$$
-
-수학적으로는 위와 같이 나타낼 수 있습니다.
-물론 위 방법을 통해 갯수를 찾아내는 것은 간단합니다만
-
-선택되어진 원소들의 나열 된 값, 바로 **이게 구하는 것**입니다.
 ```java
 res: [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
 ```
@@ -81,8 +66,8 @@ public class Backtracking {
 	}
 
 	static void backtrack(int[] nums, LinkedList<Integer> track){
-		if(track.size() == nums.length) {
-			res.add(new LinkedList<>(track));
+		if(track.size() == nums.length) { // base-case
+			res.add(new LinkedList<>(track)); 
 			return;
 		}
 
@@ -102,46 +87,114 @@ public class Backtracking {
 
 ## 해석
 
-이전에 풀어본 코인 문제와 비슷합니다.
+기본적인 프레임은 DFS를 통한 재귀 트리의 순회입니다.
 
-단 배열이 아니라 값을 저장하는 용도로 LinkedList를 사용했습니다.
+주어진 배열을 반복문으로 순회하면서 재귀 호출을 실행합니다.
 
-nums의 배열만큼 반복문 내부의 재귀를 호출합니다.
-```java
-int[] nums = {1, 2};
+재귀 호출의 조건 중 기저조건에 닿으면 **값을 반환하고**,
+**해당 콜스택은 사라지고**,
+**tracking하던 값의 마지막 값을 삭제합니다.**
+
+
+UML을 그려보겠습니다.
+
+배열 `{1, 2}`를 입력받았다고 가정합니다.
+
+트리는 DFS조건을 따라 가장 왼쪽 리프노드까지 진행됩니다.
+
+```plantuml
+node "0" as n0
+node "1" as n1
+node "1" as n1_2
+node "2" as n2
+node "base" as base
+
+n0 --> n1 
+n1 --> n1_2:x
+n1 --> n2
+n2 --> base
 ```
-인 경우가 가장 간단하겠습니다.
 
-루트에서 왼쪽 자식 노드로 1을 track에 넣어준 뒤 실행합니다.
+리프노드에 도달해 base case에 닿은 경우가 발생했습니다.
+2번 노드가 base case에 닿은 노드가 되었습니다.
 
-왼쪽 자식 노드에서 호출된 재귀는 다시 track에 1을 넣으려 시도합니다만 이미 track에 값이 있으므로 반복문을 다음으로 넘깁니다.
+- base case에 도달한 경우 콜스택을 반환합니다.
+- track에서 마지막 값을 지웁니다.
 
-2를 담을 수 있습니다.
+```plantuml
+node "0" as n0
+node "1" as n1
+node "1" as n1_2
+node "2" as n2
+node "base" as base
 
-재귀를 호출하면 기저조건에 닿게 됩니다.
-그리고 track의 마지막 값을 지우면 반복문도 모두 돌게 됩니다. 
+n0 --> n1 
+n1 --> n1_2:x
+n1 --> n2
+n2 --> base
+n2 --> n1
 
-만약 여기서 배열이 1, 2가 아닌 
-
-```java
-int[] nums = {1, 2, 3};
+base --> n2:return
 ```
-였다면 track은 반복문에서 2의 값을 순회할 때,
-`{1, 2, 3}`을 채우고,
+이 상황에서 레벨 1의 노드 1의 상태는 아래와 같습니다.
 
-3의 값을 순회할 때 `{1, 3, 2}`를 채울 수 있게 됩니다.
+- 하위 노드에게서 반환을 받음
+- 순회중인 반복문의 i 값은 0임
+- 하위 노드에게 반환을 받는 위치는 정확히 backtrack함수를 호출한 시점임
+- 다음 명령어는 removeLast 함수임
 
-이렇게 마지막 list를 지우면 맨 처음 고른 1의 값은 유지한채 `{1, 2, 3}`를 만들 수 있게 됩니다.
+위의 4개 상황이 node 1이 처한 상황이고
+앞으로의 행동을 나타냅니다.
 
-이렇게 간단한 방법으로 알아본 backtracking입니다만,
+node1은 값을 반환받고 다음 명령어로 removeLast를 수행합니다.
 
-실제 프로덕션 레벨에서 사용하려면 좀 더 최적화를 해줘야 합니다.
+track은 `1->2`에서 순서대로 `1`이 되었고
+이제 아무것도 가리키지 않게 됩니다.
 
-물론 모든 순회를 한다는 점에서 N!이라는 속도를 어찌 할 방법은 없습니다.
+그리고 반복문의 `i` 값은 0이였으므로 1로 올라가게 됩니다.
+
+nums의 배열에 다음 값은 2이므로 `i = 2`가 되고
+다음 track의 시작값은 2입니다.
+마지막 track의 값을 지우는 이유는 이전 값들을 재활용하기 위해서입니다. 
+
+`{1, 2}` 배열의 경우 1을 구한 순간 남은 값은 2밖에 없어서 별로 티가 나지 않지만
+
+`{1, 2, 3}` 배열의 경우 1을 구한 상태에서 `{1, 2, 3}`을 구할 수 있고, `{1, 3, 2}`를 구할 수도 있기 때문입니다.
 
 
+```plantuml
+node "0" as n0
 
+node "1" as n1
+node "2" as n2_2
 
+node "1" as n1_2
+node "2" as n2
+node "1" as n1_3
+node "2" as n2_3
 
+node "base" as base
+node "base" as base_2
 
+n0 --> n1 
+n0 --> n2_2
 
+n1 --> n1_2:x
+n1 --> n2
+n2_2 --> n1_3
+n2_2 --> n2_3:x
+
+n2 --> base
+n1_3 --> base_2
+
+base --> n2:return
+base_2 --> n1_3:return
+
+```
+위의 트리 노드는 배열 `{1, 2}`를 구하는 과정을 나타낸 것입니다. 
+
+위 트리에서 base case까지 도달한 경우
+해당하는 루트들은 조건에 알맞은 값이라고 볼 수 있습니다.
+
+고작 배열 2개 짜리인데 트리의 깊이는 3레벨에 달합니다.
+모든 경우의 수를 따지는 것이 기본이기 때문에 최적화에도 한계가 있습니다.
