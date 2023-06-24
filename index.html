@@ -58,6 +58,7 @@ ol, ul {
 :root {
 	--font-family: -apple-system, system-ui, sans-serif;
 	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+    --img-max-width: 607px;
 }
 
 /* Theme colors */
@@ -811,6 +812,12 @@ header {
 .post-content {
 	font-size: large;
 }
+.post-content > img {
+    max-width: var(--img-max-width);
+    border-style: none;
+    box-sizing: content-box;
+    background-color: #0d1117;
+}
 .post-metadata time {
 	margin-right: 1em;
 }
@@ -1003,11 +1010,21 @@ h2 + .header-anchor {
 
 
 .numb {
-    color: var(--color-btn-text);
+    padding:10px;
+    margin:5px;
 }
+.btn {
+    padding:10px;
+    margin:5px;
+}
+
 .active {
     background-color: var(--color-btn-outline-selected-bg);
-
+    color: var(--adaptiveGrey100)!important;
+    border-radius: 8px;
+}
+.border-radius10 {
+    border-radius: 10px;
 }
 
 .posts-container > ol, .posts-container > ul, .posts-container > li{
@@ -1073,13 +1090,11 @@ h2 + .header-anchor {
 
 
 <div class="posts-container">
-  <ol style="counter-reset: start-from 40" >
-    <li>
     
         <a href="/blog/JAVA/leet-code/backtrack-algorithm/">
         <div class="p-3 d-flex color-bg-default Box m-3 post-container">
           
-            <img class="cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
+            <img class="cover-img" src=data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABOAE4DASIAAhEBAxEB/8QAGwAAAwADAQEAAAAAAAAAAAAAAgMEAQUHAAb/xAAuEAABAwMDAwIGAQUAAAAAAAABAAIDBBEhBRJBEzFRBhQHImFxgaGRIzNCwfD/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAQIDBP/EABoRAQEBAQADAAAAAAAAAAAAAAARASECEkH/2gAMAwEAAhEDEQA/AOttKY1ySLJgK9Ec6cHIt6RdRahPXRz0go6aOaB8m2oLn2cxvkDlIlbDqbzdjmloOV50hAwLlACALAADwFglIUZkS3OzwsEoXHwkKy4+Epz8rJOEBsUhRByMPUgejDl0jNU71JqslU3Tqg6cxslZsPSa4gDdxe+FrvU+qP0jQa2uijEj4Wbg0mwJuBn+UPpXUqjU9CpqyrEIlluf6RJba5A7/ZJ9S9jYaI2uj0uBurTRzVtryOY3aL+Px5VhclF+Etz7dypFP3rBep+ovFyQOLkJckl6AvukSlNkHlMbIPK17X4ymCSy0xVU5ZLE6OVjJGOFnNe24I8EFDTyxf2oTGOnjYy3y/gdlp/UOrwaRpM1ZVPLI2jaCBc7jgL5f4X6RJTx1OsTySOfWCzdxy4XvuP3Pb6KzlPbsdFfJjukPkuUp0vF0p0tr5UWqBLblEZrBQOlxhCJjZEq4zITLc4Ki6lxyhMnF0Kw2Tk2BR9UDuoxIPOF8N8RPVdVpk0On6U6NlU8dR8jhfYz7fVazKxY6M/pyxlksbJGHu17dwP4KLqBrQALAYAGLLQ+l6yorPT1BU1jQKiWIOfxc+VsnPt37qRapMpSjIAe6ndITwgL/qhTzJ4KEvP3CndIOVkEntchEp4fzwhdIEokkZwEDn2GCgxvH1/JXIPWE3uviMI44TIGmGBzT/nm5H8FdTdJt4KnNBRe+9/7OD3hFutt+bx3W/HYzrb3s3a3AGAAh3lvNip99gl9UkZ/SkKqM18g/tY6gJySCpJZM2AQxuIuOQkKrLwTYWKIOIFhayla65yOyaXEC6gaXdj/ALQF3/BAXWG536QbicDCK//Z alt="cover image" height="auto" />
           
           <div class="d-flex pl-3 flex-direction-col post-title-container">
               <h5 class="d-flex flex-items-center post-title">
@@ -1146,8 +1161,6 @@ h2 + .header-anchor {
         </div>
         </a>
     
-    </ol>
-    </li>
 </div>
 <div class="wrapper">
   <ul id="pagination" class="sticky-bottom-nav"></ul>
@@ -1161,11 +1174,11 @@ h2 + .header-anchor {
   const postsCount = 39
   let allPages = pageLinks.length
   const pagination = document.getElementById("pagination")
-  const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
+  const NOTHING_BUTTON = (dir='<')=>`<div class="btn">${dir}</div>`
   const pageNumber = 0
 
   function elem(allPages = pageLinks.length, page) {
-    let li = "";
+    let a = "";
     let beforePages = page - 1;
     let afterPages = page + 1;
     let liActive;
@@ -1174,25 +1187,22 @@ h2 + .header-anchor {
 
 
   if (page > 0) {
-    li += `
-    <li class="btn" onclick="elem(allPages, ${
+    a += `
+    <a class="btn" 
+    onclick="elem(allPages, ${
       0
-    })" >
-    <a href="${pageLinks.at(0)}">
+    })"
+    href="${pageLinks.at(0)}">
       <span> << </span>
     </a>
-    </li>
-    <li class="btn" onclick="elem(allPages, ${
-      page - 1
-    })" >
-    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}">
+    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}" 
+     class="btn" onclick="elem(allPages, ${page - 1 })">
       <span> < </span>
     </a>
-    </li>
     `;
     spaceStack.push(1)
   } else {
-    li += NOTHING_BUTTON('_')
+    a += NOTHING_BUTTON('_')
     spaceStack.push(1)
   }
 
@@ -1216,14 +1226,12 @@ h2 + .header-anchor {
     * 마지막 페이지의 pagination
     */
     if(page == allPages - 1) {
-    li += `
-    <li class="numb active" onclick="elem(allPages, ${currentPage})">
-        <a href="${pageLinks[currentPage]}">
+    a += `
+        <a href="${pageLinks[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
          <span>
           ${afterPages}
          </span>
         </a>
-      </li>
       `;
       spaceStack.push(1)
       break;
@@ -1231,59 +1239,51 @@ h2 + .header-anchor {
     /**
      * 첫 페이지의 pagination
      */
-    li += `
-    <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" >
-      <a href="${pageLinks[currentPage]}">
+    a += `
+      <a href="${pageLinks[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
       <span>
         ${currentPage + 1}
       </span>
       </a>
-      </li>
       `;
     spaceStack.push(1)
   }
 
   if(page == 0) {
-    li += `
-    <li class="numb" onclick="elem(allPages, ${afterPages + 1})">
-      <a href="${pageLinks[afterPages + 1]}">
+    a += `
+      <a href="${pageLinks[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
       <span>
         ${afterPages + 2}
       </span>
       </a>
-    </li>
       `;
     spaceStack.push(1)
   }
 
   if (page < allPages && page !== allPages - 1) {
-    li += `
-    <li class="btn" onclick="elem(allPages, ${
+    a += `
+      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
         page + 1
       })" >
-      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}">
         <span> > </span>
       </a>
-    </li>
     `;
-    li += `
-    <li class="btn" onclick="elem(allPages, ${
+    a += `
+      <a href="${pageLinks.at(-1)}" class="btn" onclick="elem(allPages, ${
       allPages
       })" >
-      <a href="${pageLinks.at(-1)}">
         <span> >> </span>
       </a>
-    </li>
     `;
     spaceStack.push(1)
   } else {
     while(spaceStack.length < 5) {
-      li += NOTHING_BUTTON('_')
+      a += NOTHING_BUTTON('_')
       spaceStack.push(1)
     }
   }
 
-  pagination.innerHTML = li;
+  pagination.innerHTML = a;
 }
 elem(allPages, 0);
 </script>

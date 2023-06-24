@@ -58,6 +58,7 @@ ol, ul {
 :root {
 	--font-family: -apple-system, system-ui, sans-serif;
 	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+    --img-max-width: 607px;
 }
 
 /* Theme colors */
@@ -811,6 +812,12 @@ header {
 .post-content {
 	font-size: large;
 }
+.post-content > img {
+    max-width: var(--img-max-width);
+    border-style: none;
+    box-sizing: content-box;
+    background-color: #0d1117;
+}
 .post-metadata time {
 	margin-right: 1em;
 }
@@ -1003,11 +1010,21 @@ h2 + .header-anchor {
 
 
 .numb {
-    color: var(--color-btn-text);
+    padding:10px;
+    margin:5px;
 }
+.btn {
+    padding:10px;
+    margin:5px;
+}
+
 .active {
     background-color: var(--color-btn-outline-selected-bg);
-
+    color: var(--adaptiveGrey100)!important;
+    border-radius: 8px;
+}
+.border-radius10 {
+    border-radius: 10px;
 }
 
 .posts-container > ol, .posts-container > ul, .posts-container > li{
@@ -1073,8 +1090,6 @@ h2 + .header-anchor {
 
 
 <div class="posts-container">
-  <ol style="counter-reset: start-from 20" >
-    <li>
     
         <a href="/blog/CS/LOGIC/p and q/">
         <div class="p-3 d-flex color-bg-default Box m-3 post-container">
@@ -1136,8 +1151,6 @@ h2 + .header-anchor {
         </div>
         </a>
     
-    </ol>
-    </li>
 </div>
 <div class="wrapper">
   <ul id="pagination" class="sticky-bottom-nav"></ul>
@@ -1151,11 +1164,11 @@ h2 + .header-anchor {
   const postsCount = 39
   let allPages = pageLinks.length
   const pagination = document.getElementById("pagination")
-  const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
+  const NOTHING_BUTTON = (dir='<')=>`<div class="btn">${dir}</div>`
   const pageNumber = 4
 
   function elem(allPages = pageLinks.length, page) {
-    let li = "";
+    let a = "";
     let beforePages = page - 1;
     let afterPages = page + 1;
     let liActive;
@@ -1164,25 +1177,22 @@ h2 + .header-anchor {
 
 
   if (page > 0) {
-    li += `
-    <li class="btn" onclick="elem(allPages, ${
+    a += `
+    <a class="btn" 
+    onclick="elem(allPages, ${
       0
-    })" >
-    <a href="${pageLinks.at(0)}">
+    })"
+    href="${pageLinks.at(0)}">
       <span> << </span>
     </a>
-    </li>
-    <li class="btn" onclick="elem(allPages, ${
-      page - 1
-    })" >
-    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}">
+    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}" 
+     class="btn" onclick="elem(allPages, ${page - 1 })">
       <span> < </span>
     </a>
-    </li>
     `;
     spaceStack.push(1)
   } else {
-    li += NOTHING_BUTTON('_')
+    a += NOTHING_BUTTON('_')
     spaceStack.push(1)
   }
 
@@ -1206,14 +1216,12 @@ h2 + .header-anchor {
     * 마지막 페이지의 pagination
     */
     if(page == allPages - 1) {
-    li += `
-    <li class="numb active" onclick="elem(allPages, ${currentPage})">
-        <a href="${pageLinks[currentPage]}">
+    a += `
+        <a href="${pageLinks[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
          <span>
           ${afterPages}
          </span>
         </a>
-      </li>
       `;
       spaceStack.push(1)
       break;
@@ -1221,59 +1229,51 @@ h2 + .header-anchor {
     /**
      * 첫 페이지의 pagination
      */
-    li += `
-    <li class="numb ${liActive}" onclick="elem(allPages, ${currentPage})" >
-      <a href="${pageLinks[currentPage]}">
+    a += `
+      <a href="${pageLinks[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
       <span>
         ${currentPage + 1}
       </span>
       </a>
-      </li>
       `;
     spaceStack.push(1)
   }
 
   if(page == 0) {
-    li += `
-    <li class="numb" onclick="elem(allPages, ${afterPages + 1})">
-      <a href="${pageLinks[afterPages + 1]}">
+    a += `
+      <a href="${pageLinks[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
       <span>
         ${afterPages + 2}
       </span>
       </a>
-    </li>
       `;
     spaceStack.push(1)
   }
 
   if (page < allPages && page !== allPages - 1) {
-    li += `
-    <li class="btn" onclick="elem(allPages, ${
+    a += `
+      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
         page + 1
       })" >
-      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}">
         <span> > </span>
       </a>
-    </li>
     `;
-    li += `
-    <li class="btn" onclick="elem(allPages, ${
+    a += `
+      <a href="${pageLinks.at(-1)}" class="btn" onclick="elem(allPages, ${
       allPages
       })" >
-      <a href="${pageLinks.at(-1)}">
         <span> >> </span>
       </a>
-    </li>
     `;
     spaceStack.push(1)
   } else {
     while(spaceStack.length < 5) {
-      li += NOTHING_BUTTON('_')
+      a += NOTHING_BUTTON('_')
       spaceStack.push(1)
     }
   }
 
-  pagination.innerHTML = li;
+  pagination.innerHTML = a;
 }
 elem(allPages, 4);
 </script>
