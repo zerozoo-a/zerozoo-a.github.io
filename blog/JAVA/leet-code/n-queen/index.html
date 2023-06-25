@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>zerozoo-a의 블로그 | zerozoo-a의 블로그</title>
+		<title>n-queen | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -18,23 +18,1189 @@
 		<meta name="google-site-verification" content="FzIp87nE_pk-4x5nXeKcIX-x1rqYcjlabzuH1EqXFYs" />
     	<meta name="naver-site-verification" content="6cf39493d46e888e46dfc3a608270980215dbca5" />
 		
-		<style>/* Message Box */
-.message-box {
-	--color-message-box: #ffc;
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
 
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
 	display: block;
-	background-color: var(--color-message-box);
-	color: var(--color-gray-90);
-	padding: 1em 0.625em; /* 16px 10px /16 */
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
 }
-.message-box ol {
-	margin-top: 0;
-}
+.markdown-body {
+    color-scheme: dark;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    margin: 0;
+    color: #c9d1d9;
+    background-color: #0d1117;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+  
+  .markdown-body .octicon {
+    display: inline-block;
+    fill: currentColor;
+    vertical-align: text-bottom;
+  }
+  
+  .markdown-body h1:hover .anchor .octicon-link:before,
+  .markdown-body h2:hover .anchor .octicon-link:before,
+  .markdown-body h3:hover .anchor .octicon-link:before,
+  .markdown-body h4:hover .anchor .octicon-link:before,
+  .markdown-body h5:hover .anchor .octicon-link:before,
+  .markdown-body h6:hover .anchor .octicon-link:before {
+    width: 16px;
+    height: 16px;
+    content: ' ';
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+  }
+  
+  .markdown-body details,
+  .markdown-body figcaption,
+  .markdown-body figure {
+    display: block;
+  }
+  
+  .markdown-body summary {
+    display: list-item;
+  }
+  
+  .markdown-body [hidden] {
+    display: none !important;
+  }
+  
+  .markdown-body a {
+    background-color: transparent;
+    color: #58a6ff;
+    text-decoration: none;
+  }
+  
+  .markdown-body abbr[title] {
+    border-bottom: none;
+    text-decoration: underline dotted;
+  }
+  
+  .markdown-body b,
+  .markdown-body strong {
+    font-weight: 600;
+  }
+  
+  .markdown-body dfn {
+    font-style: italic;
+  }
+  
+  .markdown-body h1 {
+    margin: .67em 0;
+    font-weight: 600;
+    padding-bottom: .3em;
+    font-size: 2em;
+    border-bottom: 1px solid #21262d;
+  }
+  
+  .markdown-body mark {
+    background-color: rgba(187,128,9,0.15);
+    color: #c9d1d9;
+  }
+  
+  .markdown-body small {
+    font-size: 90%;
+  }
+  
+  .markdown-body sub,
+  .markdown-body sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  
+  .markdown-body sub {
+    bottom: -0.25em;
+  }
+  
+  .markdown-body sup {
+    top: -0.5em;
+  }
+  
+  .markdown-body img {
+    border-style: none;
+    box-sizing: content-box;
+    max-width: 607px;
+    background-color: #0d1117;
+  }
+  
+  /* .markdown-body code, */
+  .markdown-body kbd,
+  /* .markdown-body pre, */
+  .markdown-body samp {
+    font-family: monospace;
+    font-size: 1em;
+  }
+  
+  .markdown-body figure {
+    margin: 1em 40px;
+  }
+  
+  .markdown-body hr {
+    box-sizing: content-box;
+    overflow: hidden;
+    background: transparent;
+    border-bottom: 1px solid #21262d;
+    height: .25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #30363d;
+    border: 0;
+  }
+  
+  .markdown-body input {
+    font: inherit;
+    margin: 0;
+    overflow: visible;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  
+  .markdown-body [type=button],
+  .markdown-body [type=reset],
+  .markdown-body [type=submit] {
+    -webkit-appearance: button;
+  }
+  
+  .markdown-body [type=checkbox],
+  .markdown-body [type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+  
+  .markdown-body [type=number]::-webkit-inner-spin-button,
+  .markdown-body [type=number]::-webkit-outer-spin-button {
+    height: auto;
+  }
+  
+  .markdown-body [type=search]::-webkit-search-cancel-button,
+  .markdown-body [type=search]::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  
+  .markdown-body ::-webkit-input-placeholder {
+    color: inherit;
+    opacity: .54;
+  }
+  
+  .markdown-body ::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit;
+  }
+  
+  .markdown-body a:hover {
+    text-decoration: underline;
+  }
+  
+  .markdown-body ::placeholder {
+    color: #6e7681;
+    opacity: 1;
+  }
+  
+  .markdown-body hr::before {
+    display: table;
+    content: "";
+  }
+  
+  .markdown-body hr::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .markdown-body table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+  }
+  
+  .markdown-body td,
+  .markdown-body th {
+    padding: 0;
+  }
+  
+  .markdown-body details summary {
+    cursor: pointer;
+  }
+  
+  .markdown-body details:not([open])>*:not(summary) {
+    display: none !important;
+  }
+  
+  .markdown-body a:focus,
+  .markdown-body [role=button]:focus,
+  .markdown-body input[type=radio]:focus,
+  .markdown-body input[type=checkbox]:focus {
+    outline: 2px solid #58a6ff;
+    outline-offset: -2px;
+    box-shadow: none;
+  }
+  
+  .markdown-body a:focus:not(:focus-visible),
+  .markdown-body [role=button]:focus:not(:focus-visible),
+  .markdown-body input[type=radio]:focus:not(:focus-visible),
+  .markdown-body input[type=checkbox]:focus:not(:focus-visible) {
+    outline: solid 1px transparent;
+  }
+  
+  .markdown-body a:focus-visible,
+  .markdown-body [role=button]:focus-visible,
+  .markdown-body input[type=radio]:focus-visible,
+  .markdown-body input[type=checkbox]:focus-visible {
+    outline: 2px solid #58a6ff;
+    outline-offset: -2px;
+    box-shadow: none;
+  }
+  
+  .markdown-body a:not([class]):focus,
+  .markdown-body a:not([class]):focus-visible,
+  .markdown-body input[type=radio]:focus,
+  .markdown-body input[type=radio]:focus-visible,
+  .markdown-body input[type=checkbox]:focus,
+  .markdown-body input[type=checkbox]:focus-visible {
+    outline-offset: 0;
+  }
+  
+  .markdown-body kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font: 11px ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    line-height: 10px;
+    color: #c9d1d9;
+    vertical-align: middle;
+    background-color: #161b22;
+    border: solid 1px rgba(110,118,129,0.4);
+    border-bottom-color: rgba(110,118,129,0.4);
+    border-radius: 6px;
+    box-shadow: inset 0 -1px 0 rgba(110,118,129,0.4);
+  }
+  
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  
+  .markdown-body h2 {
+    font-weight: 600;
+    padding-bottom: .3em;
+    font-size: 1.5em;
+    border-bottom: 1px solid #21262d;
+  }
+  
+  .markdown-body h3 {
+    font-weight: 600;
+    font-size: 1.25em;
+  }
+  
+  .markdown-body h4 {
+    font-weight: 600;
+    font-size: 1em;
+  }
+  
+  .markdown-body h5 {
+    font-weight: 600;
+    font-size: .875em;
+  }
+  
+  .markdown-body h6 {
+    font-weight: 600;
+    font-size: .85em;
+    color: #8b949e;
+  }
+  
+  .markdown-body p {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .markdown-body blockquote {
+    margin: 0;
+    padding: 0 1em;
+    color: #8b949e;
+    border-left: .25em solid #30363d;
+  }
+  
+  .markdown-body ul,
+  .markdown-body ol {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 2em;
+  }
+  
+  .markdown-body ol ol,
+  .markdown-body ul ol {
+    list-style-type: lower-roman;
+  }
+  
+  .markdown-body ul ul ol,
+  .markdown-body ul ol ol,
+  .markdown-body ol ul ol,
+  .markdown-body ol ol ol {
+    list-style-type: lower-alpha;
+  }
+  
+  .markdown-body dd {
+    margin-left: 0;
+  }
+  
+  .markdown-body tt,
+  /* .markdown-body code, */
+  .markdown-body samp {
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    font-size: 12px;
+  }
+  
+  /* .markdown-body pre {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    font-size: 12px;
+    word-wrap: normal;
+  } */
+  
+  .markdown-body .octicon {
+    display: inline-block;
+    overflow: visible !important;
+    vertical-align: text-bottom;
+    fill: currentColor;
+  }
+  
+  .markdown-body input::-webkit-outer-spin-button,
+  .markdown-body input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .markdown-body::before {
+    display: table;
+    content: "";
+  }
+  
+  .markdown-body::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .markdown-body>*:first-child {
+    margin-top: 0 !important;
+  }
+  
+  .markdown-body>*:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .markdown-body a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .markdown-body .absent {
+    color: #f85149;
+  }
+  
+  .markdown-body .anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+    line-height: 1;
+  }
+  
+  .markdown-body .anchor:focus {
+    outline: none;
+  }
+  
+  .markdown-body p,
+  .markdown-body blockquote,
+  .markdown-body ul,
+  .markdown-body ol,
+  .markdown-body dl,
+  .markdown-body table,
+  /* .markdown-body pre, */
+  .markdown-body details {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body blockquote>:first-child {
+    margin-top: 0;
+  }
+  
+  .markdown-body blockquote>:last-child {
+    margin-bottom: 0;
+  }
+  
+  .markdown-body h1 .octicon-link,
+  .markdown-body h2 .octicon-link,
+  .markdown-body h3 .octicon-link,
+  .markdown-body h4 .octicon-link,
+  .markdown-body h5 .octicon-link,
+  .markdown-body h6 .octicon-link {
+    color: #c9d1d9;
+    vertical-align: middle;
+    visibility: hidden;
+  }
+  
+  .markdown-body h1:hover .anchor,
+  .markdown-body h2:hover .anchor,
+  .markdown-body h3:hover .anchor,
+  .markdown-body h4:hover .anchor,
+  .markdown-body h5:hover .anchor,
+  .markdown-body h6:hover .anchor {
+    text-decoration: none;
+  }
+  
+  .markdown-body h1:hover .anchor .octicon-link,
+  .markdown-body h2:hover .anchor .octicon-link,
+  .markdown-body h3:hover .anchor .octicon-link,
+  .markdown-body h4:hover .anchor .octicon-link,
+  .markdown-body h5:hover .anchor .octicon-link,
+  .markdown-body h6:hover .anchor .octicon-link {
+    visibility: visible;
+  }
+  
+  .markdown-body h1 tt,
+  /* .markdown-body h1 code, */
+  .markdown-body h2 tt,
+  /* .markdown-body h2 code, */
+  .markdown-body h3 tt,
+  /* .markdown-body h3 code, */
+  .markdown-body h4 tt,
+  /* .markdown-body h4 code, */
+  .markdown-body h5 tt,
+  /* .markdown-body h5 code, */
+  .markdown-body h6 tt {
+  /* .markdown-body h6 code  */
+    padding: 0 .2em;
+    font-size: inherit;
+  }
+  
+  .markdown-body summary h1,
+  .markdown-body summary h2,
+  .markdown-body summary h3,
+  .markdown-body summary h4,
+  .markdown-body summary h5,
+  .markdown-body summary h6 {
+    display: inline-block;
+  }
+  
+  .markdown-body summary h1 .anchor,
+  .markdown-body summary h2 .anchor,
+  .markdown-body summary h3 .anchor,
+  .markdown-body summary h4 .anchor,
+  .markdown-body summary h5 .anchor,
+  .markdown-body summary h6 .anchor {
+    margin-left: -40px;
+  }
+  
+  .markdown-body summary h1,
+  .markdown-body summary h2 {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  
+  .markdown-body ul.no-list,
+  .markdown-body ol.no-list {
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .markdown-body ol[type=a] {
+    list-style-type: lower-alpha;
+  }
+  
+  .markdown-body ol[type=A] {
+    list-style-type: upper-alpha;
+  }
+  
+  .markdown-body ol[type=i] {
+    list-style-type: lower-roman;
+  }
+  
+  .markdown-body ol[type=I] {
+    list-style-type: upper-roman;
+  }
+  
+  .markdown-body ol[type="1"] {
+    list-style-type: decimal;
+  }
+  
+  .markdown-body div>ol:not([type]) {
+    list-style-type: decimal;
+  }
+  
+  .markdown-body ul ul,
+  .markdown-body ul ol,
+  .markdown-body ol ol,
+  .markdown-body ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .markdown-body li>p {
+    margin-top: 16px;
+  }
+  
+  .markdown-body li+li {
+    margin-top: .25em;
+  }
+  
+  .markdown-body dl {
+    padding: 0;
+  }
+  
+  .markdown-body dl dt {
+    padding: 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: 600;
+  }
+  
+  .markdown-body dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body table th {
+    font-weight: 600;
+  }
+  
+  .markdown-body table th,
+  .markdown-body table td {
+    padding: 6px 13px;
+    border: 1px solid #30363d;
+  }
+  
+  .markdown-body table tr {
+    background-color: #0d1117;
+    border-top: 1px solid #21262d;
+  }
+  
+  .markdown-body table tr:nth-child(2n) {
+    background-color: #161b22;
+  }
+  
+  .markdown-body table img {
+    background-color: transparent;
+  }
+  
+  .markdown-body img[align=right] {
+    padding-left: 20px;
+  }
+  
+  .markdown-body img[align=left] {
+    padding-right: 20px;
+  }
+  
+  .markdown-body .emoji {
+    max-width: none;
+    vertical-align: text-top;
+    background-color: transparent;
+  }
+  
+  .markdown-body span.frame {
+    display: block;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.frame>span {
+    display: block;
+    float: left;
+    width: auto;
+    padding: 7px;
+    margin: 13px 0 0;
+    overflow: hidden;
+    border: 1px solid #30363d;
+  }
+  
+  .markdown-body span.frame span img {
+    display: block;
+    float: left;
+  }
+  
+  .markdown-body span.frame span span {
+    display: block;
+    padding: 5px 0 0;
+    clear: both;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body span.align-center {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+  
+  .markdown-body span.align-center>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .markdown-body span.align-center span img {
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .markdown-body span.align-right {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+  
+  .markdown-body span.align-right>span {
+    display: block;
+    margin: 13px 0 0;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .markdown-body span.align-right span img {
+    margin: 0;
+    text-align: right;
+  }
+  
+  .markdown-body span.float-left {
+    display: block;
+    float: left;
+    margin-right: 13px;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.float-left span {
+    margin: 13px 0 0;
+  }
+  
+  .markdown-body span.float-right {
+    display: block;
+    float: right;
+    margin-left: 13px;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.float-right>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .markdown-body code,
+  .markdown-body tt {
+    padding: .2em .4em;
+    margin: 0;
+    font-size: 85%;
+    white-space: break-spaces;
+    /* background-color: rgba(110,118,129,0.4); */
+    background-color: #272822;
+    border-radius: 6px;
+  }
+  
+  /* .markdown-body code br, */
+  .markdown-body tt br {
+    display: none;
+  }
+  
+  /* .markdown-body del code {
+    text-decoration: inherit;
+  } */
+  
+  .markdown-body samp {
+    font-size: 85%;
+  }
+  
+  /* .markdown-body pre code {
+    font-size: 100%;
+  } */
+  
+  /* .markdown-body pre>code {
+    padding: 0;
+    margin: 0;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  } */
+  
+  /* .markdown-body .highlight {
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body .highlight pre {
+    margin-bottom: 0;
+    word-break: normal;
+  }
+  
+  .markdown-body .highlight pre,
+  .markdown-body pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #161b22;
+    border-radius: 6px;
+  }
+  
+  .markdown-body pre code,
+  .markdown-body pre tt {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  } */
+  
+  .markdown-body .csv-data td,
+  .markdown-body .csv-data th {
+    padding: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1;
+    text-align: left;
+    white-space: nowrap;
+  }
+  
+  .markdown-body .csv-data .blob-num {
+    padding: 10px 8px 9px;
+    text-align: right;
+    background: #0d1117;
+    border: 0;
+  }
+  
+  .markdown-body .csv-data tr {
+    border-top: 0;
+  }
+  
+  .markdown-body .csv-data th {
+    font-weight: 600;
+    background: #161b22;
+    border-top: 0;
+  }
+  
+  .markdown-body [data-footnote-ref]::before {
+    content: "[";
+  }
+  
+  .markdown-body [data-footnote-ref]::after {
+    content: "]";
+  }
+  
+  .markdown-body .footnotes {
+    font-size: 12px;
+    color: #8b949e;
+    border-top: 1px solid #30363d;
+  }
+  
+  .markdown-body .footnotes ol {
+    padding-left: 16px;
+  }
+  
+  .markdown-body .footnotes ol ul {
+    display: inline-block;
+    padding-left: 16px;
+    margin-top: 16px;
+  }
+  
+  .markdown-body .footnotes li {
+    position: relative;
+  }
+  
+  .markdown-body .footnotes li:target::before {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    bottom: -8px;
+    left: -24px;
+    pointer-events: none;
+    content: "";
+    border: 2px solid #1f6feb;
+    border-radius: 6px;
+  }
+  
+  .markdown-body .footnotes li:target {
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .footnotes .data-footnote-backref g-emoji {
+    font-family: monospace;
+  }
+  
+  .markdown-body .pl-c {
+    color: #8b949e;
+  }
+  
+  .markdown-body .pl-c1,
+  .markdown-body .pl-s .pl-v {
+    color: #79c0ff;
+  }
+  
+  .markdown-body .pl-e,
+  .markdown-body .pl-en {
+    color: #d2a8ff;
+  }
+  
+  .markdown-body .pl-smi,
+  .markdown-body .pl-s .pl-s1 {
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-ent {
+    color: #7ee787;
+  }
+  
+  .markdown-body .pl-k {
+    color: #ff7b72;
+  }
+  
+  .markdown-body .pl-s,
+  .markdown-body .pl-pds,
+  .markdown-body .pl-s .pl-pse .pl-s1,
+  .markdown-body .pl-sr,
+  .markdown-body .pl-sr .pl-cce,
+  .markdown-body .pl-sr .pl-sre,
+  .markdown-body .pl-sr .pl-sra {
+    color: #a5d6ff;
+  }
+  
+  .markdown-body .pl-v,
+  .markdown-body .pl-smw {
+    color: #ffa657;
+  }
+  
+  .markdown-body .pl-bu {
+    color: #f85149;
+  }
+  
+  .markdown-body .pl-ii {
+    color: #f0f6fc;
+    background-color: #8e1519;
+  }
+  
+  .markdown-body .pl-c2 {
+    color: #f0f6fc;
+    background-color: #b62324;
+  }
+  
+  .markdown-body .pl-sr .pl-cce {
+    font-weight: bold;
+    color: #7ee787;
+  }
+  
+  .markdown-body .pl-ml {
+    color: #f2cc60;
+  }
+  
+  .markdown-body .pl-mh,
+  .markdown-body .pl-mh .pl-en,
+  .markdown-body .pl-ms {
+    font-weight: bold;
+    color: #1f6feb;
+  }
+  
+  .markdown-body .pl-mi {
+    font-style: italic;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-mb {
+    font-weight: bold;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-md {
+    color: #ffdcd7;
+    background-color: #67060c;
+  }
+  
+  .markdown-body .pl-mi1 {
+    color: #aff5b4;
+    background-color: #033a16;
+  }
+  
+  .markdown-body .pl-mc {
+    color: #ffdfb6;
+    background-color: #5a1e02;
+  }
+  
+  .markdown-body .pl-mi2 {
+    color: #c9d1d9;
+    background-color: #1158c7;
+  }
+  
+  .markdown-body .pl-mdr {
+    font-weight: bold;
+    color: #d2a8ff;
+  }
+  
+  .markdown-body .pl-ba {
+    color: #8b949e;
+  }
+  
+  .markdown-body .pl-sg {
+    color: #484f58;
+  }
+  
+  .markdown-body .pl-corl {
+    text-decoration: underline;
+    color: #a5d6ff;
+  }
+  
+  .markdown-body g-emoji {
+    display: inline-block;
+    min-width: 1ch;
+    font-family: "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 1em;
+    font-style: normal !important;
+    font-weight: 400;
+    line-height: 1;
+    vertical-align: -0.075em;
+  }
+  
+  .markdown-body g-emoji img {
+    width: 1em;
+    height: 1em;
+  }
+  
+  .markdown-body .task-list-item {
+    list-style-type: none;
+  }
+  
+  .markdown-body .task-list-item label {
+    font-weight: 400;
+  }
+  
+  .markdown-body .task-list-item.enabled label {
+    cursor: pointer;
+  }
+  
+  .markdown-body .task-list-item+.task-list-item {
+    margin-top: 4px;
+  }
+  
+  .markdown-body .task-list-item .handle {
+    display: none;
+  }
+  
+  .markdown-body .task-list-item-checkbox {
+    margin: 0 .2em .25em -1.4em;
+    vertical-align: middle;
+  }
+  
+  .markdown-body .contains-task-list:dir(rtl) .task-list-item-checkbox {
+    margin: 0 -1.6em .25em .2em;
+  }
+  
+  .markdown-body .contains-task-list {
+    position: relative;
+  }
+  
+  .markdown-body .contains-task-list:hover .task-list-item-convert-container,
+  .markdown-body .contains-task-list:focus-within .task-list-item-convert-container {
+    display: block;
+    width: auto;
+    height: 24px;
+    overflow: visible;
+    clip: auto;
+  }
+  
+  .markdown-body ::-webkit-calendar-picker-indicator {
+    filter: invert(50%);
+  }
 
-@media (prefers-color-scheme: dark) {
-	.message-box {
-		--color-message-box: #082840;
-	}
+  .markdown-body ol{
+    list-style: decimal ;
+
+  } 
+  .markdown-body ul {
+    list-style: disc;
 }
 * { box-sizing: border-box; }
 /* HTML5 display-role reset for older browsers */
@@ -1079,217 +2245,35 @@ h2 + .header-anchor {
 		</header>
 
 		<main id="skip">
-			<!-- Delete this message, it will also remove the component CSS from the bundle -->
+			
 
-<!-- Stop deleting -->
+<figure>
+	
+	
+	
+</figure>
 
+<h1>n-queen</h1>
 
-
-
-
-
-
-<div class="posts-container">
-    
-        <a href="/blog/JAVA/leet-code/n-queen/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  n-queen
-              </h5>
-              <time class="postlist-date" datetime="2023-06-26">2023/06/26</time>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JAVA/leet-code/decision-tree-of-backtracking/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-            <img class="cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  의사결정트리와 순회
-              </h5>
-              <time class="postlist-date" datetime="2023-06-25">2023/06/25</time>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JAVA/leet-code/backtrack-algorithm/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-            <img class="cover-img" src=data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABOAE4DASIAAhEBAxEB/8QAGwAAAwADAQEAAAAAAAAAAAAAAgMEAQUHAAb/xAAuEAABAwMDAwIGAQUAAAAAAAABAAIDBBEhBRJBEzFRBhQHImFxgaGRIzNCwfD/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAQIDBP/EABoRAQEBAQADAAAAAAAAAAAAAAARASECEkH/2gAMAwEAAhEDEQA/AOttKY1ySLJgK9Ec6cHIt6RdRahPXRz0go6aOaB8m2oLn2cxvkDlIlbDqbzdjmloOV50hAwLlACALAADwFglIUZkS3OzwsEoXHwkKy4+Epz8rJOEBsUhRByMPUgejDl0jNU71JqslU3Tqg6cxslZsPSa4gDdxe+FrvU+qP0jQa2uijEj4Wbg0mwJuBn+UPpXUqjU9CpqyrEIlluf6RJba5A7/ZJ9S9jYaI2uj0uBurTRzVtryOY3aL+Px5VhclF+Etz7dypFP3rBep+ovFyQOLkJckl6AvukSlNkHlMbIPK17X4ymCSy0xVU5ZLE6OVjJGOFnNe24I8EFDTyxf2oTGOnjYy3y/gdlp/UOrwaRpM1ZVPLI2jaCBc7jgL5f4X6RJTx1OsTySOfWCzdxy4XvuP3Pb6KzlPbsdFfJjukPkuUp0vF0p0tr5UWqBLblEZrBQOlxhCJjZEq4zITLc4Ki6lxyhMnF0Kw2Tk2BR9UDuoxIPOF8N8RPVdVpk0On6U6NlU8dR8jhfYz7fVazKxY6M/pyxlksbJGHu17dwP4KLqBrQALAYAGLLQ+l6yorPT1BU1jQKiWIOfxc+VsnPt37qRapMpSjIAe6ndITwgL/qhTzJ4KEvP3CndIOVkEntchEp4fzwhdIEokkZwEDn2GCgxvH1/JXIPWE3uviMI44TIGmGBzT/nm5H8FdTdJt4KnNBRe+9/7OD3hFutt+bx3W/HYzrb3s3a3AGAAh3lvNip99gl9UkZ/SkKqM18g/tY6gJySCpJZM2AQxuIuOQkKrLwTYWKIOIFhayla65yOyaXEC6gaXdj/ALQF3/BAXWG536QbicDCK//Z alt="cover image" height="auto" />
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  backtracking 알고리즘
-              </h5>
-              <time class="postlist-date" datetime="2023-06-24">2023/06/24</time>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JS/iterator-protocol/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-            <img class="cover-img" src=data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABOAE4DASIAAhEBAxEB/8QAHQAAAAcBAQEAAAAAAAAAAAAAAAMEBQYHCAEJAv/EADcQAAIBAwMCBAMECQUAAAAAAAECAwAEEQUhMQYSBxNBYRQiUSNCcYEIFSQyM1JTYnKRobHB8f/EABcBAAMBAAAAAAAAAAAAAAAAAAABAgP/xAAaEQEBAQEBAQEAAAAAAAAAAAAAARECMSFB/9oADAMBAAIRAxEAPwDKlChT50b01e9Wa5FpendomcFizcACnJoMdCrm1jwB6i07T5bhbiKZ0GfLVCM/nVRX1ncWNy9veQvDMhwyOMEU7zYCahXcUKWByhQoUgFChQoDoqz/ANHSQx+Jlpg4zGw/3FVjU88Er5NO8RNNmlB7DlSfpmr59DeqiNoyHUMTzmq/8SPCPQur7ZmkhEN5g9ksexBqfWkkd3CskLA5ApUxPknu5FVp2PPzxD8ONc6IumGoQGSyLYjuU3Uj3+lQkivSjVdFtNXs5Le+ggmt3XDCUZGP/Ky74yeAlzpCz6v0gpurQZeWxQEvGPqn8w9qLJ+JZ4xXKMdCrEMCCDgg+lfJFZ4b5oUKFID1x6kVKPDggdWWRB4NRXtxUo8PWWHqKCVuE3q56Gw9C1aeyKNC3cmBlDU/07UrfUrUmNsOOV9QaprR9TiniV0YHan61uHRDPbymKUcMPWnGlmrWKfZ9jAMD9RzRbSusFuERZGkkCszvwCTk5wckY2G1N/T+tJqEaQzlUvAuSo4bbkU5SwuHTtPdGHU9p+6Pmyc+vIoRYpXxJ8HNN69iXVbC0k0jVpo0cSpCEV92GJIywweCTju/HisrdcdE650VqfwXUFk0DkZjlU90Uox9xxsfw5HrXoVcQq8+nubmWERuZDCjdguCIiArepA/ex7b1F9Z/VHVL6ro2p6XFdrbBRL8Ta5TLISCjH7wB5XcZpzm1O489yK+cUpuIfLmkQcKxX/AEOKIIqDGAE8Zp86YcwXDSZx6Uyjf1pzsfs0GDzVT0LU6d197Qrv3L6jNWnpmsx3NmpjYcb1nSzuyrD/AKNS7Rtdlt2XDAr6iqs051i/rW7MnlsjMjqcqynGCKmuidULNffCXzlJyIwJHGI3HcQSCBhWO2x2qnunNXiuoQ6scjkfSpGl1DcxdsyLImVOGGxOdqjGl+xamqrIJrE25j84eaEWQkKzeScZwCfT22zzxUVWPqx5kN3c6BDACDJHDDPIxX1AZmUA++Kb9F6sk0t7O31l557MN2xTglpAzIw7WVR8yAHb1HvTpqHVWmrbStbLdXMiqSqRQkdxxxlsCrjPGCb9f2y4x/VfbP8AcaRsPane80u9S5ma4haMl2JUY2yc4zSKW2cHBQioIQgyRj/mlsRxt9Peksa4bOd6NTOeaIDlbSAN8xpxguF7xzTGuw5o2KQg5yaqUlh9P6vLZSBo2JU7EE81aOl6pFcWsOGwSQSAeKz/AGd2wZQM1K9F1qSKcEA4XfGeaLFS4vVGHm2xRgxAY/N/jikq3xjLd3AB4NMFhqJmhQkNny8D8SN6I+KCyTAL/CTO/wBTSlWp/qmdEvJi4JbvO351FZbpmbaIYpbrkzXmqXDuTgOQBSHyMAb0tZv/2Q== alt="cover image" height="auto" />
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  자바스크립트 iterator의 특징
-              </h5>
-              <time class="postlist-date" datetime="2023-06-24">2023/06/24</time>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JAVA/leet-code/coin-change-problem-bottom-up/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-            <img class="cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  동전 교환 문제 - bottom-up
-              </h5>
-              <time class="postlist-date" datetime="2023-06-18">2023/06/18</time>
-          </div>
-        </div>
-        </a>
-    
-</div>
-<div class="wrapper">
-  <ul id="pagination" class="sticky-bottom-nav"></ul>
-</div>
+<ul class="post-metadata pt-2">
+	<li><time datetime="2023-06-26">26 June 2023</time></li>
+</ul>
 
 
 
+	<section class="post-content markdown-body">
+		<br />
+<br />
+<br />
+<pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// java</span><br><span class="token keyword">package</span> <span class="token namespace">leetCodes</span><span class="token punctuation">;</span><br><br><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Arrays</span></span><span class="token punctuation">;</span><br><br><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">NQueens</span> <span class="token punctuation">{</span><br><br>	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>		<span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span><br>		<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> cols <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br>		<span class="token function">traversal</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> cols<span class="token punctuation">)</span><span class="token punctuation">;</span><br>	<span class="token punctuation">}</span><br><br>	<span class="token comment">// promising 통과하면 col 배열의 다음 칸으로 넘어간다. (다음 row를 대상으로 함)</span><br>	<span class="token comment">// promising 을 통과하지 못하면 통과하지 못한 row의 값을 하나 올린다. (다음 col을 대상으로 함)</span><br>	<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">traversal</span><span class="token punctuation">(</span><span class="token keyword">int</span> row<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> cols<span class="token punctuation">)</span><span class="token punctuation">{</span><br>		<span class="token keyword">int</span> n <span class="token operator">=</span> cols<span class="token punctuation">.</span>length <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span><br>		<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">promising</span><span class="token punctuation">(</span>row<span class="token punctuation">,</span> cols<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>			<span class="token keyword">if</span><span class="token punctuation">(</span>row <span class="token operator">==</span> n<span class="token punctuation">)</span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">copyOfRange</span><span class="token punctuation">(</span>cols<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>			<span class="token keyword">else</span> <span class="token punctuation">{</span><br>				<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> col <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> col <span class="token operator">&lt;</span> n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> col<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>					cols<span class="token punctuation">[</span>row <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> col<span class="token punctuation">;</span><br>					<span class="token function">traversal</span><span class="token punctuation">(</span>row <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span>cols<span class="token punctuation">)</span><span class="token punctuation">;</span><br>				<span class="token punctuation">}</span><br>			<span class="token punctuation">}</span><br>		<span class="token punctuation">}</span><br><br>	<span class="token punctuation">}</span><br><br>	<span class="token keyword">static</span> <span class="token keyword">boolean</span> <span class="token function">promising</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> cols<span class="token punctuation">)</span><span class="token punctuation">{</span><br>		<span class="token keyword">int</span> k <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><br>		<span class="token keyword">boolean</span> flag <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span><br><br>		<span class="token keyword">while</span><span class="token punctuation">(</span>k <span class="token operator">&lt;</span> i <span class="token operator">&amp;&amp;</span> flag<span class="token punctuation">)</span><span class="token punctuation">{</span><br>			<span class="token keyword">if</span><span class="token punctuation">(</span>cols<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> cols<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">abs</span><span class="token punctuation">(</span>cols<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> cols<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token punctuation">(</span>i <span class="token operator">-</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>				flag <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span><br>			<span class="token punctuation">}</span><br>			k <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span><br>		<span class="token punctuation">}</span><br>		<span class="token keyword">return</span> flag<span class="token punctuation">;</span><br>	<span class="token punctuation">}</span><br><span class="token punctuation">}</span><br></code></pre>
 
-<script type="text/javascript" async>
-  const pageLinks = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;,&quot;/page7/index.html&quot;,&quot;/page8/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
-  const postsCount = 41
-  let allPages = pageLinks.length
-  const pagination = document.getElementById("pagination")
-  const NOTHING_BUTTON = (dir='<')=>`<div class="btn">${dir}</div>`
-  const pageNumber = 0
-
-  function elem(allPages = pageLinks.length, page) {
-    let a = "";
-    let beforePages = page - 1;
-    let afterPages = page + 1;
-    let liActive;
-
-    let spaceStack = [];
-
-
-  if (page > 0) {
-    a += `
-    <a class="btn" 
-    onclick="elem(allPages, ${
-      0
-    })"
-    href="${pageLinks.at(0)}">
-      <span> << </span>
-    </a>
-    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}" 
-     class="btn" onclick="elem(allPages, ${page - 1 })">
-      <span> < </span>
-    </a>
-    `;
-    spaceStack.push(1)
-  } else {
-    a += NOTHING_BUTTON('_')
-    spaceStack.push(1)
-  }
-
-  for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
-
-    if (currentPage > allPages ) {
-      continue;
-    }
-
-    if (currentPage == -1) {
-      currentPage = currentPage + 1;
-    }
-
-    if (page == currentPage) {
-      liActive = "active";
-    } else {
-      liActive = "";
-    }
-
-    /**
-    * 마지막 페이지의 pagination
-    */
-    if(page == allPages - 1) {
-    a += `
-        <a href="${pageLinks[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
-         <span>
-          ${afterPages}
-         </span>
-        </a>
-      `;
-      spaceStack.push(1)
-      break;
-    }
-    /**
-     * 첫 페이지의 pagination
-     */
-    a += `
-      <a href="${pageLinks[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
-      <span>
-        ${currentPage + 1}
-      </span>
-      </a>
-      `;
-    spaceStack.push(1)
-  }
-
-  if(page == 0) {
-    a += `
-      <a href="${pageLinks[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
-      <span>
-        ${afterPages + 2}
-      </span>
-      </a>
-      `;
-    spaceStack.push(1)
-  }
-
-  if (page < allPages && page !== allPages - 1) {
-    a += `
-      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
-        page + 1
-      })" >
-        <span> > </span>
-      </a>
-    `;
-    a += `
-      <a href="${pageLinks.at(-1)}" class="btn" onclick="elem(allPages, ${
-      allPages
-      })" >
-        <span> >> </span>
-      </a>
-    `;
-    spaceStack.push(1)
-  } else {
-    while(spaceStack.length < 5) {
-      a += NOTHING_BUTTON('_')
-      spaceStack.push(1)
-    }
-  }
-
-  pagination.innerHTML = a;
-}
-elem(allPages, 0);
-</script>
-
-
-
-
-
+	</section>
+<br>
+<br>
+<br>
+<hr></hr>
+<ul><li>Previous: <a href="/blog/JAVA/leet-code/decision-tree-of-backtracking/">의사결정트리와 순회</a></li>
+</ul>
 
 		</main>
 		<footer></footer>
