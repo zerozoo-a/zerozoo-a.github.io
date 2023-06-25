@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>backtracking 알고리즘 | zerozoo-a의 블로그</title>
+		<title>의사결정트리와 순회 | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -2253,98 +2253,73 @@ h2 + .header-anchor {
 	
 </figure>
 
-<h1>backtracking 알고리즘</h1>
+<h1>의사결정트리와 순회</h1>
 
 <ul class="post-metadata pt-2">
-	<li><time datetime="2023-06-24">24 June 2023</time></li>
+	<li><time datetime="2023-06-25">25 June 2023</time></li>
 </ul>
 
 
 	<hr></hr>
 		<aside>
 			<nav class="toc" >
-        <ol><li><a href="#backtracking">backtracking 알고리즘이란?</a></li><li><a href="#-1">주어진 것</a></li><li><a href="#-2">풀이</a></li><li><a href="#-3">해석</a></li></ol>
+        <ol><li><a href="#-1">순회</a><ol><li><a href="#-2">중위순회</a></li><li><a href="#-3">후위순회</a></li></ol></li></ol>
       </nav>
 		</aside>
 	<hr></hr>
 
 
 	<section class="post-content markdown-body">
-		<div class="img-container"><img class="border-radius10" src="/img/r6A-VqEYCx-600.webp" width="100%" height="auto" alt="footsteps" loading="lazy" decoding="async"></div>
-<a href="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/QfV6AqEwNBw">이미지 출처</a>
-<br />
-<br />
-<br />
-<h2 id="backtracking" tabindex="-1">backtracking 알고리즘이란? <a class="header-anchor" href="#backtracking">#</a></h2>
+		<h1 id="decision-tree" tabindex="-1">의사결정트리 (decision tree)란? <a class="header-anchor" href="#decision-tree">#</a></h1>
 <blockquote>
-<p>Backtracking can be defined as a general algorithmic technique that considers searching every possible combination in order to solve a computational problem. -geeks for geeks-</p>
+<p>결정 트리(decision tree)는 의사 결정 규칙과 그 결과들을 트리 구조로 도식화한 의사 결정 지원 도구의 일종이다. 결정 트리는 운용 과학, 그 중에서도 의사 결정 분석에서 목표에 가장 가까운 결과를 낼 수 있는 전략을 찾기 위해 주로 사용된다. <a href="https://ko.wikipedia.org/wiki/%EA%B2%B0%EC%A0%95_%ED%8A%B8%EB%A6%AC">wiki 의사결정트리</a></p>
 </blockquote>
-<p>백트레킹 알고리즘은 문제 해결을 위해 가능한 모든 조합을 검색하는 일반적인 알고리즘 기법입니다.</p>
-<h2 id="" tabindex="-1">구하는 것 <a class="header-anchor" href="#">#</a></h2>
-<p>주어진 배열의 모든 중복되지 않은 조합을 찾습니다.
-int 배열 <code>int[] nums = {1, 2, 3}</code>이 주어졌을 때 아래의 답을 반환하면 됩니다.</p>
-<pre class="language-java" tabindex="0"><code class="language-java">res<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span></code></pre>
-<h2 id="-1" tabindex="-1">주어진 것 <a class="header-anchor" href="#-1">#</a></h2>
-<p>문제에서 주어지는 것은 숫자 배열입니다.</p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// java</span><br>        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">;</span><br>        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><br>		<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span><span class="token punctuation">></span></span> result <span class="token operator">=</span> <span class="token function">permute</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">;</span><br>        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span></code></pre>
-<h2 id="-2" tabindex="-1">풀이 <a class="header-anchor" href="#-2">#</a></h2>
-<p>풀이는 아래와 같습니다.</p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// java</span><br><br><span class="token keyword">package</span> <span class="token namespace">leetCodes</span><span class="token punctuation">;</span><br><br><br><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">LinkedList</span></span><span class="token punctuation">;</span><br><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span></span><span class="token punctuation">;</span><br><br><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Backtracking</span> <span class="token punctuation">{</span><br>	<span class="token keyword">static</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span><span class="token punctuation">></span></span> res <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>		<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">;</span><br>		<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span><span class="token punctuation">></span></span> result <span class="token operator">=</span> <span class="token function">permute</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"res: "</span><span class="token operator">+</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span><br>	<span class="token punctuation">}</span><br><br>	<span class="token keyword">static</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">permute</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>		<span class="token class-name">LinkedList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> track <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token function">backtrack</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> track<span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token keyword">return</span> res<span class="token punctuation">;</span><br>	<span class="token punctuation">}</span><br><br>	<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">backtrack</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">,</span> <span class="token class-name">LinkedList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> track<span class="token punctuation">)</span><span class="token punctuation">{</span><br>		<span class="token keyword">if</span><span class="token punctuation">(</span>track<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// base-case</span><br>			res<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>track<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <br>			<span class="token keyword">return</span><span class="token punctuation">;</span><br>		<span class="token punctuation">}</span><br><br>		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>			<span class="token keyword">if</span><span class="token punctuation">(</span>track<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>				<span class="token keyword">continue</span><span class="token punctuation">;</span><br>			<span class="token punctuation">}</span><br>			track<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>			<span class="token function">backtrack</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> track<span class="token punctuation">)</span><span class="token punctuation">;</span><br>			track<span class="token punctuation">.</span><span class="token function">removeLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token punctuation">}</span><br>	<span class="token punctuation">}</span><br><span class="token punctuation">}</span><br></code></pre>
-<h2 id="-3" tabindex="-1">해석 <a class="header-anchor" href="#-3">#</a></h2>
-<p>기본적인 프레임은 DFS를 통한 재귀 트리의 순회입니다.</p>
-<p>주어진 배열을 반복문으로 순회하면서 재귀 호출을 실행합니다.</p>
-<p>재귀 호출의 조건 중 기저조건에 닿으면</p>
-<ul>
-<li><strong>값을 반환하고</strong>,</li>
-<li><strong>해당 콜스택은 사라지고</strong>,</li>
-<li><strong>tracking하던 값의 마지막 값을 삭제합니다.</strong></li>
-</ul>
-<p>UML을 그려보겠습니다.</p>
-<p>배열 <code>{1, 2}</code>를 입력받았다고 가정합니다.</p>
-<p>트리는 DFS조건을 따라 가장 왼쪽 리프 노드 부터 진행됩니다.</p>
-<img src="https://www.plantuml.com/plantuml/svg/SoWkIImgAStDuShBJqbLK39GKaWiLiWpW78D8Ln3D6wy4LJ02280uoOb5gU2HK0CBguy0mLTNJkWUWKk88OmuusiAk0ye3uZC0kitY4rBmNe4W00" alt="uml diagram">
-<p>중복되는 track인 1 노드에 접근한 경우 <code>continue</code>를 통해 건너 뛰어줍니다.</p>
-<p>리프노드에 도달해 <code>base case</code>에 닿은 경우가 발생했습니다.</p>
-<p>2번 노드가 base case에 닿은 노드가 되었습니다.</p>
-<ul>
-<li>base case에 도달한 경우 콜스택을 반환합니다.</li>
-<li>track에서 마지막 값을 지웁니다.</li>
-</ul>
-<p>track의 상태는 <code>1 -&gt; 2</code>에서 <code>1</code>이 됩니다.</p>
-<img src="https://www.plantuml.com/plantuml/svg/SoWkIImgAStDuShBJqbLK39GKaWiLiWpW78D8Ln3D6wy4LJ02280uoOb5gU2HK0CBguy0mLTNJkWUWKk88OmuusiAk0ye3uZC0ki7ie6siO5uaELM1MbbfGMvN4vfEQb0Dq90000" alt="uml diagram">
-<p>이 상황에서 레벨 1의 노드 1의 상태는 아래와 같습니다.</p>
-<ul>
-<li>하위 노드에게서 반환을 받음</li>
-<li>순회중인 반복문의 i 값은 1임</li>
-<li>하위 노드에게 반환을 받는 위치는 정확히 backtrack함수를 호출한 시점임</li>
-<li>다음 명령어는 removeLast 함수임</li>
-</ul>
-<p>위의 4개 상황이 node 1이 처한 상황이고
-앞으로의 행동을 나타냅니다.</p>
-<p>node1은 값을 반환받고 다음 명령어로 removeLast를 수행합니다.</p>
-<p>track은 <code>1</code>에서 순서대로 removeLast 함수에 의해 <code>1</code>이 삭제되어
-이제 아무것도 가리키지 않게 됩니다.</p>
-<p>그리고 반복문의 <code>i</code> 값은 1이였으므로 반복문이 종료되고
-레벨 1의 노드 1은 할 일이 이제 없습니다. 스택은 사라지게 되고
-레벨 0의 노드는 다음 반복문을 실행합니다.</p>
-<p>nums의 배열에 다음 값은 2이므로 <code>i = 2</code>가 되고
-다음 track의 시작값은 2입니다.
-마지막 track의 값을 지우는 이유는 이전 값들을 재활용하기 위해서입니다.</p>
-<p><code>{1, 2}</code> 배열의 경우 1을 구한 순간 남은 값은 2밖에 없어서 별로 티가 나지 않지만</p>
-<p><code>{1, 2, 3}</code> 배열의 경우 1을 구한 상태에서 <code>{1, 2, 3}</code>을 구할 수 있고, <code>{1, 3, 2}</code>를 구할 수도 있기 때문입니다.</p>
-<img src="https://www.plantuml.com/plantuml/svg/RP0z2iGW58HxJ_587_2dIx7a9i4GkwmBQc2Fdz6diYkfz9iPPiGr9XlIzJw5_noE9ZcHZUIbgAoOLKNDg3Sz1g3yHqRVZ1McLUmskYBcovDMrYJDymj5rA_y2bNrJI_VJbY7snppGzX53a91NaIYK-xCPqqlmQKhUC5MBspowlo1pxi1" alt="uml diagram">
-<p>위의 트리 노드는 배열 <code>{1, 2}</code>를 구하는 과정을 나타낸 것입니다.</p>
-<p>위 트리에서 base case까지 도달한 경우
-해당하는 루트들은 조건에 알맞은 값이라고 볼 수 있습니다.</p>
-<p>고작 배열 2개 짜리인데 트리의 깊이는 3레벨에 달합니다.
-모든 경우의 수를 따지는 것이 기본이기 때문에 최적화에도 한계가 있습니다.</p>
+<h2 id="" tabindex="-1">역추적 알고리즘의 의사결정트리 <a class="header-anchor" href="#">#</a></h2>
+<p>3개의 수 [1, 2, 3]이 주어지고 이 수들의 순열을 찾을때 역추적 알고리즘의 의사결정트리를 사용 할 수 있습니다.</p>
+<img src="https://www.plantuml.com/plantuml/svg/RP9B2iCW48RtdaAo5nnVIJOb1-Wb0d6NMcZIdhyJ7ALJPlVv-JCFSJdEzNM-7xigpothuPu_URU3NWzThFgLOA1gq5oxgjsVzbLxpQgu5W_SKZfoInsJc1t5x2HsczaGlfK0opMb0UIquxgzXvUB13aT5SvYjJ4tF7HodJnUGyNG2T_5LKgTS7zVQUfqxHceDkuM2R5F8iH68o7EFH5YfvamgYMN3N_45m00" alt="uml diagram">
+<p>위 UML은 backtracking의 의사결정트리입니다.
+순열을 처음 계산할 때 손으로 만들던 그 트리와 비슷합니다.</p>
+<p>해당 트리는 루트 노드에서부터 트리를 순회하고 경로를 숫자로 기록합니다.</p>
+<p>배열의 길이가 3이므로 트리의 레벨은 출발점부터 계산하면 레벨 3까지 총 길이는 4가 되겠습니다.</p>
+<p>이를 의사결정트리라고 부르는 이유는 각 트리의 노드에서 의사결정을 내리기 때문입니다.</p>
+<p>노드에서 하위 트리를 생성할 때, 자신이 기록해둔 값들이
+&quot;1, 2라면 나머지 3을 하위 트리로 만든다&quot; 라는 의사결정이 각 노드들에서 일어나는 것이 위 순열 문제의 의사결정입니다.</p>
+<h2 id="-1" tabindex="-1">순회 <a class="header-anchor" href="#-1">#</a></h2>
+<p>순회에는 전위, 중위, 후위 순회가 있습니다.</p>
+<p>각 순회의 위치는 root 노드의 방문 순서에 따라 이름 지어졌습니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// js</span><br><span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span><br>  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span><br>    <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">const</span> root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>root<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>root<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>root<span class="token punctuation">.</span>left<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>root<span class="token punctuation">.</span>left<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>예시를 위해 이진트리를 생성합니다.</p>
+<img src="https://www.plantuml.com/plantuml/svg/SoWkIImgAStDuShBJqbLK39KKaWiLYY2yemWF3sOh36K3vCtWSd3LPZ2HOguk8eKT7NjmDfXh28k80yc2X97uXLnEQJcfG2T0W00" alt="uml diagram">
+<p>트리는 위와 같은 그림을 그리게 됩니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// js</span><br><span class="token keyword">function</span> <span class="token function">preOrderTraversal</span><span class="token punctuation">(</span><span class="token parameter">root</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><br>  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 현재 노드의 값</span><br><br>  <span class="token function">preOrderTraversal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 왼쪽 노드로</span><br>  <span class="token function">preOrderTraversal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 오른쪽 노드로</span><br><span class="token punctuation">}</span></code></pre>
+<p>전위순회 함수인 preOrderTraversal 함수는
+현재 방문한 node의 값을 출력합니다.</p>
+<p>그리고 왼쪽 하위 트리로 재귀를 실행합니다.
+따라서 왼쪽 하위 트리부터 방문을 하면서 기저조건에 닿은 경우 콜스택이 반환되고 그 다음 오른쪽 트리를 방문하게 됩니다.</p>
+<p>따라서 <code>1 --&gt; 2 --&gt; 4 --&gt; 5 --&gt; 3</code>의 순서로 방문하게 됩니다.</p>
+<p>전위순회는 루트를 가장 먼저 방문하기 때문에 전위입니다.</p>
+<p>중위순회는 루트를 중간에 방문하기 때문에 중위순회입니다.</p>
+<p>후위순회는 루트를 중간에 방문하기 때문에 후위순회입니다.</p>
+<iframe src="https://codesandbox.io/embed/brave-darwin-grqgls?autoresize=1&expanddevtools=1&fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.js&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="brave-darwin-grqgls"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+   ></iframe>
+<p>따라서 언제 각 노드의 값에 접근하는지에 따라 순회가 결정됩니다.</p>
+<h3 id="-2" tabindex="-1">중위순회 <a class="header-anchor" href="#-2">#</a></h3>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// js </span><br><span class="token comment">// 중위순회 4 --> 2 --> 5 --> 1 --> 3</span><br><span class="token keyword">function</span> <span class="token function">inOrderTraversal</span><span class="token punctuation">(</span><span class="token parameter">root</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><br>  <span class="token function">preOrderTraversal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 왼쪽 노드로</span><br>  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 현재 노드의 값</span><br>  <span class="token function">preOrderTraversal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 오른쪽 노드로</span><br><span class="token punctuation">}</span></code></pre>
+<h3 id="-3" tabindex="-1">후위순회 <a class="header-anchor" href="#-3">#</a></h3>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// js </span><br><span class="token comment">// 후위순회 4 --> 5 --> 2 --> 3 --> 1</span><br><span class="token keyword">function</span> <span class="token function">postOrderTraversal</span><span class="token punctuation">(</span><span class="token parameter">root</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">return</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><br><br>  <span class="token function">preOrderTraversal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 왼쪽 노드로</span><br>  <span class="token function">preOrderTraversal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 오른쪽 노드로</span><br>  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 현재 노드의 값</span><br><span class="token punctuation">}</span></code></pre>
+<p>이렇게 각 순회 방법을 알아봤습니다.</p>
+<p>감사합니다.</p>
 
 	</section>
 <br>
 <br>
 <br>
 <hr></hr>
-<ul><li>Previous: <a href="/blog/JS/iterator-protocol/">자바스크립트 iterator의 특징</a></li><li>Next: <a href="/blog/JAVA/leet-code/decision-tree-of-backtracking/">의사결정트리와 순회</a></li>
+<ul><li>Previous: <a href="/blog/JAVA/leet-code/backtrack-algorithm/">backtracking 알고리즘</a></li>
 </ul>
 
 		</main>
