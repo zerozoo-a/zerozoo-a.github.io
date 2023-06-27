@@ -8,6 +8,7 @@ coverURL:
 <br />
 n queen 문제 풀이
 
+
 ```java
 // java
 package leetCodes;
