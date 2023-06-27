@@ -6,6 +6,7 @@ coverURL:
 <br />
 <br />
 <br />
+n queen 문제 풀이
 
 ```java
 // java
