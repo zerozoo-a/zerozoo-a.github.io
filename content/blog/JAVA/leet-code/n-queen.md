@@ -6,52 +6,124 @@ coverURL:
 <br />
 <br />
 <br />
-n queen 문제 풀이
+n queens 문제
 
-abc dwdef
+이번 문제는 leet code를 돌아다니다가 좋은 답을 발견하여 이를 이해해보고자 합니다.
 
-```java
-// java
-package leetCodes;
+```js
+// js
+var solveNQueens = function (n) {
+  //  final result
+  let goodPlacement = [];
 
-import java.util.Arrays;
+  // chess board, initialized with '.', of size n x n
+  let board = Array.from(Array(n), () => new Array(n).fill("."));
 
-public class NQueens {
+  let colSet = new Set(); // occupy flag for each column
+  let priDiagSet = new Set(); // occupy flag for each primary diagonal (i.e., Northwest <-> Southeast direction )
+  let secDiagSet = new Set(); // occupy flag for each secondary diagonal (i.e., Northeast <-> Southwest direction )
 
-	public static void main(String[] args) {
-		int n = 4;
-		int[] cols = new int[n + 1];
-		traversal(0, cols);
-	}
+  var isSafe = function (row, col) {
+    return (
+      !colSet.has(col) &&
+      !priDiagSet.has(col - row) &&
+      !secDiagSet.has(col + row)
+    );
+  };
 
-	// promising 통과하면 col 배열의 다음 칸으로 넘어간다. (다음 row를 대상으로 함)
-	// promising 을 통과하지 못하면 통과하지 못한 row의 값을 하나 올린다. (다음 col을 대상으로 함)
-	static void traversal(int row, int[] cols){
-		int n = cols.length + 1;
-		if(promising(row, cols)) {
-			if(row == n) System.out.println(Arrays.copyOfRange(cols,1,n+1));
-			else {
-				for(int col = 1; col < n + 1; col++) {
-					cols[row + 1] = col;
-					traversal(row + 1,cols);
-				}
-			}
-		}
+  var update = function (row, col, putOn) {
+    if (putOn == true) {
+      // put Queen on specified position, and set corresponding occupy flag
+      board[row][col] = "Q";
+      colSet.add(col);
+      priDiagSet.add(col - row);
+      secDiagSet.add(col + row);
+    } else {
+      // take Queen away from specified position, and clear corresponding occupy flag
+      board[row][col] = ".";
+      colSet.delete(col);
+      priDiagSet.delete(col - row);
+      secDiagSet.delete(col + row);
+    }
+    return;
+  };
 
-	}
+  // Notice that here we use the DFS + backtracking template, just like what we described before.
+  var placeQueen = function (row = 0) {
+    // Base case aka stop condition
+    // We already placed all N Queens in good position
+    if (row == n) {
+      goodPlacement.push(board.map((eachRow) => eachRow.join("")));
+      return;
+    }
 
-	static boolean promising(int i, int[] cols){
-		int k = 1;
-		boolean flag = true;
+    // General cases:
+    // Try all possible columns in DFS + backtracking
+    for (let col = 0; col < n; col++) {
+      if (isSafe(row, col)) {
+        update(row, col, true); // make a selection
+        placeQueen(row + 1); // solve next row in DFS
+        update(row, col, false); // undo selection
+      }
+    }
+    return;
+  };
+  // ---------------------------------------
 
-		while(k < i && flag){
-			if(cols[i] == cols[k] || Math.abs(cols[i] - cols[k]) == (i - k)) {
-				flag = false;
-			}
-			k += 1;
-		}
-		return flag;
-	}
-}
+  // Start placing Queen from row_#0
+  placeQueen(0);
 
+  return goodPlacement;
+};
+
+solveNQueens(4);
 ```
+
+
+<a href="https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/">문제</a>의 설명은 링크와 같습니다.
+
+
+n-queens 문제의 핵심적인 풀이법은 아래와 같습니다.
+
+퀸은 한 행에 하나의 퀸만 놓을 수 있습니다.
+각 행의 퀸들은 북서에서 남동 방향 모든 칸들, 북동에서 남서로 이어지는 모든 칸들을 이동할 수 있습니다.
+
+각 퀸은 서로의 이동 방향에 놓여있으면 안됩니다.
+
+
+대략적인 풀이는 아래와 같습니다.
+
+- 첫 행에 퀸을 놓고,
+- 다음 행으로 이동합니다. (재귀 호출)
+- 다음 행의 n개의 열에 퀸을 놓을 수 있는지 검사합니다. (반복문 + promising 검사)
+- 퀸을 놓을 수 있다면 퀸을 놓고 다음 행으로 이동합니다.
+- 놓을 수 없다면 반복문을 종료하고 재귀 호출한 함수를 반환해 stack을 없애줍니다.
+  
+
+
+위 알고리즘에서 배울 점은 아래의 프레임입니다.
+
+```js
+
+    for (let col = 0; col < n; col++) {
+      if (isSafe(row, col)) {
+        update(row, col, true); // make a selection
+        placeQueen(row + 1); // solve next row in DFS
+        update(row, col, false); // undo selection
+      }
+    }
+	return;
+```
+
+n개의 행이 있다면 반복문 n번을 순회합니다.
+
+현재 진행중인 행의 각 칸마다 하위 행 n개 만큼을 재귀호출합니다.
+
+재귀트리를 타고 내려가다 조건에 부합하지 않는 경우
+반복문을 빠져나오게 됩니다.
+
+예를 들어 다음 행 모든 칸에 퀸을 놓을 수 없는 경우 반복문이 종료되고 재귀 함수가 반환됩니다.
+
+반환된 재귀함수는 스택을 반환하고 해당 행의 queen을 행에서 지웁니다.
+
+반복문이 돌아가고 다음 칸에 queen을 놓게 됩니다.
