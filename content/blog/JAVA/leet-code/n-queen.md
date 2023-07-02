@@ -1,8 +1,10 @@
 ---
-title: n-queen
+title: n-queen 문제
 date: 2023-06-26 00:14:50
-coverURL: 
+coverURL: https://images.unsplash.com/photo-1591117752671-541f3495dc93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
 ---
+
+{% image "../images/photo-1591117752671-541f3495dc93.avif" %}
 <br />
 <br />
 <br />
@@ -127,3 +129,97 @@ n개의 행이 있다면 반복문 n번을 순회합니다.
 반환된 재귀함수는 스택을 반환하고 해당 행의 queen을 행에서 지웁니다.
 
 반복문이 돌아가고 다음 칸에 queen을 놓게 됩니다.
+
+아래는 java의 풀이입니다.
+
+```java
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        
+        // Chess board initialization
+        board = new char[n][n];
+        
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(board[i], '.');
+        }
+        
+        //Start placing Queen from row_#0
+        placeQueen( 0 );
+        
+        return goodPlacement;
+    }
+    
+    
+    // final result
+    private List<List<String>> goodPlacement = new ArrayList();
+        
+    private char[][] board;
+    
+    // occupy flag for each column
+    private Set<Integer> colSet = new HashSet<Integer>();
+    
+    // occupy flag for each primary diagonal (i.e., Northwest <-> Southeast direction )
+    private Set<Integer> priDiagSet = new HashSet<Integer>();
+    
+    // occupy flag for each secondary diagonal (i.e., Northeast <-> Southwest direction )
+    private Set<Integer> secDiagSet = new HashSet<Integer>();
+        
+    private boolean isSafe( int row, int col){
+        return !colSet.contains( col ) && !priDiagSet.contains( col - row ) && !secDiagSet.contains( col + row );
+    }
+    
+    private void update( int row, int col, boolean putOn ){
+        
+        if( putOn ){
+            // put Queen on specified position, and set corresponding occupy flag
+            board[row][col] = 'Q';
+            colSet.add( col );
+            priDiagSet.add( col - row );
+            secDiagSet.add( col + row );
+            
+        }else{
+            // take Queen away from specified position, and clear corresponding occupy flag
+            board[row][col] = '.';
+            colSet.remove( col );
+            priDiagSet.remove( col - row );
+            secDiagSet.remove( col + row );
+        }
+        
+        return;
+    }
+    
+    
+    // Notice that here we use the DFS + backtracking template, just like what we described before.
+    private void placeQueen( int row ){
+        
+        // Base case aka stop condition
+        // We already placed all N Queens in good position
+        // Base case
+        if( row == board.length ){
+            
+            List<String> solution = new ArrayList();
+            for( char[] perRow : board){
+                solution.add( String.copyValueOf(perRow) );
+            }
+            
+            goodPlacement.add( solution );
+            return;
+        }
+        
+        // General cases:
+        // Try all possible columns in DFS + backtracking
+        for( int col = 0 ; col < board.length ; col++){
+            
+            if( isSafe(row, col) ){
+                
+                update( row, col, true);        // make a selection
+                placeQueen( row + 1 );          // solve next row in DFS 
+                update( row, col, false);       // undo selection
+            }
+            
+        }
+        return;
+    }
+    
+}
+```
