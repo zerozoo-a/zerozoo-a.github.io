@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>zerozoo-a의 블로그 | zerozoo-a의 블로그</title>
+		<title>recursive-power | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -18,23 +18,1189 @@
 		<meta name="google-site-verification" content="FzIp87nE_pk-4x5nXeKcIX-x1rqYcjlabzuH1EqXFYs" />
     	<meta name="naver-site-verification" content="6cf39493d46e888e46dfc3a608270980215dbca5" />
 		
-		<style>/* Message Box */
-.message-box {
-	--color-message-box: #ffc;
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
 
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
 	display: block;
-	background-color: var(--color-message-box);
-	color: var(--color-gray-90);
-	padding: 1em 0.625em; /* 16px 10px /16 */
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
 }
-.message-box ol {
-	margin-top: 0;
-}
+.markdown-body {
+    color-scheme: dark;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    margin: 0;
+    color: #c9d1d9;
+    background-color: #0d1117;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+  
+  .markdown-body .octicon {
+    display: inline-block;
+    fill: currentColor;
+    vertical-align: text-bottom;
+  }
+  
+  .markdown-body h1:hover .anchor .octicon-link:before,
+  .markdown-body h2:hover .anchor .octicon-link:before,
+  .markdown-body h3:hover .anchor .octicon-link:before,
+  .markdown-body h4:hover .anchor .octicon-link:before,
+  .markdown-body h5:hover .anchor .octicon-link:before,
+  .markdown-body h6:hover .anchor .octicon-link:before {
+    width: 16px;
+    height: 16px;
+    content: ' ';
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+  }
+  
+  .markdown-body details,
+  .markdown-body figcaption,
+  .markdown-body figure {
+    display: block;
+  }
+  
+  .markdown-body summary {
+    display: list-item;
+  }
+  
+  .markdown-body [hidden] {
+    display: none !important;
+  }
+  
+  .markdown-body a {
+    background-color: transparent;
+    color: #58a6ff;
+    text-decoration: none;
+  }
+  
+  .markdown-body abbr[title] {
+    border-bottom: none;
+    text-decoration: underline dotted;
+  }
+  
+  .markdown-body b,
+  .markdown-body strong {
+    font-weight: 600;
+  }
+  
+  .markdown-body dfn {
+    font-style: italic;
+  }
+  
+  .markdown-body h1 {
+    margin: .67em 0;
+    font-weight: 600;
+    padding-bottom: .3em;
+    font-size: 2em;
+    border-bottom: 1px solid #21262d;
+  }
+  
+  .markdown-body mark {
+    background-color: rgba(187,128,9,0.15);
+    color: #c9d1d9;
+  }
+  
+  .markdown-body small {
+    font-size: 90%;
+  }
+  
+  .markdown-body sub,
+  .markdown-body sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  
+  .markdown-body sub {
+    bottom: -0.25em;
+  }
+  
+  .markdown-body sup {
+    top: -0.5em;
+  }
+  
+  .markdown-body img {
+    border-style: none;
+    box-sizing: content-box;
+    max-width: 607px;
+    background-color: #0d1117;
+  }
+  
+  /* .markdown-body code, */
+  .markdown-body kbd,
+  /* .markdown-body pre, */
+  .markdown-body samp {
+    font-family: monospace;
+    font-size: 1em;
+  }
+  
+  .markdown-body figure {
+    margin: 1em 40px;
+  }
+  
+  .markdown-body hr {
+    box-sizing: content-box;
+    overflow: hidden;
+    background: transparent;
+    border-bottom: 1px solid #21262d;
+    height: .25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #30363d;
+    border: 0;
+  }
+  
+  .markdown-body input {
+    font: inherit;
+    margin: 0;
+    overflow: visible;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  
+  .markdown-body [type=button],
+  .markdown-body [type=reset],
+  .markdown-body [type=submit] {
+    -webkit-appearance: button;
+  }
+  
+  .markdown-body [type=checkbox],
+  .markdown-body [type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+  
+  .markdown-body [type=number]::-webkit-inner-spin-button,
+  .markdown-body [type=number]::-webkit-outer-spin-button {
+    height: auto;
+  }
+  
+  .markdown-body [type=search]::-webkit-search-cancel-button,
+  .markdown-body [type=search]::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  
+  .markdown-body ::-webkit-input-placeholder {
+    color: inherit;
+    opacity: .54;
+  }
+  
+  .markdown-body ::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit;
+  }
+  
+  .markdown-body a:hover {
+    text-decoration: underline;
+  }
+  
+  .markdown-body ::placeholder {
+    color: #6e7681;
+    opacity: 1;
+  }
+  
+  .markdown-body hr::before {
+    display: table;
+    content: "";
+  }
+  
+  .markdown-body hr::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .markdown-body table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+  }
+  
+  .markdown-body td,
+  .markdown-body th {
+    padding: 0;
+  }
+  
+  .markdown-body details summary {
+    cursor: pointer;
+  }
+  
+  .markdown-body details:not([open])>*:not(summary) {
+    display: none !important;
+  }
+  
+  .markdown-body a:focus,
+  .markdown-body [role=button]:focus,
+  .markdown-body input[type=radio]:focus,
+  .markdown-body input[type=checkbox]:focus {
+    outline: 2px solid #58a6ff;
+    outline-offset: -2px;
+    box-shadow: none;
+  }
+  
+  .markdown-body a:focus:not(:focus-visible),
+  .markdown-body [role=button]:focus:not(:focus-visible),
+  .markdown-body input[type=radio]:focus:not(:focus-visible),
+  .markdown-body input[type=checkbox]:focus:not(:focus-visible) {
+    outline: solid 1px transparent;
+  }
+  
+  .markdown-body a:focus-visible,
+  .markdown-body [role=button]:focus-visible,
+  .markdown-body input[type=radio]:focus-visible,
+  .markdown-body input[type=checkbox]:focus-visible {
+    outline: 2px solid #58a6ff;
+    outline-offset: -2px;
+    box-shadow: none;
+  }
+  
+  .markdown-body a:not([class]):focus,
+  .markdown-body a:not([class]):focus-visible,
+  .markdown-body input[type=radio]:focus,
+  .markdown-body input[type=radio]:focus-visible,
+  .markdown-body input[type=checkbox]:focus,
+  .markdown-body input[type=checkbox]:focus-visible {
+    outline-offset: 0;
+  }
+  
+  .markdown-body kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font: 11px ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    line-height: 10px;
+    color: #c9d1d9;
+    vertical-align: middle;
+    background-color: #161b22;
+    border: solid 1px rgba(110,118,129,0.4);
+    border-bottom-color: rgba(110,118,129,0.4);
+    border-radius: 6px;
+    box-shadow: inset 0 -1px 0 rgba(110,118,129,0.4);
+  }
+  
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  
+  .markdown-body h2 {
+    font-weight: 600;
+    padding-bottom: .3em;
+    font-size: 1.5em;
+    border-bottom: 1px solid #21262d;
+  }
+  
+  .markdown-body h3 {
+    font-weight: 600;
+    font-size: 1.25em;
+  }
+  
+  .markdown-body h4 {
+    font-weight: 600;
+    font-size: 1em;
+  }
+  
+  .markdown-body h5 {
+    font-weight: 600;
+    font-size: .875em;
+  }
+  
+  .markdown-body h6 {
+    font-weight: 600;
+    font-size: .85em;
+    color: #8b949e;
+  }
+  
+  .markdown-body p {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .markdown-body blockquote {
+    margin: 0;
+    padding: 0 1em;
+    color: #8b949e;
+    border-left: .25em solid #30363d;
+  }
+  
+  .markdown-body ul,
+  .markdown-body ol {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 2em;
+  }
+  
+  .markdown-body ol ol,
+  .markdown-body ul ol {
+    list-style-type: lower-roman;
+  }
+  
+  .markdown-body ul ul ol,
+  .markdown-body ul ol ol,
+  .markdown-body ol ul ol,
+  .markdown-body ol ol ol {
+    list-style-type: lower-alpha;
+  }
+  
+  .markdown-body dd {
+    margin-left: 0;
+  }
+  
+  .markdown-body tt,
+  /* .markdown-body code, */
+  .markdown-body samp {
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    font-size: 12px;
+  }
+  
+  /* .markdown-body pre {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    font-size: 12px;
+    word-wrap: normal;
+  } */
+  
+  .markdown-body .octicon {
+    display: inline-block;
+    overflow: visible !important;
+    vertical-align: text-bottom;
+    fill: currentColor;
+  }
+  
+  .markdown-body input::-webkit-outer-spin-button,
+  .markdown-body input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .markdown-body::before {
+    display: table;
+    content: "";
+  }
+  
+  .markdown-body::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .markdown-body>*:first-child {
+    margin-top: 0 !important;
+  }
+  
+  .markdown-body>*:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .markdown-body a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .markdown-body .absent {
+    color: #f85149;
+  }
+  
+  .markdown-body .anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+    line-height: 1;
+  }
+  
+  .markdown-body .anchor:focus {
+    outline: none;
+  }
+  
+  .markdown-body p,
+  .markdown-body blockquote,
+  .markdown-body ul,
+  .markdown-body ol,
+  .markdown-body dl,
+  .markdown-body table,
+  /* .markdown-body pre, */
+  .markdown-body details {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body blockquote>:first-child {
+    margin-top: 0;
+  }
+  
+  .markdown-body blockquote>:last-child {
+    margin-bottom: 0;
+  }
+  
+  .markdown-body h1 .octicon-link,
+  .markdown-body h2 .octicon-link,
+  .markdown-body h3 .octicon-link,
+  .markdown-body h4 .octicon-link,
+  .markdown-body h5 .octicon-link,
+  .markdown-body h6 .octicon-link {
+    color: #c9d1d9;
+    vertical-align: middle;
+    visibility: hidden;
+  }
+  
+  .markdown-body h1:hover .anchor,
+  .markdown-body h2:hover .anchor,
+  .markdown-body h3:hover .anchor,
+  .markdown-body h4:hover .anchor,
+  .markdown-body h5:hover .anchor,
+  .markdown-body h6:hover .anchor {
+    text-decoration: none;
+  }
+  
+  .markdown-body h1:hover .anchor .octicon-link,
+  .markdown-body h2:hover .anchor .octicon-link,
+  .markdown-body h3:hover .anchor .octicon-link,
+  .markdown-body h4:hover .anchor .octicon-link,
+  .markdown-body h5:hover .anchor .octicon-link,
+  .markdown-body h6:hover .anchor .octicon-link {
+    visibility: visible;
+  }
+  
+  .markdown-body h1 tt,
+  /* .markdown-body h1 code, */
+  .markdown-body h2 tt,
+  /* .markdown-body h2 code, */
+  .markdown-body h3 tt,
+  /* .markdown-body h3 code, */
+  .markdown-body h4 tt,
+  /* .markdown-body h4 code, */
+  .markdown-body h5 tt,
+  /* .markdown-body h5 code, */
+  .markdown-body h6 tt {
+  /* .markdown-body h6 code  */
+    padding: 0 .2em;
+    font-size: inherit;
+  }
+  
+  .markdown-body summary h1,
+  .markdown-body summary h2,
+  .markdown-body summary h3,
+  .markdown-body summary h4,
+  .markdown-body summary h5,
+  .markdown-body summary h6 {
+    display: inline-block;
+  }
+  
+  .markdown-body summary h1 .anchor,
+  .markdown-body summary h2 .anchor,
+  .markdown-body summary h3 .anchor,
+  .markdown-body summary h4 .anchor,
+  .markdown-body summary h5 .anchor,
+  .markdown-body summary h6 .anchor {
+    margin-left: -40px;
+  }
+  
+  .markdown-body summary h1,
+  .markdown-body summary h2 {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  
+  .markdown-body ul.no-list,
+  .markdown-body ol.no-list {
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .markdown-body ol[type=a] {
+    list-style-type: lower-alpha;
+  }
+  
+  .markdown-body ol[type=A] {
+    list-style-type: upper-alpha;
+  }
+  
+  .markdown-body ol[type=i] {
+    list-style-type: lower-roman;
+  }
+  
+  .markdown-body ol[type=I] {
+    list-style-type: upper-roman;
+  }
+  
+  .markdown-body ol[type="1"] {
+    list-style-type: decimal;
+  }
+  
+  .markdown-body div>ol:not([type]) {
+    list-style-type: decimal;
+  }
+  
+  .markdown-body ul ul,
+  .markdown-body ul ol,
+  .markdown-body ol ol,
+  .markdown-body ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .markdown-body li>p {
+    margin-top: 16px;
+  }
+  
+  .markdown-body li+li {
+    margin-top: .25em;
+  }
+  
+  .markdown-body dl {
+    padding: 0;
+  }
+  
+  .markdown-body dl dt {
+    padding: 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: 600;
+  }
+  
+  .markdown-body dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body table th {
+    font-weight: 600;
+  }
+  
+  .markdown-body table th,
+  .markdown-body table td {
+    padding: 6px 13px;
+    border: 1px solid #30363d;
+  }
+  
+  .markdown-body table tr {
+    background-color: #0d1117;
+    border-top: 1px solid #21262d;
+  }
+  
+  .markdown-body table tr:nth-child(2n) {
+    background-color: #161b22;
+  }
+  
+  .markdown-body table img {
+    background-color: transparent;
+  }
+  
+  .markdown-body img[align=right] {
+    padding-left: 20px;
+  }
+  
+  .markdown-body img[align=left] {
+    padding-right: 20px;
+  }
+  
+  .markdown-body .emoji {
+    max-width: none;
+    vertical-align: text-top;
+    background-color: transparent;
+  }
+  
+  .markdown-body span.frame {
+    display: block;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.frame>span {
+    display: block;
+    float: left;
+    width: auto;
+    padding: 7px;
+    margin: 13px 0 0;
+    overflow: hidden;
+    border: 1px solid #30363d;
+  }
+  
+  .markdown-body span.frame span img {
+    display: block;
+    float: left;
+  }
+  
+  .markdown-body span.frame span span {
+    display: block;
+    padding: 5px 0 0;
+    clear: both;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body span.align-center {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+  
+  .markdown-body span.align-center>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .markdown-body span.align-center span img {
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .markdown-body span.align-right {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+  
+  .markdown-body span.align-right>span {
+    display: block;
+    margin: 13px 0 0;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .markdown-body span.align-right span img {
+    margin: 0;
+    text-align: right;
+  }
+  
+  .markdown-body span.float-left {
+    display: block;
+    float: left;
+    margin-right: 13px;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.float-left span {
+    margin: 13px 0 0;
+  }
+  
+  .markdown-body span.float-right {
+    display: block;
+    float: right;
+    margin-left: 13px;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.float-right>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .markdown-body code,
+  .markdown-body tt {
+    padding: .2em .4em;
+    margin: 0;
+    font-size: 85%;
+    white-space: break-spaces;
+    /* background-color: rgba(110,118,129,0.4); */
+    background-color: #272822;
+    border-radius: 6px;
+  }
+  
+  /* .markdown-body code br, */
+  .markdown-body tt br {
+    display: none;
+  }
+  
+  /* .markdown-body del code {
+    text-decoration: inherit;
+  } */
+  
+  .markdown-body samp {
+    font-size: 85%;
+  }
+  
+  /* .markdown-body pre code {
+    font-size: 100%;
+  } */
+  
+  /* .markdown-body pre>code {
+    padding: 0;
+    margin: 0;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  } */
+  
+  /* .markdown-body .highlight {
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body .highlight pre {
+    margin-bottom: 0;
+    word-break: normal;
+  }
+  
+  .markdown-body .highlight pre,
+  .markdown-body pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #161b22;
+    border-radius: 6px;
+  }
+  
+  .markdown-body pre code,
+  .markdown-body pre tt {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  } */
+  
+  .markdown-body .csv-data td,
+  .markdown-body .csv-data th {
+    padding: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1;
+    text-align: left;
+    white-space: nowrap;
+  }
+  
+  .markdown-body .csv-data .blob-num {
+    padding: 10px 8px 9px;
+    text-align: right;
+    background: #0d1117;
+    border: 0;
+  }
+  
+  .markdown-body .csv-data tr {
+    border-top: 0;
+  }
+  
+  .markdown-body .csv-data th {
+    font-weight: 600;
+    background: #161b22;
+    border-top: 0;
+  }
+  
+  .markdown-body [data-footnote-ref]::before {
+    content: "[";
+  }
+  
+  .markdown-body [data-footnote-ref]::after {
+    content: "]";
+  }
+  
+  .markdown-body .footnotes {
+    font-size: 12px;
+    color: #8b949e;
+    border-top: 1px solid #30363d;
+  }
+  
+  .markdown-body .footnotes ol {
+    padding-left: 16px;
+  }
+  
+  .markdown-body .footnotes ol ul {
+    display: inline-block;
+    padding-left: 16px;
+    margin-top: 16px;
+  }
+  
+  .markdown-body .footnotes li {
+    position: relative;
+  }
+  
+  .markdown-body .footnotes li:target::before {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    bottom: -8px;
+    left: -24px;
+    pointer-events: none;
+    content: "";
+    border: 2px solid #1f6feb;
+    border-radius: 6px;
+  }
+  
+  .markdown-body .footnotes li:target {
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .footnotes .data-footnote-backref g-emoji {
+    font-family: monospace;
+  }
+  
+  .markdown-body .pl-c {
+    color: #8b949e;
+  }
+  
+  .markdown-body .pl-c1,
+  .markdown-body .pl-s .pl-v {
+    color: #79c0ff;
+  }
+  
+  .markdown-body .pl-e,
+  .markdown-body .pl-en {
+    color: #d2a8ff;
+  }
+  
+  .markdown-body .pl-smi,
+  .markdown-body .pl-s .pl-s1 {
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-ent {
+    color: #7ee787;
+  }
+  
+  .markdown-body .pl-k {
+    color: #ff7b72;
+  }
+  
+  .markdown-body .pl-s,
+  .markdown-body .pl-pds,
+  .markdown-body .pl-s .pl-pse .pl-s1,
+  .markdown-body .pl-sr,
+  .markdown-body .pl-sr .pl-cce,
+  .markdown-body .pl-sr .pl-sre,
+  .markdown-body .pl-sr .pl-sra {
+    color: #a5d6ff;
+  }
+  
+  .markdown-body .pl-v,
+  .markdown-body .pl-smw {
+    color: #ffa657;
+  }
+  
+  .markdown-body .pl-bu {
+    color: #f85149;
+  }
+  
+  .markdown-body .pl-ii {
+    color: #f0f6fc;
+    background-color: #8e1519;
+  }
+  
+  .markdown-body .pl-c2 {
+    color: #f0f6fc;
+    background-color: #b62324;
+  }
+  
+  .markdown-body .pl-sr .pl-cce {
+    font-weight: bold;
+    color: #7ee787;
+  }
+  
+  .markdown-body .pl-ml {
+    color: #f2cc60;
+  }
+  
+  .markdown-body .pl-mh,
+  .markdown-body .pl-mh .pl-en,
+  .markdown-body .pl-ms {
+    font-weight: bold;
+    color: #1f6feb;
+  }
+  
+  .markdown-body .pl-mi {
+    font-style: italic;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-mb {
+    font-weight: bold;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-md {
+    color: #ffdcd7;
+    background-color: #67060c;
+  }
+  
+  .markdown-body .pl-mi1 {
+    color: #aff5b4;
+    background-color: #033a16;
+  }
+  
+  .markdown-body .pl-mc {
+    color: #ffdfb6;
+    background-color: #5a1e02;
+  }
+  
+  .markdown-body .pl-mi2 {
+    color: #c9d1d9;
+    background-color: #1158c7;
+  }
+  
+  .markdown-body .pl-mdr {
+    font-weight: bold;
+    color: #d2a8ff;
+  }
+  
+  .markdown-body .pl-ba {
+    color: #8b949e;
+  }
+  
+  .markdown-body .pl-sg {
+    color: #484f58;
+  }
+  
+  .markdown-body .pl-corl {
+    text-decoration: underline;
+    color: #a5d6ff;
+  }
+  
+  .markdown-body g-emoji {
+    display: inline-block;
+    min-width: 1ch;
+    font-family: "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 1em;
+    font-style: normal !important;
+    font-weight: 400;
+    line-height: 1;
+    vertical-align: -0.075em;
+  }
+  
+  .markdown-body g-emoji img {
+    width: 1em;
+    height: 1em;
+  }
+  
+  .markdown-body .task-list-item {
+    list-style-type: none;
+  }
+  
+  .markdown-body .task-list-item label {
+    font-weight: 400;
+  }
+  
+  .markdown-body .task-list-item.enabled label {
+    cursor: pointer;
+  }
+  
+  .markdown-body .task-list-item+.task-list-item {
+    margin-top: 4px;
+  }
+  
+  .markdown-body .task-list-item .handle {
+    display: none;
+  }
+  
+  .markdown-body .task-list-item-checkbox {
+    margin: 0 .2em .25em -1.4em;
+    vertical-align: middle;
+  }
+  
+  .markdown-body .contains-task-list:dir(rtl) .task-list-item-checkbox {
+    margin: 0 -1.6em .25em .2em;
+  }
+  
+  .markdown-body .contains-task-list {
+    position: relative;
+  }
+  
+  .markdown-body .contains-task-list:hover .task-list-item-convert-container,
+  .markdown-body .contains-task-list:focus-within .task-list-item-convert-container {
+    display: block;
+    width: auto;
+    height: 24px;
+    overflow: visible;
+    clip: auto;
+  }
+  
+  .markdown-body ::-webkit-calendar-picker-indicator {
+    filter: invert(50%);
+  }
 
-@media (prefers-color-scheme: dark) {
-	.message-box {
-		--color-message-box: #082840;
-	}
+  .markdown-body ol{
+    list-style: decimal ;
+
+  } 
+  .markdown-body ul {
+    list-style: disc;
 }
 * { box-sizing: border-box; }
 /* HTML5 display-role reset for older browsers */
@@ -1079,215 +2245,43 @@ h2 + .header-anchor {
 		</header>
 
 		<main id="skip">
-			<!-- Delete this message, it will also remove the component CSS from the bundle -->
+			
 
-<!-- Stop deleting -->
+<figure>
+	
+	
+	
+</figure>
 
+<h1>recursive-power</h1>
 
-
-
-
-
-
-<div class="posts-container">
-    
-        <a href="/blog/wiki/11ty/use-latext-in-11ty/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  11ty에서-latex-사용하기
-              </h5>
-              <time class="postlist-date" datetime="2023-07-06">2023/07/06</time>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/CS/RECURSIVE/recursive-power/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  recursive-power
-              </h5>
-              <time class="postlist-date" datetime="2023-07-06">2023/07/06</time>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/CS/DATA_STRUCTURE/TREE/basic-of-recursive/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-            <img class="cover-img" src=data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABOAE4DASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAwQBBQYCAP/EADgQAAIBAwEFBAYIBwAAAAAAAAECAwAEEQUSITFBURMiMnEGI2GBkaEUFVJyscHR8BYkJTNTwuH/xAAZAQADAQEBAAAAAAAAAAAAAAACAwQBBQD/xAApEQABBAEDAQcFAAAAAAAAAAABAAIDEQQSITFhFCIyQVGR8BMjgaHR/9oADAMBAAIRAxEAPwDAS0s9HlagNhV2m4VcDQtIewvdQS8hwcGgNUa28i6Y89qQSu85Gd1I6TfLfQZ4SLuZaNrrClmiMZ6JzGTXaJk12iZNNwwEnhW2klBjhoyxgU0IsVIjoSVgbaX2a9sGm1hzXfY9ay14spVzNkgdaHcsSqkDultgHyGT8q5jb1i+zfT14Yv4b0cIB2gaZ3PPLH9MUL26hS6MWUIXgkWTdfgJCECVZIX8MikVlIf6ffpLwG0YZl6Ec/zrTxkhgRxFUvpJaEXZnjHcnQFh7Ru/Sj4Kn1a20fJaO3j2iMbxVpDGFWqP0UuBc2IVzmSI7J8uRrQqawmklrdRpRsUSOL2VKijqMCklyubDshlQopaV8GjytSEz76zWj7MqaI+sA65Hyr0Ds2krk5CTso9m4UMPsuG6HNMRrs6Zep/jmSUfdPdP4rVA3UU/wBtzCfWvfZDi3mvapC0tgxQZki76jqOY+FRDxqwhG0hryG9Jo8FZb0euxa3yycIZT2TjoeRrVzznBJZgvReJrNNp4F9PbgbpFLL+NWWlTmZAZT62LuMD1+176GQGrCZjFhe5rzRTaOS3qnkjk6ZKn4c6PFryW86W+o5Rm8MuNx86kiOZdmQeRHEUlqVkt1A1tc7yRmOT986XzsVXwQWmvnn8Cv5WyMg5BpCbjWe9F9TlguX0q+JLIcRsTw9nl0rRyrvpZbpKqbKHjqqI01ZSoGKy/23QxyfdPP3UmWrykggjcac1xG6RlY7ZWFhRJ9vTZRHe91D4JhvVxyOaaW+ghg7UyoV5EHOam2upFi7J1SWE8Y3GV93T3U1bQ6fCyy29jGk43g8lPUfsUZc1c0RT+F7Qet0PY7+wKRv4LhY4rgDs7mM7aZ4jHIj5H3jkaDqKdm8WqWkZWOVfWxfZ6j48KtZ8sdpjluv5eVTZ3EMcf0W9B+iEkq6jJiJ45HNfwomOB7pU+VDLGG5EfeLeeo9a+ftJW1wsiK6NlTvBpt2DxHqveHnSGoaPcWMjz6VLHcWzbyEO0P+VVy6jqJUoloik7s7W6gMZBVMOdFM3U0pL0nAj1K1nhbEjLy47uBrZWs3b2kEreJ0BPnispaaNdXUxubs5wN7Y7qjoK0cGIoI4xwUYoJNgArcZ31nEtVSONdqKhVo8S76C10jHaJEtOwigRpvpuJaEuWdnBRim0lKzRVYxDdUSxChLkAh0FV1q8MLfzFv2mPDJG5ikXyYcfIg0z9aJGcxW8jnkZnRv9M0OSIUBoxmiEjhwUmXEx5fHGCfWv4uru/ub3ZE7jYXwoowooS5rsRiirGKxzidynY8McTdMYoL/9k= alt="cover image" height="auto" />
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  재귀 함수의 기본 1
-              </h5>
-              <time class="postlist-date" datetime="2023-07-04">2023/07/04</time>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JAVA/leet-code/n-queen/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-            <img class="cover-img" src=data:image/png;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABOAE4DASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABQcDBAYCCAH/xAA4EAACAQMDAgUCBAQEBwAAAAABAgMEBREAEiEGMQcTIkFRYYEUFXGRIzLB4TNCUqFiY6KxwtHw/8QAGgEAAwEBAQEAAAAAAAAAAAAAAgMEBQYAAf/EACQRAAIBBAEFAAMBAAAAAAAAAAECAAMEESESEyIxQVEFFDJx/9oADAMBAAIRAxEAPwBKWjquKLw8vNguDVErSFDRLvO2M7stx2A/96I+AlzmtXifZKimi81pZTTsmMkq4wSPqO/20vsxEHBIONbvwaq4bX1rS3aZfNioVaUpjkkjaMfXnQEhdmSme/wkZQFwFyMnJ1Wr6UVFG8cZGCOOdIy4eI0lbc4Zm3iA+hIg2QPq2tHU+IdTQBUkiLoAMFBoTd0h5OjDHd6gHxN6nXpGijerhLSSymGMkHYG/wCI+39tY7p3xSmluVJStaNyiXE8qgsgU9mHOiPiR1TDekqWqo446WMr/MAwL4yTg/BwNL6gvtD6YpoahEMAjM5BCg+/tycdvtqKmgViyTRRBwAeNjqmlRbHcKwFqeOdw0Lo2N24DA+e+gvQdyvUUFfGZJFimlVHdx6sgY+2gVP1FLF0t+WVpFXFTyJUUxzk4ztxn4BIOtPYa2SajrKkMXcsCVC8KMcffUt9WdNprUSKIDHMI3S4RI8VvpQ0ta0gMhb1c/rrRVFTDRA+aVLs3LOc849tZGmrqM3O3yvEy1Lt6vSc6rdZVVateI6VVKP/ABAze3tjWS7voezCGiTPKaLgj501/CWzSVtNWMsYjjlZU84jJ4Odq/U6V4jwcNn9dNvwIvsVt6mho6iFpVnOyMjnYx98HXVXFPqpwziQFxkR00kVRQuq/l8ZBX0koM6LNsdQzQAOR2wONbeqpYZ1hkkUFgvfGsne7dKpZomOxmwfoPprPq/iXpjKsSI6k4ZuJ1EDe7u8T3KFaNDItRJ/EmwwTnPA7Hn3OsvWCstdDBdJmdoZ3IAPYkdz/trQ9eU0liu88O1poaqTzcbCS+0+pdw7YO09uRqXqzqS2XjowW2K11sNXBtCKQrKDtJyTntj7/TTk5jGBozYZUIPdseJ10Pc47rdrdPDCqinSTz488Oe44+c6bUKpcqCSKlZrfJN62YqMZ+ukL4RUjvc6itPmGGAbWIXCKT2yc53cHjHsTpufmMklPLE2CA+MD41FfJxeRVM1FDe5uIrals6dkrpqszywRliI1Hqx8awtJc6u90KVRqEoUd2ZI2i8w4z7k64i6jkWtpbdtf8LIp3jPGNU4upqG3XKWjHESAkAjIHOp+nzwBFu2hgzzdJKoUr/MfnR/w+qIR1TbPxpZadZlZirFScdhn202bZ4L9OsA09yus/PKLsjx9Dwdamz+GXSdtfzoLXVTSLxmoqXb/YY10IrUvJMQbdsYjnpapau208sfClBxntrI9YeINj6cMtFWvNLWBN/kwxliOMjJOAP31btdW1AsaQ08IiUYReSB+50AvnSllvF6ku9fSSSVkkgkdvPcKSCCBt7Y4Ax8ar/bplcLAFuwbLS7NY4j/EuMO9ahBKUYYMZb4I598H50FrOnbUtL+FFspWpvO/EEcndJjGfnOPfOt5V3Z7mhFVTx9tuVyuBqisFKgAaBMfUkk6xnpPyIpnU26N2ir3jcWvXbQ9K9NJVLAiUc84U+SmPLkZSRu9znB50L6BqIbtbTNHKsoEu1iDkg9+dN66W+33S2Ggr6GlqaEurmKVNyll7Hv7agtdtttqglhtVFSUcbkMy08KpkjgE4HfvqxaNMgdTZmZVcsxK6EXl7tzUV3p54wDGyle3PbS56ks1xmrDLTU87FiclYycj9teiKiRwzqB6R7k99R0ru7EsxAx25HOkNZL1OaHA+Qc5XBmYhoKylkjmWQJJtG4KTtP7+2jNNWyMSjjy3AyQGONFJExCFJDe/6jVGal3SK6Mf5cYPI4P8AfTmtQv8AMIVmM+ioA/xCx98ZzjVwTkLwR20PipG2kBhEx9wNWY0aAbdxcHgfJ+ftpXTZTD558y1FU5P8WPlexxrlpoy59DnHyNcGRo+E2kk+57DUc1QkbAADd744OiyfBM8MfJZM0GweYWHv/LxqL8TESFgO8/HbtqCGsLM+CoGQAGb2/bXL1KU5BkWN8knIYDRgn7Pmvk+zTM86x+QSxz2PxqKaseKZovLyw5OR86lnqWjcsCAcbsNg4/trK3S/1ULD8voZK+oJy3BYKvPv+v8A20NWqtIZYx9tQa4fgi7mymZHk8vdtKYPA9tQSSxwSAkSEkngc5+v6DSlsXjTbrhIlJcbPUwSthd0EiyL/wBWCNMSj6jp6uk/EgT+WmcAxqDj27NqsnMz1EJLNvK+x78HjOrUNKzqDn1k5yTz9tZCfr61IQhgrWJ/5aD/AMtH7LfI7vZkrqJJI4S7IBIAGyDjPGdL0TuM9QosMoTYwVgDj7aqOEinkC+klic8nv31Zp6iRFDu7OpznPfOpk2SsuEAYDcCf66BsQ1zBFVUIke8xAqv+oMPvoTVXZ8GRIN1PH6UKbTk/HyP1Oil0mQzLCEySxUE9hj6axN3vsdNWyxpCxlgJIbgDd9B8d9B7yYf+QistTV+ZJWM5RfUY1OOPqf6aK0y+VRQjs7AFjzz/wDZ0AoKiorbfDPUOu2eTaEVQAoH9dHppZvSImRRj/Muf6jSqnbGLP/Z alt="cover image" height="auto" />
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  n-queen 문제
-              </h5>
-              <time class="postlist-date" datetime="2023-06-26">2023/06/26</time>
-          </div>
-        </div>
-        </a>
-    
-        <a href="/blog/JAVA/leet-code/decision-tree-of-backtracking/">
-        <div class="p-3 d-flex color-bg-default Box m-3 post-container">
-          
-            <img class="cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
-          
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h5 class="d-flex flex-items-center post-title">
-                  의사결정트리와 순회
-              </h5>
-              <time class="postlist-date" datetime="2023-06-25">2023/06/25</time>
-          </div>
-        </div>
-        </a>
-    
-</div>
-<div class="wrapper">
-  <ul id="pagination" class="sticky-bottom-nav"></ul>
-</div>
+<ul class="post-metadata pt-2">
+	<li><time datetime="2023-07-06">06 July 2023</time></li>
+</ul>
 
 
 
+	<section class="post-content markdown-body">
+		<br />
+<br />
+<br />
+<p>임의의 수 x의 n제곱을 점화식으로 나타내면 다음과 같이 정의할 수 있습니다.</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>x</mi><mi>n</mi></msup><mo>=</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>x</mi><mo>∗</mo><msup><mi>x</mi><mi>n</mi></msup><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mtext> </mtext><mn>1</mn><mo stretchy="false">(</mo><mi>n</mi><mo>&gt;</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mn>1</mn><mo separator="true">,</mo><mtext> </mtext><mn>1</mn><mo stretchy="false">(</mo><mi>n</mi><mo>=</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">x^n = 
+\begin{cases}
+x * x^n-1, \space{1} (n &gt; 1)\\
+1, \space{1} (n = 1)
+\end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7143919999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.0000299999999998em;vertical-align:-1.25003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.69em;"><span style="top:-3.69em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">1</span></span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord">1</span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">1</span></span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.19em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>이를 재귀로 표현합니다.</p>
+<pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// java</span><br><span class="token keyword">package</span> <span class="token namespace">recursiveTree</span><span class="token punctuation">;</span><br><br><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Recurisves</span> <span class="token punctuation">{</span><br><br>	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>		<span class="token keyword">int</span> p <span class="token operator">=</span> <span class="token function">power</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span><br>	<span class="token punctuation">}</span><br>	<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">power</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>		<span class="token keyword">if</span><span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span><br>		<span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">;</span><br>		<span class="token keyword">else</span> <span class="token keyword">return</span> x <span class="token operator">*</span> <span class="token function">power</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>	<span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
 
-<script type="text/javascript" async>
-  const pageLinks = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;,&quot;/page7/index.html&quot;,&quot;/page8/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
-  const postsCount = 44
-  let allPages = pageLinks.length
-  const pagination = document.getElementById("pagination")
-  const NOTHING_BUTTON = (dir='<')=>`<div class="btn">${dir}</div>`
-  const pageNumber = 0
-
-  function elem(allPages = pageLinks.length, page) {
-    let a = "";
-    let beforePages = page - 1;
-    let afterPages = page + 1;
-    let liActive;
-
-    let spaceStack = [];
-
-
-  if (page > 0) {
-    a += `
-    <a class="btn" 
-    onclick="elem(allPages, ${
-      0
-    })"
-    href="${pageLinks.at(0)}">
-      <span> << </span>
-    </a>
-    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}" 
-     class="btn" onclick="elem(allPages, ${page - 1 })">
-      <span> < </span>
-    </a>
-    `;
-    spaceStack.push(1)
-  } else {
-    a += NOTHING_BUTTON('_')
-    spaceStack.push(1)
-  }
-
-  for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
-
-    if (currentPage > allPages ) {
-      continue;
-    }
-
-    if (currentPage == -1) {
-      currentPage = currentPage + 1;
-    }
-
-    if (page == currentPage) {
-      liActive = "active";
-    } else {
-      liActive = "";
-    }
-
-    /**
-    * 마지막 페이지의 pagination
-    */
-    if(page == allPages - 1) {
-    a += `
-        <a href="${pageLinks[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
-         <span>
-          ${afterPages}
-         </span>
-        </a>
-      `;
-      spaceStack.push(1)
-      break;
-    }
-    /**
-     * 첫 페이지의 pagination
-     */
-    a += `
-      <a href="${pageLinks[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
-      <span>
-        ${currentPage + 1}
-      </span>
-      </a>
-      `;
-    spaceStack.push(1)
-  }
-
-  if(page == 0) {
-    a += `
-      <a href="${pageLinks[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
-      <span>
-        ${afterPages + 2}
-      </span>
-      </a>
-      `;
-    spaceStack.push(1)
-  }
-
-  if (page < allPages && page !== allPages - 1) {
-    a += `
-      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
-        page + 1
-      })" >
-        <span> > </span>
-      </a>
-    `;
-    a += `
-      <a href="${pageLinks.at(-1)}" class="btn" onclick="elem(allPages, ${
-      allPages
-      })" >
-        <span> >> </span>
-      </a>
-    `;
-    spaceStack.push(1)
-  } else {
-    while(spaceStack.length < 5) {
-      a += NOTHING_BUTTON('_')
-      spaceStack.push(1)
-    }
-  }
-
-  pagination.innerHTML = a;
-}
-elem(allPages, 0);
-</script>
-
-
-
-
-
+	</section>
+<br>
+<br>
+<br>
+<hr></hr>
+<ul><li>Previous: <a href="/blog/CS/DATA_STRUCTURE/TREE/basic-of-recursive/">재귀 함수의 기본 1</a></li><li>Next: <a href="/blog/wiki/11ty/use-latext-in-11ty/">11ty에서-latex-사용하기</a></li>
+</ul>
 
 		</main>
 		<footer></footer>
