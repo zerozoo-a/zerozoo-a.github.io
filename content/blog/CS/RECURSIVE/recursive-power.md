@@ -8,9 +8,17 @@ coverURL:
 <br />
 <br />
 
-```
+임의의 수 x의 n제곱을 점화식으로 나타내면 다음과 같이 정의할 수 있습니다.
 
-```
+$$
+x^n = 
+\begin{cases}
+x * x^n-1, \space{1} (n > 1)\\
+1, \space{1} (n = 1)
+\end{cases}
+$$
+
+이를 재귀로 표현합니다.
 
 ```java
 // java
