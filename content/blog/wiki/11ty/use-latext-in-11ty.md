@@ -22,6 +22,13 @@ md와 비슷하게 특정 형식으로 쓰여진 문자열을 수학 식으로 �
 
 **바로 수학 식을 이쁘게 바꿔줍니다.**
 
+아래와 같이 말입니다.
+
+$$f(n)=\begin{cases}
+\text{ if } 1,\space{1}(n = 1, 2) \\
+\text { if } f(n - 1) + f(n - 2),\space{1}(n > 2)
+\end{cases}$$
+
 ## eleventy에 설치하기
 
 library를 설치합니다.
@@ -31,10 +38,6 @@ library를 설치합니다.
 npm install @iktakahiro/markdown-it-katex
 ```
 
-$$f(n)=\begin{cases}
-\text{ if } 1,\space{1}(n = 1, 2) \\
-\text { if } f(n - 1) + f(n - 2),\space{1}(n > 2)
-\end{cases}$$
 
 ## eleventy.config에 설정하기
 
