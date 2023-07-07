@@ -13,7 +13,7 @@ coverURL: https://images.unsplash.com/photo-1635492491273-455af7728453?ixlib=rb-
 $$
 x^n = 
 \begin{cases}
-x * x^n-1, \space{1} (n > 1)\\
+x * x^{n-1}, \space{1} (n > 1)\\
 1, \space{1} (n = 1)
 \end{cases}
 $$
