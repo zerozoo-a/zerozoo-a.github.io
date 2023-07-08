@@ -63,7 +63,7 @@ module.exports = (eleventyConfig) => {
 							.on("end", () => {
 								const buffer = Buffer.concat(chunks);
 								new Promise((res) => {
-									res(sharp(buffer).resize(78, 78).toBuffer()); // image resize
+									res(sharp(buffer).resize(128, 128).toBuffer()); // image resize
 								}).then((res) => {
 									const base64 = res.toString("base64");
 									resolve(base64);
