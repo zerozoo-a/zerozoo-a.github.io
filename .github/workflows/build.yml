@@ -15,6 +15,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - name: Cache packages
         uses: actions/cache@v3
         with:
@@ -25,11 +28,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Install dependencies & build
         run: |
-          npm ci
-          npm run build-ghpages          
+          pnpm install
+          pnpm build-ghpages          
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
