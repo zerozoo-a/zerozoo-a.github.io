@@ -20,7 +20,8 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({
 		"./public/": "/",
 		"./favicon/": "/",
-		"./node_modules/prismjs/themes/prism-okaidia.css": "/css/prism-okaidia.css",
+		// "./node_modules/prismjs/themes/prism-okaidia.css": "/css/prism-okaidia.css",
+		"./public/css/gh-syntax.css": "/css/gh-syntax.css",
 	});
 	eleventyConfig.addPassthroughCopy("./covers");
 
