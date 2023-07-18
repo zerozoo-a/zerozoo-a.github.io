@@ -20,7 +20,6 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({
 		"./public/": "/",
 		"./favicon/": "/",
-		// "./node_modules/prismjs/themes/prism-okaidia.css": "/css/prism-okaidia.css",
 		"./public/css/gh-syntax.css": "/css/gh-syntax.css",
 	});
 	eleventyConfig.addPassthroughCopy("./covers");
@@ -117,7 +116,7 @@ module.exports = function (eleventyConfig) {
 		);
 	});
 
-	eleventyConfig.addFilter("tap", (a) => {
+	eleventyConfig.addFilter("log", (a) => {
 		console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		console.log(a);
 		return a;

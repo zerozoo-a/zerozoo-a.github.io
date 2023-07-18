@@ -1,7 +1,8 @@
 const path = require("path");
 const eleventyImage = require("@11ty/eleventy-img");
-const https = require("https");
-const sharp = require("sharp");
+// const https = require("https");
+// const sharp = require("sharp");
+const { createBase64FromURL } = require("./libs/createBase64FromURL");
 const File = require("fs/promises");
 const Fs = require("fs");
 
@@ -21,72 +22,7 @@ module.exports = (eleventyConfig) => {
 		return res;
 	}
 
-	eleventyConfig.addAsyncShortcode(
-		"convert",
-		/**
-		 * @param {string} url
-		 */
-		async (url) => {
-			const PATH = "imageURL2base64Db.json";
-			const isFileExists = Fs.existsSync(PATH);
-			if (!isFileExists) {
-				await File.writeFile(PATH, JSON.stringify({ empty: "" })).catch((e) =>
-					console.error(e)
-				);
-			}
-			const cachedData = JSON.parse(
-				await File.readFile(PATH, { encoding: "utf-8" })
-			);
-
-			if (cachedData[url]) {
-				// use cached data
-				console.log("use cached data");
-				return cachedData[url];
-			}
-
-			const convertedBase64 = new Promise((resolve, reject) => {
-				https.get(
-					url,
-					{
-						headers: {
-							"User-Agent": "Mozilla/5.0",
-						},
-					},
-					(res) => {
-						const chunks = [];
-
-						res.on("data", (chunk) => {
-							chunks.push(chunk);
-						});
-
-						res
-							.on("end", () => {
-								const buffer = Buffer.concat(chunks);
-								new Promise((res) => {
-									res(sharp(buffer).resize(128, 128).toBuffer()); // image resize
-								}).then((res) => {
-									const base64 = res.toString("base64");
-									resolve(base64);
-								});
-							})
-							.on("error", (err) => {
-								console.error(err);
-								reject(err);
-							});
-					}
-				);
-			});
-			const base64 = `data:image/png;base64,${await convertedBase64}`;
-			// update json object
-			cachedData[url] = base64;
-			const updatedJSON = JSON.stringify(cachedData, null, 2);
-			await File.writeFile(PATH, updatedJSON, "utf8", (err) => {
-				console.error(err);
-			});
-
-			return base64;
-		}
-	);
+	eleventyConfig.addAsyncShortcode("convert", createBase64FromURL);
 
 	// Eleventy Image shortcode
 	// https://www.11ty.dev/docs/plugins/image/
