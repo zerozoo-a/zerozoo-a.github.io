@@ -22,8 +22,12 @@ const getFromBase64DB = async (url) => {
 
 /**
  * @param {string} url
+ * @param {number} index
  */
-const createBase64FromURL = async (url) => {
+const createBase64FromURL = async (url, index = 1) => {
+	if (typeof index === "string") index = Number(index);
+	if (url.length === 0 || !(0 <= index && index < 3)) return "";
+
 	const isFileExists = Fs.existsSync(PATH);
 	if (!isFileExists) {
 		await File.writeFile(PATH, JSON.stringify({ _: "" })).catch((e) =>
@@ -34,34 +38,33 @@ const createBase64FromURL = async (url) => {
 		await File.readFile(PATH, { encoding: "utf-8" })
 	);
 
+	// use cached data
 	if (cachedData[url]) {
-		// use cached data
-		return cachedData[url];
+		return cachedData[url][index];
 	}
 
-	const d = await convertToBase64(url);
-	console.log(
-		"🚀 ~ file: createBase64FromURL.js:43 ~ createBase64FromURL ~ d:",
-		d
-	);
+	const images = await convertToBase64(url);
+
 	/**
 	 *
 	 * @param {string} base64
 	 * @returns
 	 */
-	const addHTMLSpec2Base64 = (base64) => `data:image/png;base64,${base64}`;
+	const addHTMLSpec2Base64 = (base64 = "") => `data:image/png;base64,${base64}`;
 
 	// update json object
 	cachedData[url] = [
-		addHTMLSpec2Base64((bigBase64 = "")),
-		addHTMLSpec2Base64((smallBase64 = "")),
+		addHTMLSpec2Base64(images[0] ?? ""), // big image
+		addHTMLSpec2Base64(images[1] ?? ""), // small image
 	];
+
 	const updatedJSON = JSON.stringify(cachedData, null, 2);
+
 	await File.writeFile(PATH, updatedJSON, "utf8", (err) => {
 		console.error(err);
 	});
 
-	return "";
+	return cachedData[index];
 };
 
 /**
@@ -88,7 +91,7 @@ const convertToBase64 = (url) =>
 						const buffer = Buffer.concat(chunks);
 
 						Promise.all([
-							resizeBase64(644, 362.25, buffer),
+							resizeBase64(544, 262, buffer),
 							resizeBase64(128, 128, buffer),
 						]).then((images) => {
 							const mappedImages = images.map((image) =>
@@ -111,12 +114,12 @@ const convertToBase64 = (url) =>
  * @param {number} h
  */
 const resizeBase64 = (w, h, buffer) =>
-	new Promise((res) => res(sharp(buffer).resize(w, h).toBuffer()))
-		.then((res) => {
+	new Promise((res) => res(sharp(buffer).resize(w, h).toBuffer())).then(
+		(res) => {
 			const base64 = res.toString("base64");
-			resolve(base64);
-		})
-		.catch((e) => console.error(`resizeBase64: ${e.message}`));
+			return base64;
+		}
+	);
 
 module.exports = {
 	createBase64FromURL,

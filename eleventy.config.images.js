@@ -3,8 +3,8 @@ const eleventyImage = require("@11ty/eleventy-img");
 // const https = require("https");
 // const sharp = require("sharp");
 const { createBase64FromURL } = require("./libs/createBase64FromURL");
-const File = require("fs/promises");
-const Fs = require("fs");
+// const File = require("fs/promises");
+// const Fs = require("fs");
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = (eleventyConfig) => {

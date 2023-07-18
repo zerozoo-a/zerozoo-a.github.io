@@ -9,9 +9,8 @@ layout: layouts/base.njk
 
 <figure>
 	{% set absoluteUrl %}{{ page.url }}{% endset %}
-	{{ coverURL }}
 	{% if(coverURL) %}
-    <img class="cover-img" src={% convert coverURL %} alt="cover image" height="auto" />
+    <img class="big-cover-img" src={% convert coverURL, "0" %} alt="cover image" height="auto" />
 	{% else %}
 	{% endif %}
 </figure>
@@ -27,11 +26,9 @@ layout: layouts/base.njk
 </ul>
 
 {% if content | toc %}
-	<hr></hr>
 		<aside>
 			{{ content | toc | safe }}
 		</aside>
-	<hr></hr>
 {% endif %}
 
 	<section class="post-content markdown-body">
@@ -40,7 +37,6 @@ layout: layouts/base.njk
 <br>
 <br>
 <br>
-<hr></hr>
 
 
 {%- if collections.posts %}
