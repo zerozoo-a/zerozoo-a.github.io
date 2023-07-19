@@ -3,7 +3,6 @@ title: backtracking 알고리즘
 date: 2023-06-24 13:44:34
 coverURL: https://images.unsplash.com/photo-1609631002724-572287d136bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80
 ---
-{% image "../images/photo-1609631002724-572287d136bb.avif","footsteps" %}
 <a href="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/QfV6AqEwNBw">이미지 출처</a>
 <br />
 <br />
