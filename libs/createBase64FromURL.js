@@ -2,7 +2,6 @@ const https = require("https");
 const sharp = require("sharp");
 const File = require("fs/promises");
 const Fs = require("fs");
-const { resolve } = require("path");
 const PATH = "imageURL2base64Db.json";
 
 /**
@@ -91,7 +90,7 @@ const convertToBase64 = (url) =>
 						const buffer = Buffer.concat(chunks);
 
 						Promise.all([
-							resizeBase64(544, 262, buffer),
+							resizeBase64(744, 462, buffer),
 							resizeBase64(128, 128, buffer),
 						]).then((images) => {
 							const mappedImages = images.map((image) =>
