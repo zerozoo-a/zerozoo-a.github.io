@@ -63,7 +63,7 @@ const createBase64FromURL = async (url, index = 1) => {
 		console.error(err);
 	});
 
-	return cachedData[index];
+	return cachedData[url][index];
 };
 
 /**
