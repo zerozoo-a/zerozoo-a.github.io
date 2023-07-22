@@ -1,10 +1,13 @@
 ---
 title: lsof-kill
 date: 2023-07-23 00:32:24
-coverURL: 
+coverURL: https://plus.unsplash.com/premium_photo-1677535563007-d10ba8cb423d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2233&q=80
 ---
 <br />
 
+<a href="https://plus.unsplash.com/premium_photo-1677535563007-d10ba8cb423d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2233&q=80">이미지 출처</a>
+
+> cli 프로그램을 알아보고 사용할 수 있다.
 ## lsof
 
 lsof = list of file process를 점유하고 있는 list를 보여줍니다.

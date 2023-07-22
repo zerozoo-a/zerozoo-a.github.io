@@ -35,7 +35,7 @@ const COVER_URL = () => `coverURL: `;
  *
  * @param {string[]} title
  */
-const main = async (title) => {
+const main = async (title, originalTitle) => {
 	console.log(`attempt create file name: ${title}`);
 	if (title.length < 1) throw new Error("파일 이름을 입력하지 않았습니다.");
 	const FRONTMATTER = `---\n${TITLE(
@@ -45,11 +45,17 @@ const main = async (title) => {
 	const isDirExists = fs.existsSync(`./content/blog/temp`);
 
 	if (isDirExists) {
-		await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
+		await File.writeFile(
+			`./content/blog/temp/${originalTitle}.md`,
+			FRONTMATTER
+		);
 	} else {
 		await File.mkdir(`./content/blog/temp`);
-		await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
+		await File.writeFile(
+			`./content/blog/temp/${originalTitle}.md`,
+			FRONTMATTER
+		);
 	}
 };
 
-main(process.argv.splice(2).join("-"));
+main(process.argv.splice(2).join("-"), process.argv.splice(2));
