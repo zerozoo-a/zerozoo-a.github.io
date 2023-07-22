@@ -4,12 +4,101 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-07-19T22:37:08Z</updated>
+	<updated>2023-07-23T00:58:53Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>post man의 header 다루기</title>
+		<link href="https://zerozoo-a.github.io/blog/wiki/Http/post-man%EC%97%90-authorization-token-%EC%8B%AC%EA%B8%B0/"/>
+		<updated>2023-07-23T00:58:53Z</updated>
+		<id>https://zerozoo-a.github.io/blog/wiki/Http/post-man%EC%97%90-authorization-token-%EC%8B%AC%EA%B8%B0/</id>
+		<content type="html">&lt;p&gt;&lt;a href=&quot;https://images.unsplash.com/photo-1575895901610-ae6503f60136?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=928&amp;q=80&quot;&gt;이미지 출처&lt;/a&gt;&lt;/p&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;blockquote&gt;
+&lt;p&gt;postman에서 header를 다루어보자&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;postman&quot; tabindex=&quot;-1&quot;&gt;postman이란? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/wiki/Http/post-man%EC%97%90-authorization-token-%EC%8B%AC%EA%B8%B0/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;postman은 각종(http를 포함한) 통신들을
+쉽게 다루고 저장, 공유등을 도와주는 소프트웨어입니다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.postman.com/&quot;&gt;postman site&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;header&quot; tabindex=&quot;-1&quot;&gt;header란? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/wiki/Http/post-man%EC%97%90-authorization-token-%EC%8B%AC%EA%B8%B0/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;HTTP 헤더는 클라이언트와 서버가 요청 또는 응답으로 부가적인 정보를 전송할 수 있도록 해줍니다.
+헤더에는 서버가 요청하는 정보들을 심어줘야 할 때가 빈번합니다.
+헤더에 적절한 데이터들이 있어야만 서버는 적절한 응답을 돌려줍니다.&lt;/p&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;필요한 이유 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/wiki/Http/post-man%EC%97%90-authorization-token-%EC%8B%AC%EA%B8%B0/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;비즈니스로직이 복잡해질 수록 헤더에는 이런저런 정보들이 올라가게 됩니다.&lt;/p&gt;
+&lt;p&gt;특정 상황이 될수록 http 통신이 이루어지는 state를 재구현하기 힘든 경우가 생겨나게됩니다.&lt;/p&gt;
+&lt;p&gt;예를 들어 조건 A, B, C를 모두 만족해야만 발생하는 http통신이 있다고 가정합시다.
+서버는 클라이언트가 조건을 만족하지 못하는 요청을 보내면 reject하면 그만입니다.&lt;/p&gt;
+&lt;p&gt;클라이언트는 이런 귀찮은 상황을 피하기 위해 postman을 사용해 요청을 저장할 수 있습니다.&lt;/p&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;하는 법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/wiki/Http/post-man%EC%97%90-authorization-token-%EC%8B%AC%EA%B8%B0/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;아래의 이미지를 보시면 http 통신에 사용되는 각종 옵션들을 설정할 수 있다는 걸 알 수 있습니다.&lt;/p&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/JPv6WMv3aG-600.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;postman request&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
+&lt;p&gt;Authorization 옵션을 선택합니다.
+다양한 옵션이 제공됩니다, 본인의 환경에 맞는 옵션을 선택해주세요&lt;/p&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/3-gFATu4Ot-600.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;postman Authorization setting&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
+&lt;p&gt;token을 선택해봅시다.&lt;/p&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/qiA-fc9DJm-600.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;postman Authorization setting&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
+토큰의 경우 서버측에서 사용하는 스펙을 알고있다면 더욱 좋습니다. (만료기한등)
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/wiki/Http/post-man%EC%97%90-authorization-token-%EC%8B%AC%EA%B8%B0/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;postman은 보통 서버측에서 사용하는 경우가 많습니다.&lt;/p&gt;
+&lt;p&gt;하지만 클라이언트 측에서도 그 활용도는 막강합니다.
+이런 단순 요청 저장이외에도 응답받은 데이터를 그대로 로컬에 저장을 할 수 있습니다.
+workspace를 통해 동료와 함께 사용한다면 그 효용성이 더욱 좋을것입니다.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>lsof-kill</title>
+		<link href="https://zerozoo-a.github.io/blog/wiki/operating-system/lsof-kill/"/>
+		<updated>2023-07-23T00:32:24Z</updated>
+		<id>https://zerozoo-a.github.io/blog/wiki/operating-system/lsof-kill/</id>
+		<content type="html">&lt;br&gt;
+&lt;p&gt;&lt;a href=&quot;https://plus.unsplash.com/premium_photo-1677535563007-d10ba8cb423d?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2233&amp;q=80&quot;&gt;이미지 출처&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cli 프로그램을 알아보고 사용할 수 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;lsof&quot; tabindex=&quot;-1&quot;&gt;lsof &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/wiki/operating-system/lsof-kill/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;lsof = list of file process를 점유하고 있는 list를 보여줍니다.
+(기본적으로 많은 내용을 담고 있으므로 찾고 싶은 특정 process를 찾아내려면 필터링이 필요합니다.)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;--help 명령어를 통해 option과 사용법을 알 수 있습니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;-i 옵션을 통해 특정 port번호를 사용하고 있는 PID(process id)를 확인할 수 있습니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt; &lt;span class=&quot;token function&quot;&gt;lsof&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; :8080
+ COMMAND     PID &lt;span class=&quot;token environment constant&quot;&gt;USER&lt;/span&gt;   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+Google    &lt;span class=&quot;token number&quot;&gt;47241&lt;/span&gt;  zerozoo   26u  IPv6 0x000000000000000d      0t0  TCP localhost:53197-&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;localhost:http-alt &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;CLOSE_WAIT&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;.&lt;/code&gt;&lt;/pre&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;kill&quot; tabindex=&quot;-1&quot;&gt;kill &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/wiki/operating-system/lsof-kill/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;특정 프로세스를 죽입니다.
+kill -l 명령어를 통해 프로세스를 죽이는 방식을 확인 할 수 있습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;// OSX &lt;span class=&quot;token number&quot;&gt;13.3&lt;/span&gt;.1
+HUP INT QUIT ILL TRAP ABRT EMT FPE KILL BUS SEGV SYS PIPE ALRM &lt;span class=&quot;token environment constant&quot;&gt;TERM&lt;/span&gt; URG STOP TSTP CONT CHLD TTIN TTOU IO XCPU XFSZ VTALRM PROF WINCH INFO USR1 USR2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;보통 9, 15를 많이 사용합니다. 9는 kill -l의 kill을 나타내며 15는 term (terminate)를 나타냅니다.&lt;/p&gt;
+&lt;p&gt;9는 강제 종료, 15는 저장 후 종료입니다.&lt;/p&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/wiki/operating-system/lsof-kill/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;lsof를 통해 PID를 알아냅니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;kill을 통해 프로세스를 죽입니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>선행재귀를 알아보는 법</title>
