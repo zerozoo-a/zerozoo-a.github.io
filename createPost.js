@@ -32,30 +32,25 @@ const TITLE = (title) => `title: ${title}`;
  */
 const COVER_URL = () => `coverURL: `;
 /**
- *
- * @param {string[]} title
+ * @param {string} title
  */
-const main = async (title, originalTitle) => {
+const main = async (title) => {
 	console.log(`attempt create file name: ${title}`);
+
 	if (title.length < 1) throw new Error("파일 이름을 입력하지 않았습니다.");
+
 	const FRONTMATTER = `---\n${TITLE(
-		title
+		title.replaceAll("-", " ")
 	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---\n<br />\n<br />\n<br />`;
 
 	const isDirExists = fs.existsSync(`./content/blog/temp`);
 
 	if (isDirExists) {
-		await File.writeFile(
-			`./content/blog/temp/${originalTitle}.md`,
-			FRONTMATTER
-		);
+		await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
 	} else {
 		await File.mkdir(`./content/blog/temp`);
-		await File.writeFile(
-			`./content/blog/temp/${originalTitle}.md`,
-			FRONTMATTER
-		);
+		await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
 	}
 };
 
-main(process.argv.splice(2).join("-"), process.argv.splice(2));
+main(process.argv.splice(2).join("-"));
