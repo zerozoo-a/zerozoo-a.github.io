@@ -194,6 +194,8 @@ $$
 
 임을 알 수 있다.
 
+> a{^-1}은 임의의 a의 multiplicative inverse다.
+
 ### example
 $$
 \pi \cdot x = 1 \rightarrow x = \pi^{-1}(x = \frac{1}{\pi})
