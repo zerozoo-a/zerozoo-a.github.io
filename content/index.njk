@@ -11,19 +11,21 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
 {% set pageNumber = pagination.pageNumber %}
 <div class="posts-container">
     {% for item in pagination.items %}
+      {% if(item.data.isCategoryIndex !== true) %}
         <a href="{{ item.page.url }}">
-        <div class="p-3 d-flex color-bg-default m-3p post-container">
-          {% if(item.data.coverURL) %}
-            <img class="cover-img" src={% convert item.data.coverURL, "1" %} alt="cover image" height="auto" />
-          {% endif %}
-          <div class="d-flex pl-3 flex-direction-col post-title-container">
-              <h4 class="d-flex flex-items-center post-title">
-                  {% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}
-              </h4>
-              <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">{{ item.page.date | readableDate("yyyy/LL/dd") }}</time>
+          <div class="p-3 d-flex color-bg-default m-3p post-container">
+            {% if(item.data.coverURL) %}
+              <img class="cover-img" src={% convert item.data.coverURL, "1" %} alt="cover image" height="auto" />
+            {% endif %}
+            <div class="d-flex pl-3 flex-direction-col post-title-container">
+                <h4 class="d-flex flex-items-center post-title">
+                    {% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}
+                </h4>
+                <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">{{ item.page.date | readableDate("yyyy/LL/dd") }}</time>
+            </div>
           </div>
-        </div>
         </a>
+      {% endif %}
     {% endfor %}
 </div>
 <div class="wrapper">

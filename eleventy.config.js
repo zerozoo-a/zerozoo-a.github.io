@@ -116,10 +116,17 @@ module.exports = function (eleventyConfig) {
 		);
 	});
 
+	// {{ collections | log }}
 	eleventyConfig.addFilter("log", (a) => {
 		console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		console.log(a);
-		return a;
+		// return a;
+	});
+	// {{ collections | keys }}
+	eleventyConfig.addFilter("keys", (a) => {
+		console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		console.log(Object.keys(a));
+		// return a;
 	});
 
 	/**
