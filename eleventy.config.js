@@ -2,16 +2,28 @@ const { DateTime } = require("luxon");
 const markdownItAnchor = require("markdown-it-anchor");
 const mk = require("@iktakahiro/markdown-it-katex");
 const mu = require("markdown-it-textual-uml");
+const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
+
+/**
+ * plugis
+ */
+const pluginDrafts = require("./eleventy.config.drafts.js");
+const pluginImages = require("./eleventy.config.images.js");
+const pluginGetAllCategories = require("./eleventy.config.categories.js");
+const pluginTOC = require("eleventy-plugin-toc");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginBundle = require("@11ty/eleventy-plugin-bundle");
 const pluginNavigation = require("@11ty/eleventy-navigation");
-const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 
-const pluginDrafts = require("./eleventy.config.drafts.js");
-const pluginImages = require("./eleventy.config.images.js");
-const pluginTOC = require("eleventy-plugin-toc");
+/**
+ * constants
+ */
+const blogPath = "content/blog";
 
+/**
+ * config
+ */
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = function (eleventyConfig) {
 	// Copy the contents of the `public` folder to the output folder
@@ -40,6 +52,7 @@ module.exports = function (eleventyConfig) {
 	// App plugins
 	eleventyConfig.addPlugin(pluginDrafts);
 	eleventyConfig.addPlugin(pluginImages);
+	eleventyConfig.addPlugin(pluginGetAllCategories);
 
 	// Official plugins
 	eleventyConfig.addPlugin(pluginRss);

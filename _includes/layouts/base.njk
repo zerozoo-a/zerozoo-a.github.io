@@ -55,7 +55,22 @@
 				{%- for entry in collections.all | eleventyNavigation %}
 					<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
 				{%- endfor %}
+
+				<ul>
+				{%- for k, v in eleventyComputedGetCategories  %}
+					<li>
+							<details>
+								<summary>{{k}}</summary>
+							    <p>
+									{%- for article in v %}
+										{{article}}
+									{%- endfor %}
+								</p>
+							</details>
+					</li>
+				{%- endfor %}
 				</ul>
+
 			</nav>
 		</header>
 
