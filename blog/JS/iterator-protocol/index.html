@@ -2221,110 +2221,382 @@ h2 + .header-anchor {
 .container img {
     max-width: 100%;
     max-height: 100%;
-  }</style>
+  }
+
+
+
+  /* header */
+
+  #drawerMenu {
+    position: fixed;
+    top: 0;
+    left: -280px; /* Start offscreen */
+    width: 280px;
+    height: 100%;
+    background-color: #24292e;
+    color: #ffffff;
+    transition: left 0.3s ease-in-out;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: scroll;
+}
+
+#drawerMenu ul {
+    list-style: none;
+    padding: 20px;
+}
+
+#drawerMenu li {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#drawerMenu li:hover {
+    color: #f1f1f1;
+}
+
+#openDrawerBtn {
+    position: sticky;
+    top: 20px;
+    cursor: pointer;
+    background-color: #24292e;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: x-large;
+}
+
+#openDrawerBtn:hover {
+    background-color: #3e444b;
+}
+
+#openDrawerBtn:focus {
+    outline: none;
+}
+
+/* Custom scrollbar for the drawer menu */
+#drawerMenu::-webkit-scrollbar {
+    width: 8px;
+}
+
+#drawerMenu::-webkit-scrollbar-thumb {
+    background-color: #3e444b;
+}
+
+#drawerMenu::-webkit-scrollbar-thumb:hover {
+    background-color: #555b62;
+}
+
+/* Media query for devices with a width smaller than 800px */
+@media (max-width: 800px) {
+    #openDrawerBtn {
+        right: 20px;
+        left: auto;
+    }
+}</style>
 	</head>
 	<body>
-		<a href="#skip" class="visually-hidden">Skip to main content</a>
+			<a href="#skip" class="visually-hidden">Skip to main content</a>
 
-		<header>
+			<header>
+				<button id="openDrawerBtn">
+					🌳
+				</button>
+
 			<a href="/" class="home-link">zerozoo-a의 블로그</a>
 			<nav>
-				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/tags/">Tags</a></li>
 					<li class="nav-item"><a href="/about/">About Me</a></li>
-
-				<ul>
-					<li>
-							<details>
-								<summary>CS</summary>
-							    <p>
-										CS,CS/ALGORITHMS/BOOKS/JONGMAN,문제풀이_과정을_나누자.md
-										CS,CS/ALGORITHMS/OPTIMIZATION,TOC in kotlin.md
-										CS,CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS,printing star stair 1.md
-										CS,CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS,printing star stair 2 and pyramid.md
-										CS,CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS,starTable.png
-										CS,CS/ALGORITHMS/PROBLEMS,card.md
-										CS,CS/ALGORITHMS/PROBLEMS,problem_card.png
-										CS,CS/ALGORITHMS,Richard_Feynman_alogorithm.md
-										CS,CS/ALGORITHMS/SEARCH,binarySearch JS.md
-										CS,CS/ALGORITHMS/SEARCH,findMaxDivideAndConquer.md
-										CS,CS/ALGORITHMS/SEARCH,leetcode 704. binarySearch.md
-										CS,CS/BOOK/JONGMAN,입문자를_위한_커리큘럼.md
-										CS,CS/BROWSER,While handling an `&lt;iframe&gt;`, I found out something.md
-										CS,CS/BROWSER,deem effect를 처리하자.md
-										CS,CS/DATA_STRUCTURE/TREE,BST.md
-										CS,CS/DATA_STRUCTURE/TREE,Tree_inorder.md
-										CS,CS/DATA_STRUCTURE/TREE,Tree_preorder.md
-										CS,CS/DATA_STRUCTURE/TREE,basic-of-recursive.md
-										CS,CS/DATA_STRUCTURE/TREE,recursive_traversal.md
-										CS,CS/ETC,operator &lt;의 성질.md
-										CS,CS/LOGIC,p and q.md
-										CS,CS/LOGIC,permutation.md
-										CS,CS/RECURSIVE,head-recursion.md
-										CS,CS/RECURSIVE,recursive-hanoi-tower.md
-										CS,CS/RECURSIVE,recursive-power.md
-								</p>
-							</details>
-					</li>
-					<li>
-							<details>
-								<summary>JAVA</summary>
-							    <p>
-										JAVA,JAVA,Deque.md
-										JAVA,JAVA,JCF의 tree set의 비교연산자를 바꾸기.md
-										JAVA,JAVA,List로 구현된 queue의 특징.md
-										JAVA,JAVA,compareTo-method.md
-										JAVA,JAVA,java bubble sort.md
-										JAVA,JAVA,java hash set.md
-										JAVA,JAVA,lambda식과 어노테이션.md
-										JAVA,JAVA/leet-code,backtrack-algorithm.md
-										JAVA,JAVA/leet-code,coin-change-problem-bottom-up.md
-										JAVA,JAVA/leet-code,coin-change-problem.md
-										JAVA,JAVA/leet-code,decision-tree-of-backtracking.md
-										JAVA,JAVA/leet-code,n-queen.md
-										JAVA,JAVA/leet-code,solve-the-Fibonacci-problem-using-a-dynamic-programming-approach.md
-										JAVA,JAVA,thread pool의 기초 1.md
-										JAVA,JAVA,thread pool의 기초 2.md
-										JAVA,JAVA,volatile keyword.md
-								</p>
-							</details>
-					</li>
-					<li>
-							<details>
-								<summary>JS</summary>
-							    <p>
-										JS,JS,about-reduce.md
-										JS,JS,iterator-protocol.md
-										JS,JS/libs,flat.md
-								</p>
-							</details>
-					</li>
-					<li>
-							<details>
-								<summary>MATHEMATICS</summary>
-							    <p>
-										MATHEMATICS,MATHEMATICS/Algebraic,Identities-and-Inverses.md
-										MATHEMATICS,MATHEMATICS/Algebraic,Sets.md
-								</p>
-							</details>
-					</li>
-					<li>
-							<details>
-								<summary>wiki</summary>
-							    <p>
-										wiki,wiki/11ty,css_config.md
-										wiki,wiki/11ty,folder_and_config.md
-										wiki,wiki/11ty,new_blog.md
-										wiki,wiki/11ty,possum.png
-										wiki,wiki/11ty,use-latext-in-11ty.md
-										wiki,wiki/Http,post-man에-authorization-token-심기.md
-										wiki,wiki/operating-system,lsof-kill.md
-								</p>
-							</details>
-					</li>
-				</ul>
-
+				
+				<div id="drawerMenu">
+					<ul>
+							<li>
+									<details>
+										<summary>CS</summary>
+										<ul>
+												<li>
+													<a href=/blog/CS/ALGORITHMS/BOOKS/JONGMAN/%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4_%EA%B3%BC%EC%A0%95%EC%9D%84_%EB%82%98%EB%88%84%EC%9E%90>
+														문제풀이_과정을_나누자
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/ALGORITHMS/OPTIMIZATION/TOC%20in%20kotlin>
+														TOC in kotlin
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing%20star%20stair%201>
+														printing star stair 1
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing%20star%20stair%202%20and%20pyramid>
+														printing star stair 2 and pyramid
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/ALGORITHMS/PROBLEMS/card>
+														card
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm>
+														Richard_Feynman_alogorithm
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/ALGORITHMS/SEARCH/binarySearch%20JS>
+														binarySearch JS
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/ALGORITHMS/SEARCH/findMaxDivideAndConquer>
+														findMaxDivideAndConquer
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/ALGORITHMS/SEARCH/leetcode%20704.%20binarySearch>
+														leetcode 704. binarySearch
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/BOOK/JONGMAN/%EC%9E%85%EB%AC%B8%EC%9E%90%EB%A5%BC_%EC%9C%84%ED%95%9C_%EC%BB%A4%EB%A6%AC%ED%81%98%EB%9F%BC>
+														입문자를_위한_커리큘럼
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/BROWSER/While%20handling%20an%20%60%3Ciframe%3E%60%2C%20I%20found%20out%20something>
+														While handling an `&lt;iframe&gt;`, I found out something
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/BROWSER/deem%20effect%EB%A5%BC%20%EC%B2%98%EB%A6%AC%ED%95%98%EC%9E%90>
+														deem effect를 처리하자
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/DATA_STRUCTURE/TREE/BST>
+														BST
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/DATA_STRUCTURE/TREE/Tree_inorder>
+														Tree_inorder
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/DATA_STRUCTURE/TREE/Tree_preorder>
+														Tree_preorder
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/DATA_STRUCTURE/TREE/basic-of-recursive>
+														basic-of-recursive
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/DATA_STRUCTURE/TREE/recursive_traversal>
+														recursive_traversal
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/ETC/operator%20%3C%EC%9D%98%20%EC%84%B1%EC%A7%88>
+														operator &lt;의 성질
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/LOGIC/p%20and%20q>
+														p and q
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/LOGIC/permutation>
+														permutation
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/RECURSIVE/head-recursion>
+														head-recursion
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/RECURSIVE/recursive-hanoi-tower>
+														recursive-hanoi-tower
+													</a>
+												</li>
+												<li>
+													<a href=/blog/CS/RECURSIVE/recursive-power>
+														recursive-power
+													</a>
+												</li>
+										</ul>
+									</details>
+							</li>
+							<li>
+									<details>
+										<summary>JAVA</summary>
+										<ul>
+												<li>
+													<a href=/blog/JAVA/Deque>
+														Deque
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/JCF%EC%9D%98%20tree%20set%EC%9D%98%20%EB%B9%84%EA%B5%90%EC%97%B0%EC%82%B0%EC%9E%90%EB%A5%BC%20%EB%B0%94%EA%BE%B8%EA%B8%B0>
+														JCF의 tree set의 비교연산자를 바꾸기
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/List%EB%A1%9C%20%EA%B5%AC%ED%98%84%EB%90%9C%20queue%EC%9D%98%20%ED%8A%B9%EC%A7%95>
+														List로 구현된 queue의 특징
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/compareTo-method>
+														compareTo-method
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/java%20bubble%20sort>
+														java bubble sort
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/java%20hash%20set>
+														java hash set
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/lambda%EC%8B%9D%EA%B3%BC%20%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98>
+														lambda식과 어노테이션
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/leet-code/backtrack-algorithm>
+														backtrack-algorithm
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/leet-code/coin-change-problem-bottom-up>
+														coin-change-problem-bottom-up
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/leet-code/coin-change-problem>
+														coin-change-problem
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/leet-code/decision-tree-of-backtracking>
+														decision-tree-of-backtracking
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/leet-code/n-queen>
+														n-queen
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/leet-code/solve-the-Fibonacci-problem-using-a-dynamic-programming-approach>
+														solve-the-Fibonacci-problem-using-a-dynamic-programming-approach
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/thread%20pool%EC%9D%98%20%EA%B8%B0%EC%B4%88%201>
+														thread pool의 기초 1
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/thread%20pool%EC%9D%98%20%EA%B8%B0%EC%B4%88%202>
+														thread pool의 기초 2
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JAVA/volatile%20keyword>
+														volatile keyword
+													</a>
+												</li>
+										</ul>
+									</details>
+							</li>
+							<li>
+									<details>
+										<summary>JS</summary>
+										<ul>
+												<li>
+													<a href=/blog/JS/about-reduce>
+														about-reduce
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JS/iterator-protocol>
+														iterator-protocol
+													</a>
+												</li>
+												<li>
+													<a href=/blog/JS/libs/flat>
+														flat
+													</a>
+												</li>
+										</ul>
+									</details>
+							</li>
+							<li>
+									<details>
+										<summary>MATHEMATICS</summary>
+										<ul>
+												<li>
+													<a href=/blog/MATHEMATICS/Algebraic/Identities-and-Inverses>
+														Identities-and-Inverses
+													</a>
+												</li>
+												<li>
+													<a href=/blog/MATHEMATICS/Algebraic/Sets>
+														Sets
+													</a>
+												</li>
+										</ul>
+									</details>
+							</li>
+							<li>
+									<details>
+										<summary>wiki</summary>
+										<ul>
+												<li>
+													<a href=/blog/wiki/11ty/css_config>
+														css_config
+													</a>
+												</li>
+												<li>
+													<a href=/blog/wiki/11ty/folder_and_config>
+														folder_and_config
+													</a>
+												</li>
+												<li>
+													<a href=/blog/wiki/11ty/new_blog>
+														new_blog
+													</a>
+												</li>
+												<li>
+													<a href=/blog/wiki/11ty/use-latext-in-11ty>
+														use-latext-in-11ty
+													</a>
+												</li>
+												<li>
+													<a href=/blog/wiki/Http/post-man%EC%97%90-authorization-token-%EC%8B%AC%EA%B8%B0>
+														post-man에-authorization-token-심기
+													</a>
+												</li>
+												<li>
+													<a href=/blog/wiki/operating-system/lsof-kill>
+														lsof-kill
+													</a>
+												</li>
+										</ul>
+									</details>
+							</li>
+					</ul>
+				</div>
 			</nav>
 		</header>
 
@@ -2452,4 +2724,27 @@ iterable하다고 할 수 있습니다.</p>
 		</main>
 		<footer></footer>
 	</body>
+		<script type="text/javascript" async>
+		const openDrawerBtn = document.getElementById('openDrawerBtn');
+		const drawerMenu = document.getElementById('drawerMenu');
+
+		openDrawerBtn.addEventListener('click', () => {
+			drawerMenu.style.left = '0';
+		});
+
+		document.addEventListener('click', (event) => {
+			if(drawerMenu.contains(event.target) && event.target === drawerMenu) {
+   		        drawerMenu.style.left = '-280px';
+				return
+			}
+
+			if (
+			event.target !== drawerMenu 
+			&& event.target !== openDrawerBtn
+			&& !drawerMenu.contains(event.target)
+			) {
+   		         drawerMenu.style.left = '-280px';
+			}
+		});
+		</script>
 </html>
