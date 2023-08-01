@@ -5,7 +5,7 @@ const path = require("path");
 /**
  *
  * @param {string} path
- * @returns {Promise<[string, string, string][]>}
+ * @returns {Promise<[string, string][]>}
  */
 async function recursiveAllFiles(path) {
 	const want2Delete = "content/blog/";
@@ -23,31 +23,40 @@ async function recursiveAllFiles(path) {
 	 */
 	const isDS_Store = (name) => name.includes(".DS_Store");
 
+	/**
+	 *
+	 * @param {string} name
+	 */
+	const isImageFile = (name) => {
+		const imageRegex = /\.(jpg|jpeg|png|gif|bmp|webp|tiff)$/i;
+		return imageRegex.test(name);
+	};
+
 	for (const item of items) {
 		if (item.isDirectory()) {
 			files = [...files, ...(await recursiveAllFiles(`${path}/${item.name}`))];
 		} else {
 			const variablePath = path.slice(want2Delete.length);
 			if (!variablePath.length) continue;
-			if (isImagesDir(variablePath) || isDS_Store(item.name)) continue;
+			if (
+				isImagesDir(variablePath) ||
+				isDS_Store(item.name) ||
+				isImageFile(item.name)
+			)
+				continue;
 
-			/**
-			 *
-			 * java, js, mathematics, wiki, errors까지 잘라야 하는데
-			 * 
-recursiveAllFiles ~ variablePath: wiki/Http <<< 이런식으로 나오
-			 */
 			const indexOfSlash = variablePath.indexOf("/");
-			const a = indexOfSlash > 0 ? indexOfSlash : 0;
+			const indexOfSlashOrZero = indexOfSlash > 0 ? indexOfSlash : 0;
 			const nameOfFirstCategory =
-				a > 0 ? variablePath.slice(0, a) : variablePath;
+				indexOfSlashOrZero > 0
+					? variablePath.slice(0, indexOfSlashOrZero)
+					: variablePath;
 
-			// console.log(
-			// 	"🚀 ~ file: eleventy.config.categories.js:43 ~ recursiveAllFiles ~ nameOfFirstCategory:",
-			// 	nameOfFirstCategory
-			// );
-
-			files.push([nameOfFirstCategory, variablePath, item.name]);
+			files.push([
+				nameOfFirstCategory,
+				variablePath,
+				item.name.replace(".md", ""),
+			]);
 		}
 	}
 
@@ -59,17 +68,12 @@ async function eleventyComputedGetCategories() {
 	const paths = await recursiveAllFiles(path);
 	const categories = paths.reduce((acc, cur) => {
 		if (!acc[cur[0]]) {
-			acc[cur[0]] = [[cur[0], cur[1], cur[2]]];
+			acc[cur[0]] = [[cur[1], cur[2]]];
 		} else {
-			// acc[cur[0]] = [...acc[cur[0]], cur[1], cur[2]];
-			acc[cur[0]] = [...acc[cur[0]], [cur[0], cur[1], cur[2]]];
+			acc[cur[0]] = [...acc[cur[0]], [cur[1], cur[2]]];
 		}
 		return acc;
 	}, {});
-	console.log(
-		"🚀 ~ file: eleventy.config.categories.js:68 ~ categories ~ categories:",
-		categories
-	);
 	return categories;
 }
 

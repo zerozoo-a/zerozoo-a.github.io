@@ -43,34 +43,42 @@
 		<style>{% getBundle "css" %}</style>
 	</head>
 	<body>
-		<a href="#skip" class="visually-hidden">Skip to main content</a>
+			<a href="#skip" class="visually-hidden">Skip to main content</a>
 
-		<header>
+			<header>
+				<button id="openDrawerBtn">
+					🌳
+				</button>
+
 			<a href="/" class="home-link">{{ metadata.title }}</a>
 
 			{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
 			<nav>
-				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 				{%- for entry in collections.all | eleventyNavigation %}
 					<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
 				{%- endfor %}
-
-				<ul>
-				{%- for k, v in eleventyComputedGetCategories  %}
-					<li>
-							<details>
-								<summary>{{k}}</summary>
-							    <p>
-									{%- for article in v %}
-										{{article}}
-									{%- endfor %}
-								</p>
-							</details>
-					</li>
-				{%- endfor %}
-				</ul>
-
+				
+				<div id="drawerMenu">
+					<ul>
+						{%- for categories, posts in eleventyComputedGetCategories  %}
+							<li>
+									<details>
+										<summary>{{categories}}</summary>
+										<ul>
+											{%- for post in posts %}
+												<li>
+													<a href=/blog/{{ post[0] }}/{{ post[1] | urlencode }}>
+														{{post[1]}}
+													</a>
+												</li>
+											{%- endfor %}
+										</ul>
+									</details>
+							</li>
+						{%- endfor %}
+					</ul>
+				</div>
 			</nav>
 		</header>
 
@@ -79,4 +87,27 @@
 		</main>
 		<footer></footer>
 	</body>
+		<script type="text/javascript" async>
+		const openDrawerBtn = document.getElementById('openDrawerBtn');
+		const drawerMenu = document.getElementById('drawerMenu');
+
+		openDrawerBtn.addEventListener('click', () => {
+			drawerMenu.style.left = '0';
+		});
+
+		document.addEventListener('click', (event) => {
+			if(drawerMenu.contains(event.target) && event.target === drawerMenu) {
+   		        drawerMenu.style.left = '-280px';
+				return
+			}
+
+			if (
+			event.target !== drawerMenu 
+			&& event.target !== openDrawerBtn
+			&& !drawerMenu.contains(event.target)
+			) {
+   		         drawerMenu.style.left = '-280px';
+			}
+		});
+		</script>
 </html>

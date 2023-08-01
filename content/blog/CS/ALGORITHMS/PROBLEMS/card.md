@@ -3,7 +3,7 @@ title: card 문제
 date: 2023-05-12 23:18:00
 ---
 
-{% image "./problem_card.png", "card 문제" %}
+{% image "../images/problem_card.png", "card 문제" %}
 
 간단해보이지만 간단하지 않은 문제이다.
 

@@ -3,7 +3,7 @@ title: 11ty를 통해 블로그를 새로 단장하기
 date: 2023-03-28
 ---
 
-{% image "./possum.png", "A possum parent and two possum kids hanging from the iconic red balloon" %}
+{% image "./images/possum.png", "A possum parent and two possum kids hanging from the iconic red balloon" %}
 
 jekyll은 충분히 훌륭한 정적생성기이지만..
 

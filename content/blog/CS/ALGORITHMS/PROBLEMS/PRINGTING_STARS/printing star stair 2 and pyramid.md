@@ -65,7 +65,7 @@ __* * * *
 _* * * * * 
 ```
 
-{% image "./starTable.png", "startable 예시 이미지" %}
+{% image "../../images/starTable.png", "startable 예시 이미지" %}
 
 이런 별찍기 문제를 푸는 경우 그림을 그려보는 것이 아주 좋은 풀이법이 됩니다.
 
@@ -117,7 +117,7 @@ star를 찍는 용도로 나누어 보았습니다.
 하지만 무엇보다 중요한건 왜 이런 함수가 나오는가? 입니다. 
 
 
-{% image "./starTable.png", "startable 예시 이미지" %}
+{% image "../../images/starTable.png", "startable 예시 이미지" %}
 
 다시 위 이미지를 보면 공백을 4개 찍습니다. 
 4개는 어떻게 나온걸까요? 역계단의 공백 4개를 찍은 것과 같습니다.
