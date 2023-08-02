@@ -1,4 +1,10 @@
 /* HTML5 display-role reset for older browsers */
+/*
+z-index:
+2 drawer menu
+1 appear-dim
+
+*/
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -9,12 +15,6 @@ body {
 ol, ul {
 	list-style: none;
 }
-/* .post-content > ol, .post-content > ul {
-	list-style: inside;
-} */
-/* .post-content > ol > li > *, .post-content > ul > li > * {
-    display: inline;
-} */
 /* Defaults */
 :root {
 	--font-family: -apple-system, system-ui, sans-serif;
@@ -1047,7 +1047,8 @@ h2 + .header-anchor {
     color: #ffffff;
     transition: left 0.3s ease-in-out;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: scroll;
+    overflow: auto;
+    z-index: 2;
 }
 
 #drawerMenu ul {
@@ -1096,10 +1097,12 @@ h2 + .header-anchor {
     background-color: #555b62;
 }
 
-/* Media query for devices with a width smaller than 800px */
-@media (max-width: 800px) {
-    #openDrawerBtn {
-        right: 20px;
-        left: auto;
-    }
+.appear-dim {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: var(--color-scale-black);
+    opacity: 0.5;
+    transition: all 0.3s ease-in-out;
 }
