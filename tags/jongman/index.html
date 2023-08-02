@@ -21,7 +21,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Tagged “JONGMAN” | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
-
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -29,13 +28,13 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		  <meta property="og:title" content={ title or renderData.title or metadata.title }/>
-  <meta property="og:url" content={ page.url } />
-  <meta property="og:description" content={description or renderData.description} />
-  <meta property="og:image" content="/static/img/logo.png" />
-  <meta property="og:type" content="article" />
-  <link rel="canonical" href={ page.url }/>
-<meta name="robots" content="index, follow" />
+		<meta property="og:title" content=Tagged “JONGMAN”/>
+		<meta property="og:url" content=/tags/jongman/ />
+		<meta property="og:description" content= />
+		<meta property="og:image" content="/static/img/logo.png" />
+		<meta property="og:type" content="article" />
+		<link rel="canonical" href=/tags/jongman/ />
+		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
 		<meta name="google-site-verification" content="FzIp87nE_pk-4x5nXeKcIX-x1rqYcjlabzuH1EqXFYs" />
@@ -62,6 +61,12 @@
 }
 * { box-sizing: border-box; }
 /* HTML5 display-role reset for older browsers */
+/*
+z-index:
+2 drawer menu
+1 appear-dim
+
+*/
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -72,12 +77,6 @@ body {
 ol, ul {
 	list-style: none;
 }
-/* .post-content > ol, .post-content > ul {
-	list-style: inside;
-} */
-/* .post-content > ol > li > *, .post-content > ul > li > * {
-    display: inline;
-} */
 /* Defaults */
 :root {
 	--font-family: -apple-system, system-ui, sans-serif;
@@ -1110,7 +1109,8 @@ h2 + .header-anchor {
     color: #ffffff;
     transition: left 0.3s ease-in-out;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: scroll;
+    overflow: auto;
+    z-index: 2;
 }
 
 #drawerMenu ul {
@@ -1159,22 +1159,22 @@ h2 + .header-anchor {
     background-color: #555b62;
 }
 
-/* Media query for devices with a width smaller than 800px */
-@media (max-width: 800px) {
-    #openDrawerBtn {
-        right: 20px;
-        left: auto;
-    }
+.appear-dim {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: var(--color-scale-black);
+    opacity: 0.5;
+    transition: all 0.3s ease-in-out;
 }</style>
 	</head>
 	<body>
-			<a href="#skip" class="visually-hidden">Skip to main content</a>
-
+		<div id = "dimLayer"></div>
 			<header>
 				<button id="openDrawerBtn">
 					🌳
 				</button>
-
 			<a href="/" class="home-link">zerozoo-a의 블로그</a>
 			<nav>
 				<ul class="nav">
@@ -1500,23 +1500,40 @@ h2 + .header-anchor {
 		<script type="text/javascript" async>
 		const openDrawerBtn = document.getElementById('openDrawerBtn');
 		const drawerMenu = document.getElementById('drawerMenu');
+		const dimLayer = document.getElementById("dimLayer")
 
 		openDrawerBtn.addEventListener('click', () => {
+			dimLayer.classList.add('appear-dim');
 			drawerMenu.style.left = '0';
-		});
+		})
+
+		dimLayer.addEventListener('click', () => {
+			dimLayer.classList.remove('appear-dim')
+   		    drawerMenu.style.left = '-280px';
+		})
 
 		document.addEventListener('click', (event) => {
+			/**
+			* drawerMenu의 하위 메뉴면서, 이벤트 타겟이 drawerMenu인 경우
+			* 이는 카테고리의 하위 메뉴들이 선택 되었을 때 해당되지 않습니다.
+			* 하위메뉴이지만 drawerMenu자체는 아니기 때문입니다.
+			*/
 			if(drawerMenu.contains(event.target) && event.target === drawerMenu) {
+				dimLayer.classList.remove('appear-dim')
    		        drawerMenu.style.left = '-280px';
 				return
 			}
 
+			/**
+			 * drawerMenu가 아니면 menu를 닫습니다.
+			*/
 			if (
 			event.target !== drawerMenu 
 			&& event.target !== openDrawerBtn
 			&& !drawerMenu.contains(event.target)
 			) {
-   		         drawerMenu.style.left = '-280px';
+				dimLayer.classList.remove('appear-dim')
+				drawerMenu.style.left = '-280px';
 			}
 		});
 		</script>
