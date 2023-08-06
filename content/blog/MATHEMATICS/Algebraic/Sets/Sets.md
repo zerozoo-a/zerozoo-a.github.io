@@ -59,7 +59,7 @@ $$
         $$
         L = \{(x, y) | y = ax + b\}
         $$
-        {% image "../images/graph.png", "graph of y=ax+b"%}
+        {% image "../../images/graph.png", "graph of y=ax+b"%}
 # 정리
 
 집합의 기본적인 선언 방법을 알아봤습니다.
