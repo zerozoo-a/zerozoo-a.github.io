@@ -664,11 +664,14 @@ li {
 a {
 	text-decoration: none;
 }
+.nav > a[href] {
+    color:var(--fgColor-default), var(--color-fg-default);
+}
 a[href] {
 	color: var(--text-color-link);
 }
 a[href]:visited {
-	color: var(--text-color-link-visited);
+    color:var(--fgColor-default), var(--color-fg-default);
 }
 a[href]:hover,
 a[href]:active {
@@ -799,7 +802,7 @@ header {
 }
 .postlist-date {
 	font-size: 0.8125em; /* 13px /16 */
-	color: var(--color-scale-gray-4);
+    color:var(--color-fg-default);
 }
 .postlist-date {
 	word-spacing: -0.5px;
@@ -1169,6 +1172,12 @@ h2 + .header-anchor {
 
 #drawerMenu::-webkit-scrollbar-thumb:hover {
     background-color: #555b62;
+}
+
+#drawerMenu summary {
+    font:bolder;
+    font-style: oblique;
+    font-family: cursive;
 }</style>
 	</head>
 	<body>
@@ -1179,8 +1188,7 @@ h2 + .header-anchor {
 				</button>
 			<a href="/" class="home-link">zerozoo-a의 블로그</a>
 			<nav>
-				<ul class="nav">
-				<div id="drawerMenu">
+				<ul id="drawerMenu"class="nav">
 					<ul>
 						<li>Categories</li>
 						<li><a href="/">home</a></li>
@@ -1599,7 +1607,7 @@ h2 + .header-anchor {
   const postsCount = 54
   let allPages = pageLinks.length
   const pagination = document.getElementById("pagination")
-  const NOTHING_BUTTON = (dir='<')=>`<div class="btn">${dir}</div>`
+  const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
   const pageNumber = 3
 
   function elem(allPages = pageLinks.length, page) {
