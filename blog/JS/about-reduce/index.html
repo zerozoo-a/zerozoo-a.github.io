@@ -2639,6 +2639,7 @@ h2 + .header-anchor {
 		<main>
 			
 
+<article>
 
 	
 	
@@ -2823,6 +2824,31 @@ reduce를 통해 모두 접어 하나의 객체나 값으로 뽑아내어 주는
 <ul><li>Previous: <a href="/blog/JAVA/thread pool의 기초 2/">thread pool의 기초 2</a></li><li>Next: <a href="/blog/JAVA/leet-code/solve-the-Fibonacci-problem-using-a-dynamic-programming-approach/">정겨운 피보나치 수열</a></li>
 </ul>
 
+</article>
+<script type="text/javascript">
+const article = document.querySelector("article");
+
+// `document.querySelector` may return null if the selector doesn't match anything.
+if (article) {
+  const text = article.textContent;
+  const wordMatchRegExp = /[^\s]+/g; // Regular expression
+  const words = text.matchAll(wordMatchRegExp);
+  // matchAll returns an iterator, convert to array to get word count
+  const wordCount = [...words].length;
+  const readingTime = Math.round(wordCount / 200);
+  const badge = document.createElement("p");
+  // Use the same styling as the publish information in an article's header
+  badge.classList.add("color-secondary-text", "type--caption");
+  badge.textContent = `읽는데 ⏱️ ${readingTime} 분 정도 소요됩니다.`
+
+  // Support for API reference docs
+  const heading = article.querySelector("h1");
+  // Support for article docs with date
+  const date = article.querySelector("time")?.parentNode;
+
+  (date ?? heading).insertAdjacentElement("afterbegin", badge);
+}
+</script>
 		</main>
 		  <footer></footer>
 	</body>

@@ -2639,6 +2639,7 @@ h2 + .header-anchor {
 		<main>
 			
 
+<article>
 
 	
 	
@@ -2763,6 +2764,31 @@ star를 찍는 용도로 나누어 보았습니다.</p>
 <ul><li>Previous: <a href="/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing star stair 1/">printing star stair 1</a></li><li>Next: <a href="/blog/CS/BROWSER/While handling an `&lt;iframe&gt;`, I found out something/">iframe을 다루면서 느낀 점</a></li>
 </ul>
 
+</article>
+<script type="text/javascript">
+const article = document.querySelector("article");
+
+// `document.querySelector` may return null if the selector doesn't match anything.
+if (article) {
+  const text = article.textContent;
+  const wordMatchRegExp = /[^\s]+/g; // Regular expression
+  const words = text.matchAll(wordMatchRegExp);
+  // matchAll returns an iterator, convert to array to get word count
+  const wordCount = [...words].length;
+  const readingTime = Math.round(wordCount / 200);
+  const badge = document.createElement("p");
+  // Use the same styling as the publish information in an article's header
+  badge.classList.add("color-secondary-text", "type--caption");
+  badge.textContent = `읽는데 ⏱️ ${readingTime} 분 정도 소요됩니다.`
+
+  // Support for API reference docs
+  const heading = article.querySelector("h1");
+  // Support for article docs with date
+  const date = article.querySelector("time")?.parentNode;
+
+  (date ?? heading).insertAdjacentElement("afterbegin", badge);
+}
+</script>
 		</main>
 		  <footer></footer>
 	</body>
