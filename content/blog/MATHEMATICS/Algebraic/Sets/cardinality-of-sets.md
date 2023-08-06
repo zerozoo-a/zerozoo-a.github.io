@@ -1,5 +1,5 @@
 ---
-title: cardinality of sets
+title: 집합 원소의 수 | cardinality of sets
 date: 2023-08-03 23:50:53
 coverURL: https://plus.unsplash.com/premium_photo-1668487827091-80bfd26b15a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1712&q=80
 ---

@@ -1,5 +1,5 @@
 ---
-title: binary operations set differences
+title: 빼기 | 집합간의 연산 
 date: 2023-08-06 21:31:17
 coverURL: https://images.unsplash.com/photo-1422207049116-cfaf69531072?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1735&q=80
 ---

@@ -1,5 +1,5 @@
 ---
-title: latex symbols
+title: latex 자주 쓰는 심볼들 정리 | latex 
 date: 2023-08-06 10:00:30
 coverURL: https://images.unsplash.com/photo-1617617494949-1b29b0e1bf5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1776&q=80
 ---
