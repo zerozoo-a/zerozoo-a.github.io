@@ -1,6 +1,7 @@
 ---
 title: List로 구현된 queue의 특징
 date: 2023-05-28 21:33:53
+coverURL: https://images.unsplash.com/photo-1610223755176-f8c8c92e4ad8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
 ---
 
 List로 구현된 queue는 iterable하다.

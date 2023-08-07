@@ -1,9 +1,9 @@
 ---
-title: Deque
+title: 자바의 Deque에 대해 알아보자
 date: 2023-05-28 22:04:24
+coverURL: https://images.unsplash.com/photo-1530840197133-665af68f9d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1774&q=80
 ---
 
-{% image "./images/Structure_definition-Deque.webp", "Deque" %}
 
 
 자바에서 Deque의 구현은 두 가지로 나뉘게 된다.

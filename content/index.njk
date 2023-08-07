@@ -36,14 +36,14 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
 {% set paginationLinks = pagination.links %}
 
 <script type="text/javascript" async>
-  const pageLinks = `{{_pagination}}`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
+  const links = `{{_pagination}}`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
   const postsCount = {{postsCount}}
-  let allPages = pageLinks.length
+  let allPages = links.length
   const pagination = document.getElementById("pagination")
   const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
   const pageNumber = {{pageNumber}}
 
-  function elem(allPages = pageLinks.length, page) {
+  function elem(allPages = links.length, page) {
     let a = "";
     let beforePages = page - 1;
     let afterPages = page + 1;
@@ -58,10 +58,10 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
     onclick="elem(allPages, ${
       0
     })"
-    href="${pageLinks.at(0)}">
+    href="${links.at(0)}">
       <span> << </span>
     </a>
-    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}" 
+    <a href="${links[page - 2] ?? links[page-1]}" 
      class="btn" onclick="elem(allPages, ${page - 1 })">
       <span> < </span>
     </a>
@@ -93,7 +93,7 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
     */
     if(page == allPages - 1) {
     a += `
-        <a href="${pageLinks[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
+        <a href="${links[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
          <span>
           ${afterPages}
          </span>
@@ -106,7 +106,7 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
      * 첫 페이지의 pagination
      */
     a += `
-      <a href="${pageLinks[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
+      <a href="${links[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
       <span>
         ${currentPage + 1}
       </span>
@@ -117,7 +117,7 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
 
   if(page == 0) {
     a += `
-      <a href="${pageLinks[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
+      <a href="${links[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
       <span>
         ${afterPages + 2}
       </span>
@@ -128,14 +128,14 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
 
   if (page < allPages && page !== allPages - 1) {
     a += `
-      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
+      <a href="${links[afterPages + 2] ?? links[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
         page + 1
       })" >
         <span> > </span>
       </a>
     `;
     a += `
-      <a href="${pageLinks.at(-1)}" class="btn" onclick="elem(allPages, ${
+      <a href="${links.at(-1)}" class="btn" onclick="elem(allPages, ${
       allPages
       })" >
         <span> >> </span>

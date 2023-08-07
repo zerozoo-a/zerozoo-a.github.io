@@ -1,7 +1,9 @@
 ---
 title: java hash set
 date: 2023-05-28 14:16:51
+coverURL: https://images.unsplash.com/photo-1600463241302-88b0e1a51175?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
 ---
+
 
 java의 HashSet은 JCF 프레임워크에 소속되어 있다.
 
@@ -115,3 +117,6 @@ console.log(mySet.size); // 2
 
 custom method를 생성해 chain에 연결해주는 것으로 끝난다.
 자바스크립트는 할 수 없는게 아니라 다른 방식일 뿐이다.
+
+---
+<a href="https://images.unsplash.com/photo-1600463241302-88b0e1a51175?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80">이미지 출처</a>
