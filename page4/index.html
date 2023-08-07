@@ -1179,14 +1179,29 @@ h2 + .header-anchor {
     font-style: oblique;
     font-family: cursive;
 }</style>
+		<style>
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--pagefind-ui-primary: #eeeeee;
+					--pagefind-ui-text: #eeeeee;
+					--pagefind-ui-background: #152028;
+					--pagefind-ui-border: #152028;
+					--pagefind-ui-tag: #152028;
+				}
+			}
+		</style>
+
 	</head>
 	<body>
+
+
 		<div id="dimLayer"></div>
 			<header>
 				<button id="openDrawerBtn">
 					🌳
 				</button>
 			<a href="/" class="home-link">zerozoo-a의 블로그</a>
+			<div id="pagefind-search" class="search"></div>
 			<nav>
 				<ul id="drawerMenu"class="nav">
 					<ul>
@@ -1325,13 +1340,13 @@ h2 + .header-anchor {
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/JCF%EC%9D%98%20tree%20set%EC%9D%98%20%EB%B9%84%EA%B5%90%EC%97%B0%EC%82%B0%EC%9E%90%EB%A5%BC%20%EB%B0%94%EA%BE%B8%EA%B8%B0>
-														JCF의 tree set의 비교연산자를 바꾸기
+													<a href=/blog/JAVA/List-queue>
+														List-queue
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/List%EB%A1%9C%20%EA%B5%AC%ED%98%84%EB%90%9C%20queue%EC%9D%98%20%ED%8A%B9%EC%A7%95>
-														List로 구현된 queue의 특징
+													<a href=/blog/JAVA/change-tree-set-compare-fn>
+														change-tree-set-compare-fn
 													</a>
 												</li>
 												<li>
@@ -1350,8 +1365,8 @@ h2 + .header-anchor {
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/lambda%EC%8B%9D%EA%B3%BC%20%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98>
-														lambda식과 어노테이션
+													<a href=/blog/JAVA/lambda-and-annotation>
+														lambda-and-annotation
 													</a>
 												</li>
 												<li>
@@ -1385,13 +1400,13 @@ h2 + .header-anchor {
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/thread%20pool%EC%9D%98%20%EA%B8%B0%EC%B4%88%201>
-														thread pool의 기초 1
+													<a href=/blog/JAVA/thread-pool-basic-1>
+														thread-pool-basic-1
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/thread%20pool%EC%9D%98%20%EA%B8%B0%EC%B4%88%202>
-														thread pool의 기초 2
+													<a href=/blog/JAVA/thread-pool-basic-2>
+														thread-pool-basic-2
 													</a>
 												</li>
 												<li>
@@ -1531,7 +1546,7 @@ h2 + .header-anchor {
       
     
       
-        <a href="/blog/JAVA/thread pool의 기초 2/">
+        <a href="/blog/JAVA/thread-pool-basic-2/">
           <div class="p-3 d-flex color-bg-default m-3p post-container">
             
               <img class="cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
@@ -1547,7 +1562,7 @@ h2 + .header-anchor {
       
     
       
-        <a href="/blog/JAVA/thread pool의 기초 1/">
+        <a href="/blog/JAVA/thread-pool-basic-1/">
           <div class="p-3 d-flex color-bg-default m-3p post-container">
             
               <img class="cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
@@ -1579,7 +1594,7 @@ h2 + .header-anchor {
       
     
       
-        <a href="/blog/JAVA/lambda식과 어노테이션/">
+        <a href="/blog/JAVA/lambda-and-annotation/">
           <div class="p-3 d-flex color-bg-default m-3p post-container">
             
               <img class="cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
@@ -1603,14 +1618,14 @@ h2 + .header-anchor {
 
 
 <script type="text/javascript" async>
-  const pageLinks = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;,&quot;/page7/index.html&quot;,&quot;/page8/index.html&quot;,&quot;/page9/index.html&quot;,&quot;/page10/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
+  const links = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;,&quot;/page7/index.html&quot;,&quot;/page8/index.html&quot;,&quot;/page9/index.html&quot;,&quot;/page10/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
   const postsCount = 54
-  let allPages = pageLinks.length
+  let allPages = links.length
   const pagination = document.getElementById("pagination")
   const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
   const pageNumber = 4
 
-  function elem(allPages = pageLinks.length, page) {
+  function elem(allPages = links.length, page) {
     let a = "";
     let beforePages = page - 1;
     let afterPages = page + 1;
@@ -1625,10 +1640,10 @@ h2 + .header-anchor {
     onclick="elem(allPages, ${
       0
     })"
-    href="${pageLinks.at(0)}">
+    href="${links.at(0)}">
       <span> << </span>
     </a>
-    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}" 
+    <a href="${links[page - 2] ?? links[page-1]}" 
      class="btn" onclick="elem(allPages, ${page - 1 })">
       <span> < </span>
     </a>
@@ -1660,7 +1675,7 @@ h2 + .header-anchor {
     */
     if(page == allPages - 1) {
     a += `
-        <a href="${pageLinks[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
+        <a href="${links[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
          <span>
           ${afterPages}
          </span>
@@ -1673,7 +1688,7 @@ h2 + .header-anchor {
      * 첫 페이지의 pagination
      */
     a += `
-      <a href="${pageLinks[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
+      <a href="${links[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
       <span>
         ${currentPage + 1}
       </span>
@@ -1684,7 +1699,7 @@ h2 + .header-anchor {
 
   if(page == 0) {
     a += `
-      <a href="${pageLinks[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
+      <a href="${links[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
       <span>
         ${afterPages + 2}
       </span>
@@ -1695,14 +1710,14 @@ h2 + .header-anchor {
 
   if (page < allPages && page !== allPages - 1) {
     a += `
-      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
+      <a href="${links[afterPages + 2] ?? links[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
         page + 1
       })" >
         <span> > </span>
       </a>
     `;
     a += `
-      <a href="${pageLinks.at(-1)}" class="btn" onclick="elem(allPages, ${
+      <a href="${links.at(-1)}" class="btn" onclick="elem(allPages, ${
       allPages
       })" >
         <span> >> </span>
@@ -1728,6 +1743,7 @@ elem(allPages, 4);
 
 		</main>
 		  <footer></footer>
+		  <script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
 	</body>
 		<script type="text/javascript" async>
 		const openDrawerBtn = document.getElementById('openDrawerBtn');

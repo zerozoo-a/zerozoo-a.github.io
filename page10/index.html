@@ -1179,14 +1179,29 @@ h2 + .header-anchor {
     font-style: oblique;
     font-family: cursive;
 }</style>
+		<style>
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--pagefind-ui-primary: #eeeeee;
+					--pagefind-ui-text: #eeeeee;
+					--pagefind-ui-background: #152028;
+					--pagefind-ui-border: #152028;
+					--pagefind-ui-tag: #152028;
+				}
+			}
+		</style>
+
 	</head>
 	<body>
+
+
 		<div id="dimLayer"></div>
 			<header>
 				<button id="openDrawerBtn">
 					🌳
 				</button>
 			<a href="/" class="home-link">zerozoo-a의 블로그</a>
+			<div id="pagefind-search" class="search"></div>
 			<nav>
 				<ul id="drawerMenu"class="nav">
 					<ul>
@@ -1325,13 +1340,13 @@ h2 + .header-anchor {
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/JCF%EC%9D%98%20tree%20set%EC%9D%98%20%EB%B9%84%EA%B5%90%EC%97%B0%EC%82%B0%EC%9E%90%EB%A5%BC%20%EB%B0%94%EA%BE%B8%EA%B8%B0>
-														JCF의 tree set의 비교연산자를 바꾸기
+													<a href=/blog/JAVA/List-queue>
+														List-queue
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/List%EB%A1%9C%20%EA%B5%AC%ED%98%84%EB%90%9C%20queue%EC%9D%98%20%ED%8A%B9%EC%A7%95>
-														List로 구현된 queue의 특징
+													<a href=/blog/JAVA/change-tree-set-compare-fn>
+														change-tree-set-compare-fn
 													</a>
 												</li>
 												<li>
@@ -1350,8 +1365,8 @@ h2 + .header-anchor {
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/lambda%EC%8B%9D%EA%B3%BC%20%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98>
-														lambda식과 어노테이션
+													<a href=/blog/JAVA/lambda-and-annotation>
+														lambda-and-annotation
 													</a>
 												</li>
 												<li>
@@ -1385,13 +1400,13 @@ h2 + .header-anchor {
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/thread%20pool%EC%9D%98%20%EA%B8%B0%EC%B4%88%201>
-														thread pool의 기초 1
+													<a href=/blog/JAVA/thread-pool-basic-1>
+														thread-pool-basic-1
 													</a>
 												</li>
 												<li>
-													<a href=/blog/JAVA/thread%20pool%EC%9D%98%20%EA%B8%B0%EC%B4%88%202>
-														thread pool의 기초 2
+													<a href=/blog/JAVA/thread-pool-basic-2>
+														thread-pool-basic-2
 													</a>
 												</li>
 												<li>
@@ -1579,14 +1594,14 @@ h2 + .header-anchor {
 
 
 <script type="text/javascript" async>
-  const pageLinks = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;,&quot;/page7/index.html&quot;,&quot;/page8/index.html&quot;,&quot;/page9/index.html&quot;,&quot;/page10/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
+  const links = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;,&quot;/page7/index.html&quot;,&quot;/page8/index.html&quot;,&quot;/page9/index.html&quot;,&quot;/page10/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
   const postsCount = 54
-  let allPages = pageLinks.length
+  let allPages = links.length
   const pagination = document.getElementById("pagination")
   const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
   const pageNumber = 10
 
-  function elem(allPages = pageLinks.length, page) {
+  function elem(allPages = links.length, page) {
     let a = "";
     let beforePages = page - 1;
     let afterPages = page + 1;
@@ -1601,10 +1616,10 @@ h2 + .header-anchor {
     onclick="elem(allPages, ${
       0
     })"
-    href="${pageLinks.at(0)}">
+    href="${links.at(0)}">
       <span> << </span>
     </a>
-    <a href="${pageLinks[page - 2] ?? pageLinks[page-1]}" 
+    <a href="${links[page - 2] ?? links[page-1]}" 
      class="btn" onclick="elem(allPages, ${page - 1 })">
       <span> < </span>
     </a>
@@ -1636,7 +1651,7 @@ h2 + .header-anchor {
     */
     if(page == allPages - 1) {
     a += `
-        <a href="${pageLinks[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
+        <a href="${links[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
          <span>
           ${afterPages}
          </span>
@@ -1649,7 +1664,7 @@ h2 + .header-anchor {
      * 첫 페이지의 pagination
      */
     a += `
-      <a href="${pageLinks[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
+      <a href="${links[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
       <span>
         ${currentPage + 1}
       </span>
@@ -1660,7 +1675,7 @@ h2 + .header-anchor {
 
   if(page == 0) {
     a += `
-      <a href="${pageLinks[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
+      <a href="${links[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
       <span>
         ${afterPages + 2}
       </span>
@@ -1671,14 +1686,14 @@ h2 + .header-anchor {
 
   if (page < allPages && page !== allPages - 1) {
     a += `
-      <a href="${pageLinks[afterPages + 2] ?? pageLinks[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
+      <a href="${links[afterPages + 2] ?? links[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
         page + 1
       })" >
         <span> > </span>
       </a>
     `;
     a += `
-      <a href="${pageLinks.at(-1)}" class="btn" onclick="elem(allPages, ${
+      <a href="${links.at(-1)}" class="btn" onclick="elem(allPages, ${
       allPages
       })" >
         <span> >> </span>
@@ -1704,6 +1719,7 @@ elem(allPages, 10);
 
 		</main>
 		  <footer></footer>
+		  <script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
 	</body>
 		<script type="text/javascript" async>
 		const openDrawerBtn = document.getElementById('openDrawerBtn');
