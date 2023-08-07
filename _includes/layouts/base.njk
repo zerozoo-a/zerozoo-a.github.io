@@ -63,14 +63,29 @@
 
 		{#- Render the CSS bundle using Inlined CSS (for the fastest site performance in production) #}
 		<style>{% getBundle "css" %}</style>
+		<style>
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--pagefind-ui-primary: #eeeeee;
+					--pagefind-ui-text: #eeeeee;
+					--pagefind-ui-background: #152028;
+					--pagefind-ui-border: #152028;
+					--pagefind-ui-tag: #152028;
+				}
+			}
+		</style>
+
 	</head>
 	<body>
+
+
 		<div id="dimLayer"></div>
 			<header>
 				<button id="openDrawerBtn">
 					🌳
 				</button>
 			<a href="/" class="home-link">{{ metadata.title }}</a>
+			<div id="pagefind-search" class="search"></div>
 			<nav>
 				<ul id="drawerMenu"class="nav">
 					<ul>
@@ -100,6 +115,7 @@
 			{{ content | safe }}
 		</main>
 		  <footer></footer>
+		  <script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
 	</body>
 		<script type="text/javascript" async>
 		const openDrawerBtn = document.getElementById('openDrawerBtn');

@@ -15,11 +15,7 @@ const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginBundle = require("@11ty/eleventy-plugin-bundle");
 const pluginNavigation = require("@11ty/eleventy-navigation");
-
-/**
- * constants
- */
-const blogPath = "content/blog";
+const { execSync } = require("child_process");
 
 /**
  * config
@@ -40,6 +36,12 @@ module.exports = function (eleventyConfig) {
 
 	// ADD TOC
 	eleventyConfig.addPlugin(pluginTOC);
+
+	eleventyConfig.on("eleventy.after", () => {
+		execSync(`npx pagefind --source _site --glob \"**/*.html\"`, {
+			encoding: "utf-8",
+		});
+	});
 
 	eleventyConfig.addGlobalData("env", process.env);
 
