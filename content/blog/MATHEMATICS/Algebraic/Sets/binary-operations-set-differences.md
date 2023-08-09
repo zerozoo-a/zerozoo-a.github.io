@@ -26,7 +26,12 @@ A - B
 $$
 
 집합 A - B는 무슨 뜻일까요?
-집합 A와 B는 교집합을 가지고 있고 집합 A에서 B를 빼는 것입니다.
+
+- 집합 $A \cap B != \emptyset$인 경우 $A-B=A \cap B^c$
+- 집합 $A \cap B = \emptyset$인 경우 $A-B = A$
+
+여기서 case 1번은 집합 A에서 집합 B와의 교집합 부분을 뺀 부분을 나타냅니다.
+case 2번은 교집합이 없는 서로소 집합이므로 집합 A에서 빼줄 것이 없으므로 집합 A가 그대로 나오게 됩니다.
 
 
 {% image "../../images/ven-1.png", "set A and B"%}
