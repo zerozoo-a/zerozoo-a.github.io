@@ -7,6 +7,7 @@ const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 /**
  * plugis
  */
+const pluginMermaid = require("@kevingimbel/eleventy-plugin-mermaid");
 const pluginDrafts = require("./eleventy.config.drafts.js");
 const pluginImages = require("./eleventy.config.images.js");
 const pluginGetAllCategories = require("./eleventy.config.categories.js");
@@ -32,8 +33,6 @@ module.exports = function (eleventyConfig) {
 	});
 	eleventyConfig.addPassthroughCopy("./covers");
 
-	// eleventyConfig.setLibrary("md");
-
 	// ADD TOC
 	eleventyConfig.addPlugin(pluginTOC);
 
@@ -52,6 +51,10 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addWatchTarget("content/**/*.{svg,webp,png,jpeg}");
 
 	// App plugins
+	eleventyConfig.addPlugin(pluginMermaid, {
+		html_tag: "div",
+		extra_classes: "graph",
+	});
 	eleventyConfig.addPlugin(pluginDrafts);
 	eleventyConfig.addPlugin(pluginImages);
 	eleventyConfig.addPlugin(pluginGetAllCategories);

@@ -42,8 +42,7 @@ const main = async (title) => {
 	const FRONTMATTER = `---\n${TITLE(
 		title.replaceAll("-", " ")
 	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---\n<sup>\n
-	각주:[1](배너_이미지_출처)\n
-	</sup><br />\n<br />\n<br />`;
+	각주:[1](배너_이미지_출처)\n</sup>\n<br />\n<br />\n<br />`;
 
 	const isDirExists = fs.existsSync(`./content/blog/temp`);
 
