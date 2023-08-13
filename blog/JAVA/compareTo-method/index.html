@@ -2334,7 +2334,7 @@ h2 + .header-anchor {
 .opacity-0 {
     opacity: 0; /* Initial opacity */
     height:100%;
-    min-height: min-content;
+    min-height: 300px;
     transition: opacity 1s ease; /* Opacity transition over 1 second */
   }
   
@@ -2685,7 +2685,6 @@ h2 + .header-anchor {
 		</header>
 		<main>
 			
-
 <article>
 	
 	
@@ -2746,59 +2745,15 @@ this.length()-anotherString.length()</p>
 
 </article>
 <script type="module" async>import mermaid from "/js/mermaid/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({startOnLoad:true}));</script>
-<script type="text/javascript">
-const mermaidEls = document.getElementsByClassName('mermaid')
-
-// 감지 옵션 (감지할 변경)
-const config = { attributes: true, childList: true,  };
-
-
-// 변경 감지 시 실행할 콜백 함수
-const callback = (mutationList, observer) => {
-  for (const mutation of mutationList) {
-    if (mutation.type === "childList") {
-	  for (let i = 0; i < mermaidEls.length; i++) {
-		mermaidEls[i].classList.add("active-mermaid")
-	  	observer.disconnect();
-	  }
-    } 
-  }
-};
-
-
-for(let i = 0; i < mermaidEls.length; i++){
-	mermaidEls[i].classList.add("opacity-0")
-	const observer = new MutationObserver(callback);
-	observer.observe(mermaidEls[i], config);
-}
-
-// 이후 감지 중단 가능
-</script>
-
-<script type="text/javascript">
-const article = document.querySelector("article");
-
-// `document.querySelector` may return null if the selector doesn't match anything.
-if (article) {
-  const text = article.textContent;
-  const wordMatchRegExp = /[^\s]+/g; // Regular expression
-  const words = text.matchAll(wordMatchRegExp);
-  // matchAll returns an iterator, convert to array to get word count
-  const wordCount = [...words].length;
-  const readingTime = Math.round(wordCount / 200);
-  const badge = document.createElement("p");
-  // Use the same styling as the publish information in an article's header
-  badge.classList.add("color-secondary-text", "type--caption");
-  badge.textContent = `읽는데 ⏱️ ${readingTime} 분 정도 소요됩니다.`
-
-  // Support for API reference docs
-  const heading = article.querySelector("h1");
-  // Support for article docs with date
-  const date = article.querySelector("time")?.parentNode;
-
-  (date ?? heading).insertAdjacentElement("afterbegin", badge);
-}
-</script>
+<script 
+type="text/javascript"
+src="/js/lib/mutationObserver.js"
+async
+></script>
+<script type="text/javascript"
+src="/js/lib/getReadTime.js"
+async
+></script>
 		</main>
 		  <footer></footer>
 		  <script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
