@@ -12,6 +12,32 @@ coverURL: https://images.unsplash.com/photo-1617617494949-1b29b0e1bf5f?ixlib=rb-
 [2](배너_이미지_출처)
 </sup>
 
+## 자주 쓰는 모음
+
+
+### forall
+
+$\forall$: `\forall`
+
+$\forall{x}, p$ : x가 될 수 있는 모든 경우에 대해 조건 p가 만족된다.
+
+$\forall{x}\in \mathbb{N}, x > 0$ = 모든 자연수에 속하는 x는 0 보다 크다.
+
+$\forall{x} \in [0,\infin), \sqrt{x} \geq 0$ = 모든 0 이상의 실수에 대해 x의 제곱근은 0 보다 크거나 같다.
+
+$\forall{x} \ except \ x \neq 0, x \cdot \frac{1}{x} = 0$ = 모든 실수 x에 (0은 제외), $x \cdot \frac{1}{x} = 0$을 만족한다.
+
+### exist
+
+$\exist$: `\exist`
+
+$\exist{x}, x - 1 = 0$ $x - 1 = 0$을 만족하는 x가 적어도 하나는 존재한다.
+
+
+$\forall{x}, \exist{a}, x + a = x$ = 모든 x에 대해 $x+a=x$를 만족하는 a가 적어도 하나는 존재한다.
+
+$\forall{x}, \exist{a}, x + a = x \longrightarrow a = 0$ = 모든 x에 대해 $x+a=x$를 만족하는 a가 적어도 하나는 존재한다. 그 a는 0이다.
+
 ## 그리스와 히브리 문자
 
 {% image "./images/greek.png", "greek symbols"%}
