@@ -148,6 +148,18 @@ module.exports = function (eleventyConfig) {
 		// return a;
 	});
 
+	// eleventyConfig.addFilter(
+	// 	"foo",
+	// 	/**
+	// 	 *
+	// 	 * @param {string} filePath
+	// 	 */
+	// 	function (filePath) {
+	// 		const lastIndexOf = filePath.lastIndexOf("/");
+	// 		const result = filePath.slice(0, lastIndexOf);
+	// 		return result;
+	// 	}
+	// );
 	/**
 	 * @param {Array<any>} a
 	 */

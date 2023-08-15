@@ -7,6 +7,8 @@ coverURL: https://images.unsplash.com/photo-1617617494949-1b29b0e1bf5f?ixlib=rb-
 <br />
 <br />
 
+# latex 자주 쓰는 심볼들 정리 | latex
+
 <sup>
 [1](PDF_출처)
 [2](배너_이미지_출처)
@@ -37,6 +39,19 @@ $\exist{x}, x - 1 = 0$ $x - 1 = 0$을 만족하는 x가 적어도 하나는 존�
 $\forall{x}, \exist{a}, x + a = x$ = 모든 x에 대해 $x+a=x$를 만족하는 a가 적어도 하나는 존재한다.
 
 $\forall{x}, \exist{a}, x + a = x \longrightarrow a = 0$ = 모든 x에 대해 $x+a=x$를 만족하는 a가 적어도 하나는 존재한다. 그 a는 0이다.
+
+## oplus
+
+$\oplus$: 두 인자가 서로 다른 경우 true를 반환합니다.
+
+$false \oplus false = true$
+
+$false \oplus true = true$
+
+$true \oplus false = false$
+
+$true \oplus true = true$
+
 
 ## 그리스와 히브리 문자
 

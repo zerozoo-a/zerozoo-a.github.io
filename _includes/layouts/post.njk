@@ -5,9 +5,10 @@ layout: layouts/base.njk
 {%- css %}{% include "public/css/gh-md-dark.css" %}{%- endcss %}
 {%- css %}{% include "public/css/gh-syntax.css" %}{%- endcss %}
 <article>
-	{% set absoluteUrl %}{{ page.url }}{% endset %}
 	{% if(coverURL) %}
     <img class="big-cover-img" src={% convert coverURL, "0" %} alt="cover image" height="auto" />
+	{% elif(local) %}
+	<img class="big-cover-img" src=/img{{ page.filePathStem }}/cover.jpeg alt="cover image" height="auto" ></img>
 	{% else %}
 	{% endif %}
 
