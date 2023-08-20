@@ -4,7 +4,10 @@ const fs = require("fs");
 /**
  * @param {string} title
  */
-const main = async (title) => {
+const main = async (_title) => {
+	const title = _title.join("-");
+	console.log("🚀 ~ file: createPost.js:9 ~ main ~ _title:", _title);
+
 	console.log(`attempt create file name: ${title}`);
 
 	if (title.length < 1) throw new Error("파일 이름을 입력하지 않았습니다.");
@@ -14,25 +17,25 @@ const main = async (title) => {
 	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---\n<sup>\n
 	각주:[1](배너_이미지_출처)\n</sup>\n<br />\n<br />\n<br />`;
 
-	const tempDir = `./content/blog/temp/`;
-	const fullPathWithFilename = tempDir + title + ".md";
+	const TEMP_DIR = `./content/blog/temp/`;
+	const FULL_PATH = TEMP_DIR + title + ".md";
 
-	const isDirExists = fs.existsSync(tempDir);
-	const isFileExists = fs.existsSync(fullPathWithFilename);
+	const isDirExists = fs.existsSync(TEMP_DIR);
+	const isFileExists = fs.existsSync(FULL_PATH);
 
 	if (isFileExists) {
-		throw Error("이미 같은 이름의 파일이 " + tempDir + "에 존재합니다.");
+		throw Error("이미 같은 이름의 파일이 " + TEMP_DIR + "에 존재합니다.");
 	}
 
 	if (isDirExists) {
-		await File.writeFile(`${tempDir}${title}.md`, FRONTMATTER);
+		await File.writeFile(FULL_PATH, FRONTMATTER);
 	} else {
-		await File.mkdir(tempDir);
-		await File.writeFile(fullPathWithFilename, FRONTMATTER);
+		await File.mkdir(TEMP_DIR);
+		await File.writeFile(FULL_PATH, FRONTMATTER);
 	}
 };
 
-main(process.argv.splice(2).join("-"));
+main(process.argv.splice(2));
 
 /**
  *
