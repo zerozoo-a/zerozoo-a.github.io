@@ -2,6 +2,39 @@ const File = require("fs/promises");
 const fs = require("fs");
 
 /**
+ * @param {string} title
+ */
+const main = async (title) => {
+	console.log(`attempt create file name: ${title}`);
+
+	if (title.length < 1) throw new Error("파일 이름을 입력하지 않았습니다.");
+
+	const FRONTMATTER = `---\n${TITLE(
+		title.replaceAll("-", " ")
+	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---\n<sup>\n
+	각주:[1](배너_이미지_출처)\n</sup>\n<br />\n<br />\n<br />`;
+
+	const tempDir = `./content/blog/temp/`;
+	const fullPathWithFilename = tempDir + title + ".md";
+
+	const isDirExists = fs.existsSync(tempDir);
+	const isFileExists = fs.existsSync(fullPathWithFilename);
+
+	if (isFileExists) {
+		throw Error("이미 같은 이름의 파일이 " + tempDir + "에 존재합니다.");
+	}
+
+	if (isDirExists) {
+		await File.writeFile(`${tempDir}${title}.md`, FRONTMATTER);
+	} else {
+		await File.mkdir(tempDir);
+		await File.writeFile(fullPathWithFilename, FRONTMATTER);
+	}
+};
+
+main(process.argv.splice(2).join("-"));
+
+/**
  *
  * @returns {string}
  */
@@ -25,33 +58,13 @@ function getKoreanDateTime() {
  * @param {string} title
  * @returns {string}
  */
-const TITLE = (title) => `title: ${title}`;
+function TITLE(title) {
+	`title: ${title}`;
+}
 
 /**
  * @returns {string}
  */
-const COVER_URL = () => `coverURL: `;
-/**
- * @param {string} title
- */
-const main = async (title) => {
-	console.log(`attempt create file name: ${title}`);
-
-	if (title.length < 1) throw new Error("파일 이름을 입력하지 않았습니다.");
-
-	const FRONTMATTER = `---\n${TITLE(
-		title.replaceAll("-", " ")
-	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---\n<sup>\n
-	각주:[1](배너_이미지_출처)\n</sup>\n<br />\n<br />\n<br />`;
-
-	const isDirExists = fs.existsSync(`./content/blog/temp`);
-
-	if (isDirExists) {
-		await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
-	} else {
-		await File.mkdir(`./content/blog/temp`);
-		await File.writeFile(`./content/blog/temp/${title}.md`, FRONTMATTER);
-	}
-};
-
-main(process.argv.splice(2).join("-"));
+function COVER_URL() {
+	`coverURL: `;
+}
