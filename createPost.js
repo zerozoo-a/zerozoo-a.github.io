@@ -4,7 +4,7 @@ const fs = require("fs");
 /**
  * @param {string} title
  */
-const main = async (_title) => {
+const createPost = async (_title) => {
 	const title = _title.join("-");
 	console.log("🚀 ~ file: createPost.js:9 ~ main ~ _title:", _title);
 
@@ -35,7 +35,7 @@ const main = async (_title) => {
 	}
 };
 
-main(process.argv.splice(2));
+createPost(process.argv.splice(2));
 
 /**
  *
@@ -71,3 +71,7 @@ function TITLE(title) {
 function COVER_URL() {
 	`coverURL: `;
 }
+
+module.exports = {
+	createPost,
+};
