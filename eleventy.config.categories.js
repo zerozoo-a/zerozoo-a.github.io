@@ -1,7 +1,6 @@
 const fs = require("fs");
 const { readdir } = require("fs").promises;
 const path = require("path");
-const contentPath = "content/blog";
 
 /**
  *
@@ -9,6 +8,7 @@ const contentPath = "content/blog";
  * @returns {Promise<[string, string][]>}
  */
 async function recursiveAllFiles(path) {
+	const want2Delete = "content/blog/";
 	let files = [];
 	const items = await readdir(path, { withFileTypes: true });
 	/**
@@ -36,7 +36,7 @@ async function recursiveAllFiles(path) {
 		if (item.isDirectory()) {
 			files = [...files, ...(await recursiveAllFiles(`${path}/${item.name}`))];
 		} else {
-			const variablePath = path.slice(contentPath.length);
+			const variablePath = path.slice(want2Delete.length);
 			if (!variablePath.length) continue;
 			if (
 				isImagesDir(variablePath) ||
@@ -63,8 +63,9 @@ async function recursiveAllFiles(path) {
 	return files;
 }
 
-async function getCategoriesFrom(contentPath) {
-	const paths = await recursiveAllFiles(contentPath);
+async function eleventyComputedGetCategories() {
+	const path = "content/blog";
+	const paths = await recursiveAllFiles(path);
 	const categories = paths.reduce((acc, cur) => {
 		if (!acc[cur[0]]) {
 			acc[cur[0]] = [[cur[1], cur[2]]];
@@ -74,10 +75,6 @@ async function getCategoriesFrom(contentPath) {
 		return acc;
 	}, {});
 	return categories;
-}
-
-async function eleventyComputedGetCategories() {
-	await getCategoriesFrom(contentPath);
 }
 
 module.exports.eleventyComputedGetCategories = eleventyComputedGetCategories;
@@ -94,6 +91,7 @@ module.exports = (eleventyConfig) => {
 					const directories = entries
 						.filter((entry) => entry.isDirectory())
 						.map((entry) => path.join(directoryPath, entry.name));
+					// .map((path) => path.slice(want2Delete.length));
 
 					resolve(directories);
 				});
@@ -106,8 +104,4 @@ module.exports = (eleventyConfig) => {
 		"eleventyComputedGetCategories",
 		eleventyComputedGetCategories
 	);
-};
-
-module.exports = {
-	getCategoriesFrom,
 };
