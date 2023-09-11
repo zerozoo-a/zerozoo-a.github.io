@@ -6,11 +6,11 @@ const fs = require("fs");
  */
 const main = async (_title) => {
 	const title = _title.join("-");
-	console.log("🚀 ~ file: createPost.js:9 ~ main ~ _title:", _title);
 
-	console.log(`attempt create file name: ${title}`);
+	console.log(`attempt to create file name: ${title}`);
 
 	if (title.length < 1) throw new Error("파일 이름을 입력하지 않았습니다.");
+	const t = TITLE(title.replaceAll("-", " "));
 
 	const FRONTMATTER = `---\n${TITLE(
 		title.replaceAll("-", " ")
@@ -62,12 +62,12 @@ function getKoreanDateTime() {
  * @returns {string}
  */
 function TITLE(title) {
-	`title: ${title}`;
+	return `title: ${title}`;
 }
 
 /**
  * @returns {string}
  */
 function COVER_URL() {
-	`coverURL: `;
+	return `coverURL: `;
 }

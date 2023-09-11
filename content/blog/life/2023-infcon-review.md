@@ -1,7 +1,8 @@
 ---
 title: 2023 인프런 후기
 date: 2023-08-15 22:06:51
-local: infcon
+coverURL: https://user-images.githubusercontent.com/80259925/260718032-8093329a-a95d-457b-948d-e0dd47d6cbda.jpeg
+rotate: 180
 ---
 <sup>
 	각주:[1](배너_이미지_출처)

@@ -23,7 +23,7 @@ const getFromBase64DB = async (url) => {
  * @param {string} url
  * @param {number} index
  */
-const createBase64FromURL = async (url, index = 1) => {
+const createBase64FromURL = async (url, index = 1, rotate = 0) => {
 	if (typeof index === "string") index = Number(index);
 	if (url.length === 0 || !(0 <= index && index < 3)) return "";
 
@@ -42,7 +42,7 @@ const createBase64FromURL = async (url, index = 1) => {
 		return cachedData[url][index];
 	}
 
-	const images = await convertToBase64(url);
+	const images = await convertToBase64(url, rotate);
 
 	/**
 	 *
@@ -71,7 +71,7 @@ const createBase64FromURL = async (url, index = 1) => {
  * @param {string} url
  * @returns
  */
-const convertToBase64 = (url) =>
+const convertToBase64 = (url, rotate = 0) =>
 	new Promise((resolve, reject) => {
 		https.get(
 			url,
@@ -90,8 +90,8 @@ const convertToBase64 = (url) =>
 						const buffer = Buffer.concat(chunks);
 
 						Promise.all([
-							resizeBase64(744, 462, buffer),
-							resizeBase64(128, 128, buffer),
+							resizeBase64(744, 462, buffer, rotate),
+							resizeBase64(128, 128, buffer, rotate),
 						]).then((images) => {
 							const mappedImages = images.map((image) =>
 								image.toString("base64")
@@ -112,13 +112,13 @@ const convertToBase64 = (url) =>
  * @param {number} w
  * @param {number} h
  */
-const resizeBase64 = (w, h, buffer) =>
-	new Promise((res) => res(sharp(buffer).resize(w, h).toBuffer())).then(
-		(res) => {
-			const base64 = res.toString("base64");
-			return base64;
-		}
-	);
+const resizeBase64 = (w, h, buffer, rotate = 0) =>
+	new Promise((res) =>
+		res(sharp(buffer).resize(w, h).rotate(rotate).toBuffer())
+	).then((res) => {
+		const base64 = res.toString("base64");
+		return base64;
+	});
 
 module.exports = {
 	createBase64FromURL,
