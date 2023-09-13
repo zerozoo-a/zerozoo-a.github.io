@@ -29,11 +29,11 @@
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
 		<meta property="og:title" content=zerozoo-a의 블로그/>
-		<meta property="og:url" content=/404.html />
+		<meta property="og:url" content=/page12/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/404.html />
+		<link rel="canonical" href=/page12/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -1577,18 +1577,156 @@ h2 + .header-anchor {
 
 
 
-<h1 id="content-not-found" tabindex="-1">Content not found. <a class="header-anchor" href="#content-not-found">#</a></h1>
-<p>여긴.. 아직 올 곳이 못됩니다. <a href="/">home</a>.</p>
-<!--
 
-Read more: https://www.11ty.dev/docs/quicktips/not-found/
 
-This will work for both GitHub pages and Netlify:
 
-* https://help.github.com/articles/creating-a-custom-404-page-for-your-github-pages-site/
-* https://www.netlify.com/docs/redirects/#custom-404
 
--->
+<div class="posts-container">
+    
+      
+        <a href="/blog/wiki/11ty/folder_and_config/">
+          <div class="p-3 d-flex color-bg-default m-3p post-container">
+            
+            <div class="d-flex pl-3 flex-direction-col post-title-container">
+                <h4 class="d-flex flex-items-center post-title">
+                    폴더 단위로 layout 명시하기
+                </h4>
+                <time class="postlist-date" datetime="2023-03-27">2023/03/27</time>
+            </div>
+          </div>
+        </a>
+      
+    
+</div>
+<div class="wrapper">
+  <ul id="pagination" class="sticky-bottom-nav"></ul>
+</div>
+
+
+
+
+<script type="text/javascript" async>
+  const links = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;,&quot;/page7/index.html&quot;,&quot;/page8/index.html&quot;,&quot;/page9/index.html&quot;,&quot;/page10/index.html&quot;,&quot;/page11/index.html&quot;,&quot;/page12/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
+  const postsCount = 61
+  let allPages = links.length
+  const pagination = document.getElementById("pagination")
+  const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
+  const pageNumber = 12
+
+  function elem(allPages = links.length, page) {
+    let a = "";
+    let beforePages = page - 1;
+    let afterPages = page + 1;
+    let liActive;
+
+    let spaceStack = [];
+
+
+  if (page > 0) {
+    a += `
+    <a class="btn" 
+    onclick="elem(allPages, ${
+      0
+    })"
+    href="${links.at(0)}">
+      <span> << </span>
+    </a>
+    <a href="${links[page - 2] ?? links[page-1]}" 
+     class="btn" onclick="elem(allPages, ${page - 1 })">
+      <span> < </span>
+    </a>
+    `;
+    spaceStack.push(1)
+  } else {
+    a += NOTHING_BUTTON('_')
+    spaceStack.push(1)
+  }
+
+  for (let currentPage = beforePages; currentPage <= afterPages; currentPage++) {
+
+    if (currentPage > allPages ) {
+      continue;
+    }
+
+    if (currentPage == -1) {
+      currentPage = currentPage + 1;
+    }
+
+    if (page == currentPage) {
+      liActive = "active";
+    } else {
+      liActive = "";
+    }
+
+    /**
+    * 마지막 페이지의 pagination
+    */
+    if(page == allPages - 1) {
+    a += `
+        <a href="${links[currentPage]}" class="numb active" onclick="elem(allPages, ${currentPage})">
+         <span>
+          ${afterPages}
+         </span>
+        </a>
+      `;
+      spaceStack.push(1)
+      break;
+    }
+    /**
+     * 첫 페이지의 pagination
+     */
+    a += `
+      <a href="${links[currentPage]}" class="numb ${liActive}" onclick="elem(allPages, ${currentPage})">
+      <span>
+        ${currentPage + 1}
+      </span>
+      </a>
+      `;
+    spaceStack.push(1)
+  }
+
+  if(page == 0) {
+    a += `
+      <a href="${links[afterPages + 1]}" class="numb" onclick="elem(allPages, ${afterPages + 1})">
+      <span>
+        ${afterPages + 2}
+      </span>
+      </a>
+      `;
+    spaceStack.push(1)
+  }
+
+  if (page < allPages && page !== allPages - 1) {
+    a += `
+      <a href="${links[afterPages + 2] ?? links[afterPages + 1]}" class="btn" onclick="elem(allPages, ${
+        page + 1
+      })" >
+        <span> > </span>
+      </a>
+    `;
+    a += `
+      <a href="${links.at(-1)}" class="btn" onclick="elem(allPages, ${
+      allPages
+      })" >
+        <span> >> </span>
+      </a>
+    `;
+    spaceStack.push(1)
+  } else {
+    while(spaceStack.length < 5) {
+      a += NOTHING_BUTTON('_')
+      spaceStack.push(1)
+    }
+  }
+
+  pagination.innerHTML = a;
+}
+elem(allPages, 12);
+</script>
+
+
+
+
 
 
 		</main>
