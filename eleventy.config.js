@@ -37,7 +37,7 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPlugin(pluginTOC);
 
 	eleventyConfig.on("eleventy.after", () => {
-		execSync(`npx pagefind --source _site --glob \"**/*.html\"`, {
+		execSync(`npx pagefind --site _site --glob \"**/*.html\"`, {
 			encoding: "utf-8",
 		});
 	});
