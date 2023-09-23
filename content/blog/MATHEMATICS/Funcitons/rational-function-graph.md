@@ -1,7 +1,7 @@
 ---
 title: 유리함수의 그래프들 rational function graph 1
 date: 2023-09-23 11:58:56
-coverURL: 
+coverURL: https://user-images.githubusercontent.com/80259925/270083660-0c37a137-7f3a-42f4-b4ba-d07e6a1b8b7b.png
 ---
 <br />
 <br />
