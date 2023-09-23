@@ -2,7 +2,9 @@ const https = require("https");
 const sharp = require("sharp");
 const File = require("fs/promises");
 const Fs = require("fs");
-const PATH = "imageURL2base64Db.json";
+const Path = require("path");
+const PATH = Path.join(__dirname, "../db/imageURL2base64Db_0.json");
+const zlib = require("zlib");
 
 /**
  *
@@ -116,8 +118,7 @@ const resizeBase64 = (w, h, buffer, rotate = 0) =>
 	new Promise((res) =>
 		res(sharp(buffer).resize(w, h).rotate(rotate).toBuffer())
 	).then((res) => {
-		const base64 = res.toString("base64");
-		return base64;
+		return res.toString("base64");
 	});
 
 module.exports = {
