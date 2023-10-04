@@ -1,5 +1,5 @@
 ---
-title: 님아 그 JSON.stringify를 함부로 쓰지 마오
+title: JSON.stringify의 속도 🐢
 date: 2023-10-06 00:00:45
 coverURL: https://images.unsplash.com/photo-1445633743309-b60418bedbf2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80
 ---
