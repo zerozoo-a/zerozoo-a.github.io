@@ -1,37 +1,29 @@
-const {
-	Worker,
-	isMainThread,
-	parentPort,
-	workerData,
-} = require("worker_threads");
+const { Worker, isMainThread } = require("worker_threads");
 
-function main() {
-	if (isMainThread) {
-		const threadCount = 8;
-		const threads = new Set();
-		threads.add(new Worker(__filename, { workerData: { number: 1 } })); // thread 1
-		threads.add(new Worker(__filename, { workerData: { number: 2 } })); // thread 2
+if (isMainThread) {
+	// This code runs in the main thread
+	const worker = new Worker("./worker.js", {
+		workerData: { filePath: "data.json" },
+	});
 
-		for (let worker of threads) {
-			worker.on("error", (err) => {
-				throw err;
-			});
-
-			worker.on("exit", () => {
-				threads.delete(worker);
-			});
-
-			worker.on("message", (message) => {
-				console.log("message", message);
-			});
+	worker.on("message", (message) => {
+		if (message.error) {
+			console.error(`Error parsing JSON: ${message.error}`);
+		} else {
+			const parsedData = message.result;
+			console.log(parsedData);
 		}
-	} else {
-		console.log("workerData", workerData);
-	}
-}
+	});
 
-function add(a, b) {
-	return a + b;
-}
+	worker.on("error", (error) => {
+		console.error(`Worker error: ${error}`);
+	});
 
-main();
+	worker.on("exit", (code) => {
+		if (code !== 0) {
+			console.error(`Worker stopped with exit code ${code}`);
+		}
+	});
+} else {
+	// This code runs in the worker thread (worker.js)
+}
