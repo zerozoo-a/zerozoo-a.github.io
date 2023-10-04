@@ -20,12 +20,13 @@ const createBase64FromURL = async (url, index = 1, rotate = 0) => {
 
 	const isFileExists = Fs.existsSync(PATH);
 	if (!isFileExists) {
-		await File.writeFile(PATH, fastJsonStringify({ _: "" })).catch((e) =>
+		await File.writeFile(PATH, JSON.stringify({})).catch((e) =>
 			console.error(e)
 		);
 	}
 	const { cachedData, cachedBase64 } = await getFromBase64DB(url);
 	if (cachedBase64) return cachedBase64[index];
+	if (!cachedData) cachedData = {};
 	const images = await convertToBase64(url, rotate);
 
 	/**
@@ -41,13 +42,30 @@ const createBase64FromURL = async (url, index = 1, rotate = 0) => {
 		addHTMLSpec2Base64(images[1] ?? ""), // small image
 	];
 
-	const updatedJSON = fastJsonStringify(cachedData);
+	// cachedData.title = "IMAGE JSON DB";
+	// cachedData.type = "object";
+	// cachedData.properties = {
+	// 	string: ["string"],
+	// };
+	const schema = {
+		type: "object",
+		patternProperties: {
+			"https://*": { type: "array" },
+		},
+	};
 
-	await File.writeFile(PATH, updatedJSON, "utf8", (err) => {
+	try {
+		const updatedJSON = fastJsonStringify(schema)(cachedData);
+
+		await File.writeFile(PATH, updatedJSON, "utf8", (err) => {
+			console.error(err);
+		});
+
+		const result = cachedData[url][index];
+		return result;
+	} catch (err) {
 		console.error(err);
-	});
-
-	return cachedData[url][index];
+	}
 };
 
 /**
@@ -107,7 +125,7 @@ const resizeBase64 = (w, h, buffer, rotate = 0) =>
  *
  * @param {string} url
  */
-const getFromBase64DB = async (url) => {
+async function getFromBase64DB(url) {
 	const isFileExists = Fs.existsSync(PATH);
 	if (!isFileExists) return new Error("CACHED DATA IS NOT EXISTS");
 
@@ -117,7 +135,7 @@ const getFromBase64DB = async (url) => {
 		cachedData,
 		cachedBase64: cachedData[url] ?? undefined,
 	};
-};
+}
 
 module.exports = {
 	createBase64FromURL,
