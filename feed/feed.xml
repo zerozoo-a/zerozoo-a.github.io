@@ -4,12 +4,130 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-10-04T22:13:05Z</updated>
+	<updated>2023-10-06T00:00:45Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>님아 그 JSON.stringify를 함부로 쓰지 마오</title>
+		<link href="https://zerozoo-a.github.io/blog/JS/libs/secret-of-json/"/>
+		<updated>2023-10-06T00:00:45Z</updated>
+		<id>https://zerozoo-a.github.io/blog/JS/libs/secret-of-json/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;json-stringify&quot; tabindex=&quot;-1&quot;&gt;JSON.stringify가 범인..? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/libs/secret-of-json/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;node와 browser를 다루고 있는 본인은 JSON 객체를 많이도 사용합니다.&lt;/p&gt;
+&lt;p&gt;브라우저와 노드 등 가리지 않고 JSON을 남발하고 있는데요.
+이 JSON.stringify가 만약 O(n)의 속도라고 한다면
+과연 쉽게 쓸 수 있을까요?&lt;/p&gt;
+&lt;p&gt;요즘이야 cpu 성능이 워낙 좋아 충분히 작은 O(n)은 무시할 정도가 되었다고는 해도,&lt;/p&gt;
+&lt;p&gt;JSON은 생각보다 커질 수 있다는 점을 간과해서는 안될 것입니다.&lt;/p&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;문제점을 찾아낸 경위 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/libs/secret-of-json/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;이 블로그의 이미지들은 base64로 encode되어 제공됩니다.
+file system을 기반으로 db없이 블로그를 운영하고 server 또한 의존하지 않을 수 있고 빌드타임에 이미 base64는 완성되어 나가므로 유저에게 이미지를 다운받게 network I/O를 발생시키지도 않습니다.&lt;/p&gt;
+&lt;p&gt;그럼 완벽할까요?&lt;/p&gt;
+&lt;p&gt;아닙니다. base64 이미지는 이미지를 text로 encode 해놓은 상태이므로 text가 아주 큽니다.&lt;/p&gt;
+&lt;p&gt;전 해당 text를 json으로 저장해두는데요.&lt;/p&gt;
+&lt;p&gt;json 파일은 블로그의 post가 쌓일수록 함께 용량이 늘어났습니다.&lt;/p&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;방법은? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/libs/secret-of-json/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;threads를 통한 개선(별 의미가 없음)이나 db의 도입 등 여러가지를 생각해봤지만
+파일시스템을 유지하면서 기존의 로직을 크게 벗어나지 않는 방법은
+json의 encode, decode를 빠르게하면 된다는 것입니다.&lt;/p&gt;
+&lt;p&gt;JSON.stringify가 실행될 때, 읽어들이고 있는 json이 될 객체의 타입을 알고 있다면,
+그렇다면 해당 객체를 string으로 변환할 때,
+보다 빠른 방법을 사용해 string으로 변환해줄 수 있지 않을까?
+라는 것이 기본 아이디어입니다.&lt;/p&gt;
+&lt;p&gt;이를 잘 구현해놓은 것이&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.npmjs.com/package/fast-json-stringify&quot;&gt;npm의 fast-json-stringify입니다.&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;사용 방법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/libs/secret-of-json/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;디테일한 설정은 &lt;a href=&quot;https://www.npmjs.com/package/fast-json-stringify&quot;&gt;링크를 통해&lt;/a&gt;확인 가능합니다. (ajv, integer의 rounding, largeArrayMechanism 등...)&lt;/p&gt;
+&lt;p&gt;우선 단순한 사용법을 알아보죠&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;stringify 할 object의 schema를 작성하고,&lt;/li&gt;
+&lt;li&gt;fast-json-stringify 라이브러리를 가져와 schema를 인자로 넣는다.&lt;/li&gt;
+&lt;li&gt;2에서 반환된 함수로 실제 object를 넣으면 끝입니다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; fastJson &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;fast-json-stringify&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; schema &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token literal-property property&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;Example Schema with required field&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token literal-property property&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;object&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token literal-property property&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;nickname&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token literal-property property&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;string&#39;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;mail&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token literal-property property&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;string&#39;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token literal-property property&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;mail&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; obj &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;token literal-property property&quot;&gt;nickname&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;zerozoo&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+	&lt;span class=&quot;token literal-property property&quot;&gt;mail&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;zoozooClub@sbs.com&#39;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; stringifySchema &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;fastJson&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;schema&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; result &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;stringifySchema&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;obj&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;감사합니다.
+happy hacking!&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>nest.js 제어의 역전 IOC</title>
+		<link href="https://zerozoo-a.github.io/blog/JS/server/nest/nest.js-using-IOC/"/>
+		<updated>2023-10-05T00:35:43Z</updated>
+		<id>https://zerozoo-a.github.io/blog/JS/server/nest/nest.js-using-IOC/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;제어의 역전 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/nest.js-using-IOC/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;제어의 역전은 보통 의존성을 다루는 주체가 역전된 것을 가리킵니다.&lt;/p&gt;
+&lt;p&gt;의존성이란 어떤 객체가 다른 객체에 의존하는 것을 의미합니다.
+객체지향에서 이 패턴이 두드러지게 나타나는데요&lt;/p&gt;
+&lt;p&gt;부모 자식간의 관계에서 자식은 부모에 의존합니다.&lt;/p&gt;
+&lt;p&gt;자식 클래스는 부모 클레스에 의존하죠.&lt;/p&gt;
+&lt;p&gt;부모 클래스를 extend한 자식클래스는 부모 클래스를 항상 명시해야합니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Children&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Parent&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;house &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;House&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;생성자 함수 내에서 House 클래스를 생성해 사용해도 이는 의존적이라 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;보통 이를 하나씩 생성하는 주체가 개발자이지만 프레임워크에 맡기는 경우
+제어가 역전되었다고 합니다.&lt;/p&gt;
+&lt;h2 id=&quot;nest-js&quot; tabindex=&quot;-1&quot;&gt;nest.js에서 사용하는 방법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/nest.js-using-IOC/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;nest에서는 &lt;code&gt;@Injectable&lt;/code&gt; 데코레이터를 사용해 IOC를 구현합니다.
+해당 데코레이터가 붙은 클래스는 이제 nest.js에서 생성과 소멸을 관리합니다.&lt;/p&gt;
+&lt;p&gt;보통 &lt;code&gt;controller&lt;/code&gt; 클래스는 &lt;code&gt;service&lt;/code&gt; 클래스를 사용합니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;service&lt;/code&gt; 클래스에 &lt;code&gt;@Injectable&lt;/code&gt;를 붙이고,
+다른 클래스에 주입해 사용하는 클래스가 만들어졌습니다.&lt;/p&gt;
+&lt;p&gt;해당 클래스는 모듈 클래스(&lt;code&gt;@Module&lt;/code&gt; 데코레이터가 붙은)의 프로바이더 설정에 추가해주면 됩니다.&lt;/p&gt;
+&lt;p&gt;이제 constructor에서 아래와 같이 써줍니다.&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token decorator&quot;&gt;&lt;span class=&quot;token at operator&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Injectable&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;GoodService&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token decorator&quot;&gt;&lt;span class=&quot;token at operator&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Injectable&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;GoodRepository&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;GoodController&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; goodService&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; GoodService&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token decorator&quot;&gt;&lt;span class=&quot;token at operator&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Module&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    imports&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    controllers&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;GoodController&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    provider&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;GoodService&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; GoodRepository&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// nest.js의 컨테이너에 Injectable 할 class들을 명시해줌&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;GoodModule&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>schema model</title>
