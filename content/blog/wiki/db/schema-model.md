@@ -1,7 +1,7 @@
 ---
 title: schema model
 date: 2023-10-04 22:13:05
-coverURL: https://images.unsplash.com/photo-1583361704493-d4d4d1b1d70a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80
+coverURL: https://images.unsplash.com/photo-1695499744859-d3f0481e6a11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2148&q=80
 ---
 <br />
 <br />

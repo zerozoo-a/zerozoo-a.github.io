@@ -6,44 +6,11 @@ const Path = require("path");
 const PATH = Path.join(__dirname, "../db/imageURL2base64Db_0.json");
 const zlib = require("zlib");
 const readLine = require("readline");
+const fastJsonStringify = require("fast-json-stringify");
 
 /**
+ * main function
  *
- * @param {string} url
- * @param {number} index
- */
-const getFromBase64DB = async (url, index) => {
-	const isFileExists = Fs.existsSync(PATH);
-	if (!isFileExists) return new Error("CACHED DATA IS NOT EXISTS");
-
-	const jsonFile = await File.readFile(PATH, { encoding: "utf-8" });
-	const cachedData = JSON.parse(jsonFile);
-	return cachedData[url][index] ?? undefined;
-};
-/**
- *
- * @param {string} url
- * @param {number} index
- */
-const getFromBase64DBUsingStream = async (url, index) => {
-	const isFileExists = Fs.existsSync(PATH);
-	if (!isFileExists) return new Error("CACHED DATA IS NOT EXISTS");
-	const input = Fs.createReadStream(PATH, { highWaterMark: 64 * 1024 });
-	const rl = readLine.createInterface({
-		input,
-		crlfDelay: Infinity,
-	});
-
-	rl.on("line", (line) => {
-		const jsonObj = JSON.parse(line);
-	});
-
-	// const jsonFile = await File.readFile(PATH, { encoding: "utf-8" });
-	const cachedData = JSON.parse(jsonFile);
-	return cachedData[url][index] ?? "";
-};
-
-/**
  * @param {string} url
  * @param {number} index
  */
@@ -53,13 +20,12 @@ const createBase64FromURL = async (url, index = 1, rotate = 0) => {
 
 	const isFileExists = Fs.existsSync(PATH);
 	if (!isFileExists) {
-		await File.writeFile(PATH, JSON.stringify({ _: "" })).catch((e) =>
+		await File.writeFile(PATH, fastJsonStringify({ _: "" })).catch((e) =>
 			console.error(e)
 		);
 	}
-
-	const cachedData = await getFromBase64DB(url, index);
-	if (cachedData) return cachedData;
+	const { cachedData, cachedBase64 } = await getFromBase64DB(url);
+	if (cachedBase64) return cachedBase64[index];
 	const images = await convertToBase64(url, rotate);
 
 	/**
@@ -75,7 +41,7 @@ const createBase64FromURL = async (url, index = 1, rotate = 0) => {
 		addHTMLSpec2Base64(images[1] ?? ""), // small image
 	];
 
-	const updatedJSON = JSON.stringify(cachedData, null, 2);
+	const updatedJSON = fastJsonStringify(cachedData);
 
 	await File.writeFile(PATH, updatedJSON, "utf8", (err) => {
 		console.error(err);
@@ -137,8 +103,23 @@ const resizeBase64 = (w, h, buffer, rotate = 0) =>
 		return res.toString("base64");
 	});
 
+/**
+ *
+ * @param {string} url
+ */
+const getFromBase64DB = async (url) => {
+	const isFileExists = Fs.existsSync(PATH);
+	if (!isFileExists) return new Error("CACHED DATA IS NOT EXISTS");
+
+	const jsonFile = await File.readFile(PATH, { encoding: "utf-8" });
+	const cachedData = JSON.parse(jsonFile);
+	return {
+		cachedData,
+		cachedBase64: cachedData[url] ?? undefined,
+	};
+};
+
 module.exports = {
 	createBase64FromURL,
 	getFromBase64DB,
-	getFromBase64DBUsingStream,
 };
