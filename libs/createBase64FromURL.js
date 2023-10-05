@@ -41,11 +41,6 @@ const createBase64FromURL = async (url, index = 1, rotate = 0) => {
 		addHTMLSpec2Base64(images[1] ?? ""), // small image
 	];
 
-	// cachedData.title = "IMAGE JSON DB";
-	// cachedData.type = "object";
-	// cachedData.properties = {
-	// 	string: ["string"],
-	// };
 	const schema = {
 		type: "object",
 		patternProperties: {

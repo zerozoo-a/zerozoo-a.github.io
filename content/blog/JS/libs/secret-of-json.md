@@ -34,7 +34,7 @@ json 파일은 블로그의 post가 쌓일수록 함께 용량이 늘어났습�
 
 ## 방법은?
 
-threads를 통한 개선(별 의미가 없음)이나 db의 도입 등 여러가지를 생각해봤지만
+db 도입 등 여러가지를 생각해봤지만
 파일시스템을 유지하면서 기존의 로직을 크게 벗어나지 않는 방법은
 json의 encode, decode를 빠르게하면 된다는 것입니다.
 
@@ -82,6 +82,5 @@ const stringifySchema = fastJson(schema);
 const result = stringifySchema(obj);
 ```
 
+(*속도 밴치마크는 해당 npm 링크에 기재되어 있습니다.)
 
-감사합니다.
-happy hacking!
