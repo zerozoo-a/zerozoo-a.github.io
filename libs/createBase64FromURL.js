@@ -41,15 +41,9 @@ const createBase64FromURL = async (url, index = 1, rotate = 0) => {
 		addHTMLSpec2Base64(images[1] ?? ""), // small image
 	];
 
-	const schema = {
-		type: "object",
-		patternProperties: {
-			"https://*": { type: "array" },
-		},
-	};
-
 	try {
-		const updatedJSON = fastJsonStringify(schema)(cachedData);
+		// const updatedJSON = fastJsonStringify(schema)(cachedData);
+		const updatedJSON = JSON.stringify(cachedData);
 
 		await File.writeFile(PATH, updatedJSON, "utf8", (err) => {
 			console.error(err);
