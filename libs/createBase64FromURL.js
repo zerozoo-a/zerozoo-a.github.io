@@ -80,7 +80,7 @@ const convertToBase64 = (url, rotate = 0) =>
 						const buffer = Buffer.concat(chunks);
 
 						Promise.all([
-							resizeBase64(744, 462, buffer, rotate),
+							resizeBase64(665, 321, buffer, rotate),
 							resizeBase64(128, 128, buffer, rotate),
 						]).then((images) => {
 							const mappedImages = images.map((image) =>
