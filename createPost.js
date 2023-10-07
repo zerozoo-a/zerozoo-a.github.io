@@ -14,8 +14,7 @@ const main = async (_title) => {
 
 	const FRONTMATTER = `---\n${TITLE(
 		title.replaceAll("-", " ")
-	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---\n<sup>\n
-	각주:[1](배너_이미지_출처)\n</sup>\n<br />\n<br />\n<br />`;
+	)}\ndate: ${getKoreanDateTime()}\n${COVER_URL()}\n---\n<br />\n<br />\n<br />`;
 
 	const TEMP_DIR = `./content/blog/temp/`;
 	const FULL_PATH = TEMP_DIR + title + ".md";

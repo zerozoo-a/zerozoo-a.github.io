@@ -323,8 +323,8 @@ public class CoinChange {
 
 	static int dp(int[] coins, int `amount`) {
 		// base case
-		if (amount == 0) return 0;
-		if (amount < 0) return -1;
+		if (amount == 0) return 0; // 딱 맞아 떨어지는 경우
+		if (amount < 0) return -1; // 초과하는 경우
 
 		float res = Float.POSITIVE_INFINITY;
 
