@@ -4,7 +4,7 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-10-06T23:52:40Z</updated>
+	<updated>2023-10-10T21:59:42Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
@@ -12,28 +12,123 @@
 	</author>
 	
 	<entry>
-		<title>basic greedy 거스름돈 문제와 dp 풀이</title>
-		<link href="https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/"/>
-		<updated>2023-10-06T23:52:40Z</updated>
-		<id>https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/</id>
+		<title>iterator를 사용해서 main thread 점유 우회하기</title>
+		<link href="https://zerozoo-a.github.io/blog/JS/play-with-generator/"/>
+		<updated>2023-10-10T21:59:42Z</updated>
+		<id>https://zerozoo-a.github.io/blog/JS/play-with-generator/</id>
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;전개 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;iterator-a-b&quot; tabindex=&quot;-1&quot;&gt;iterator를 통해 a, b 상호 재귀 함수를 만들어보자 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/play-with-generator/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;generator를 사용해서 함수 a, b를 서로 호출 할 수 있도록
+코드를 작성해봤다.&lt;/p&gt;
+&lt;p&gt;a는 함수 b를
+함수 b는 함수 a를 호출합니다.&lt;/p&gt;
+&lt;p&gt;iterator a, b가 서로 인자 count를 넘기면서 연산을 이어나갑니다.&lt;/p&gt;
+&lt;p&gt;함수 a, b가 서로를 호출하므로 상호재귀 꼴이되는데요
+무한히 호출하므로 stack overflow가 나지 않도록 base case를 추가해줘야 합니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;b&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; count&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;in a&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; count&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;count &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;yield&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;count &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;yield&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;a&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; count&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;a&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; count&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;in b&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; count&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;count &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;yield&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;count &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;yield&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;b&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; count&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; start &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;b&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;🚀 ~ file: index.js:15 ~ main ~ start:&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; start&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+ &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; a &lt;span class=&quot;token number&quot;&gt;6&lt;/span&gt;
+ &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; b &lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;
+ &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; a &lt;span class=&quot;token number&quot;&gt;4&lt;/span&gt;
+ &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; b &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;
+ &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; a &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;
+ &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; b &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;
+ &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; a &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;
+
+🚀 &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt; file&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; index&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt; main &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt; start&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token literal-property property&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;undefined&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;done&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;main-thread-iterator-function&quot; tabindex=&quot;-1&quot;&gt;main thread에서 iterator function 으로 또 그 반대로, &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/play-with-generator/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;gene&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;max&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;load&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;block&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; i &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; curr &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; load&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; max&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;curr&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token function&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      i&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      curr &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; load&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;yield&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;nbFor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;maxLoadBlock&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; iterator &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;gene&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;maxLoadBlock&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    iterator&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;done &lt;span class=&quot;token operator&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;setTimeout&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;f&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;token function&quot;&gt;setTimeout&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;f&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;hi&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;hi&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token function&quot;&gt;nbFor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; hi&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위 코드는 setTimeout을 통해 iterator가 인자로 받은
+함수를 실행하다가 제한으로 둔 조건문에 의해 yield 되어
+while 문과 함수 자체를 모두 빠져나옵니다.&lt;/p&gt;
+&lt;p&gt;함수는 main thread에게 다시 flow를 건네주는 모양이 됩니다.&lt;/p&gt;
+&lt;p&gt;정확히는 main thread가 iterator 함수를 실행하다가,
+멈추고,
+다시 iterator 함수 다음을 실행시키다가,
+setTimeout에 의해 iterator가 다시 실행되는 모양이 됩니다.&lt;/p&gt;
+&lt;p&gt;따라서 iterator 함수가 main thread를 계속 점유하지 않고
+서로 양보하면서 실행하게 됩니다.&lt;/p&gt;
+&lt;p&gt;이 모양을 parallel 하다고 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;위 코드에 대한 설명은 유튜브의 코드 스피츠를 기반으로 작성되었습니다.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>basic greedy 거스름돈 문제와 dp 풀이</title>
+		<link href="https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/"/>
+		<updated>2023-10-06T23:52:40Z</updated>
+		<id>https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;전개 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;가게에서 점원은 손님에게 거스름돈을 거슬러줘야 한다.
 거스름돈은 동전으로 거슬러 줄 수 있다.&lt;/p&gt;
-&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;조건 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;조건 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;거스름돈의 동전의 개수는 최소한이 되도록 거슬러 주어야 한다.&lt;/li&gt;
 &lt;li&gt;500, 100, 50, 10원 짜리 동전이 무수히 존재하고 N원을 거슬러 준다.&lt;/li&gt;
 &lt;li&gt;n(거스름돈)은 항상 10의 배수이다.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;예 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;예 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;1260원을 거슬러 준다면 500 + 500 + 100 + 100 + 50 + 10을 준다.
 거스름돈이 1000원: (500 * 2)
 거스름돈이 600원: (500 * 1, 100 * 1)
 거스름돈이 300원: (100 * 3)&lt;/p&gt;
-&lt;h2 id=&quot;js&quot; tabindex=&quot;-1&quot;&gt;풀이 (JS) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;js&quot; tabindex=&quot;-1&quot;&gt;풀이 (JS) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;나눗셈 연산에 대해 자바스크립트는 형변환이 확장되며 일어나기 때문에,
 자연수에서 실수로 확장되어버린다. 따라서 적절한 방법으로 소수점을 처리해주어야 합니다.&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// js&lt;/span&gt;
@@ -55,7 +150,7 @@
     n &lt;span class=&quot;token operator&quot;&gt;%=&lt;/span&gt; coin&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;거스름돈의 개수: &#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;count&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;java&quot; tabindex=&quot;-1&quot;&gt;풀이 (JAVA) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;java&quot; tabindex=&quot;-1&quot;&gt;풀이 (JAVA) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;자바에서는 int의 경우 소수점을 버리고
 double의 경우 소수점을 살려줍니다. (좋네요)&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// java&lt;/span&gt;
@@ -75,7 +170,7 @@ double의 경우 소수점을 살려줍니다. (좋네요)&lt;/p&gt;
         &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;count: &quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; count&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;중요한 점 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;중요한 점 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;거스름 돈 문제에선 동전의 셋이 중요합니다.&lt;/p&gt;
 &lt;p&gt;동전이 500, 100, 50, 10 있을 때, 가장 큰 동전인 500원은 하위 동전의 배수입니다.
 하위 동전 100, 50, 10은 아무리 조합해도 500원 하나의 개수보다 더 적은 최적해를 만들 어 낼 수 없습니다.&lt;/p&gt;
@@ -86,7 +181,7 @@ double의 경우 소수점을 살려줍니다. (좋네요)&lt;/p&gt;
 정답은 [400, 300]으로 2개인데 말입니다.&lt;/p&gt;
 &lt;p&gt;조심해서 풀거나.. 혹은 dp등 다른 방법을 사용하는 것도 좋습니다.&lt;/p&gt;
 &lt;p&gt;아래는 DP를 활용한 방법입니다.&lt;/p&gt;
-&lt;h2 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;풀이 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;풀이 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// java&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;token namespace&quot;&gt;org&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;example&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token import&quot;&gt;&lt;span class=&quot;token namespace&quot;&gt;java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;util&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Arrays&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
@@ -152,7 +247,7 @@ double의 경우 소수점을 살려줍니다. (좋네요)&lt;/p&gt;
     
     &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; memo&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;amount&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;dp&quot; tabindex=&quot;-1&quot;&gt;dp 풀이 설명 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;dp&quot; tabindex=&quot;-1&quot;&gt;dp 풀이 설명 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;이 잔돈문제의 dp 버전은&lt;/p&gt;
 &lt;p&gt;코인 배열을 순회하면서 내부적으로 재귀호출을 한다는 점입니다.
 재귀호출을 하면서 총 거슬러 주어야 할 값인 amount - 현재 반복하고 있는 coin의 값으로
