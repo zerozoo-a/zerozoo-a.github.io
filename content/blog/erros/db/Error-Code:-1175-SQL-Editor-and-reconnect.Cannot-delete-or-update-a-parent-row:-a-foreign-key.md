@@ -17,6 +17,8 @@ mysql workbench에서 해당 토글을 켜고 끄는 방법을 알아봅시다.
 
 {% image '../images/workbench.png', 'example' %}
 1. 우측 상단의 톱니바퀴를 눌러주세요
-2. 우측 상단의 톱니바퀴를 눌러주세요
-3. 우측 상단의 톱니바퀴를 눌러주세요
+2. 화살표로 표시 된 SQL Editor 메뉴를 눌러주세요
+3. Safe updates toggle을 눌러주세요
+
+
 
