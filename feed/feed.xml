@@ -31,7 +31,7 @@ dto는 data를 전달 할 때 사용되는 object입니다.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;설치 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;    &lt;span class=&quot;token function&quot;&gt;pnpm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; class-transformer class-validator&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;적당한 package manager를 통해 라이브러리를 설치합니ㅏㄷ.&lt;/p&gt;
+&lt;p&gt;package manager를 통해 라이브러리를 설치합니다.&lt;/p&gt;
 &lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;설정 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;설정에 대한 자세한 내용은 &lt;a href=&quot;https://docs.nestjs.com/techniques/validation#auto-validation&quot;&gt;
 nest.js&lt;/a&gt;에서 확인 할 수 있습니다.&lt;/p&gt;
@@ -46,10 +46,13 @@ nest.js&lt;/a&gt;에서 확인 할 수 있습니다.&lt;/p&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;bootstrap&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;사용하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;dto 클래스를 생성하고 decorator를 붙여줍니다.&lt;/p&gt;
-&lt;p&gt;class-validator는 typescript를 사용하는 많은 유저들에게
-많은 사용되고 있고 nest.js의 decorator와도 궁합이 좋아 오래도록
-nest.js에서 사용되어 왔습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;dto 클래스를 생성하고 decorator를 붙여줍니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;class-validator는 typescript를 사용하는 많은 유저들에게
+많은 사용되고 있고 nest.js의 decorator와도 궁합이 좋아 오래도록 
+nest.js에서 사용되어 왔습니다.
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;dto-1&quot; tabindex=&quot;-1&quot;&gt;dto 파일 생성 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// src/dtos/createUser.dto.ts&lt;/span&gt;
 
@@ -72,6 +75,13 @@ nest.js에서 사용되어 왔습니다.&lt;/p&gt;
     &lt;span class=&quot;token builtin&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; hi&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;done&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이렇게 인자를 선언하고 type을 지정해주는 것만으로
+이미 validate 함수가 실행됩니다.
+(decorator에 의해 실행되어짐)&lt;/p&gt;
+&lt;p&gt;dto로 인해 보다 방어적인 코드 작성이 가능해졌습니다.&lt;/p&gt;
+&lt;p&gt;request 객체의 createUserDto 값이 위에서 선언한 DTO에 적합하지 않다면
+controller는 자동적으로 생성된 에러 메시지를 반환합니다.&lt;/p&gt;
+&lt;p&gt;(email 형식이 잘못되었다면 email에 대한 에러 메시지를 반환함)&lt;/p&gt;
 &lt;h3 id=&quot;client&quot; tabindex=&quot;-1&quot;&gt;client 단에서 요청하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;  &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
     &lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;your_cool_api/createHouseUser&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
@@ -92,7 +102,7 @@ nest.js에서 사용되어 왔습니다.&lt;/p&gt;
 &lt;li&gt;library를 설치합니다.&lt;/li&gt;
 &lt;li&gt;config를 설정합니다.&lt;/li&gt;
 &lt;li&gt;dto class 파일을 생성합니다.&lt;/li&gt;
-&lt;li&gt;controller에서 입력으로 들어오는 입력의 타입을 Dto로 입력해줍니다.&lt;/li&gt;
+&lt;li&gt;controller에서 입력으로 들어오는 입력의 타입을 Dto로 입력해줍니다.(입력이 들어올 때 validate pipe를 지나오게 되어 입력을 걸러줌)&lt;/li&gt;
 &lt;li&gt;client에서 적당한 option과 함께 요청을 넣어줍시다.&lt;/li&gt;
 &lt;/ul&gt;
 </content>

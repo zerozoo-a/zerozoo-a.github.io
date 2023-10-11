@@ -2827,7 +2827,7 @@ dto는 data를 전달 할 때 사용되는 object입니다.</p>
 </ul>
 <h2 id="-1" tabindex="-1">설치 <a class="header-anchor" href="#-1">#</a></h2>
 <pre class="language-bash" tabindex="0"><code class="language-bash">    <span class="token function">pnpm</span> <span class="token function">add</span> class-transformer class-validator</code></pre>
-<p>적당한 package manager를 통해 라이브러리를 설치합니ㅏㄷ.</p>
+<p>package manager를 통해 라이브러리를 설치합니다.</p>
 <h2 id="-2" tabindex="-1">설정 <a class="header-anchor" href="#-2">#</a></h2>
 <p>설정에 대한 자세한 내용은 <a href="https://docs.nestjs.com/techniques/validation#auto-validation">
 nest.js</a>에서 확인 할 수 있습니다.</p>
@@ -2842,10 +2842,13 @@ nest.js</a>에서 확인 할 수 있습니다.</p>
 <span class="token punctuation">}</span>
 <span class="token function">bootstrap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <h2 id="-3" tabindex="-1">사용하기 <a class="header-anchor" href="#-3">#</a></h2>
-<p>dto 클래스를 생성하고 decorator를 붙여줍니다.</p>
-<p>class-validator는 typescript를 사용하는 많은 유저들에게
-많은 사용되고 있고 nest.js의 decorator와도 궁합이 좋아 오래도록
-nest.js에서 사용되어 왔습니다.</p>
+<ul>
+<li>dto 클래스를 생성하고 decorator를 붙여줍니다.</li>
+</ul>
+<pre><code>class-validator는 typescript를 사용하는 많은 유저들에게
+많은 사용되고 있고 nest.js의 decorator와도 궁합이 좋아 오래도록 
+nest.js에서 사용되어 왔습니다.
+</code></pre>
 <h3 id="dto-1" tabindex="-1">dto 파일 생성 <a class="header-anchor" href="#dto-1">#</a></h3>
 <pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token comment">// src/dtos/createUser.dto.ts</span>
 
@@ -2868,6 +2871,13 @@ nest.js에서 사용되어 왔습니다.</p>
     <span class="token builtin">Promise</span><span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">{</span> hi<span class="token operator">:</span> <span class="token string">'done'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token operator">...</span></code></pre>
+<p>이렇게 인자를 선언하고 type을 지정해주는 것만으로
+이미 validate 함수가 실행됩니다.
+(decorator에 의해 실행되어짐)</p>
+<p>dto로 인해 보다 방어적인 코드 작성이 가능해졌습니다.</p>
+<p>request 객체의 createUserDto 값이 위에서 선언한 DTO에 적합하지 않다면
+controller는 자동적으로 생성된 에러 메시지를 반환합니다.</p>
+<p>(email 형식이 잘못되었다면 email에 대한 에러 메시지를 반환함)</p>
 <h3 id="client" tabindex="-1">client 단에서 요청하기 <a class="header-anchor" href="#client">#</a></h3>
 <pre class="language-ts" tabindex="0"><code class="language-ts">  <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span>
     <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">your_cool_api/createHouseUser</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
@@ -2888,7 +2898,7 @@ nest.js에서 사용되어 왔습니다.</p>
 <li>library를 설치합니다.</li>
 <li>config를 설정합니다.</li>
 <li>dto class 파일을 생성합니다.</li>
-<li>controller에서 입력으로 들어오는 입력의 타입을 Dto로 입력해줍니다.</li>
+<li>controller에서 입력으로 들어오는 입력의 타입을 Dto로 입력해줍니다.(입력이 들어올 때 validate pipe를 지나오게 되어 입력을 걸러줌)</li>
 <li>client에서 적당한 option과 함께 요청을 넣어줍시다.</li>
 </ul>
 
