@@ -20,25 +20,23 @@
 &lt;br&gt;
 &lt;br&gt;
 &lt;h2 id=&quot;dto&quot; tabindex=&quot;-1&quot;&gt;dto란? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;data transfer object
-dto는 data를 전달 할 때 사용되는 object입니다.&lt;/p&gt;
+&lt;p&gt;data transfer object&lt;/p&gt;
+&lt;p&gt;dto는 data를 전달 할 때 사용되는 object입니다.&lt;/p&gt;
 &lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;어디에 사용하나요? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;data를 전송할 때 사용하면 됩니다.
 이번엔 nest.js에서 dto를 통해 client와 통신하고&lt;/p&gt;
 &lt;p&gt;validate까지 이어서 진행하겠습니다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;dto는 데이터를 전송할 때 쓴다.&lt;/li&gt;
-&lt;/ul&gt;
 &lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;설치 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;    &lt;span class=&quot;token function&quot;&gt;pnpm&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; class-transformer class-validator&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;package manager를 통해 라이브러리를 설치합니다.&lt;/p&gt;
 &lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;설정 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;설정에 대한 자세한 내용은 &lt;a href=&quot;https://docs.nestjs.com/techniques/validation#auto-validation&quot;&gt;
 nest.js&lt;/a&gt;에서 확인 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;(아래 설정은 모든 controller에 validation pipe를 연결하겠다는 표현입니다.)&lt;/p&gt;
 &lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;bootstrap&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; app &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; NestFactory&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;AppModule&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
-  app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;useGlobalPipes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ValidationPipe&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;useGlobalPipes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ValidationPipe&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// auto validation을 위해 추가해주세요&lt;/span&gt;
 
   &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;5050&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
@@ -68,6 +66,12 @@ nest.js에서 사용되어 왔습니다.
   &lt;span class=&quot;token decorator&quot;&gt;&lt;span class=&quot;token at operator&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;IsNotEmpty&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
   name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위 코드를 보면 실 데이터가 빈 클래스를 생성했습니다.
+typescript를 사용한다면 위와 비슷한 interface를 선언하면 비슷한 역할을 할 수 있다고 생각 할 수 있습니다만
+typescript의 interface는 metadata를 생성하지 않고 js로 compile시 결국 사라지게 됩니다.&lt;/p&gt;
+&lt;p&gt;따라서 runtime에 값을 검사하기 위해선 실제 메모리로 저장되어지는 클래스를 선언해주어야 합니다.&lt;/p&gt;
+&lt;p&gt;같은 맥락으로 위 클래스를 import 할 때, type으로 import 하지 말아주세요
+결국 runtime에 사라지게 되므로 pipe라인을 통과하지 않고 그냥 값이 들어오게 됩니다.&lt;/p&gt;
 &lt;h3 id=&quot;controller&quot; tabindex=&quot;-1&quot;&gt;controller에서 사용하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/server/nest/using-dto-in-nest-js/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;
   &lt;span class=&quot;token decorator&quot;&gt;&lt;span class=&quot;token at operator&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Post&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/createHouseUser&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;

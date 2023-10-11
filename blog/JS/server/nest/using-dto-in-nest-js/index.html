@@ -2816,25 +2816,23 @@ h2 + .header-anchor {
 <br />
 <br />
 <h2 id="dto" tabindex="-1">dto란? <a class="header-anchor" href="#dto">#</a></h2>
-<p>data transfer object
-dto는 data를 전달 할 때 사용되는 object입니다.</p>
+<p>data transfer object</p>
+<p>dto는 data를 전달 할 때 사용되는 object입니다.</p>
 <h2 id="" tabindex="-1">어디에 사용하나요? <a class="header-anchor" href="#">#</a></h2>
 <p>data를 전송할 때 사용하면 됩니다.
 이번엔 nest.js에서 dto를 통해 client와 통신하고</p>
 <p>validate까지 이어서 진행하겠습니다.</p>
-<ul>
-<li>dto는 데이터를 전송할 때 쓴다.</li>
-</ul>
 <h2 id="-1" tabindex="-1">설치 <a class="header-anchor" href="#-1">#</a></h2>
 <pre class="language-bash" tabindex="0"><code class="language-bash">    <span class="token function">pnpm</span> <span class="token function">add</span> class-transformer class-validator</code></pre>
 <p>package manager를 통해 라이브러리를 설치합니다.</p>
 <h2 id="-2" tabindex="-1">설정 <a class="header-anchor" href="#-2">#</a></h2>
 <p>설정에 대한 자세한 내용은 <a href="https://docs.nestjs.com/techniques/validation#auto-validation">
 nest.js</a>에서 확인 할 수 있습니다.</p>
+<p>(아래 설정은 모든 controller에 validation pipe를 연결하겠다는 표현입니다.)</p>
 <pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">bootstrap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token keyword">await</span> NestFactory<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>AppModule<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  app<span class="token punctuation">.</span><span class="token function">useGlobalPipes</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ValidationPipe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  app<span class="token punctuation">.</span><span class="token function">useGlobalPipes</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ValidationPipe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// auto validation을 위해 추가해주세요</span>
 
   <span class="token keyword">await</span> app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">5050</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -2864,6 +2862,12 @@ nest.js에서 사용되어 왔습니다.
   <span class="token decorator"><span class="token at operator">@</span><span class="token function">IsNotEmpty</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
   name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
+<p>위 코드를 보면 실 데이터가 빈 클래스를 생성했습니다.
+typescript를 사용한다면 위와 비슷한 interface를 선언하면 비슷한 역할을 할 수 있다고 생각 할 수 있습니다만
+typescript의 interface는 metadata를 생성하지 않고 js로 compile시 결국 사라지게 됩니다.</p>
+<p>따라서 runtime에 값을 검사하기 위해선 실제 메모리로 저장되어지는 클래스를 선언해주어야 합니다.</p>
+<p>같은 맥락으로 위 클래스를 import 할 때, type으로 import 하지 말아주세요
+결국 runtime에 사라지게 되므로 pipe라인을 통과하지 않고 그냥 값이 들어오게 됩니다.</p>
 <h3 id="controller" tabindex="-1">controller에서 사용하기 <a class="header-anchor" href="#controller">#</a></h3>
 <pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token operator">...</span>
   <span class="token decorator"><span class="token at operator">@</span><span class="token function">Post</span></span><span class="token punctuation">(</span><span class="token string">'/createHouseUser'</span><span class="token punctuation">)</span>
