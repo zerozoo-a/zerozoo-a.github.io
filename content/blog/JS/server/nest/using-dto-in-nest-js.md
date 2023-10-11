@@ -10,6 +10,7 @@ coverURL: https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?ixlib=rb-
 ## dto란?
 
 data transfer object
+
 dto는 data를 전달 할 때 사용되는 object입니다.
 
 ## 어디에 사용하나요?
@@ -18,8 +19,6 @@ data를 전송할 때 사용하면 됩니다.
 이번엔 nest.js에서 dto를 통해 client와 통신하고
 
 validate까지 이어서 진행하겠습니다.
-
-- dto는 데이터를 전송할 때 쓴다.
 
 ## 설치
 
@@ -33,11 +32,13 @@ package manager를 통해 라이브러리를 설치합니다.
 설정에 대한 자세한 내용은 <a href="https://docs.nestjs.com/techniques/validation#auto-validation">
 nest.js</a>에서 확인 할 수 있습니다.
 
+(아래 설정은 모든 controller에 validation pipe를 연결하겠다는 표현입니다.)
+
 ```ts
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe()); // auto validation을 위해 추가해주세요
 
   await app.listen(5050);
 
@@ -73,6 +74,14 @@ export class CreateUserDto {
 }
 ```
 
+위 코드를 보면 실 데이터가 빈 클래스를 생성했습니다.
+typescript를 사용한다면 위와 비슷한 interface를 선언하면 비슷한 역할을 할 수 있다고 생각 할 수 있습니다만
+typescript의 interface는 metadata를 생성하지 않고 js로 compile시 결국 사라지게 됩니다.
+
+따라서 runtime에 값을 검사하기 위해선 실제 메모리로 저장되어지는 클래스를 선언해주어야 합니다.
+
+같은 맥락으로 위 클래스를 import 할 때, type으로 import 하지 말아주세요
+결국 runtime에 사라지게 되므로 pipe라인을 통과하지 않고 그냥 값이 들어오게 됩니다.
 
 ### controller에서 사용하기
 
