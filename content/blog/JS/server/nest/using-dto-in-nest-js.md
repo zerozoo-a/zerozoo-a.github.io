@@ -75,7 +75,7 @@ export class CreateUserDto {
 ```
 
 위 코드를 보면 실 데이터가 빈 클래스를 생성했습니다.
-typescript를 사용한다면 위와 비슷한 interface를 선언하면 비슷한 역할을 할 수 있다고 생각 할 수 있습니다만
+typescript를 사용한다면 위와 비슷한 interface를 선언하면 비슷한 역할을 할 수 있다고 생각 할 수 있습니다만,
 typescript의 interface는 metadata를 생성하지 않고 js로 compile시 결국 사라지게 됩니다.
 
 따라서 runtime에 값을 검사하기 위해선 실제 메모리로 저장되어지는 클래스를 선언해주어야 합니다.
