@@ -26,7 +26,7 @@ validate까지 이어서 진행하겠습니다.
 ```bash
     pnpm add class-transformer class-validator
 ```
-적당한 package manager를 통해 라이브러리를 설치합니ㅏㄷ.
+package manager를 통해 라이브러리를 설치합니다.
 
 ## 설정
 
@@ -48,11 +48,12 @@ bootstrap();
 
 ## 사용하기
 
-dto 클래스를 생성하고 decorator를 붙여줍니다.
-
+- dto 클래스를 생성하고 decorator를 붙여줍니다.
+```
 class-validator는 typescript를 사용하는 많은 유저들에게
 많은 사용되고 있고 nest.js의 decorator와도 궁합이 좋아 오래도록 
 nest.js에서 사용되어 왔습니다.
+```
 
 ### dto 파일 생성
 ```ts
@@ -84,6 +85,17 @@ export class CreateUserDto {
 ...
 ```
 
+이렇게 인자를 선언하고 type을 지정해주는 것만으로
+이미 validate 함수가 실행됩니다.
+(decorator에 의해 실행되어짐)
+
+dto로 인해 보다 방어적인 코드 작성이 가능해졌습니다.
+
+request 객체의 createUserDto 값이 위에서 선언한 DTO에 적합하지 않다면
+controller는 자동적으로 생성된 에러 메시지를 반환합니다.
+
+(email 형식이 잘못되었다면 email에 대한 에러 메시지를 반환함)
+
 ### client 단에서 요청하기
 
 ```ts
@@ -108,7 +120,7 @@ export class CreateUserDto {
 - library를 설치합니다.
 - config를 설정합니다.
 - dto class 파일을 생성합니다.
-- controller에서 입력으로 들어오는 입력의 타입을 Dto로 입력해줍니다.
+- controller에서 입력으로 들어오는 입력의 타입을 Dto로 입력해줍니다.(입력이 들어올 때 validate pipe를 지나오게 되어 입력을 걸러줌)
 - client에서 적당한 option과 함께 요청을 넣어줍시다.
 
 
