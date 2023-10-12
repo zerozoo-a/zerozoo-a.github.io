@@ -19,7 +19,7 @@
 </script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Richard_Feynman_alogorithm | zerozoo-a의 블로그</title>
+		<title>QueryFailedError Duplicate key name | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -28,12 +28,12 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		<meta property="og:title" content=Richard_Feynman_alogorithm/>
-		<meta property="og:url" content=/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm/ />
+		<meta property="og:title" content=QueryFailedError Duplicate key name/>
+		<meta property="og:url" content=/blog/erros/db/QueryFailedError-Duplicate-key-name/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm/ />
+		<link rel="canonical" href=/blog/erros/db/QueryFailedError-Duplicate-key-name/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -2818,27 +2818,62 @@ h2 + .header-anchor {
 	
 	
 
-<h1>Richard_Feynman_alogorithm</h1>
+<h1>QueryFailedError Duplicate key name</h1>
 
 <ul class="post-metadata pt-2">
-	<li><time datetime="2023-04-12">12 April 2023</time></li>
+	<li><time datetime="2023-10-12">12 October 2023</time></li>
 </ul>
 
 
 
 	<section class="post-content markdown-body" data-pagefind-body>
-		<div class="img-container"><img class="border-radius10" src="/img/7sCSQM8IPN-278.webp" width="100%" height="auto" alt="1. Writhe down the problem 2.  think very hard 3. Writhe down the answer" loading="lazy" decoding="async"></div>
-<ol>
-<li>칠판에 문제를 적는다.</li>
-<li>골똘히 생각한다.</li>
-<li>칠판에 답안을 적는다.</li>
-</ol>
+		<br />
+<br />
+<br />
+<p>table을 생성하던 도중 아래와 같은 에러를 마주했습니다.</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash">ERROR <span class="token punctuation">[</span>TypeOrmModule<span class="token punctuation">]</span> Unable to connect to the database. Retrying <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">..</span>.
+QueryFailedError: Duplicate key name <span class="token string">'IDX_97672ac88f789774dd47f7c8be'</span></code></pre>
+<p>indexing을 위해 entity를 변경하다 발생했는데요,</p>
+<p>예시와 함께 보겠습니다.</p>
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token decorator"><span class="token at operator">@</span><span class="token function">Entity</span></span><span class="token punctuation">(</span><span class="token string">'users'</span><span class="token punctuation">)</span>
+<span class="token decorator"><span class="token at operator">@</span><span class="token function">Unique</span></span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'email'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">Users</span> <span class="token punctuation">{</span>
+  <span class="token decorator"><span class="token at operator">@</span><span class="token function">PrimaryGeneratedColumn</span></span><span class="token punctuation">(</span><span class="token punctuation">{</span> type<span class="token operator">:</span> <span class="token string">'int'</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'id'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  id<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+
+  <span class="token decorator"><span class="token at operator">@</span><span class="token function">Index</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// err</span>
+  <span class="token decorator"><span class="token at operator">@</span><span class="token function">Column</span></span><span class="token punctuation">(</span><span class="token string">'varchar'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">'email'</span><span class="token punctuation">,</span> length<span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span> unique<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// err</span>
+  email<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>위 예시에서 문제되는 부분은 email입니다.
+email은 indexing을 위해 index decorator를 붙여놓은 상태입니다.
+게다가 추가적으로 unique로 설정해두었는데요,</p>
+<p>이 부분에서 에러가 발생합니다.</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash">Error: Duplicate key name <span class="token string">'IDX_97672ac88f789774dd47f7c8be'</span>
+query: ROLLBACK
+<span class="token punctuation">[</span>Nest<span class="token punctuation">]</span> <span class="token number">74850</span>  - <span class="token number">10</span>/12/2023, <span class="token number">11</span>:05:58 PM   ERROR <span class="token punctuation">[</span>TypeOrmModule<span class="token punctuation">]</span> Unable to connect to the database. Retrying <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">..</span>.</code></pre>
+<p>index decorator를 설정하기 위해서는 아래와 같이 고쳐주세요</p>
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token decorator"><span class="token at operator">@</span><span class="token function">Entity</span></span><span class="token punctuation">(</span><span class="token string">'users'</span><span class="token punctuation">)</span>
+<span class="token decorator"><span class="token at operator">@</span><span class="token function">Unique</span></span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'email'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">Users</span> <span class="token punctuation">{</span>
+  <span class="token decorator"><span class="token at operator">@</span><span class="token function">PrimaryGeneratedColumn</span></span><span class="token punctuation">(</span><span class="token punctuation">{</span> type<span class="token operator">:</span> <span class="token string">'int'</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token string">'id'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  id<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+
+  <span class="token decorator"><span class="token at operator">@</span><span class="token function">Index</span></span><span class="token punctuation">(</span><span class="token punctuation">{</span> unique<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token decorator"><span class="token at operator">@</span><span class="token function">Column</span></span><span class="token punctuation">(</span><span class="token string">'varchar'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">'email'</span><span class="token punctuation">,</span> length<span class="token operator">:</span> <span class="token number">100</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  email<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre>
 
 	</section>
 <br>
 <br>
 <br>
-<ul><li>Previous: <a href="/blog/CS/BOOK/JONGMAN/입문자를_위한_커리큘럼/">입문자를 위한 커리큘럼</a></li><li>Next: <a href="/blog/CS/ALGORITHMS/BOOKS/JONGMAN/문제풀이_과정을_나누자/">문제풀이 과정을 나누자</a></li>
+<ul><li>Previous: <a href="/blog/erros/db/Error-Code:-1175-SQL-Editor-and-reconnect.Cannot-delete-or-update-a-parent-row:-a-foreign-key/">Error Code 1175 SQL Editor and reconnect.</a></li>
 </ul>
 
 </article>
