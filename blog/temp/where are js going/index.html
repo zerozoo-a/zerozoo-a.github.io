@@ -19,7 +19,7 @@
 </script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>iframe을 다루면서 느낀 점 | zerozoo-a의 블로그</title>
+		<title>js는 어디로 가고 있는가? | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -28,12 +28,12 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		<meta property="og:title" content=iframe을 다루면서 느낀 점/>
-		<meta property="og:url" content=/blog/CS/BROWSER/While handling an `&lt;iframe&gt;`, I found out something/ />
+		<meta property="og:title" content=js는 어디로 가고 있는가?/>
+		<meta property="og:url" content=/blog/temp/where are js going/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/CS/BROWSER/While handling an `&lt;iframe&gt;`, I found out something/ />
+		<link rel="canonical" href=/blog/temp/where are js going/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -2830,38 +2830,57 @@ h2 + .header-anchor {
 	
 	
 
-<h1>iframe을 다루면서 느낀 점</h1>
+<h1>js는 어디로 가고 있는가?</h1>
 
 <ul class="post-metadata pt-2">
-	<li><time datetime="2023-05-20">20 May 2023</time></li>
+	<li><time datetime="2023-10-15">15 October 2023</time></li>
 </ul>
 
 
+		<aside>
+			<nav class="toc" >
+        <ol><li><a href="#js">js 프레임워크의 발전</a></li><li><a href="#-1">미래는 어떨까</a></li></ol>
+      </nav>
+		</aside>
+
 
 	<section class="post-content markdown-body" data-pagefind-body>
-		<p>회사 프로젝트로 iframe을 다루게 되면서 알게된 것들을 정리하겠습니다.</p>
-<p>iframe은 개인적으로 사용하는 걸 꺼리는 편입니다.
-이유는 무겁기 때문인데요, 브라우저 내부에 하나의 브라우저를 더 띄우는 것은
-자바스크립트 환경이 독립적으로 하나 더 생성된다는 말이기도 합니다.</p>
-<p>iframe에 대한 자세한 내용은 <a href="https://developer.mozilla.org/ko/docs/Web/HTML/Element/iframe">MDN</a> 같은 문서를 찾아보는게 가장 정확하고 좋습니다. (혹은 ecmascript 문서)</p>
-<p>제가 느낀점 중에 가장 기록해두고 싶은 것은 iframe과 호스트의 이벤트 관계입니다.</p>
-<p>예를 들어 호스트의 html 태그에 대한 클릭 이벤트를 걸어놓았다고 가정합시다.</p>
-<p>이 때, iframe 내부의 텍스트에도 클릭 이벤트가 발동할까요?</p>
-<p>아래 예제의 HTML을 보시면 host에는 event를 걸어두고 iframe에는 걸어두지 않았습니다.</p>
-<p>iframe은 html &gt; iframe의 관계를 가지고 있어서 호스트의 이벤트도 발동 할 것이다! 라고 생각하면 안됩니다.</p>
-<script async src="//jsfiddle.net/zoo385/62xfc3pj/embed/js,html,css,result/dark/"></script>
-<p>그럼 어떻게 이런 문제를 해결해야 할까요?
-바로 호스트에서 iframe내부에 접근하는 방법을 사용하는 것입니다.</p>
-<p><a href="https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_iframe_contentdocument">예시: w3schools</a></p>
-<p>위 예시를 보면 본인의 Domain 하에 있는 사이트라면 조작이 가능합니다. (CORS 에러에 무관한)</p>
-<p><strong>fiddle 예시 처럼 구글을 띄워놓고 내가 심어둔 이벤트가 발동하게끔 코드를 짜면 안됩니다.</strong></p>
-<p>(위 예시의 src 파일이 htm인 것은 무시하셔도 됩니다. (같은 뜻임))</p>
+		<br />
+<br />
+<br />
+<h2 id="js" tabindex="-1">js 프레임워크의 발전 <a class="header-anchor" href="#js">#</a></h2>
+<p>최근 js 진영의 움직임이 심상치 않습니다.</p>
+<p>물론 다른 언어들도 극적인 기능과 성장이 두드러지지만 js의 변화는 눈여겨 볼 가치가 있을 것 같습니다.</p>
+<p>점점 Php처럼 변해가는 frontend의 프레임워크들은 browser상의 js와 node.js (include deno, bun)등
+이 복합적으로 상호작용하면서 화면을 그리기 시작했습니다. SSR부터 server상에가서 가상돔을 통해 그려내는
+이미 그려진 화면과 상호작용하는 client side의 컴포넌트등이 있습니다.</p>
+<p>(node.js에서의 multithread 환경을 구성하고 더 빠른 화면 그리기 등도 가능하지 않을까요? 여러 요청이 동시에 일어나고
+master와 slave로 나뉜 node들이 master에 화면을 제공하고 master는 그려진 화면을 다시 그리지 않고 다른 slave에 재분배하는 이런 그림도 가능하지 않을지..)</p>
+<h2 id="" tabindex="-1">한계점과 대안 <a class="header-anchor" href="#">#</a></h2>
+<p>js만으로 돌아가는 회사들도, 서비스들도 많아지고 있는 추세인데요
+개발자들은 기본적으로 싱글스레드를 싫어합니다. (js는 사실 최소 4개 쓰레드를 담고 있는 쓰레드 pool을 기본적으로 만들고 있습니다 *uv thread pool)</p>
+<p>또한 함수형에서 부터 기초한 js는 메모리 공유를 기본적으로 하지 않습니다만 이미 정식 스펙에 메모리 공유 api가 있습니다.
+쓰레드를 생성해서 해당 메모리를 동시에 접근 할 수도 있죠, 이제 js도 뮤텍스 세마포어 등을 고려하면서 작업해야 하지만,
+CPS를 기반으로 아직까진 쓰레드를 남용하진 않고 있습니다.</p>
+<p>또한 클라이언트에서는 더욱 그 사용이 제한됩니다.</p>
+<p>이유는 당연하게도 browser에서 돌아가기 때문에 worker를 만들더라도 오버헤드가 크고
+또한 워커를 생성 할 수 있는 client device인지 몇개까지 돌릴 수 있는지도 파악하기 쉽지 않습니다.</p>
+<p>WASM 또한 아직 제대로 사용되고 있지 않아 js가 웹을 놓아줄 시기는 아직 많이 먼 것으로 보입니다. (flutter에서 wasm 포팅을 지원하겠다는데 군침이 싹도네요)</p>
+<p>이러한 한계점이 명확한 Js이지만 브라우저 화면을 굳이 클라이언트단에서 그릴 필요는 없습니다.</p>
+<p>그럼 자연스럽게 브라우저의 성능에 의존하지 않고 서버가 자원을 태워 화면을 다 그려놓고 반환해주면 그만이죠.
+네트워크 통신 비용이 들어간다는 사실은 변함이 없지만 이전보다는 많은 선택지가 있는 것도 사실입니다.</p>
+<h2 id="-1" tabindex="-1">미래는 어떨까 <a class="header-anchor" href="#-1">#</a></h2>
+<p>WASM이 관심을 끌다가 지지부진한 지원과 자바스크립트와의 속도 차이에 그렇게 메리트를 못느낀 것인지
+관심이 한 풀 죽은 느낌입니다.</p>
+<p>연산이 많이 드는 작업이나 많은 연산을 필요로 하는 화면은 서버에 옮기고 유저와 interaction이 필요한 화면은
+유저에게 일임하는 방법이 현재 최선으로 보입니다.</p>
+<p>나중엔 모두 WASM으로 빌드하고 실행하며 웹이 더 발전하길 바랍니다.</p>
 
 	</section>
 <br>
 <br>
 <br>
-<ul><li>Previous: <a href="/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing star stair 2 and pyramid/">printing star stair 2</a></li><li>Next: <a href="/blog/JAVA/java bubble sort/">java bubble, insert sort</a></li>
+<ul><li>Previous: <a href="/blog/erros/db/QueryFailedError-Duplicate-key-name/">QueryFailedError Duplicate key name</a></li>
 </ul>
 
 </article>
