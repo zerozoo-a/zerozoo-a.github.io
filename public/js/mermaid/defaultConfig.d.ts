@@ -1,4 +1,5 @@
-import { type MermaidConfig } from './config.type.js';
+import type { RequiredDeep } from 'type-fest';
+import type { MermaidConfig } from './config.type.js';
 /**
  * Default mermaid configuration options.
  *
@@ -6,6 +7,6 @@ import { type MermaidConfig } from './config.type.js';
  * Non-JSON JS default values are listed in this file, e.g. functions, or
  * `undefined` (explicitly set so that `configKeys` finds them).
  */
-declare const config: Partial<MermaidConfig>;
-export declare const configKeys: string[];
+declare const config: RequiredDeep<MermaidConfig>;
+export declare const configKeys: Set<string>;
 export default config;

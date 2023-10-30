@@ -1,6 +1,6 @@
 import type { MermaidConfig } from './config.type.js';
 export declare const defaultConfig: MermaidConfig;
-export declare const updateCurrentConfig: (siteCfg: MermaidConfig, _directives: any[]) => MermaidConfig;
+export declare const updateCurrentConfig: (siteCfg: MermaidConfig, _directives: MermaidConfig[]) => MermaidConfig;
 /**
  * ## setSiteConfig
  *
@@ -76,7 +76,7 @@ export declare const sanitize: (options: any) => void;
  *
  * @param directive - The directive to push in
  */
-export declare const addDirective: (directive: any) => void;
+export declare const addDirective: (directive: MermaidConfig) => void;
 /**
  * ## reset
  *

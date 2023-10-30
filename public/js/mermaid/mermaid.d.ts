@@ -1,10 +1,11 @@
-import { MermaidConfig } from './config.type.js';
-import { mermaidAPI, ParseOptions, RenderResult } from './mermaidAPI.js';
+import type { MermaidConfig } from './config.type.js';
+import type { ParseOptions, RenderResult } from './mermaidAPI.js';
+import { mermaidAPI } from './mermaidAPI.js';
 import { detectType } from './diagram-api/detectType.js';
 import type { ParseErrorFunction } from './Diagram.js';
 import type { DetailedError } from './utils.js';
-import { ExternalDiagramDefinition } from './diagram-api/types.js';
-import { UnknownDiagramError } from './errors.js';
+import type { ExternalDiagramDefinition } from './diagram-api/types.js';
+import type { UnknownDiagramError } from './errors.js';
 export type { MermaidConfig, DetailedError, ExternalDiagramDefinition, ParseErrorFunction, RenderResult, ParseOptions, UnknownDiagramError, };
 export interface RunOptions {
     /**
