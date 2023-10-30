@@ -103,4 +103,4 @@ class Animal {
 ```
 
 class diagram의 **class**에 대해 알아봤습니다.
-다음은 class가 서로 상호작용하는 class diagram에 대해 알아보겠습니다.
+<a href="https://zerozoo-a.github.io/blog/%EC%A0%95%EC%B2%98%EA%B8%B0/UML-class-digram-2/">다음은 class가 서로 상호작용하는 </a>class diagram에 대해 알아보겠습니다.
