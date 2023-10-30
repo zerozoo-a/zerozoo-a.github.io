@@ -7,7 +7,7 @@ coverURL: https://images.unsplash.com/photo-1573166364266-356ef04ae798?auto=form
 <br />
 <br />
 
-# class diagram
+# class diagram 2
 
 안녕하세요,
 
@@ -142,7 +142,7 @@ class PM {
 ## 정리
 
 이번엔 class diagram이 서로 상관 관계를 이루는 것에 대해 알아봤습니다.
-다음엔 더 다양한 상관관계와 1 대 1, 다대다 관계를 알아보겠습니다.
+다음엔 더 다양한 상관 관계 (Relationship)에 대해 알아보겠습니다.
 
 
 
