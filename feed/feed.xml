@@ -4,12 +4,216 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-10-30T23:45:25Z</updated>
+	<updated>2023-10-31T22:31:23Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>UML class diagram 5 관계 정리 / 확장 스테레오 타입</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/"/>
+		<updated>2023-10-31T22:31:23Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;관계들 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;관계들&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;연관관계: Association&lt;/li&gt;
+&lt;li&gt;의존관계: Dependency&lt;/li&gt;
+&lt;li&gt;일반화관계: Generalization&lt;/li&gt;
+&lt;li&gt;실체화관계: Realization&lt;/li&gt;
+&lt;li&gt;포함/합성관계: Composition&lt;/li&gt;
+&lt;li&gt;집합/집약 관계: Aggregation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;확장 스테레오 타입들&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;&amp;lt;include&amp;gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;&amp;lt;entity&amp;gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;&amp;lt;boundary&amp;gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;&amp;lt;control&amp;gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;association&quot; tabindex=&quot;-1&quot;&gt;연관관계: Association &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;house instance가 person instance를 내부적으로 사용하는 경우&lt;/p&gt;
+&lt;p&gt;diagram을 보면 house는 countPerson으로 person의 수를 반환하고 있다&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+
+classDiagram
+
+class House {
+    - person:Person
+}
+class Person {
+    + name: String
+}
+
+House --&gt; Person
+&lt;/div&gt;
+&lt;h2 id=&quot;dependency&quot; tabindex=&quot;-1&quot;&gt;의존관계: Dependency &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Calculator 클래스는 Parameters 클래스를 사용하고
+의존하고 있습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Parameters 클래스는 Calculator에 대해 알지 못합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+
+classDiagram
+
+class Calculator {
+    sum(int a, int b)int
+}
+class Parameters {
+    + a: int
+    + b: int
+}
+
+ Calculator ..&gt; Parameters
+&lt;/div&gt;
+&lt;h2 id=&quot;generalization&quot; tabindex=&quot;-1&quot;&gt;일반화 관계: Generalization &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;일반적인 class 상속으로 부모, 자식간의 관계입니다.
+extends를 했다고 보면 되겠습니다.&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+
+classDiagram
+
+class Animal {
+    -life:int
+    +name: String
+}
+
+class Dog {
+    run()
+}
+
+class Cat {
+    jump()
+}
+
+Animal &lt;|-- Dog
+Animal &lt;|-- Cat
+&lt;/div&gt;
+&lt;h2 id=&quot;realization&quot; tabindex=&quot;-1&quot;&gt;실체화 관계: Realization &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;john은 person 클래스를 구현한 concrete 구현체입니다.
+interface만을 상속했기 때문에 implements했음을 알 수 있습니다.&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+
+classDiagram
+direction RL
+
+  class Person {
+    interface
+    -idCard : IdCard
+  }
+
+  class John {
+    +name: john
+  }
+
+ Person &lt;|.. John:implements
+&lt;/div&gt;
+&lt;h2 id=&quot;realization-1&quot; tabindex=&quot;-1&quot;&gt;포함/합성 관계: Realization &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;포함관계는 상위 객체가 소멸되면 하위 객체도 모두 소멸되며
+하위 객체는 상위 객체의 부분이 되어진다.&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+
+classDiagram
+
+class Desk {
+    price: int
+}
+class DeskLegs {
+    countOfLegs: int
+}
+
+class DeskChair {
+    wheels: int
+}
+
+Desk *--&gt; DeskLegs
+Desk *--&gt; DeskChair
+&lt;/div&gt;
+&lt;h2 id=&quot;aggregation&quot; tabindex=&quot;-1&quot;&gt;집합/집약 관계: Aggregation &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;집합/집약관계는 포함관계와는 다르게 생명주기를 함께하지 않는다.&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+
+classDiagram
+
+class Computer {
+    boot():void
+}
+
+class Mouse {
+    movePointer()[int, int]
+}
+
+class Keyboard {
+    typeChars(char: String)void
+}
+
+Computer o--&gt; Mouse
+Computer o--&gt; Keyboard
+&lt;/div&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;확장 스테레오 타입 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/UML-class-diagram-5/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;요소 유형&lt;/th&gt;
+&lt;th&gt;확장 스테레오 타입&lt;/th&gt;
+&lt;th&gt;설명&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;관계&lt;/td&gt;
+&lt;td&gt;«include»&lt;/td&gt;
+&lt;td&gt;한 유스케이스에서 다른 유스케이스를 포함하며 항상 실행됨을 나타냅니다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;«extend»&lt;/td&gt;
+&lt;td&gt;기본 유스케이스를 확장하며 특정 조건에서만 실행됨을 나타냅니다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;클래스&lt;/td&gt;
+&lt;td&gt;«interface»&lt;/td&gt;
+&lt;td&gt;클래스가 특정 작업과 메서드를 정의하는 추상 클래스를 구현해야 함을 나타냅니다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;«entity»&lt;/td&gt;
+&lt;td&gt;데이터나 정보를 나타내는 클래스로, 주로 데이터베이스와 관려이거나 핵심 데이터 구조를 표현합니다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;«boundary»&lt;/td&gt;
+&lt;td&gt;시스템과 외부 요소 간의 상호 작용을 나타내는 클래스로, 사용자 인터페이스와 관련됩니다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;«control»&lt;/td&gt;
+&lt;td&gt;시스템 내부의 제어 논리나 프로세스를 나타내는 클래스로, 시스템의 흐름과 논리를 조정하고 관리합니다.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>UML class diagram 4 Cardinality</title>
