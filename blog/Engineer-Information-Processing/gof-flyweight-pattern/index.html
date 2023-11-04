@@ -19,7 +19,7 @@
 </script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>deem effect를 처리하자 | zerozoo-a의 블로그</title>
+		<title>gof flyweight pattern | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -28,12 +28,12 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		<meta property="og:title" content=deem effect를 처리하자/>
-		<meta property="og:url" content=/blog/CS/BROWSER/deem effect를 처리하자/ />
+		<meta property="og:title" content=gof flyweight pattern/>
+		<meta property="og:url" content=/blog/Engineer-Information-Processing/gof-flyweight-pattern/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/CS/BROWSER/deem effect를 처리하자/ />
+		<link rel="canonical" href=/blog/Engineer-Information-Processing/gof-flyweight-pattern/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -2880,69 +2880,161 @@ h2 + .header-anchor {
 	
 	
 
-<h1>deem effect를 처리하자</h1>
+<h1>gof flyweight pattern</h1>
 
 <ul class="post-metadata pt-2">
-	<li><time datetime="2023-05-09">09 May 2023</time></li>
+	<li><time datetime="2023-11-04">04 November 2023</time></li>
 </ul>
 
 
+		<aside>
+			<nav class="toc" >
+        <ol><ol><li><a href="#-1">다이어그램</a></li><li><a href="#-2">구현</a></li><li><a href="#normal-version">normal version</a></li><li><a href="#-3">차이점 확인하기</a><ol><li><a href="#normal-version-1">normal version의 메모리 사용률</a></li><li><a href="#flyweight-version">flyweight version의 메모리 사용률</a></li></ol></li></ol></ol>
+      </nav>
+		</aside>
+
 
 	<section class="post-content markdown-body" data-pagefind-body>
-		<div>
-<img alt="뭔가 사라지는 인간의 그림" src="https://www.shutterstock.com/image-vector/concept-passing-time-man-who-260nw-1749497999.jpg">  
-<a href="https://www.shutterstock.com/ko/search/disappear">출처</a>
-</div>
-개인적인 일로 바쁜와중에 글을 써봅니다.
-<p>frontend 개발자라면 deem effect를 가끔 구현 할 일이 생깁니다.
-이번에 제가 effect를 구현하면서 마주한 문제와 해결 방법에 대해 작성해봅니다.</p>
-<p>해결은 framework에 관계없이 바닐라js만을 사용하겠습니다.</p>
-<p>browser 상에서 동작하는 것을 기본으로 합니다.</p>
-<p>deem이라는 것은 기본적으로 애니메이션을 동반하게 됩니다.</p>
-<iframe src="https://giphy.com/embed/AQRapWCgC7dThyVEYb" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/bandainamco-dark-souls-dsr-remastered-AQRapWCgC7dThyVEYb">via GIPHY</a></p>
-<p>어두웠다가 밝아지고 밝아졌다 어두워지는 등의 애니메이션이 들어가게 됩니다.</p>
-<p>deem이 없는 상태</p>
-<p>deem 처리가 된 상태</p>
-<p>deem을 종료하는 액션이 발생</p>
-<p>deem이 종료된 상태</p>
-<p>간략하게 4가지 스텝으로 나누고 이에 시간을 두어 이펙트를 주면 애니메이션이 되는 것이죠</p>
-<p>제가 마주한 문제는 바로 마지막 deem이 종료된 상태입니다.</p>
-<p>무엇이 문제일까요?</p>
-<p>바로 deem이 종료되면 해당 DOM은 더 이상 쓸모가 없기에 지워주려한다! 라는 점이 문제입니다.</p>
-<p>좀 더 자세히 설명하면</p>
-<p>deem의 종료 animation이 2초라고 가정합시다.
-deem을 종료시키는 event가 발생하고 어떤 상태 값이 변경되면 해당 DOM을 DOM tree에서 지우려 합니다.</p>
-<p>보통 framework에서는 if 혹은 삼항연산자를 통해 해당하는 DOM을 지워주곤 합니다.</p>
-<p><strong>그럼 놀랍게도 animation이 끝나기도 전에 DOM이 삭제됩니다.</strong></p>
-<p>그렇습니다. js는 animation이 끝나고 DOM을 삭제하는 것이 아니라 의존하고 있는 상태값의 변경에 따라 DOM을 삭제합니다.</p>
-<p>CSS IN JS를 사용하거나 한다면 JS를 더 사용해 이를 해결 할 수도 있겠습니다. 혹은 timer등을 걸어두어도 해결이 가능하겠죠</p>
-<p>하지만 전 위 방법이 지저분하다는 느낌을 강하게 받았습니다.</p>
-<p>현재는 JS의 많은 framework들이 각자의 lifecycle 위에서 코드를 짜고 직접 DOM에 개입하는 것은 지양하도록 가이드합니다.</p>
-<p>맞습니다. DOM을 직접 건들게 되면 다른 개발자가 보기에 framework에서 가이드하는 패턴이 아닌 JS가 브라우저를 직접 조작하게 되는 것이니까요 코드의 일관성이 깨지게 됩니다.</p>
-<p>그건 그거고 우선 문제부터 해결해봅시다.</p>
-<p>문제의 해결 방법은 간단합니다.</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> animated <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">".animated"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<br />
+<br />
+<br />
+<h1 id="flyweight-pattern" tabindex="-1">flyweight pattern이란? <a class="header-anchor" href="#flyweight-pattern">#</a></h1>
+<p>flyweight 패턴은 객체들 간에 중복되는 내부 상태를 공유하여 메모리를 절약하는 디자인 패턴입니다.</p>
+<h2 id="" tabindex="-1">예시 <a class="header-anchor" href="#">#</a></h2>
+<p>강아지와 강아지의 DNA를 통해 flyweight pattern을 예로 들어보겠습니다.</p>
+<p>강아지 객체는 강아지 클래스를 통해 생성합니다.</p>
+<p>강아지 클래스는 이름, 나이, 종, dna를 입력받아 강아지 객체를 생성해줍니다.
+dna는 메모리를 너무 많이 사용하므로 이를 강아지의 종마다 같은 dna를 사용하도록 공유하고 싶습니다.
+(실제 dna는 물론 강아지마다 다릅니다.)</p>
+<h3 id="-1" tabindex="-1">다이어그램 <a class="header-anchor" href="#-1">#</a></h3>
+<div class="mermaid">
+%%{init: {'theme':'dark'}}%%
 
-animated<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"animationend"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Animation ended"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>바로 animationed를 사용하는 것입니다.
-특정 DOM node가 css의 특정 animation을 구독하고
-animation이 종료되면 해당 소식을 전파받고 callback 함수를 실행합니다.</p>
-<p>이 방법은 DOM node에 직접 접근하여 이벤트를 등록하는 것입니다.</p>
-<blockquote>
-<p>DOM node에 이벤트가 발생했을 때 해당 callback을 실행시켜주면 그 때 원하는 DOM을 삭제해주세요
-그러면 animation이 종료된 후에 DOM노드가 삭제됨을 보장합니다.</p>
-</blockquote>
-<p>이제 이를 framework에 맞게 변경하면 되는데 react, vue같은 경우에는
-각 framework에서 제공하는 ref 함수가 존재합니다.
-해당 ref를 통해 DOM을 특정하고 위의 코드를 적절히 녹여내면 되겠습니다.</p>
+classDiagram
+  class DogDNA {
+    +constructor(dna)
+    -dna
+  }
+
+  class Dog {
+    +constructor(name, age, breed, dna)
+    -name
+    -age
+    -breed
+    -dna
+  }
+
+  class DogFactory {
+    +dnaCache
+    +getDNA(breed)
+    +createDog(name, age, breed)
+  }
+
+  DogFactory ..> DogDNA: Uses
+  DogFactory --> Dog: Creates
+  Dog --> DogDNA: Contains
+</div>
+<p>DogDNA의 메모리 사용을 줄이기 위해
+사용 될 DNA를 강아지 객체 생성 전에 미리 값을 넣어줍시다.</p>
+<p>구현 방식에 따라 다르지만 dna가 없는 경우 에러를 던져주거나
+dna를 강아지 객체를 생성할 때 받아서 cache에 추가를 해주는 방법도 있습니다.</p>
+<h3 id="-2" tabindex="-1">구현 <a class="header-anchor" href="#-2">#</a></h3>
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">class</span> <span class="token class-name">DogDNA</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>dna<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dna <span class="token operator">=</span> dna<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Dog</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> age<span class="token punctuation">,</span> breed<span class="token punctuation">,</span> dna<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>breed <span class="token operator">=</span> breed<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dna <span class="token operator">=</span> dna<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">DogFactory</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> dnaCache <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">static</span> <span class="token function">getDNA</span><span class="token punctuation">(</span>breed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>dnaCache<span class="token punctuation">[</span>breed<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">"Runtime error: Breed DNA not found."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>dnaCache<span class="token punctuation">[</span>breed<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token function">createDog</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> age<span class="token punctuation">,</span> breed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> dna <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getDNA</span><span class="token punctuation">(</span>breed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Dog</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> age<span class="token punctuation">,</span> breed<span class="token punctuation">,</span> dna<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> bulldog <span class="token operator">=</span> <span class="token string">"b"</span><span class="token punctuation">.</span><span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> chihuahua <span class="token operator">=</span> <span class="token string">"c"</span><span class="token punctuation">.</span><span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> poodle <span class="token operator">=</span> <span class="token string">"p"</span><span class="token punctuation">.</span><span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DogFactory<span class="token punctuation">.</span>dnaCache<span class="token punctuation">[</span><span class="token string">"Bulldog"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DogDNA</span><span class="token punctuation">(</span><span class="token string">"abcBulldog"</span> <span class="token operator">+</span> bulldog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+DogFactory<span class="token punctuation">.</span>dnaCache<span class="token punctuation">[</span><span class="token string">"Poodle"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DogDNA</span><span class="token punctuation">(</span><span class="token string">"abcPoodle"</span> <span class="token operator">+</span> poodle<span class="token punctuation">)</span><span class="token punctuation">;</span>
+DogFactory<span class="token punctuation">.</span>dnaCache<span class="token punctuation">[</span><span class="token string">"Chihuahua"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DogDNA</span><span class="token punctuation">(</span><span class="token string">"abcChihuahua"</span> <span class="token operator">+</span> chihuahua<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> s <span class="token operator">=</span> process<span class="token punctuation">.</span><span class="token function">memoryUsage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>heapUsed<span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> dog1 <span class="token operator">=</span> DogFactory<span class="token punctuation">.</span><span class="token function">createDog</span><span class="token punctuation">(</span><span class="token string">"jojo"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"Bulldog"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog2 <span class="token operator">=</span> DogFactory<span class="token punctuation">.</span><span class="token function">createDog</span><span class="token punctuation">(</span><span class="token string">"jotaro"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"Chihuahua"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog3 <span class="token operator">=</span> DogFactory<span class="token punctuation">.</span><span class="token function">createDog</span><span class="token punctuation">(</span><span class="token string">"popo"</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token string">"Poodle"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog4 <span class="token operator">=</span> DogFactory<span class="token punctuation">.</span><span class="token function">createDog</span><span class="token punctuation">(</span><span class="token string">"jomallon"</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token string">"Bulldog"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog5 <span class="token operator">=</span> DogFactory<span class="token punctuation">.</span><span class="token function">createDog</span><span class="token punctuation">(</span><span class="token string">"dodo"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"Chihuahua"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog6 <span class="token operator">=</span> DogFactory<span class="token punctuation">.</span><span class="token function">createDog</span><span class="token punctuation">(</span><span class="token string">"fodo"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">"Chihuahua"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog7 <span class="token operator">=</span> DogFactory<span class="token punctuation">.</span><span class="token function">createDog</span><span class="token punctuation">(</span><span class="token string">"podo"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">"Chihuahua"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> s2 <span class="token operator">=</span> process<span class="token punctuation">.</span><span class="token function">memoryUsage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>heapUsed<span class="token punctuation">;</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">flyweight: memory used: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>s2<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> - </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>s<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>s2 <span class="token operator">-</span> s<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> bytes</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>이렇게 사용하는 경우 dnaCache에 적재된 메모리를 가리키므로,
+각 객체별로 메모리를 사용하는 구현보다 메모리의 사용이 낮아집니다.</p>
+<p>차이를 확인하기 위해 아래와 같이 일반적으로 객체가 각 속성의 메모리를 전부
+사용하는 코드를 작성해봅시다.</p>
+<h3 id="normal-version" tabindex="-1">normal version <a class="header-anchor" href="#normal-version">#</a></h3>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Dog</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">name<span class="token punctuation">,</span> age<span class="token punctuation">,</span> breed<span class="token punctuation">,</span> dna</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>breed <span class="token operator">=</span> breed<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dna <span class="token operator">=</span> dna<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> bulldog <span class="token operator">=</span> <span class="token string">"b"</span><span class="token punctuation">.</span><span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> chihuahua <span class="token operator">=</span> <span class="token string">"c"</span><span class="token punctuation">.</span><span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> poodle <span class="token operator">=</span> <span class="token string">"p"</span><span class="token punctuation">.</span><span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> s <span class="token operator">=</span> process<span class="token punctuation">.</span><span class="token function">memoryUsage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>heapUsed<span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> dog1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dog</span><span class="token punctuation">(</span><span class="token string">"jojo"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"Bulldog"</span><span class="token punctuation">,</span> <span class="token string">"abcBulldog"</span> <span class="token operator">+</span> bulldog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dog</span><span class="token punctuation">(</span><span class="token string">"jotaro"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token string">"Chihuahua"</span><span class="token punctuation">,</span> <span class="token string">"abcChihuahua"</span> <span class="token operator">+</span> chihuahua<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dog</span><span class="token punctuation">(</span><span class="token string">"popo"</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token string">"Poodle"</span><span class="token punctuation">,</span> <span class="token string">"abcPoodle"</span> <span class="token operator">+</span> poodle<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dog</span><span class="token punctuation">(</span><span class="token string">"jomallon"</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token string">"Bulldog"</span><span class="token punctuation">,</span> <span class="token string">"abcBulldog"</span> <span class="token operator">+</span> bulldog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog5 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dog</span><span class="token punctuation">(</span><span class="token string">"toto"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"Bulldog"</span><span class="token punctuation">,</span> <span class="token string">"abcBulldog"</span> <span class="token operator">+</span> bulldog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog6 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dog</span><span class="token punctuation">(</span><span class="token string">"foto"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"Bulldog"</span><span class="token punctuation">,</span> <span class="token string">"abcBulldog"</span> <span class="token operator">+</span> bulldog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> dog7 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Dog</span><span class="token punctuation">(</span><span class="token string">"podo"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"Bulldog"</span><span class="token punctuation">,</span> <span class="token string">"abcBulldog"</span> <span class="token operator">+</span> bulldog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> s2 <span class="token operator">=</span> process<span class="token punctuation">.</span><span class="token function">memoryUsage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>heapUsed<span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">normal: memory used: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>s2<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> - </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>s<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>s2 <span class="token operator">-</span> s<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> bytes</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="-3" tabindex="-1">차이점 확인하기 <a class="header-anchor" href="#-3">#</a></h3>
+<h4 id="normal-version-1" tabindex="-1">normal version의 메모리 사용률 <a class="header-anchor" href="#normal-version-1">#</a></h4>
+<p>실험 결과: normal: memory used: 2692936 - 2689816: 3120 bytes</p>
+<h4 id="flyweight-version" tabindex="-1">flyweight version의 메모리 사용률 <a class="header-anchor" href="#flyweight-version">#</a></h4>
+<p>실험 결과: flyweight: memory used: 2695256 - 2692360: 2896 bytes</p>
+<p>여기서 주의 할 점은 flyweight의 경우 구현을 위해 클래스 객체를 더 많이 생성합니다.
+따라서 클래스를 생성하고 힙 메모리에 저장하는 자바스크립트 특성상 기본적인 메모리 사용량이 더 높습니다.</p>
 
 	</section>
 <br>
 <br>
 <br>
-<ul><li>Previous: <a href="/blog/CS/ETC/operator &lt;의 성질/">operator &lt;의 성질</a></li><li>Next: <a href="/blog/CS/ALGORITHMS/PROBLEMS/card/">card 문제</a></li>
+<ul><li>Previous: <a href="/blog/Engineer-Information-Processing/UML-class-diagram-5/">UML class diagram 5 관계 정리 / 확장 스테레오 타입</a></li>
 </ul>
 
 </article>
