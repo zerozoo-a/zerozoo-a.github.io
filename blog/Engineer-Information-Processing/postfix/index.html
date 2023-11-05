@@ -19,7 +19,7 @@
 </script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>BST | zerozoo-a의 블로그</title>
+		<title>postfix | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -28,12 +28,12 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		<meta property="og:title" content=BST/>
-		<meta property="og:url" content=/blog/CS/DATA_STRUCTURE/TREE/BST/ />
+		<meta property="og:title" content=postfix/>
+		<meta property="og:url" content=/blog/Engineer-Information-Processing/postfix/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/CS/DATA_STRUCTURE/TREE/BST/ />
+		<link rel="canonical" href=/blog/Engineer-Information-Processing/postfix/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -2885,85 +2885,209 @@ h2 + .header-anchor {
 	
 	
 
-<h1>BST</h1>
+<h1>postfix</h1>
 
 <ul class="post-metadata pt-2">
-	<li><time datetime="2023-04-10">10 April 2023</time></li>
+	<li><time datetime="2023-11-05">05 November 2023</time></li>
 </ul>
 
+
+		<aside>
+			<nav class="toc" >
+        <ol></ol>
+      </nav>
+		</aside>
 
 
 	<section class="post-content markdown-body" data-pagefind-body>
-		<p>아래의 자료구조는 BinarySearchTree이다.</p>
-<p>특징은 아래와 같다.</p>
-<ul>
-<li>재귀적으로 구현되었다.
-<ul>
-<li>중위순회한다.</li>
-<li>재귀적으로 insert한다.</li>
-</ul>
-</li>
-</ul>
-<p>아래의 구조는 좋은 점이 한가지 정도 있다.</p>
-<p>그나마 외우기 편하다는 점이다.</p>
-<p>단점은 스택이 터질 것이라는 점이며 최적화가 필요하다는 점이다.</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">/**
- * example
- * new Node(3) // Node {data: 3, left: null, right: null}
- */</span>
-<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
-  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">data <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">,</span> left <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">,</span> right <span class="token operator">=</span> <span class="token keyword">null</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>data <span class="token operator">=</span> data<span class="token punctuation">;</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> left<span class="token punctuation">;</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> right<span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+		<br />
+<br />
+<br />
+<h1 id="postfix" tabindex="-1">postfix 연산이란? <a class="header-anchor" href="#postfix">#</a></h1>
+<p>postfix 연산은 후위 표기연산입니다.</p>
+<p>익숙한 중위 표기법을 먼저 확인합니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token number">3</span> <span class="token operator">+</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">5</span> <span class="token comment">// 23</span></code></pre>
+<p>postfix(후위 표기법)을 확인합니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token number">3</span> <span class="token number">4</span> <span class="token number">5</span> <span class="token operator">*</span> <span class="token operator">+</span></code></pre>
+<p>위 방식의 계산은 연산자와 피연산자인 숫자를
+각각의 스택에 넣어둔다고 생각하면 됩니다.</p>
+<p>아래와 같은 흐름을 따르게 됩니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> n <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> o <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'*'</span><span class="token punctuation">,</span> <span class="token string">'+'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> s <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-<span class="token keyword">class</span> <span class="token class-name">BinarySearchTree</span> <span class="token punctuation">{</span>
-  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">keys <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">of</span> keys<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> n1 <span class="token operator">=</span> n<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 5</span>
+<span class="token keyword">const</span> n2 <span class="token operator">=</span> n<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 4</span>
+<span class="token keyword">const</span> o1 <span class="token operator">=</span> o<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">switch</span> <span class="token punctuation">(</span>o1<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span><span class="token string">'*'</span><span class="token operator">:</span> 
+        s<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>n1 <span class="token operator">*</span> n2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [20]</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token string">'+'</span><span class="token operator">:</span>
+        s<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>n1 <span class="token operator">+</span> n2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="" tabindex="-1">구현해보기 <a class="header-anchor" href="#">#</a></h2>
+<p>구현은 input으로 &quot;3 - 4 * 7&quot;을 입력 받았을 때,
+postfix 형식으로 &quot;347*-&quot;를 반환하는 함수,
+이를 계산하는 -25로 계산하는 함수를 만들어 보겠습니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">InfixToPostfix</span> <span class="token punctuation">{</span>
+  #precedence <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string-property property">"+"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"-"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"*"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"/"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">expression</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>expression <span class="token operator">=</span> expression<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">isOperator</span><span class="token punctuation">(</span><span class="token parameter">token</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"+-*/"</span><span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">higherPrecedence</span><span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>#precedence<span class="token punctuation">[</span>oper1<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token keyword">this</span><span class="token punctuation">.</span>#precedence<span class="token punctuation">[</span>oper2<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">translatePostfix</span><span class="token punctuation">(</span><span class="token parameter">expression</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>expression<span class="token punctuation">)</span> expression <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>expression<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> output <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> tokens <span class="token operator">=</span> expression<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\d+|[+\-*/]</span><span class="token regex-delimiter">/</span><span class="token regex-flags">g</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    tokens<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">token</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isOperator</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>
+          stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token comment">// opertator의 스택에 아무것도 없다면 연산자 우선순위를 계산 할 필요가 없음</span>
+          <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">higherPrecedence</span><span class="token punctuation">(</span>stack<span class="token punctuation">[</span>stack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> token<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          output<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>token <span class="token operator">===</span> <span class="token string">"("</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>token <span class="token operator">===</span> <span class="token string">")"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> stack<span class="token punctuation">[</span>stack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token string">"("</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">this</span><span class="token punctuation">.</span>output<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        output<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      output<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> output<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 
-  <span class="token function">insert</span><span class="token punctuation">(</span><span class="token parameter">targetNode<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>targetNode<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">evaluatePostfix</span><span class="token punctuation">(</span><span class="token parameter">postfix</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> tokens <span class="token operator">=</span> postfix<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> cases <span class="token operator">=</span> <span class="token punctuation">{</span>
+      <span class="token string-property property">"+"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">+</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"-"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">-</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"*"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">*</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"/"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">/</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>targetNode<span class="token punctuation">.</span>data <span class="token operator">></span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      targetNode<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>targetNode<span class="token punctuation">.</span>left<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// key</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-      targetNode<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>targetNode<span class="token punctuation">.</span>right<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    tokens<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">token</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isNaN</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">parseFloat</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isOperator</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> oper2 <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">const</span> oper1 <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cases<span class="token punctuation">[</span>token<span class="token punctuation">]</span><span class="token punctuation">(</span>oper1<span class="token punctuation">,</span> oper2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> stack<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>translatePostfix 함수는 expression을 받습니다.</p>
+<p>정규식을 통해 숫자와 사칙연산을 나누어 주는 것을 확인 할 수 있습니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// d = decimal, [+\-*/]</span>
+<span class="token string">'3 + 4'</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\d+|[+\-*/]</span><span class="token regex-delimiter">/</span><span class="token regex-flags">g</span></span><span class="token punctuation">)</span> <span class="token comment">// ['3', '+', '4']</span></code></pre>
+<p>나누어진 중위표현식을 하나의 char 형식으로 변환 및 배열에 담았으니
+이를 순회하면서 연산식과 피연산자로 나누겠습니다.</p>
+<p>연산식은 stack에 추가하고,
+피연산자인 숫자는 output에 추가합니다.</p>
+<p>괄호가 있는 경우는 else if로 따로 처리해줍니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js">    tokens<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">token</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isOperator</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>
+          stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token comment">// opertator의 스택에 아무것도 없다면 연산자 우선순위를 계산 할 필요가 없음</span>
+          <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">higherPrecedence</span><span class="token punctuation">(</span>stack<span class="token punctuation">[</span>stack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> token<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          output<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>token <span class="token operator">===</span> <span class="token string">"("</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>token <span class="token operator">===</span> <span class="token string">")"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> stack<span class="token punctuation">[</span>stack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token string">"("</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">this</span><span class="token punctuation">.</span>output<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        output<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      output<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> targetNode<span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
 
-  <span class="token function">inorder</span><span class="token punctuation">(</span><span class="token parameter">node <span class="token operator">=</span> <span class="token keyword">null</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>node<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">inorder</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">inorder</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">const</span> <span class="token function-variable function">main</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> keys <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> bst <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BinarySearchTree</span><span class="token punctuation">(</span>keys<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>bst<span class="token punctuation">.</span><span class="token function">inorder</span><span class="token punctuation">(</span>bst<span class="token punctuation">.</span>root<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
+    <span class="token keyword">return</span> output<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span></code></pre>
+<p>아래의 분기는
+현재 token이 operator이면서,</p>
+<ul>
+<li>stack이 0 보다 큰 경우: operator를 담아두는 stack 배열에 또 다른 연산자가 있으면서</li>
+<li>stack의 top과 연산자 우선순위를 비교해서 top이 더 우선순위가 높을 경우
+피연산자 stack에 연산자 top을 pop해서 넣고, 우선순위가 더 낮은 연산자를 stack에 밀어넣는다.</li>
+</ul>
+<p>예를 들어 347*-를 만들기 위해서는
+3 - 4 * 7을 해독하는데
+문자열 순서상 - 연산자가 먼저 stack에 들어가 있을 수 밖에 없습니다.</p>
+<p>-와 *의 우선순위는 *가 더 높으므로,
+higherPrecedence의 값이 false로 나오게 됩니다.</p>
+<p>stack에는 [-, *]순으로 쌓이게 되는데 어차피 stack은 pop으로 값을
+꺼내기 때문에 이는 올바른 순서가 됩니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js">      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isOperator</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>
+          stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token comment">// opertator의 스택에 아무것도 없다면 연산자 우선순위를 계산 할 필요가 없음</span>
+          <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">higherPrecedence</span><span class="token punctuation">(</span>stack<span class="token punctuation">[</span>stack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> token<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          output<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span></code></pre>
+<p>반대의 경우를 생각해보겠습니다.
+*연산자가 먼저 stack에 들어와있는 경우 - 연산자가 나중에 들어오려고 할 때,
+pop으로 값을 꺼내는 stack에서 이는 곤란한 경우입니다.
+(연산자의 순서가 바뀌므로)</p>
+<p>따라서 피연산자의 스택인 output에 연산자 스택인 stack을 pop하고 그 값을
+피연산자 스택에 밀어넣습니다.</p>
+<p><code>3 * 4 - 7</code>이라면</p>
+<pre><code>[*] &lt;-- [-]
+[3, 4]
 </code></pre>
+<pre><code>[-]
+[3, 4, *]
+</code></pre>
+<p>위와 같은 형태가 됩니다.</p>
 
 	</section>
 <br>
 <br>
 <br>
-<ul><li>Previous: <a href="/blog/JS/libs/flat/">중첩 배열을 평탄화하기</a></li><li>Next: <a href="/blog/CS/BOOK/JONGMAN/입문자를_위한_커리큘럼/">입문자를 위한 커리큘럼</a></li>
+<ul><li>Previous: <a href="/blog/Engineer-Information-Processing/gof-flyweight-pattern/">gof flyweight pattern</a></li>
 </ul>
 
 </article>
