@@ -1,7 +1,7 @@
 ---
 title: gof flyweight pattern
 date: 2023-11-04 22:12:39
-coverURL: 
+coverURL: https://images.unsplash.com/photo-1559644705-15d30e582900?auto=format&fit=crop&q=80&w=2912&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 ---
 <br />
 <br />
