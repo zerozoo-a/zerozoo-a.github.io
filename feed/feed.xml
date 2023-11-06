@@ -126,7 +126,7 @@ postfix 형식으로 &amp;quot;347*-&amp;quot;를 반환하는 함수,
   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;translatePostfix 함수는 expression을 받습니다.&lt;/p&gt;
-&lt;p&gt;정규식을 통해 숫자와 사칙연산을 나누어 주는 것을 확인 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;정규식을 통해 숫자와 사칙연산을 나누어 스택에 저장합니다.&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// d = decimal, [+&#92;-*/]&lt;/span&gt;
 &lt;span class=&quot;token string&quot;&gt;&#39;3 + 4&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token regex&quot;&gt;&lt;span class=&quot;token regex-delimiter&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token regex-source language-regex&quot;&gt;&#92;d+|[+&#92;-*/]&lt;/span&gt;&lt;span class=&quot;token regex-delimiter&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token regex-flags&quot;&gt;g&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// [&#39;3&#39;, &#39;+&#39;, &#39;4&#39;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;나누어진 중위표현식을 하나의 char 형식으로 변환 및 배열에 담았으니
@@ -188,9 +188,9 @@ higherPrecedence의 값이 false로 나오게 됩니다.&lt;/p&gt;
 *연산자가 먼저 stack에 들어와있는 경우 - 연산자가 나중에 들어오려고 할 때,
 pop으로 값을 꺼내는 stack에서 이는 곤란한 경우입니다.
 (연산자의 순서가 바뀌므로)&lt;/p&gt;
-&lt;p&gt;따라서 피연산자의 스택인 output에 연산자 스택인 stack을 pop하고 그 값을
+&lt;p&gt;따라서 피연산자의 스택인 output에 연산자 top을 pop하고 그 값을
 피연산자 스택에 밀어넣습니다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;3 * 4 - 7&lt;/code&gt;이라면&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;3 * 4 - 7&lt;/code&gt;을 예로 들면&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[*] &amp;lt;-- [-]
 [3, 4]
 &lt;/code&gt;&lt;/pre&gt;

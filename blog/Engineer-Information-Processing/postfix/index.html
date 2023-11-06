@@ -3010,7 +3010,7 @@ postfix 형식으로 &quot;347*-&quot;를 반환하는 함수,
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>translatePostfix 함수는 expression을 받습니다.</p>
-<p>정규식을 통해 숫자와 사칙연산을 나누어 주는 것을 확인 할 수 있습니다.</p>
+<p>정규식을 통해 숫자와 사칙연산을 나누어 스택에 저장합니다.</p>
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// d = decimal, [+\-*/]</span>
 <span class="token string">'3 + 4'</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\d+|[+\-*/]</span><span class="token regex-delimiter">/</span><span class="token regex-flags">g</span></span><span class="token punctuation">)</span> <span class="token comment">// ['3', '+', '4']</span></code></pre>
 <p>나누어진 중위표현식을 하나의 char 형식으로 변환 및 배열에 담았으니
@@ -3072,9 +3072,9 @@ higherPrecedence의 값이 false로 나오게 됩니다.</p>
 *연산자가 먼저 stack에 들어와있는 경우 - 연산자가 나중에 들어오려고 할 때,
 pop으로 값을 꺼내는 stack에서 이는 곤란한 경우입니다.
 (연산자의 순서가 바뀌므로)</p>
-<p>따라서 피연산자의 스택인 output에 연산자 스택인 stack을 pop하고 그 값을
+<p>따라서 피연산자의 스택인 output에 연산자 top을 pop하고 그 값을
 피연산자 스택에 밀어넣습니다.</p>
-<p><code>3 * 4 - 7</code>이라면</p>
+<p><code>3 * 4 - 7</code>을 예로 들면</p>
 <pre><code>[*] &lt;-- [-]
 [3, 4]
 </code></pre>
