@@ -1,7 +1,7 @@
 ---
-title: postfix
+title: postfix, infix, prefix를 알아보고 postfix js로 구현하기
 date: 2023-11-05 21:09:26
-coverURL: 
+coverURL: https://images.unsplash.com/photo-1626427223333-183395267453?auto=format&fit=crop&q=80&w=2832&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 ---
 <br />
 <br />
@@ -45,6 +45,52 @@ switch (o1) {
         s.push(n1 + n2);
 }
 ```
+
+## postfix를 만들기
+
+`3 * 2 + 3`을 infix라고 부릅니다.
+물론 infix, postfix 모두 존재합니다.
+
+prefix는 clojure의 바로 그 것입니다.
+`+ * 3 2 3` 이렇게 작성 할 수 있습니다.
+
+postfix로 변환하면
+`3 2 * 3 +` 이렇습니다.
+
+이제 순서대로 괄호를 활용해서 이해 가능하게 변환하는 방법을 알아보겠습니다.
+
+
+### prefix 변환해보기
+
+1. `3 * 2 + 3`을 연산자와 피연산자의 관계로 치환해보겠습니다.
+    - `(피연산자 연산자 피연산자 연산자 피연산자)`
+    - prefix는 `(연산자, 피연산자, 피연산자)` 쌍으로 묶이며 한 연산을 이룹니다.
+2. 연산자와 피연산자를 다시 값으로 치환합니다.
+    - `(3 * 2) -> (* 3 2)` (* 3 2)는 다시 연산자가 되어집니다.
+    - `(+ (* 3 2) 3)` 
+3. 괄호를 제거해줍니다.
+    - `+ * 3 2 3`
+
+### postfix 변환해보기
+
+1. `3 * 2 + 3`을 연산자와 피연산자의 관계로 치환해보겠습니다.
+    - `(피연산자 연산자 피연산자 연산자 피연산자)`
+    - prefix는 `(연산자, 피연산자, 피연산자)` 쌍으로 묶이며 한 연산을 이룹니다.
+2. 연산자와 피연산자를 다시 값으로 치환합니다.
+    - `(3 * 2) -> (* 3 2)` (* 3 2)는 다시 연산자가 되어집니다.
+    - `(+ (* 3 2) 3)` 
+3. 괄호를 제거해줍니다.
+    - `+ * 3 2 3`
+
+
+### 되돌리기
+1. `+ * 3 2 3` 
+2. `(+ (* 3 2) 3)`
+3. `(+ (3 * 2) 3)`
+4. `((3 * 2) +  3)`
+5. `3 * 2 +  3`
+
+
 
 ## 구현해보기
 
@@ -107,29 +153,7 @@ class InfixToPostfix {
 
     return output.join(" ");
   }
-
-  evaluatePostfix(postfix) {
-    const stack = [];
-    const tokens = postfix.split(" ");
-    const cases = {
-      "+": (oper1, oper2) => stack.push(oper1 + oper2),
-      "-": (oper1, oper2) => stack.push(oper1 - oper2),
-      "*": (oper1, oper2) => stack.push(oper1 * oper2),
-      "/": (oper1, oper2) => stack.push(oper1 / oper2),
-    };
-
-    tokens.forEach((token) => {
-      if (!isNaN(token)) {
-        stack.push(parseFloat(token));
-      } else if (this.isOperator(token)) {
-        const oper2 = stack.pop();
-        const oper1 = stack.pop();
-        cases[token](oper1, oper2);
-      }
-    });
-
-    return stack[0];
-  }
+  // ...
 }
 ```
 
@@ -218,16 +242,79 @@ pop으로 값을 꺼내는 stack에서 이는 곤란한 경우입니다.
 `3 * 4 - 7`을 예로 들면
 
 ```
-[*] <-- [-]
+[*] <-- [-] // *을 pop하고 stack에 push
 [3, 4]
 ```
 
 
 ```
-[-]
+[-] 
 [3, 4, *]
 ```
-
 위와 같은 형태가 됩니다.
 
+
+연산 순서를 변경했으므로 연산하는 함수를 작성하면 끝입니다.
+`evaluatePostfix` 메소드가 바로 그 함수입니다.
+
+```js
+class InfixToPostfix {
+  #precedence = {
+    "+": 1,
+    "-": 1,
+    "*": 2,
+    "/": 2,
+  };
+
+  constructor(expression) {
+    this.expression = expression;
+  }
+
+  isOperator(token) {
+    return "+-*/".indexOf(token) !== -1;
+  }
+
+  higherPrecedence(oper1, oper2) {
+    return this.#precedence[oper1] > this.#precedence[oper2];
+  }
+
+  translatePostfix(expression) {
+    // ...
+  }
+
+  evaluatePostfix(postfix) {
+    const stack = [];
+    const tokens = postfix.split(" ");
+    const cases = {
+      "+": (oper1, oper2) => stack.push(oper1 + oper2),
+      "-": (oper1, oper2) => stack.push(oper1 - oper2),
+      "*": (oper1, oper2) => stack.push(oper1 * oper2),
+      "/": (oper1, oper2) => stack.push(oper1 / oper2),
+    };
+
+    tokens.forEach((token) => {
+      if (!isNaN(token)) {
+        stack.push(parseFloat(token));
+      } else if (this.isOperator(token)) {
+        const oper2 = stack.pop();
+        const oper1 = stack.pop();
+        cases[token](oper1, oper2);
+      }
+    });
+
+    return stack[0];
+  }
+}
+```
+
+인자인 postfix는 `3 2 +`처럼 space를 구분자로 들어온 문자열이기 때문에
+split으로 나눠주면 다시 char 배열이 됩니다. `['2', '3', '+']`
+
+나눠진 token들을 순회하며 숫자인 경우 피연산자, 아닌 경우 연산자이므로
+연산자들을 stack에 쌓아줍니다.
+
+postfix 스택을 인덱스 0부터 꺼내오므로 피연산자, 피연산자, 연산자 순으로 꺼내게 되는데
+연산자를 꺼냈을 때, stack을 pop하면서 계산하고 다시 stack에 밀어 넣어줍니다.
+
+연산이 모두 끝나고 남은 값은 마지막 계산 값이 되므로 stack[0]을 꺼내주면 끝입니다.
 
