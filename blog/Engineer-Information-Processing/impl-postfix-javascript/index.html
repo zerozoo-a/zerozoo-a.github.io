@@ -19,7 +19,7 @@
 </script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>postfix | zerozoo-a의 블로그</title>
+		<title>postfix, infix, prefix를 알아보고 postfix js로 구현하기 | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -28,12 +28,12 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		<meta property="og:title" content=postfix/>
-		<meta property="og:url" content=/blog/Engineer-Information-Processing/postfix/ />
+		<meta property="og:title" content=postfix, infix, prefix를 알아보고 postfix js로 구현하기/>
+		<meta property="og:url" content=/blog/Engineer-Information-Processing/impl-postfix-javascript/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/Engineer-Information-Processing/postfix/ />
+		<link rel="canonical" href=/blog/Engineer-Information-Processing/impl-postfix-javascript/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -2572,13 +2572,13 @@ h2 + .header-anchor {
 													</a>
 												</li>
 												<li>
-													<a href=/blog/Engineer-Information-Processing/lan-man-wan>
-														lan-man-wan
+													<a href=/blog/Engineer-Information-Processing/impl-postfix-javascript>
+														impl-postfix-javascript
 													</a>
 												</li>
 												<li>
-													<a href=/blog/Engineer-Information-Processing/postfix>
-														postfix
+													<a href=/blog/Engineer-Information-Processing/lan-man-wan>
+														lan-man-wan
 													</a>
 												</li>
 										</ul>
@@ -2883,9 +2883,10 @@ h2 + .header-anchor {
 			
 <article>
 	
+    <img class="big-cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
 	
 
-<h1>postfix</h1>
+<h1>postfix, infix, prefix를 알아보고 postfix js로 구현하기</h1>
 
 <ul class="post-metadata pt-2">
 	<li><time datetime="2023-11-05">05 November 2023</time></li>
@@ -2894,7 +2895,7 @@ h2 + .header-anchor {
 
 		<aside>
 			<nav class="toc" >
-        <ol></ol>
+        <ol><li><a href="#postfix-1">postfix를 만들기</a><ol><li><a href="#prefix">prefix 변환해보기</a></li><li><a href="#postfix-2">postfix 변환해보기</a></li></ol></li><li><a href="#-1">구현해보기</a></li></ol>
       </nav>
 		</aside>
 
@@ -2927,7 +2928,63 @@ h2 + .header-anchor {
     <span class="token keyword">case</span> <span class="token string">'+'</span><span class="token operator">:</span>
         s<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>n1 <span class="token operator">+</span> n2<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<h2 id="" tabindex="-1">구현해보기 <a class="header-anchor" href="#">#</a></h2>
+<h2 id="postfix-1" tabindex="-1">postfix를 만들기 <a class="header-anchor" href="#postfix-1">#</a></h2>
+<p><code>3 * 2 + 3</code>을 infix라고 부릅니다.
+물론 infix, postfix 모두 존재합니다.</p>
+<p>prefix는 clojure의 바로 그 것입니다.
+<code>+ * 3 2 3</code> 이렇게 작성 할 수 있습니다.</p>
+<p>postfix로 변환하면
+<code>3 2 * 3 +</code> 이렇습니다.</p>
+<p>이제 순서대로 괄호를 활용해서 이해 가능하게 변환하는 방법을 알아보겠습니다.</p>
+<h3 id="prefix" tabindex="-1">prefix 변환해보기 <a class="header-anchor" href="#prefix">#</a></h3>
+<ol>
+<li><code>3 * 2 + 3</code>을 연산자와 피연산자의 관계로 치환해보겠습니다.
+<ul>
+<li><code>(피연산자 연산자 피연산자 연산자 피연산자)</code></li>
+<li>prefix는 <code>(연산자, 피연산자, 피연산자)</code> 쌍으로 묶이며 한 연산을 이룹니다.</li>
+</ul>
+</li>
+<li>연산자와 피연산자를 다시 값으로 치환합니다.
+<ul>
+<li><code>(3 * 2) -&gt; (* 3 2)</code> (* 3 2)는 다시 연산자가 되어집니다.</li>
+<li><code>(+ (* 3 2) 3)</code></li>
+</ul>
+</li>
+<li>괄호를 제거해줍니다.
+<ul>
+<li><code>+ * 3 2 3</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="postfix-2" tabindex="-1">postfix 변환해보기 <a class="header-anchor" href="#postfix-2">#</a></h3>
+<ol>
+<li><code>3 * 2 + 3</code>을 연산자와 피연산자의 관계로 치환해보겠습니다.
+<ul>
+<li><code>(피연산자 연산자 피연산자 연산자 피연산자)</code></li>
+<li>prefix는 <code>(연산자, 피연산자, 피연산자)</code> 쌍으로 묶이며 한 연산을 이룹니다.</li>
+</ul>
+</li>
+<li>연산자와 피연산자를 다시 값으로 치환합니다.
+<ul>
+<li><code>(3 * 2) -&gt; (* 3 2)</code> (* 3 2)는 다시 연산자가 되어집니다.</li>
+<li><code>(+ (* 3 2) 3)</code></li>
+</ul>
+</li>
+<li>괄호를 제거해줍니다.
+<ul>
+<li><code>+ * 3 2 3</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="" tabindex="-1">되돌리기 <a class="header-anchor" href="#">#</a></h3>
+<ol>
+<li><code>+ * 3 2 3</code></li>
+<li><code>(+ (* 3 2) 3)</code></li>
+<li><code>(+ (3 * 2) 3)</code></li>
+<li><code>((3 * 2) +  3)</code></li>
+<li><code>3 * 2 +  3</code></li>
+</ol>
+<h2 id="-1" tabindex="-1">구현해보기 <a class="header-anchor" href="#-1">#</a></h2>
 <p>구현은 input으로 &quot;3 - 4 * 7&quot;을 입력 받았을 때,
 postfix 형식으로 &quot;347*-&quot;를 반환하는 함수,
 이를 계산하는 -25로 계산하는 함수를 만들어 보겠습니다.</p>
@@ -2985,29 +3042,7 @@ postfix 형식으로 &quot;347*-&quot;를 반환하는 함수,
 
     <span class="token keyword">return</span> output<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
-
-  <span class="token function">evaluatePostfix</span><span class="token punctuation">(</span><span class="token parameter">postfix</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token keyword">const</span> tokens <span class="token operator">=</span> postfix<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">const</span> cases <span class="token operator">=</span> <span class="token punctuation">{</span>
-      <span class="token string-property property">"+"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">+</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
-      <span class="token string-property property">"-"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">-</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
-      <span class="token string-property property">"*"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">*</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
-      <span class="token string-property property">"/"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">/</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-    tokens<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">token</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isNaN</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">parseFloat</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isOperator</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">const</span> oper2 <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">const</span> oper1 <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        cases<span class="token punctuation">[</span>token<span class="token punctuation">]</span><span class="token punctuation">(</span>oper1<span class="token punctuation">,</span> oper2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> stack<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token comment">// ...</span>
 <span class="token punctuation">}</span></code></pre>
 <p>translatePostfix 함수는 expression을 받습니다.</p>
 <p>정규식을 통해 숫자와 사칙연산을 나누어 스택에 저장합니다.</p>
@@ -3075,13 +3110,69 @@ pop으로 값을 꺼내는 stack에서 이는 곤란한 경우입니다.
 <p>따라서 피연산자의 스택인 output에 연산자 top을 pop하고 그 값을
 피연산자 스택에 밀어넣습니다.</p>
 <p><code>3 * 4 - 7</code>을 예로 들면</p>
-<pre><code>[*] &lt;-- [-]
+<pre><code>[*] &lt;-- [-] // *을 pop하고 stack에 push
 [3, 4]
 </code></pre>
-<pre><code>[-]
+<pre><code>[-] 
 [3, 4, *]
 </code></pre>
 <p>위와 같은 형태가 됩니다.</p>
+<p>연산 순서를 변경했으므로 연산하는 함수를 작성하면 끝입니다.
+<code>evaluatePostfix</code> 메소드가 바로 그 함수입니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">InfixToPostfix</span> <span class="token punctuation">{</span>
+  #precedence <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string-property property">"+"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"-"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"*"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"/"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">expression</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>expression <span class="token operator">=</span> expression<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">isOperator</span><span class="token punctuation">(</span><span class="token parameter">token</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"+-*/"</span><span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">higherPrecedence</span><span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>#precedence<span class="token punctuation">[</span>oper1<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token keyword">this</span><span class="token punctuation">.</span>#precedence<span class="token punctuation">[</span>oper2<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">translatePostfix</span><span class="token punctuation">(</span><span class="token parameter">expression</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">evaluatePostfix</span><span class="token punctuation">(</span><span class="token parameter">postfix</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> tokens <span class="token operator">=</span> postfix<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> cases <span class="token operator">=</span> <span class="token punctuation">{</span>
+      <span class="token string-property property">"+"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">+</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"-"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">-</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"*"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">*</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"/"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">oper1<span class="token punctuation">,</span> oper2</span><span class="token punctuation">)</span> <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>oper1 <span class="token operator">/</span> oper2<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    tokens<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">token</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isNaN</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">parseFloat</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isOperator</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> oper2 <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">const</span> oper1 <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cases<span class="token punctuation">[</span>token<span class="token punctuation">]</span><span class="token punctuation">(</span>oper1<span class="token punctuation">,</span> oper2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> stack<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>인자인 postfix는 <code>3 2 +</code>처럼 space를 구분자로 들어온 문자열이기 때문에
+split으로 나눠주면 다시 char 배열이 됩니다. <code>['2', '3', '+']</code></p>
+<p>나눠진 token들을 순회하며 숫자인 경우 피연산자, 아닌 경우 연산자이므로
+연산자들을 stack에 쌓아줍니다.</p>
+<p>postfix 스택을 인덱스 0부터 꺼내오므로 피연산자, 피연산자, 연산자 순으로 꺼내게 되는데
+연산자를 꺼냈을 때, stack을 pop하면서 계산하고 다시 stack에 밀어 넣어줍니다.</p>
+<p>연산이 모두 끝나고 남은 값은 마지막 계산 값이 되므로 stack[0]을 꺼내주면 끝입니다.</p>
 
 	</section>
 <br>
