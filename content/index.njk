@@ -13,13 +13,13 @@ permalink: ./{% if pagination.pageNumber > 0 %}page{{ pagination.pageNumber }}/{
     {% for item in pagination.items %}
       {% if(item.data.isCategoryIndex !== true) %}
         <a href="{{ item.page.url }}">
-          <div class="p-3 d-flex color-bg-default m-3p post-container">
+          <div class="d-flex color-bg-default m-3p border rounded-2 color-border-default p-6 pb-3">
             {% if(item.data.coverURL) %}
               <img class="cover-img" src={% convert item.data.coverURL, "1" %} alt="cover image" height="auto" />
             {% elif(item.data.local) %}
             	<img class="cover-img" src=/img{{ item.filePathStem }}/cover.jpeg alt="cover image" height="auto" ></img>
             {% endif %}
-            <div class="d-flex pl-3 flex-direction-col post-title-container">
+            <div class="d-flex pl-3 flex-direction-col post-title-container mt-12">
                 <h4 class="d-flex flex-items-center post-title">
                     {% if item.data.title %}{{ item.data.title }}{% else %}<code>{{ item.url }}</code>{% endif %}
                 </h4>
