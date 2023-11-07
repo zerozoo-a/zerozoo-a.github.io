@@ -2,6 +2,7 @@ const { DateTime } = require("luxon");
 const markdownItAnchor = require("markdown-it-anchor");
 const mk = require("@iktakahiro/markdown-it-katex");
 const mu = require("markdown-it-textual-uml");
+const schema = require("@quasibit/eleventy-plugin-schema");
 const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 
 /**
@@ -32,6 +33,7 @@ module.exports = function (eleventyConfig) {
 		"./public/css/gh-syntax.css": "/css/gh-syntax.css",
 	});
 	eleventyConfig.addPassthroughCopy("./covers");
+	eleventyConfig.addPlugin(schema);
 
 	// ADD TOC
 	eleventyConfig.addPlugin(pluginTOC);
@@ -78,6 +80,9 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addFilter("htmlDateString", (dateObj) => {
 		// dateObj input: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
 		return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
+	});
+	eleventyConfig.addFilter("iso8601", (dateObj) => {
+		return DateTime.fromJSDate(dateObj, { zone: "utc" }).toISO();
 	});
 
 	// Get the first `n` elements of a collection.

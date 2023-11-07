@@ -1,5 +1,17 @@
 ---
 layout: layouts/base.njk
+type: post
+eleventyComputed:
+  meta:
+    author:
+      name: "{{ metadata.author.name }}"
+    published: "{{ date | iso8601 }}"
+    modified: "{% if updateDate %}{{ updateDate | iso8601 }}{% endif %}"
+    description: "{{ description or metadata.description }}"
+    image:
+      src: "{% if image %}{{ metadata.url }}{{ image }}{% endif %}"
+	site:
+      url: "{{ metadata.url }}"
 ---
 {%- css %}{% include "public/css/prism-diff.css" %}{%- endcss %}
 {%- css %}{% include "public/css/gh-md-dark.css" %}{%- endcss %}
