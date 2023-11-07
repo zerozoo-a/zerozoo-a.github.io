@@ -4,8 +4,6 @@ const File = require("fs/promises");
 const Fs = require("fs");
 const Path = require("path");
 const PATH = Path.join(__dirname, "../db/imageURL2base64Db_0.json");
-const readLine = require("readline");
-const fastJsonStringify = require("fast-json-stringify");
 
 /**
  * main function
