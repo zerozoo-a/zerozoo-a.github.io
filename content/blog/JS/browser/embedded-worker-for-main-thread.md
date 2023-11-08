@@ -1,25 +1,71 @@
 ---
 title: embedded worker의 기초
 date: 2023-11-08 12:38:10
-coverURL: 
+coverURL: https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 ---
 
 <br>
 <br>
 <br>
 
-## embedded worker란
-자세한 내용은 MDN의 using web workers라는 페이지에 소개되어 있습니다.
-[https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers]
+# embedded worker에 대해
 
-javascript의 worker는 다른 언어들과는 다르게 (심지어 거의 같은 싱글스레드 + event loop 조합인 dart에서도 지원하는..)
-thread를 생성하고 사용하는 것이 조금은 까다롭습니다.
 
-thread를 생성하기 위해서는 javascript 파일을 새로 생성하고 생성된 파일의 경로를 인자로 넘겨주면 되는데요,
-언뜻보면 코드가 분리되어 좋은게 아니냐라고 생각 할 수 있지만 문제는 해당 방법 이외의 다른 대안인 바로 함수를 넘기거나 값을 넘기는 등의
-api가 없다는 것입니다.
+## embedded 이전에 worker에 대해
+javascript에서 worker를 사용하기 위해서는 
+1. worker 객체를 생성,
+2. worker 객체에 넘겨줄 script 파일의 path를 입력하게 됩니다.
+3. worker와 main thread의 통신은 모두 message로 이루어집니다.
+   1. postMessage를 통해 worker에게 데이터를 보냅니다.
+   2. worker는 onmessage를 통해 message를 받습니다.
+   3. main thread도 마찬가지로 응답을 onmessage를 통해 받습니다.
+   4. message들은 Event 객체를 상속받습니다.
+   ```mermaid
+    %%{init: {'theme':'dark'}}%%
+    classDiagram
 
-사실 정확히는 파일의 경로는 아닙니다. URL 주소를 넘기는 것인데요 이를 활용해 embedded worker를 구현해보겠습니다.
+    MessageEvent --> Event
+   ```
+   5. Event emitter를 상속 받기 때문에 Worker의 생성이 비동기여도 정상 작동하게 됩니다.
+
+### worker의 생성과 사용
+```js
+// main.js
+const worker = new Worker('/work.js')
+worker.postMessage(5);
+worker.onmessage = function (e) {
+  console.log(e)
+}
+// work.js
+self.onmessage = function(e) {
+  postMessage(e.data + 1);
+}
+```
+위 방식의 불편한 점은 항상 파일을 분리해두어야 한다는 점입니다.
+
+아래와 같이 작성 할 순 없을까요?
+```js
+function add (a, b) { return a + b; }
+const worker = new Worker(add) // thread 생성
+worker(1, 2); // 3 반환
+```
+아쉽지만 위와 같은 함수는 현재 스펙에는 없습니다.
+
+아예 방법이 없는 것은 아닌데요 embedded worker라는 방법을 통해
+위와 같이 worker thread에 함수를 넘겨주는 방식을 구현해보겠습니다.
+
+embedded worker에 대한 자세한 내용은 MDN의 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">using web workers라는 페이지에 소개되어 있습니다.</a>
+
+embedded worker 방식은 일반 자바스크립트를 다른 파일을 생성하지 않고,
+worker를 사용하는 방법입니다.
+
+worker의 스펙을 보면 아래와 같습니다.
+```js
+new Worker(aURL)
+new Worker(aURL, options)
+```
+`aURL`을 받습니다. 즉 path만을 받는 것이 아닌 URL이면 됩니다.
+자바스크립트 함수를 놀랍게도 URL로 변환하는 작업을 거쳐보겠습니다.
 
 순서는 아래와 같습니다.
 - 코드를 blob으로 쪼갭니다.
@@ -35,25 +81,17 @@ api가 없다는 것입니다.
     const worker = new Worker(url);
 ```
 
-worker를 생성하고 worker가 일을 하고 값을 반환하는 것은 비동기로 처리됩니다.
-저희는 브라우저에서 정해준 api를 통해 동기를 비동기로 변경 할 수 있는데요, 대표적으로 timeout 함수들이 그렇습니다.
+이제 위 함수를 잘 다듬어 worker에 함수를 넘겨주고, 결과값을 받는 함수를 만들어보도록 하겠습니다.
 
-단, timeout 함수에 넘겨준 콜백함수는 일정 조건을 만족하고 나서 다시 main thread를 점유하며 task를 처리합니다.
-그저 일의 순서를 뒤로 미룬것과 같은 방식입니다. 결국 main thread를 점유당하는 것은 그대로입니다.
-
-그렇다면 방법은 thread를 사용하는 것입니다.
-
-브라우저 환경의 대부분은 worker를 지원하고 있지만 그렇지 못한 경우를 대비하는 것도 잊으면 안됩니다.
-
-원하는 스펙을 하나씩 나열하겠습니다.
-
-- worker를 사용 할 수 없다면 입력받은 함수를 main thread에서 그대로 실행시켰으면 좋겠습니다.
-- inline으로 함수를 입력하고 값을 반환받고 싶습니다.
-
-이정도입니다.
+함수에 필요한 스펙을 정리해보면
+  - inline으로 함수를 입력하고 값을 반환받고 싶습니다.
+  - worker를 사용 할 수 없다면 입력받은 함수를 main thread에서 그대로 실행시켰으면 좋겠습니다.
 
 worker의 생성은 오버헤드가 존재하므로 브라우저에서는 비동기로 생성됩니다.
-worker 자체가 비동기이므로 저희가 넘겨주는 함수도 비동기로 스펙인 Promise를 따라야합니다.
+
+Promise를 이용해 async await을 사용 할 수 있도록 수정합니다.
+
+물론 onmessage를 통해 event emit방식을 사용 할 수 있지만 그러고 싶은 분은 많지 않으리라 생각합니다.
 
 아래는 해당 내용을 구현한 함수입니다.
 
@@ -87,17 +125,14 @@ fib().then(res => console.log('result: ', res));
 ```
 - 위 코드는 hikaMaeng님의 블로그와 MDN을 참조했습니다.
 
-mainthread를 block 하는 cpu intensive한 함수를 thread에 위임하고 해당 함수의 결과값을 비동기로 받습니다.
-timeout 함수와는 다르게 병렬로 실행되어진다는 점입니다.
+위 함수에는 약간의 문제점이 있습니다.
+바로 subroutine을 호출 할 수 없다는 것입니다.
 
-이와 비슷한 로직을 dart에서는 Isolate로 이름 짓고 사용하고 있습니다.
-
-함수는 subroutine을 호출 할 수 있습니다.
-위에서 구현한대로는 subroutine을 호출 하는 경우 rejected 되고 마는데요,
+위의 구현대로는 subroutine을 호출 하는 경우 rejected 되고 마는데요,
 이유는 생성된 worker thread에서 subroutine의 존재를 알 수 없기 때문입니다.
 
 message로 넘겨준 것은 단일 함수이므로 scope가 서로 다른 worker는 넘겨받은 함수만을 이해할 뿐,
-다른 객체에 대한 것은 알 수 없습니다.
+다른 객체에 대한 것을 알 수 없습니다.
 
 따라서 아래와 같이 수정해줍니다.
 
@@ -152,19 +187,22 @@ async function main () {
 }
 main();
 ```
-
 여기서 재밌는 점은 caller와 callee 내부에 log를 찍어도 보여지지 않는다는 것인데요,
-log는 생성 및 분리된 스코프인 thread 내부에서 실행되므로 main에서는 해당 출력을 확인 할 수 없습니다.
+log는 생성 및 분리된 스코프인 thread 스코프에서 실행되므로,
+main에서는 해당 출력을 확인 할 수 없습니다.
 
-위 코드에서 한가지 문제점을 더 발견 할 수 있습니다.
-인자가 1개 이상인 함수의 경우 변수 meta는 worker thread에서 실행 할 함수의 첫 인자에만
-데이터를 넣어준다는 것입니다.
+아쉽게도, 위 코드에서 다시 한가지 문제점을 더 발견 할 수 있습니다. 
+
+인자가 1개 이상인 함수의 경우 **변수 meta**는 **worker thread에서 실행 할 함수의 첫 인자에만
+데이터를 넣어준다는 것입니다.**
 
 merge sort를 예로 들면, 아래와 같은 함수를 thread에서 실행 할 때,
 위의 코드로는 left인자에만 값을 넣어주게 됩니다.
+
 ```js
-mergeSort(left, right);
+mergeSort(left, right); // error
 ```
+
 이를 수정해보도록 하겠습니다.
 
 ```js
@@ -200,20 +238,6 @@ export const process = (f = () => {}, ...fs) => {
 }
 ```
 위 처럼 수정하게 되면 인자를 여러개 받는 함수의 경우에도 실행이 가능하게 됩니다.
-
-이번 thread를 embedded로 실행하는 함수를 공부하며 느낀점은 아래와 같습니다.
-
-- rest parameter를 사용해 얼마든지 원하는 만큼 subroutine을 추가해줄 수 있다는 점입니다.
-단, 이런 모양이 불편하다면 class 형태로 잘 패키징해서 하나만 넘기는 것도 좋을 것입니다.
-
-- 이런 코드는 기존의 자바스크립트에선 하기 어려웠던(금기시 되었던 eval?) 메타프로그래밍을 가능케합니다.
-이런 특성을 아주 적극적으로 활용하는 clojure에서는 데이터를 하나의 sequence로 보거나
-코드 자체를 하나의 데이터로 보는 등의 확장을 통해 보다 자유로운 코드가 가능합니다. (물론 위험부담은 본인 책임이지만)
-(자바스크립트에서도 이런 부분이 좀 더 열렸으면 좋겠습니다만 브라우저를 안정적으로 돌리기 위해서는 당연히 닫혀있겠죠🥲)
-
-- 욕심을 부린다면 메모리 allocate가 큰 변수의 경우 shared memory를 사용해 계산하면 좋겠습니다만
-언제가 될런지...
-
 
 마지막으로 mergeSort를 각 thread에 task를 분배, 정렬하도록 작성해봤습니다.
 
@@ -309,10 +333,13 @@ async function main () {
 main();
 ```
 
-테스트를 하지 않을 수가 없네요
+테스트를 하지 않을 수가 없네요,
+
 일반 mergeSort와 thread 2개를 사용한 mergeSort로 비교해보겠습니다.
+
 thread를 사용하는 경우 main thread를 block하지 않는 다는 점도 주요하게 볼 대목입니다만
 속도도 함께 봐주세요
+
 ```js
 import { process } from "./thread.js";
 import { mergeSort, merge } from "./mergeSort.js";
@@ -359,6 +386,13 @@ default: 3578.2060546875 ms // with main thread
 
 mergeSort는 특히나 정렬하는 그 특유의 방식 덕분에 thread에 일감을 나눠주기 편한데요.
 반을 나누어준 다음 가각의 thread를 통해 정렬, 결과값을 마지막에 merge만 해주면 되기 때문입니다.
+
+thread를 browser의 idle 타임에 생성해두고 
+pool에 저장하고 사용한다면 worker를 생성하는 비용과 시간을 대폭 줄일 수 있습니다.
+자바스크립트를 싱글스레드로만 사용하기엔 너무 아깝다고 생각합니다.
+
+다음은 pool을 사용하고,
+shared memory를 사용하는 등의 글을 작성해보겠습니다.
 
 이상으로 긴 글 봐주셔서 감사합니다.
 
