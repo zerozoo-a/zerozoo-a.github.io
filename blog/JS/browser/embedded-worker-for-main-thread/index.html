@@ -3217,6 +3217,49 @@ log는 생성 및 분리된 스코프인 thread 내부에서 실행되므로 mai
 <span class="token punctuation">}</span>
 
 <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>테스트를 하지 않을 수가 없네요
+일반 mergeSort와 thread 2개를 사용한 mergeSort로 비교해보겠습니다.
+thread를 사용하는 경우 main thread를 block하지 않는 다는 점도 주요하게 볼 대목입니다만
+속도도 함께 봐주세요</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> process <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./thread.js"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> mergeSort<span class="token punctuation">,</span> merge <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./mergeSort.js"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">createRandomArray</span><span class="token punctuation">(</span><span class="token parameter">size</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> array <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Push a random integer into the array</span>
+    <span class="token comment">// For example, if you want numbers between 0 and 999</span>
+    array<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> array<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> number <span class="token operator">=</span> <span class="token number">10000000</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> bigArray <span class="token operator">=</span> <span class="token function">createRandomArray</span><span class="token punctuation">(</span>number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+  console<span class="token punctuation">.</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> pivot <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>number <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> arrLeft <span class="token operator">=</span> bigArray<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> pivot<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> arrRight <span class="token operator">=</span> bigArray<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>pivot<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> thread1 <span class="token operator">=</span> <span class="token function">process</span><span class="token punctuation">(</span>mergeSort<span class="token punctuation">,</span> merge<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> thread2 <span class="token operator">=</span> <span class="token function">process</span><span class="token punctuation">(</span>mergeSort<span class="token punctuation">,</span> merge<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>resultLeft<span class="token punctuation">,</span> resultRight<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">await</span> Promise<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token function">thread1</span><span class="token punctuation">(</span>arrLeft<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">thread2</span><span class="token punctuation">(</span>arrRight<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">merge</span><span class="token punctuation">(</span>resultLeft<span class="token punctuation">,</span> resultRight<span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">timeEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  console<span class="token punctuation">.</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token function">mergeSort</span><span class="token punctuation">(</span>bigArray<span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">timeEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span>
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-bash" tabindex="0"><code class="language-bash">// <span class="token number">10000000</span> 랜덤 숫자 배열의 길이
+default: <span class="token number">2555.906982421875</span> ms // with worker thread
+default: <span class="token number">3578.2060546875</span> ms // with main thread</code></pre>
 <p>mergeSort는 특히나 정렬하는 그 특유의 방식 덕분에 thread에 일감을 나눠주기 편한데요.
 반을 나누어준 다음 가각의 thread를 통해 정렬, 결과값을 마지막에 merge만 해주면 되기 때문입니다.</p>
 <p>이상으로 긴 글 봐주셔서 감사합니다.</p>
