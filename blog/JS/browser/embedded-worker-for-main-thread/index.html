@@ -2978,11 +2978,9 @@ api가 없다는 것입니다.</p>
 </ul>
 <p>구현은 아래와 같습니다.</p>
 <pre class="language-js" tabindex="0"><code class="language-js">    <span class="token keyword">function</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-
     <span class="token keyword">const</span> blob <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Blob</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">onmessage = ({data}) => postMessage((</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>f<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)(data));</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'text/javascript'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token constant">URL</span><span class="token punctuation">.</span><span class="token function">createObjectURL</span><span class="token punctuation">(</span>blob<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">const</span> worker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Worker</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
+    <span class="token keyword">const</span> worker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Worker</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>worker를 생성하고 worker가 일을 하고 값을 반환하는 것은 비동기로 처리됩니다.
 저희는 브라우저에서 정해준 api를 통해 동기를 비동기로 변경 할 수 있는데요, 대표적으로 timeout 함수들이 그렇습니다.</p>
 <p>단, timeout 함수에 넘겨준 콜백함수는 일정 조건을 만족하고 나서 다시 main thread를 점유하며 task를 처리합니다.
@@ -2998,27 +2996,26 @@ api가 없다는 것입니다.</p>
 <p>worker의 생성은 오버헤드가 존재하므로 브라우저에서는 비동기로 생성됩니다.
 worker 자체가 비동기이므로 저희가 넘겨주는 함수도 비동기로 스펙인 Promise를 따라야합니다.</p>
 <p>아래는 해당 내용을 구현한 함수입니다.</p>
-<pre><code>const process = f =&gt; {
-  const isOkWorker = Blob &amp;&amp; URL &amp;&amp; URL.createObjectURL;
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">process</span> <span class="token operator">=</span> <span class="token parameter">f</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> isOkWorker <span class="token operator">=</span> Blob <span class="token operator">&amp;&amp;</span> <span class="token constant">URL</span> <span class="token operator">&amp;&amp;</span> <span class="token constant">URL</span><span class="token punctuation">.</span>createObjectURL<span class="token punctuation">;</span>
 
-  if(isOkWorker) {
-    const blob = new Blob([`onmessage = ({data}) =&gt; postMessage((${f})(data));`], { type: 'text/javascript' });
-    const url = URL.createObjectURL(blob);
-    const worker = new Worker(url);
+  <span class="token keyword">if</span><span class="token punctuation">(</span>isOkWorker<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> blob <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Blob</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">onmessage = ({data}) => postMessage((</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>f<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)(data));</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'text/javascript'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token constant">URL</span><span class="token punctuation">.</span><span class="token function">createObjectURL</span><span class="token punctuation">(</span>blob<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> worker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Worker</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    const onMessage = (res) =&gt; worker.onmessage = ({data}) =&gt; res(data);
-    const onError = (rej) =&gt; worker.onerror = ({data}) =&gt; rej(data);
+    <span class="token keyword">const</span> <span class="token function-variable function">onMessage</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=></span> worker<span class="token punctuation">.</span><span class="token function-variable function">onmessage</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span>data<span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">res</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">onError</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">rej</span><span class="token punctuation">)</span> <span class="token operator">=></span> worker<span class="token punctuation">.</span><span class="token function-variable function">onerror</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span>data<span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">rej</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    return data =&gt; new Promise((res, rej) =&gt; {
-      onMessage(res);
-      onError(rej);
-      worker.postMessage(data)
-    })
-  } else {
-    return data =&gt; f(data);
-  }
-}
-</code></pre>
+    <span class="token keyword">return</span> <span class="token parameter">data</span> <span class="token operator">=></span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res<span class="token punctuation">,</span> rej</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token function">onMessage</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">onError</span><span class="token punctuation">(</span>rej<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      worker<span class="token punctuation">.</span><span class="token function">postMessage</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token parameter">data</span> <span class="token operator">=></span> <span class="token function">f</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <p>사용하는 방법은 아래와 같습니다.</p>
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> fib <span class="token operator">=</span> <span class="token function">process</span><span class="token punctuation">(</span>blockCpuFor1Sec<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">fib</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'result: '</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
