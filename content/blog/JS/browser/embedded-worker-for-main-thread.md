@@ -309,6 +309,54 @@ async function main () {
 main();
 ```
 
+테스트를 하지 않을 수가 없네요
+일반 mergeSort와 thread 2개를 사용한 mergeSort로 비교해보겠습니다.
+thread를 사용하는 경우 main thread를 block하지 않는 다는 점도 주요하게 볼 대목입니다만
+속도도 함께 봐주세요
+```js
+import { process } from "./thread.js";
+import { mergeSort, merge } from "./mergeSort.js";
+
+function createRandomArray(size) {
+  const array = [];
+  for (let i = 0; i < size; i++) {
+    // Push a random integer into the array
+    // For example, if you want numbers between 0 and 999
+    array.push(Math.floor(Math.random() * 1000));
+  }
+  return array;
+}
+
+
+
+async function main () {
+  const number = 10000000;
+  const bigArray = createRandomArray(number);
+
+
+  console.time()
+  const pivot = Math.floor(number / 2);
+  const arrLeft = bigArray.slice(0, pivot);
+  const arrRight = bigArray.slice(pivot);
+  const thread1 = process(mergeSort, merge);
+  const thread2 = process(mergeSort, merge);
+  const [resultLeft, resultRight] = await Promise.all([thread1(arrLeft), thread2(arrRight)]);
+  merge(resultLeft, resultRight)
+  console.timeEnd()
+
+  console.time()
+  mergeSort(bigArray)
+  console.timeEnd()
+
+}
+main();
+```
+```bash
+// 10000000 랜덤 숫자 배열의 길이
+default: 2555.906982421875 ms // with worker thread
+default: 3578.2060546875 ms // with main thread
+```
+
 mergeSort는 특히나 정렬하는 그 특유의 방식 덕분에 thread에 일감을 나눠주기 편한데요.
 반을 나누어준 다음 가각의 thread를 통해 정렬, 결과값을 마지막에 merge만 해주면 되기 때문입니다.
 
