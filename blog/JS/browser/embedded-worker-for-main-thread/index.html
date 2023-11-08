@@ -19,7 +19,7 @@
 </script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>printing star stair 2 | zerozoo-a의 블로그</title>
+		<title>embedded worker의 기초 | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 		<script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -40,7 +40,7 @@
       "isPartOf": {
         "@id": "https://zerozoo-a.github.io/#website"
       },
-      "headline": "printing star stair 2",
+      "headline": "embedded worker의 기초",
       "description": "안녕하세요 반갑습니다. 건강하고 행복하세요",
       "image": "",
       "inLanguage": "ko-KR",
@@ -54,7 +54,7 @@
         "name": "zerozoo-a"
       },
       "keywords": "posts",
-      "datePublished": "2023-05-19T23:30:13.000Z"
+      "datePublished": "2023-11-08T12:38:10.000Z"
     }
   ]
 }</script>
@@ -65,12 +65,12 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		<meta property="og:title" content=printing star stair 2/>
-		<meta property="og:url" content=/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing star stair 2 and pyramid/ />
+		<meta property="og:title" content=embedded worker의 기초/>
+		<meta property="og:url" content=/blog/JS/browser/embedded-worker-for-main-thread/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing star stair 2 and pyramid/ />
+		<link rel="canonical" href=/blog/JS/browser/embedded-worker-for-main-thread/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -2943,123 +2943,95 @@ h2 + .header-anchor {
 	
 	
 
-<h1>printing star stair 2</h1>
+<h1>embedded worker의 기초</h1>
 
 <ul class="post-metadata pt-2">
-	<li><time datetime="2023-05-19">19 May 2023</time></li>
+	<li><time datetime="2023-11-08">08 November 2023</time></li>
 </ul>
 
 
+		<aside>
+			<nav class="toc" >
+        <ol><li><a href="#embedded-worker">embedded worker란</a></li></ol>
+      </nav>
+		</aside>
+
 
 	<section class="post-content markdown-body" data-pagefind-body>
-		<p>좌우 반전인 계단을 만들어보자</p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Stair2</span> <span class="token punctuation">{</span>
-	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		<span class="token keyword">int</span> rows <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> rows<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> rows <span class="token operator">-</span> i<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token char">' '</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> i<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<pre class="language-shell" tabindex="0"><code class="language-shell">      *
-     **
-    ***
-   ****
-  *****
- ******</code></pre>
-<p>여기서 잠깐 피라미드에 대해 설명하겠습니다.</p>
-<p>피라미드와 역방향 계단찍기는 아주 약간의 차이를 빼고는 거의 같은 코드입니다.</p>
-<p>바로 별찍기를 담당하는 반복문의 print 함수에 공백 문자가 하나 추가되었다는 것입니다.
-이는 역방향 계단을 피라미드로 바꿔놓습니다.</p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Pyramid</span> <span class="token punctuation">{</span>
+		<br>
+<br>
+<br>
+<h2 id="embedded-worker" tabindex="-1">embedded worker란 <a class="header-anchor" href="#embedded-worker">#</a></h2>
+<p>자세한 내용은 MDN의 using web workers라는 페이지에 소개되어 있습니다.
+[https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers]</p>
+<p>javascript의 worker는 다른 언어들과는 다르게 (심지어 거의 같은 싱글스레드 + event loop 조합인 dart에서도 지원하는..)
+thread를 생성하고 사용하는 것이 조금은 까다롭습니다.</p>
+<p>thread를 생성하기 위해서는 javascript 파일을 새로 생성하고 생성된 파일의 경로를 인자로 넘겨주면 되는데요,
+언뜻보면 코드가 분리되어 좋은게 아니냐라고 생각 할 수 있지만 문제는 해당 방법 이외의 다른 대안인 바로 함수를 넘기거나 값을 넘기는 등의
+api가 없다는 것입니다.</p>
+<p>사실 정확히는 파일의 경로는 아닙니다. URL 주소를 넘기는 것인데요 이를 활용해 embedded worker를 구현해보겠습니다.</p>
+<p>순서는 아래와 같습니다.</p>
+<ul>
+<li>코드를 blob으로 쪼갭니다.</li>
+<li>blob을 url로 변환합니다.</li>
+<li>worker 객체를 생성해 url을 넘겨줍니다.</li>
+</ul>
+<p>구현은 아래와 같습니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js">    <span class="token keyword">function</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 
-	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		<span class="token keyword">int</span> rows <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> rows<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> rows <span class="token operator">-</span> i<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"_"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> i<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"* "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<pre><code>_____* 
-____* * 
-___* * * 
-__* * * * 
-_* * * * * 
+    <span class="token keyword">const</span> blob <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Blob</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">onmessage = ({data}) => postMessage((</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>f<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)(data));</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'text/javascript'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token constant">URL</span><span class="token punctuation">.</span><span class="token function">createObjectURL</span><span class="token punctuation">(</span>blob<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> worker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Worker</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<div class="img-container"><img class="border-radius10" src="/img/rxtjGnm1py-1200.webp" width="100%" height="auto" alt="startable 예시 이미지" loading="lazy" decoding="async"></div>
-<p>이런 별찍기 문제를 푸는 경우 그림을 그려보는 것이 아주 좋은 풀이법이 됩니다.</p>
-<p>반복문이 중첩 구조를 이루고 있고,
-중첩 내부에 다시 반복문이 여러개 들어가기 시작하면 아무래도 머리속으로
-그려내기가 쉽지 않습니다. 🤯</p>
-<pre class="language-java" tabindex="0"><code class="language-java">	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		<span class="token keyword">int</span> rows <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> rows<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> rows <span class="token operator">-</span> i<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"_"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> i<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"* "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
+<p>worker를 생성하고 worker가 일을 하고 값을 반환하는 것은 비동기로 처리됩니다.
+저희는 브라우저에서 정해준 api를 통해 동기를 비동기로 변경 할 수 있는데요, 대표적으로 timeout 함수들이 그렇습니다.</p>
+<p>단, timeout 함수에 넘겨준 콜백함수는 일정 조건을 만족하고 나서 다시 main thread를 점유하며 task를 처리합니다.
+그저 일의 순서를 뒤로 미룬것과 같은 방식입니다. 결국 main thread를 점유당하는 것은 그대로입니다.</p>
+<p>그렇다면 방법은 thread를 사용하는 것입니다.</p>
+<p>브라우저 환경의 대부분은 worker를 지원하고 있지만 그렇지 못한 경우를 대비하는 것도 잊으면 안됩니다.</p>
+<p>원하는 스펙을 하나씩 나열하겠습니다.</p>
+<ul>
+<li>worker를 사용 할 수 없다면 입력받은 함수를 main thread에서 그대로 실행시켰으면 좋겠습니다.</li>
+<li>inline으로 함수를 입력하고 값을 반환받고 싶습니다.</li>
+</ul>
+<p>이정도입니다.</p>
+<p>worker의 생성은 오버헤드가 존재하므로 브라우저에서는 비동기로 생성됩니다.
+worker 자체가 비동기이므로 저희가 넘겨주는 함수도 비동기로 스펙인 Promise를 따라야합니다.</p>
+<p>아래는 해당 내용을 구현한 함수입니다.</p>
+<pre><code>const process = f =&gt; {
+  const isOkWorker = Blob &amp;&amp; URL &amp;&amp; URL.createObjectURL;
+
+  if(isOkWorker) {
+    const blob = new Blob([`onmessage = ({data}) =&gt; postMessage((${f})(data));`], { type: 'text/javascript' });
+    const url = URL.createObjectURL(blob);
+    const worker = new Worker(url);
+
+    const onMessage = (res) =&gt; worker.onmessage = ({data}) =&gt; res(data);
+    const onError = (rej) =&gt; worker.onerror = ({data}) =&gt; rej(data);
+
+    return data =&gt; new Promise((res, rej) =&gt; {
+      onMessage(res);
+      onError(rej);
+      worker.postMessage(data)
+    })
+  } else {
+    return data =&gt; f(data);
+  }
+}
 </code></pre>
-<p>이런 코드만 보고 바로 이해를 한다는건 쉽지 않습니다.
-무엇을 뜻하는지도 모르겠고 변수명도 의미가 없기 때문이죠</p>
-<p>코드를 좀 수정해봅시다.</p>
-<pre class="language-java" tabindex="0"><code class="language-java">	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		<span class="token keyword">int</span> rows <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> row <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> row <span class="token operator">&lt;</span> rows<span class="token punctuation">;</span> row<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			<span class="token comment">// 빈칸을 찍는다.</span>
-			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> empty <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> empty <span class="token operator">&lt;=</span> rows <span class="token operator">-</span> row<span class="token punctuation">;</span> empty<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"_"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			<span class="token comment">// 별을 찍는다.</span>
-			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> star <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> star <span class="token operator">&lt;=</span> row<span class="token punctuation">;</span> star<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"* "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			<span class="token comment">// 다 찍었으니 다음 줄로 넘어간다.</span>
-			<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span></code></pre>
-<p>이제 좀 보기가 편해졌을지 모르겠습니다. 반복문의 변수를 empty를 찍는 용도
-star를 찍는 용도로 나누어 보았습니다.</p>
-<p>하지만 무엇보다 중요한건 왜 이런 함수가 나오는가? 입니다.</p>
-<div class="img-container"><img class="border-radius10" src="/img/rxtjGnm1py-1200.webp" width="100%" height="auto" alt="startable 예시 이미지" loading="lazy" decoding="async"></div>
-<p>다시 위 이미지를 보면 공백을 4개 찍습니다.
-4개는 어떻게 나온걸까요? 역계단의 공백 4개를 찍은 것과 같습니다.
-하지만 피라미드라 하면 이렇게 생각 할 수 있습니다.</p>
-<p>(공백은 설명시에 안좋으니 공백은 a로 별은 ⭐️로 찍겠습니다.)</p>
-<p>aa⭐️aa</p>
-<p>a⭐️⭐️⭐️a</p>
-<p>⭐️⭐️⭐️⭐️⭐️</p>
-<p>네 맞습니다. 이것도 피라미드입니다. 그냥 피라미드 모양이면 다 피라미드이죠</p>
-<p>그렇다면</p>
-<p>aaaa⭐️</p>
-<p>aaa⭐️a⭐️</p>
-<p>aa⭐️a⭐️a⭐️</p>
-<p>a⭐️a⭐️a⭐️a⭐️</p>
-<p>이것도 피라미드라고 할 수 있겠습니다.
-그것도 rows의 갯수만큼 나온 피라미드입니다.</p>
-<p>감사합니다.</p>
+<p>사용하는 방법은 아래와 같습니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> fib <span class="token operator">=</span> <span class="token function">process</span><span class="token punctuation">(</span>blockCpuFor1Sec<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">fib</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'result: '</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>mainthread를 block 하는 cpu intensive한 함수를 thread에 위임하고 해당 함수의 결과값을 비동기로 받습니다.
+timeout 함수와는 다르게 병렬로 실행되어진다는 점입니다.</p>
+<p>이와 비슷한 로직을 dart에서는 Isolate로 이름 짓고 사용하고 있습니다.</p>
+<p>위 코드는 hikaMaeng님의 블로그와 MDN을 참조했습니다.</p>
 
 	</section>
 <br>
 <br>
 <br>
-<ul><li>이전 글: <a href="/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing star stair 1/">printing star stair 1</a></li><li>다음 글: <a href="/blog/CS/BROWSER/While handling an `&lt;iframe&gt;`, I found out something/">iframe을 다루면서 느낀 점</a></li>
+<ul><li>이전 글: <a href="/blog/Engineer-Information-Processing/impl-postfix-javascript/">postfix, infix, prefix를 알아보고 postfix js로 구현하기</a></li>
 </ul>
 
 </article>

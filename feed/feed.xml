@@ -4,12 +4,88 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-11-05T21:09:26Z</updated>
+	<updated>2023-11-08T12:38:10Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>embedded worker의 기초</title>
+		<link href="https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-for-main-thread/"/>
+		<updated>2023-11-08T12:38:10Z</updated>
+		<id>https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-for-main-thread/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;embedded-worker&quot; tabindex=&quot;-1&quot;&gt;embedded worker란 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-for-main-thread/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;자세한 내용은 MDN의 using web workers라는 페이지에 소개되어 있습니다.
+[https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers]&lt;/p&gt;
+&lt;p&gt;javascript의 worker는 다른 언어들과는 다르게 (심지어 거의 같은 싱글스레드 + event loop 조합인 dart에서도 지원하는..)
+thread를 생성하고 사용하는 것이 조금은 까다롭습니다.&lt;/p&gt;
+&lt;p&gt;thread를 생성하기 위해서는 javascript 파일을 새로 생성하고 생성된 파일의 경로를 인자로 넘겨주면 되는데요,
+언뜻보면 코드가 분리되어 좋은게 아니냐라고 생각 할 수 있지만 문제는 해당 방법 이외의 다른 대안인 바로 함수를 넘기거나 값을 넘기는 등의
+api가 없다는 것입니다.&lt;/p&gt;
+&lt;p&gt;사실 정확히는 파일의 경로는 아닙니다. URL 주소를 넘기는 것인데요 이를 활용해 embedded worker를 구현해보겠습니다.&lt;/p&gt;
+&lt;p&gt;순서는 아래와 같습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;코드를 blob으로 쪼갭니다.&lt;/li&gt;
+&lt;li&gt;blob을 url로 변환합니다.&lt;/li&gt;
+&lt;li&gt;worker 객체를 생성해 url을 넘겨줍니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;구현은 아래와 같습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; blob &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Blob&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;onmessage = ({data}) =&gt; postMessage((&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;f&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;)(data));&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;text/javascript&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; url &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;URL&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;createObjectURL&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;blob&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; worker &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Worker&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;url&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;worker를 생성하고 worker가 일을 하고 값을 반환하는 것은 비동기로 처리됩니다.
+저희는 브라우저에서 정해준 api를 통해 동기를 비동기로 변경 할 수 있는데요, 대표적으로 timeout 함수들이 그렇습니다.&lt;/p&gt;
+&lt;p&gt;단, timeout 함수에 넘겨준 콜백함수는 일정 조건을 만족하고 나서 다시 main thread를 점유하며 task를 처리합니다.
+그저 일의 순서를 뒤로 미룬것과 같은 방식입니다. 결국 main thread를 점유당하는 것은 그대로입니다.&lt;/p&gt;
+&lt;p&gt;그렇다면 방법은 thread를 사용하는 것입니다.&lt;/p&gt;
+&lt;p&gt;브라우저 환경의 대부분은 worker를 지원하고 있지만 그렇지 못한 경우를 대비하는 것도 잊으면 안됩니다.&lt;/p&gt;
+&lt;p&gt;원하는 스펙을 하나씩 나열하겠습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;worker를 사용 할 수 없다면 입력받은 함수를 main thread에서 그대로 실행시켰으면 좋겠습니다.&lt;/li&gt;
+&lt;li&gt;inline으로 함수를 입력하고 값을 반환받고 싶습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;이정도입니다.&lt;/p&gt;
+&lt;p&gt;worker의 생성은 오버헤드가 존재하므로 브라우저에서는 비동기로 생성됩니다.
+worker 자체가 비동기이므로 저희가 넘겨주는 함수도 비동기로 스펙인 Promise를 따라야합니다.&lt;/p&gt;
+&lt;p&gt;아래는 해당 내용을 구현한 함수입니다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;const process = f =&amp;gt; {
+  const isOkWorker = Blob &amp;amp;&amp;amp; URL &amp;amp;&amp;amp; URL.createObjectURL;
+
+  if(isOkWorker) {
+    const blob = new Blob([`onmessage = ({data}) =&amp;gt; postMessage((${f})(data));`], { type: &#39;text/javascript&#39; });
+    const url = URL.createObjectURL(blob);
+    const worker = new Worker(url);
+
+    const onMessage = (res) =&amp;gt; worker.onmessage = ({data}) =&amp;gt; res(data);
+    const onError = (rej) =&amp;gt; worker.onerror = ({data}) =&amp;gt; rej(data);
+
+    return data =&amp;gt; new Promise((res, rej) =&amp;gt; {
+      onMessage(res);
+      onError(rej);
+      worker.postMessage(data)
+    })
+  } else {
+    return data =&amp;gt; f(data);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;사용하는 방법은 아래와 같습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; fib &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;blockCpuFor1Sec&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;result: &#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; res&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;mainthread를 block 하는 cpu intensive한 함수를 thread에 위임하고 해당 함수의 결과값을 비동기로 받습니다.
+timeout 함수와는 다르게 병렬로 실행되어진다는 점입니다.&lt;/p&gt;
+&lt;p&gt;이와 비슷한 로직을 dart에서는 Isolate로 이름 짓고 사용하고 있습니다.&lt;/p&gt;
+&lt;p&gt;위 코드는 hikaMaeng님의 블로그와 MDN을 참조했습니다.&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>postfix, infix, prefix를 알아보고 postfix js로 구현하기</title>
