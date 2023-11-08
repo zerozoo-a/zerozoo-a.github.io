@@ -30,11 +30,9 @@ api가 없다는 것입니다.
 
 ```js
     function f() {}
-
     const blob = new Blob([`onmessage = ({data}) => postMessage((${f})(data));`], { type: 'text/javascript' });
     const url = URL.createObjectURL(blob);
     const worker = new Worker(url);
-
 ```
 
 worker를 생성하고 worker가 일을 하고 값을 반환하는 것은 비동기로 처리됩니다.
@@ -59,7 +57,7 @@ worker 자체가 비동기이므로 저희가 넘겨주는 함수도 비동기�
 
 아래는 해당 내용을 구현한 함수입니다.
 
-```
+```js
 const process = f => {
   const isOkWorker = Blob && URL && URL.createObjectURL;
 
