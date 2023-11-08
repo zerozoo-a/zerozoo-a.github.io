@@ -3019,10 +3019,71 @@ worker 자체가 비동기이므로 저희가 넘겨주는 함수도 비동기�
 <p>사용하는 방법은 아래와 같습니다.</p>
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> fib <span class="token operator">=</span> <span class="token function">process</span><span class="token punctuation">(</span>blockCpuFor1Sec<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">fib</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'result: '</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<ul>
+<li>위 코드는 hikaMaeng님의 블로그와 MDN을 참조했습니다.</li>
+</ul>
 <p>mainthread를 block 하는 cpu intensive한 함수를 thread에 위임하고 해당 함수의 결과값을 비동기로 받습니다.
 timeout 함수와는 다르게 병렬로 실행되어진다는 점입니다.</p>
 <p>이와 비슷한 로직을 dart에서는 Isolate로 이름 짓고 사용하고 있습니다.</p>
-<p>위 코드는 hikaMaeng님의 블로그와 MDN을 참조했습니다.</p>
+<p>함수는 subroutine을 호출 할 수 있습니다.
+위에서 구현한대로는 subroutine을 호출 하는 경우 rejected 되고 마는데요,
+이유는 생성된 worker thread에서 subroutine의 존재를 알 수 없기 때문입니다.</p>
+<p>message로 넘겨준 것은 단일 함수이므로 scope가 서로 다른 worker는 넘겨받은 함수만을 이해할 뿐,
+다른 객체에 대한 것은 알 수 없습니다.</p>
+<p>따라서 아래와 같이 수정해줍니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">/**
+ * 
+ * @param {Function} f
+ * @param {Function[]} fs  
+ * @returns 
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">process</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function-variable function">f</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token operator">...</span>fs<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> isOkWorker <span class="token operator">=</span> Blob <span class="token operator">&amp;&amp;</span> <span class="token constant">URL</span> <span class="token operator">&amp;&amp;</span> <span class="token constant">URL</span><span class="token punctuation">.</span>createObjectURL<span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span>isOkWorker<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> meta <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">onmessage = ({data}) => {
+      </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token punctuation">[</span>fs<span class="token punctuation">]</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> // subroutine 함수를 함께 넘겨줌
+      return postMessage((</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>f<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)(data))
+    };</span><span class="token template-punctuation string">`</span></span>
+    <span class="token keyword">const</span> blob <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Blob</span><span class="token punctuation">(</span><span class="token punctuation">[</span>meta<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'text/javascript'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token constant">URL</span><span class="token punctuation">.</span><span class="token function">createObjectURL</span><span class="token punctuation">(</span>blob<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> worker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Worker</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">onMessage</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=></span> worker<span class="token punctuation">.</span><span class="token function-variable function">onmessage</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span>data<span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">res</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">onError</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">rej</span><span class="token punctuation">)</span> <span class="token operator">=></span> worker<span class="token punctuation">.</span><span class="token function-variable function">onerror</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">rej</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> <span class="token parameter">data</span> <span class="token operator">=></span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res<span class="token punctuation">,</span> rej</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token function">onMessage</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">onError</span><span class="token punctuation">(</span>rej<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      worker<span class="token punctuation">.</span><span class="token function">postMessage</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token parameter">data</span> <span class="token operator">=></span> <span class="token function">f</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>사용 방법도 함께 알아보겠습니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">function</span> <span class="token function">caller</span><span class="token punctuation">(</span><span class="token parameter">a</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">callee</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">callee</span><span class="token punctuation">(</span><span class="token parameter">a</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">return</span> a
+<span class="token punctuation">}</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> ca <span class="token operator">=</span> <span class="token function">process</span><span class="token punctuation">(</span>caller<span class="token punctuation">,</span> callee<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> awaitedCa <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">ca</span><span class="token punctuation">(</span><span class="token string">'hi'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"🚀 ~ file: main.js:22 ~ main ~ awaitedCa:"</span><span class="token punctuation">,</span> awaitedCa<span class="token punctuation">)</span> <span class="token comment">// hi</span>
+<span class="token punctuation">}</span>
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>여기서 재밌는 점은 caller와 callee 내부에 log를 찍어도 보여지지 않는다는 것인데요,
+log는 생성 및 분리된 스코프인 thread 내부에서 실행되므로 main에서는 해당 출력을 확인 할 수 없습니다.</p>
+<p>또 하나는 rest parameter를 사용해 얼마든지 원하는 만큼 subroutine을 추가해줄 수 있다는 점입니다.
+단, 이런 모양이 불편하다면 class 형태로 잘 패키징해서 하나만 넘기는 것도 좋을 것입니다.</p>
+<p>이제 욕심을 부린다면 메모리 allocate가 큰 변수의 경우 shared memory를 사용해 계산하면 좋겠습니다만
+atomic에 대한 내용은 mdn이나 많은 고수분들이 적극 권장하지 않는 분야입니다.
+따라서 좀 더 성숙해졌을 5년 정도 뒤에 다루어보겠습니다.</p>
+<p>이상으로 긴 글 봐주셔서 감사합니다.</p>
 
 	</section>
 <br>
