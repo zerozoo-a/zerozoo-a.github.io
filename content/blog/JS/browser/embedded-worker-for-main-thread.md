@@ -85,9 +85,86 @@ const process = f => {
 const fib = process(blockCpuFor1Sec);
 fib().then(res => console.log('result: ', res));
 ```
+- 위 코드는 hikaMaeng님의 블로그와 MDN을 참조했습니다.
+
 mainthread를 block 하는 cpu intensive한 함수를 thread에 위임하고 해당 함수의 결과값을 비동기로 받습니다.
 timeout 함수와는 다르게 병렬로 실행되어진다는 점입니다.
 
 이와 비슷한 로직을 dart에서는 Isolate로 이름 짓고 사용하고 있습니다.
 
-위 코드는 hikaMaeng님의 블로그와 MDN을 참조했습니다.
+함수는 subroutine을 호출 할 수 있습니다.
+위에서 구현한대로는 subroutine을 호출 하는 경우 rejected 되고 마는데요,
+이유는 생성된 worker thread에서 subroutine의 존재를 알 수 없기 때문입니다.
+
+message로 넘겨준 것은 단일 함수이므로 scope가 서로 다른 worker는 넘겨받은 함수만을 이해할 뿐,
+다른 객체에 대한 것은 알 수 없습니다.
+
+따라서 아래와 같이 수정해줍니다.
+
+```js
+/**
+ * 
+ * @param {Function} f
+ * @param {Function[]} fs  
+ * @returns 
+ */
+export const process = (f = () => {}, ...fs) => {
+  const isOkWorker = Blob && URL && URL.createObjectURL;
+
+  if(isOkWorker) {
+    const meta = `onmessage = ({data}) => {
+      ${[fs]} // subroutine 함수를 함께 넘겨줌
+      return postMessage((${f})(data))
+    };`
+    const blob = new Blob([meta], { type: 'text/javascript' });
+    const url = URL.createObjectURL(blob);
+    const worker = new Worker(url);
+
+    const onMessage = (res) => worker.onmessage = ({data}) => res(data)
+    const onError = (rej) => worker.onerror = (err) => rej(err)
+
+    return data => new Promise((res, rej) => {
+      onMessage(res);
+      onError(rej);
+      worker.postMessage(data)
+    })
+  } else {
+    return data => f(data);
+  }
+}
+```
+
+사용 방법도 함께 알아보겠습니다.
+
+```js
+function caller(a){
+  return callee(a)
+}
+
+function callee(a){
+  return a
+}
+
+async function main () {
+  const ca = process(caller, callee)
+  const awaitedCa = await ca('hi');
+  console.log("🚀 ~ file: main.js:22 ~ main ~ awaitedCa:", awaitedCa) // hi
+}
+main();
+```
+
+여기서 재밌는 점은 caller와 callee 내부에 log를 찍어도 보여지지 않는다는 것인데요,
+log는 생성 및 분리된 스코프인 thread 내부에서 실행되므로 main에서는 해당 출력을 확인 할 수 없습니다.
+
+또 하나는 rest parameter를 사용해 얼마든지 원하는 만큼 subroutine을 추가해줄 수 있다는 점입니다.
+단, 이런 모양이 불편하다면 class 형태로 잘 패키징해서 하나만 넘기는 것도 좋을 것입니다.
+
+이제 욕심을 부린다면 메모리 allocate가 큰 변수의 경우 shared memory를 사용해 계산하면 좋겠습니다만
+atomic에 대한 내용은 mdn이나 많은 고수분들이 적극 권장하지 않는 분야입니다.
+따라서 좀 더 성숙해졌을 5년 정도 뒤에 다루어보겠습니다.
+
+
+이상으로 긴 글 봐주셔서 감사합니다.
+
+
+
