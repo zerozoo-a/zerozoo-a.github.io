@@ -4,12 +4,113 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-11-08T12:38:10Z</updated>
+	<updated>2023-11-11T11:53:24Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>embedded worker 2 thread를 미리 &quot;만들기만 하고 싶을 때&quot;</title>
+		<link href="https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-2/"/>
+		<updated>2023-11-11T11:53:24Z</updated>
+		<id>https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-2/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;embedded-worker-idle&quot; tabindex=&quot;-1&quot;&gt;embedded worker를 idle하게 모아보자 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-2/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;주의사항&lt;/li&gt;
+&lt;li&gt;개선점&lt;/li&gt;
+&lt;li&gt;정리&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;주의사항 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-2/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;아래 코드는 &lt;code&gt;eval&lt;/code&gt;을 사용하고 있습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;eval&lt;/code&gt;의 사용을 원치 않는 경우 해당 &lt;strong&gt;코드는 사용하면 안됩니다.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;worker-thread&quot; tabindex=&quot;-1&quot;&gt;worker thread를 그냥 만들기만 하는 것에 대해 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-2/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;worker thread를 생성,
+이를 변수에 store 했다가 나중에 일감을 던져주는 형태를 구현하기 위해
+임시로 제작한 함수입니다.&lt;/p&gt;
+&lt;p&gt;개선방안을 생각하고 있습니다.&lt;/p&gt;
+&lt;p&gt;구현은 &lt;a href=&quot;https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-for-main-thread/&quot;&gt;지난 글&lt;/a&gt;에서 사용한
+함수를 조금 변경 한 정도입니다.&lt;/p&gt;
+&lt;p&gt;코드는 아래와 같습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// thread.js&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;thread2&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;isOkWorker&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; meta &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;onmessage = ({data}) =&gt; {
+    const evaluatedFn = eval(data)(); // 2
+    return postMessage({ evaluatedFn }) // send message to worker
+  }&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; worker &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;makeWorker&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;meta&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;onMessage&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;worker&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function-variable function&quot;&gt;onmessage&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; data &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;data&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;onError&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;rej&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;worker&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function-variable function&quot;&gt;onerror&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;rej&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;data&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;res&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; rej&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; p &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; data&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 1&lt;/span&gt;
+      &lt;span class=&quot;token function&quot;&gt;onMessage&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;res&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token function&quot;&gt;onError&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;rej&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      worker&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;postMessage&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;눈에 띄게 변경된 점은 eval의 사용과 변수 p에서 data를 serializable하게 변경했다는 점입니다.
+그리고 사용처인 main.js를 바로 확인해보겠습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// main.js&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; thread2 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./thread.js&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; b &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;thread2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;thread를 생성만하고 별다른 액션이 없습니다.
+thread는 생성되고 다음 함수가 들어올 때 까지 별다른 일을 하지 않습니다.&lt;/p&gt;
+&lt;p&gt;일을 주는 형태는 아래와 같습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; thread2 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./thread.js&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; b &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;thread2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; b2 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;b2:&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; b2&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 1&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;원래의 형태에선 thread를 생성 할 때, 일을 무조건 줘야만 했습니다.(함수)
+이래선 thread를 cpu의 idle 타임에 틈틈히 만들어 두는 것은 어렵습니다.&lt;/p&gt;
+&lt;p&gt;실제로 thread는 함수를 받아 해당 함수를 실행시키고 값을 반환하는 형태이며,
+함수를 다시 넘겨주는 것이 불가능하기 때문입니다.&lt;/p&gt;
+&lt;p&gt;물론 처음 실행엔 thread를 생성하는 오버헤드를 감수하고 worker를 저장해두었다가 다시 사용하는
+방법도 있겠습니다만, 뭔가 마음에 들진 않았습니다.&lt;/p&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;개선점 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-2/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;eval&quot; tabindex=&quot;-1&quot;&gt;eval &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-2/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;개선 할 점은 물론 eval을 빼는 것입니다.&lt;/p&gt;
+&lt;p&gt;new Function도 eval과 비슷한 이슈를 가지고 있습니다.&lt;/p&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/browser/embedded-worker-2/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;생각보다 원하는 스펙의 worker thread 생성 함수를 만드는게 어렵다고 느꼈습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;브라우저에서 사용 할 경우 requestIdleTime 함수에 thread를 생성하는 함수를 넣어두는 것이 좋습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;위 함수는 일반적인 경우에서 사용하기 힘든 형태입니다.
+이유는 점점 코드를 읽기 어려워지고 있고, eval의 위험성을 굳이 감수할 필요는 전혀 없기 때문입니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;위 배너 이미지를 보게 되면 thread가 생성된 것을 볼 수 있습니다.
+이름 붙은 Main thread와 아래의 이상한 이름을 가진 thread가 있는데 그것이 바로 위 함수로 생성된
+thread입니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>embedded worker의 기초</title>
