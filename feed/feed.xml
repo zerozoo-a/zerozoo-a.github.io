@@ -4,12 +4,89 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-11-11T11:53:24Z</updated>
+	<updated>2023-11-15T22:04:08Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>IPSec에</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/"/>
+		<updated>2023-11-15T22:04:08Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;ipsec&quot; tabindex=&quot;-1&quot;&gt;IPSec &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;IPSec는 흔히 OSI 7 Layer의 3 계층인 IP계층에서 무결성과 인증을 보장하는 통신 프로토콜 세트입니다.
+IPSec은 암호와와 인증을 추가해 프로토콜을 더욱 안전하게 만듭니다.&lt;/p&gt;
+&lt;p&gt;IPSec는 IP 패킷의 보안성을 제공하기 위해 2가지 헤더를 정의합니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AH 헤더: 무결성, 인증&lt;/li&gt;
+&lt;li&gt;ESP 헤더: 무결성, 인증, 암호화(기밀성)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;ah-authentication-header&quot; tabindex=&quot;-1&quot;&gt;AH(Authentication Header) 헤더 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/oMhQZxVoV1-357.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;image alt&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
+(이미지 출처: ktword.co.kr)
+&lt;p&gt;AH 헤더는 데이터의 무결서오가 출처의 인증을 제공합니다.
+통신간 패킷이 변경되지 않고 예상된 송신자로부터 왔음을 보장합니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;데이터가 패킷 단위로 쪼개져 이동하는데 이 패킷이 다른 악의적인 의도로 들어온 패킷인지(무결성, 인증) 아닌지를
+확인해야 하므로 AH헤더가 필요함&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;esp-encapsulating-security-payload&quot; tabindex=&quot;-1&quot;&gt;ESP(Encapsulating Security Payload) 헤더 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/gPWzIkqZ6v-412.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;image alt&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
+(이미지 출처: ktword.co.kr)
+&lt;p&gt;ESP는 무결성, 인증, 그리고 기밀성을 제공합니다.
+ESP는 데이터를 암호화해 중간자가 데이터를 읽을 수 없도록 합니다.&lt;/p&gt;
+&lt;p&gt;인터넷 통신이 일어날 때, 통신이 싣고 가는 데이터를 암호화하는 기술로, 악의적인 의도를 가진자가
+이동하는 데이터를 열어 해독 하지 못하게 암호화합니다.&lt;/p&gt;
+&lt;p&gt;위 이미지처럼
+ESP 헤더가 payload 앞에,
+ESP Trailer가 payload 뒤에 위치합니다.&lt;/p&gt;
+&lt;p&gt;이는 암호화되고 인증되는 데이터를 감싸는 역할을 하게됩니다.&lt;/p&gt;
+&lt;h4 id=&quot;esp-header&quot; tabindex=&quot;-1&quot;&gt;ESP header &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;SPI (Security Parameter Index) (32 비트)
+&lt;ul&gt;
+&lt;li&gt;임의 32 비트 값으로, 보안연관의 식별용&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Sequence Number (32 비트)
+&lt;ul&gt;
+&lt;li&gt;재전송공격 방지&lt;/li&gt;
+&lt;li&gt;1부터 1씩 증가하다가 232까지 가능&lt;/li&gt;
+&lt;li&gt;232 이후, SA가 재설정되어야 함&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;esp-trailer&quot; tabindex=&quot;-1&quot;&gt;ESP Trailer &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;payload 데이터
+&lt;ul&gt;
+&lt;li&gt;ESP에 의해 암호화 되는 실제로 전송되어야 할 데이터&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;패딩(padding)
+&lt;ul&gt;
+&lt;li&gt;암호화 알고리즘의 요구에 맞게 늘었다 줄었다하는 데이터 블록&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;pad length
+&lt;ul&gt;
+&lt;li&gt;패딩의 길이&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;next header
+&lt;ul&gt;
+&lt;li&gt;payload 필드에 포함된 데이터 종류를 식별해 줄 필드&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>embedded worker 2 thread를 미리 &quot;만들기만 하고 싶을 때&quot;</title>
