@@ -36,7 +36,7 @@ join은 크게 두 가지로 나뉘어진다.
 3. 교차 join 
 4. 셀프 join 
 
-#### 내부 join
+#### 내부 join: Inner join
 
 내부 join은 두 테이블의 공통된 column을 기준으로 데이터를 결합합니다.
 
