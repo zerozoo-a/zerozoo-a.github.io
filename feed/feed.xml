@@ -4,12 +4,83 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-11-23T22:07:03Z</updated>
+	<updated>2023-11-24T21:56:29Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>SQL cross join</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/"/>
+		<updated>2023-11-24T21:56:29Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;joins&quot; tabindex=&quot;-1&quot;&gt;논리적 joins &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;논리적 join은 다시 아래의 네 가지로 나뉘어집니다.
+오늘은 이 중에서 Cross Join에 대해 알아보겠습니다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;Inner Join&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;Outer ️Join&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/&quot;&gt;Cross Join ⭐&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;Self Join &lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;cross-join&quot; tabindex=&quot;-1&quot;&gt;Cross Join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Cross Join은 두 테이블 간 가능한 모든 조합을 생성하는 Join입니다.&lt;/p&gt;
+&lt;p&gt;교차 조인은 테이블 간 일치 조건을 기반으로 조인하지 않습니다.
+첫 번째 테이블과 두 번째 테이블의 모든 행을 조합해 결과를 생성합니다.&lt;/p&gt;
+&lt;h2 id=&quot;cross-join-1&quot; tabindex=&quot;-1&quot;&gt;교차 조인: Cross Join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;교차 조인의 조인 순서&lt;/p&gt;
+&lt;p&gt;두 테이블 A, B가 있을 때,&lt;/p&gt;
+&lt;p&gt;첫 번째 테이블인 A의 첫 행은
+두 번째 테이블인 B 테이블의 각 행과 조합되어집니다.&lt;/p&gt;
+&lt;p&gt;간단한 예시를 들어보겠습니다.&lt;/p&gt;
+&lt;p&gt;아주 간단한 테이블 A가 있다고 하겠습니다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;A&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;교차 조인될 테이블 B는 아래와 같다고 하겠습니다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;B&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;X&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;A 테이블의 첫 행인 1,
+B 테이블의 모든 행과 결합해보겠습니다.&lt;/p&gt;
+&lt;p&gt;|A||B|
+|--|--|
+|1|X|
+|1|Y|&lt;/p&gt;
+&lt;p&gt;테이블 A의 행은 하나이므로 B 테이블의 X, Y 두 행과 각각 결합되었습니다.&lt;/p&gt;
+&lt;p&gt;만약 조인의 결과는 행이 총 2개, 열이 2개 나왔습니다.&lt;/p&gt;
+&lt;p&gt;행의 개수는 1(A 테이블의 행의 수) * 2(B 테이블의 행의 수)가 되었습니다.
+열의 개수는 A, B로 2 (1 + 1)개가 되었습니다.&lt;/p&gt;
+&lt;p&gt;테이블의 조인 방법도 독특합니다만 결과도 독특합니다.&lt;/p&gt;
+&lt;p&gt;분석이나 테스트용으로 주로 사용됩니다.&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>SQL Outer join</title>
@@ -19,15 +90,19 @@
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h1 id=&quot;outer-join&quot; tabindex=&quot;-1&quot;&gt;Outer Join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;Inner join에 이어서 Outer join에 대해 알아보겠습니다.&lt;/p&gt;
 &lt;h2 id=&quot;joins&quot; tabindex=&quot;-1&quot;&gt;논리적 joins &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;논리적 join은 다시 아래의 네 가지로 나뉘어집니다.
+오늘은 이 중에서 Outer Join에 대해 알아보겠습니다.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;내부 join&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;외부 join ⭐️&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;교차 join&lt;/li&gt;
-&lt;li&gt;셀프 join&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;Inner Join&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;Outer Join ️⭐️&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/&quot;&gt;Cross  Join&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;Self Join &lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h1 id=&quot;outer-join&quot; tabindex=&quot;-1&quot;&gt;Outer Join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;외부조인은 두 테이블을 결합해 하나의 조인된 결과를 반환합니다.&lt;/p&gt;
+&lt;p&gt;두 테이블이 조인 될 때, &lt;strong&gt;일치하지 않는 값도 포함&lt;/strong&gt;합니다.
+일치하지 않아 값이 존재하지 않는 경우 NULL을 채워 넣습니다.&lt;/p&gt;
 &lt;h2 id=&quot;outer-join-1&quot; tabindex=&quot;-1&quot;&gt;외부 조인: Outer join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;외부조인의 특징&lt;/p&gt;
 &lt;ul&gt;
@@ -417,8 +492,18 @@ SELECT 한 모든 값이 정상적으로 나올 것입니다.&lt;/li&gt;
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
+&lt;h2 id=&quot;joins&quot; tabindex=&quot;-1&quot;&gt;논리적 joins &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;논리적 join은 다시 아래의 네 가지로 나뉘어집니다.
+오늘은 이 중에서 Inner Join에 대해 알아보겠습니다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;Inner Join ⭐&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;Outer Join ️&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/&quot;&gt;Cross Join &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;Self Join &lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h1 id=&quot;inner-join&quot; tabindex=&quot;-1&quot;&gt;Inner Join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;오늘은 join의 종류에 대해 알아보고 Inner Join을 정리해보겠습니다.&lt;/p&gt;
+&lt;p&gt;내부조인은 두 테이블을 결합해 하나의 조인된 결과를 반환합니다.&lt;/p&gt;
+&lt;p&gt;두 테이블이 조인 될 때, &lt;strong&gt;일치하는 값들만을 포함&lt;/strong&gt;합니다.&lt;/p&gt;
 &lt;h2 id=&quot;join&quot; tabindex=&quot;-1&quot;&gt;join이란 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -434,15 +519,6 @@ SELECT 한 모든 값이 정상적으로 나올 것입니다.&lt;/li&gt;
 &lt;ol&gt;
 &lt;li&gt;논리적 join&lt;/li&gt;
 &lt;li&gt;물리적 join&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;join-2&quot; tabindex=&quot;-1&quot;&gt;논리적 join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;논리적 join은 다시 아래의 네 가지로 나뉘어집니다.
-오늘은 이 중에서 내부 join에 대해 알아보겠습니다.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;내부 join&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;외부 join ⭐️&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;교차 join&lt;/li&gt;
-&lt;li&gt;셀프 join&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h4 id=&quot;join-inner-join&quot; tabindex=&quot;-1&quot;&gt;내부 join: Inner join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;내부 join은 두 테이블의 공통된 column을 기준으로 데이터를 결합합니다.&lt;/p&gt;
