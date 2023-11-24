@@ -7,16 +7,22 @@ coverURL: https://images.unsplash.com/photo-1556484687-30636164638b?q=80&w=2874&
 <br />
 <br />
 
-# Outer Join
-Inner join에 이어서 Outer join에 대해 알아보겠습니다.
-
 ## 논리적 joins
 
-1. <a href="/blog/Engineer-Information-Processing/SQL-Inner-join/">내부 join</a>
-2. <a href="/blog/Engineer-Information-Processing/SQL-Outer-join/">외부 join ⭐️</a>
-3. 교차 join 
-4. 셀프 join 
+논리적 join은 다시 아래의 네 가지로 나뉘어집니다.
+오늘은 이 중에서 Outer Join에 대해 알아보겠습니다.
 
+1. <a href="/blog/Engineer-Information-Processing/SQL-Inner-join/">Inner Join</a>
+2. <a href="/blog/Engineer-Information-Processing/SQL-Outer-join/">Outer Join ️⭐️</a>
+3. <a href="/blog/Engineer-Information-Processing/SQL-Cross-join/">Cross  Join</a>
+4. <a href="/blog/Engineer-Information-Processing/SQL-Self-join/">Self Join </a>
+
+# Outer Join
+
+외부조인은 두 테이블을 결합해 하나의 조인된 결과를 반환합니다.
+
+두 테이블이 조인 될 때, **일치하지 않는 값도 포함**합니다.
+일치하지 않아 값이 존재하지 않는 경우 NULL을 채워 넣습니다.
 
 ## 외부 조인: Outer join
 
