@@ -28,15 +28,25 @@
 &lt;li&gt;교차 join&lt;/li&gt;
 &lt;li&gt;셀프 join&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&quot;join-outer-join&quot; tabindex=&quot;-1&quot;&gt;외부 join: Outer join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;외부 조인은 두 테이블을 결합할 때, 일치하는 행이 없는 경우에도 한쪽 테이블의 데이터를 포함합니다.
-외부 조인은 세 가지로 나뉘어집니다.&lt;/p&gt;
+&lt;h2 id=&quot;outer-join-1&quot; tabindex=&quot;-1&quot;&gt;외부 조인: Outer join &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;외부조인의 특징&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;외부 조인은 두 테이블을 결합할 때, 일치하는 행이 없는 경우에도 한쪽 테이블의 데이터를 포함합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;외부 조인은 세 가지로 나뉘어집니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;외부조인
 &lt;ol&gt;
 &lt;li&gt;왼쪽 외부 조인 (Left Outer Join)&lt;/li&gt;
 &lt;li&gt;오른쪽 외부 조인 (Right Outer Join)&lt;/li&gt;
 &lt;li&gt;전체 외부 조인 (Full Outer Join)&lt;/li&gt;
 &lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;왼쪽과 오른쪽에 대해 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;외부조인을 알아보기 앞서 왼쪽, 오른쪽 테이블에 대해서 알아두어야만 합니다.
+왼쪽, 오른쪽은 각각 왼쪽 테이블, 오른쪽 테이블로 테이블을 가리키며
+각 테이블의 join시의 역할을 나타냅니다.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;왼쪽: 왼쪽은 SQL 쿼리 구문에서 LEFT JOIN 키워드 바로 앞에 위치하는 테이블을 가리킵니다.
 &lt;ul&gt;
@@ -46,7 +56,7 @@
 &lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; 직원 
 &lt;span class=&quot;token keyword&quot;&gt;LEFT&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;OUTER&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;JOIN&lt;/span&gt; 부서 &lt;span class=&quot;token keyword&quot;&gt;ON&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서ID &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; 부서&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서ID&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
-&lt;li&gt;오른쪽: 오른쪽은 위의 예에서 바로 알 수 있듯이 부서 테이블이 오른쪽 테이블이 됩니다.&lt;/li&gt;
+&lt;li&gt;오른쪽: 위의 예에서 바로 알 수 있듯이 부서 테이블이 오른쪽 테이블이 됩니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&quot;left-outer-join&quot; tabindex=&quot;-1&quot;&gt;왼쪽 외부 조인 (Left Outer Join) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;ol&gt;
@@ -114,7 +124,7 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;위의 두 테이블로 아래의 query를 실행해보겠습니다.&lt;/p&gt;
+&lt;p&gt;위의 두 테이블에 대해 아래의 query를 실행해보겠습니다.&lt;/p&gt;
 &lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;직원ID&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;이름&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 부서&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서명
 &lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; 직원
 &lt;span class=&quot;token keyword&quot;&gt;LEFT&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;OUTER&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;JOIN&lt;/span&gt; 부서 &lt;span class=&quot;token keyword&quot;&gt;ON&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서ID &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; 부서&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서ID&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
@@ -219,73 +229,13 @@ SELECT 한 모든 값이 정상적으로 나올 것입니다.&lt;/li&gt;
 &lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;직원ID&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;이름&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 부서&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서명
 &lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; 부서
 &lt;span class=&quot;token keyword&quot;&gt;RIGHT&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;OUTER&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;JOIN&lt;/span&gt; 직원 &lt;span class=&quot;token keyword&quot;&gt;ON&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서ID &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; 부서&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서ID&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h5&gt;조인 결과&lt;/h5&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;직원ID&lt;/th&gt;
-&lt;th&gt;이름&lt;/th&gt;
-&lt;th&gt;부서명&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;홍길동&lt;/td&gt;
-&lt;td&gt;개발&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;2&lt;/td&gt;
-&lt;td&gt;이순신&lt;/td&gt;
-&lt;td&gt;마케팅&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;NULL&lt;/td&gt;
-&lt;td&gt;NULL&lt;/td&gt;
-&lt;td&gt;인사&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;3&lt;/td&gt;
-&lt;td&gt;강감찬&lt;/td&gt;
-&lt;td&gt;NULL&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;4&lt;/td&gt;
-&lt;td&gt;장보고&lt;/td&gt;
-&lt;td&gt;NULL&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;조인 결과를 확인하면서 오른쪽 테이블인 부서를 생각해보겠습니다.&lt;/p&gt;
-&lt;h5&gt;부서 테이블 (오른쪽 테이블)&lt;/h5&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;부서ID&lt;/th&gt;
-&lt;th&gt;부서명&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;101&lt;/td&gt;
-&lt;td&gt;개발&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;102&lt;/td&gt;
-&lt;td&gt;마케팅&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;104&lt;/td&gt;
-&lt;td&gt;인사&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+&lt;p&gt;오른쪽 외부 조인이므로 아래의 조건을 만족시켜야 합니다.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;부서 테이블의 모든 튜플은 조인 결과에 포함되어야 합니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;이 조건을 지키기 위해서 가장 쉬운 방법은 먼저 부서 테이블을
 조인 결과에 모두 추가해놓는 것이 가장 합리적일 것입니다.&lt;/p&gt;
-&lt;p&gt;실제 조인 결과도 그렇게 출력되는 것 같습니다.&lt;/p&gt;
+&lt;p&gt;실제 조인 결과도 그런지 확인하겠습니다.&lt;/p&gt;
 &lt;h5&gt;조인 결과&lt;/h5&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -448,8 +398,14 @@ SELECT 한 모든 값이 정상적으로 나올 것입니다.&lt;/li&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;위 결과를 보면 왼쪽, 오른쪽 조인을 순서대로 한 것과 같습니다.&lt;/p&gt;
-&lt;p&gt;이렇게 논리적 Joins에서 Outer join인 외부 조인을 알아봤습니다.
-사실 왼쪽, 오른쪽보단 현장에선 left, right를 더 많이 쓰는 것 같습니다.&lt;/p&gt;
+&lt;p&gt;이렇게 논리적 Joins에서 Outer join인 외부 조인을 알아봤습니다.&lt;/p&gt;
+&lt;h3 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;정리하자면 외부 조인의 경우&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;조인의 주체가 되는 테이블을 먼저 조인하고,&lt;/li&gt;
+&lt;li&gt;다른 테이블을 붙인다.&lt;/li&gt;
+&lt;li&gt;값이 조건에 맞지 않는 경우 NULL을 넣는다.&lt;/li&gt;
+&lt;/ol&gt;
 </content>
 	</entry>
 	
@@ -483,8 +439,8 @@ SELECT 한 모든 값이 정상적으로 나올 것입니다.&lt;/li&gt;
 &lt;p&gt;논리적 join은 다시 아래의 네 가지로 나뉘어집니다.
 오늘은 이 중에서 내부 join에 대해 알아보겠습니다.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;내부 join ⭐️&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;외부 join&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;내부 join&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;외부 join ⭐️&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;교차 join&lt;/li&gt;
 &lt;li&gt;셀프 join&lt;/li&gt;
 &lt;/ol&gt;
