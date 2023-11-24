@@ -31,8 +31,8 @@ join은 크게 두 가지로 나뉘어진다.
 논리적 join은 다시 아래의 네 가지로 나뉘어집니다.
 오늘은 이 중에서 내부 join에 대해 알아보겠습니다.
 
-1. <a href="/blog/Engineer-Information-Processing/SQL-Inner-join/">내부 join ⭐️</a>
-2. 외부 join 
+1. <a href="/blog/Engineer-Information-Processing/SQL-Inner-join/">내부 join</a>
+2. <a href="/blog/Engineer-Information-Processing/SQL-Outer-join/">외부 join ⭐️</a>
 3. 교차 join 
 4. 셀프 join 
 
