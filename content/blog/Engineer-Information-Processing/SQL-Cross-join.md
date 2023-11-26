@@ -1,7 +1,7 @@
 ---
 title: SQL cross join
 date: 2023-11-24 21:56:29
-coverURL: 
+coverURL: https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 ---
 <br />
 <br />
@@ -51,7 +51,7 @@ Cross Join은 두 테이블 간 가능한 모든 조합을 생성하는 Join입�
 A 테이블의 첫 행인 1,
 B 테이블의 모든 행과 결합해보겠습니다.
 
-|A||B|
+|A|B|
 |--|--|
 |1|X|
 |1|Y|
