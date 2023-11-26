@@ -12,7 +12,8 @@ coverURL: https://images.unsplash.com/photo-1641598547935-49453f079d90?q=80&w=29
 논리 데이터베이스 설계는 3가지로 나뉘어집니다.
 
 1. 개념 데이터베이스 설계
-2. 논리 데이터베이스 설계
+2. <a href="/blog/Engineer-Information-Processing/Logical-Database-Design/">논리 데이터베이스 설계</a>
+    1. <a href="/blog/Engineer-Information-Processing/relational-model">Relational model: 관계 모델 </a>
 3. 물리 데이터베이스 설계
    
 
