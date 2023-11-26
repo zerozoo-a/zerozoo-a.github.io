@@ -9,7 +9,7 @@ coverURL: https://images.unsplash.com/photo-1641598547935-49453f079d90?q=80&w=29
 
 # 논리 데이터베이스의 설계
 
-논리 데이터베이스 설계는 3가지로 나뉘어집니다.
+논리 데이터베이스 설계는 3 가지로 나뉘어집니다.
 
 1. 개념 데이터베이스 설계
 2. <a href="/blog/Engineer-Information-Processing/Logical-Database-Design/">논리 데이터베이스 설계</a>
@@ -26,7 +26,7 @@ coverURL: https://images.unsplash.com/photo-1641598547935-49453f079d90?q=80&w=29
 
 ### 데이터 모델
 
-논리 데이터베이스 설계시 사용하는 데이터 모델의 종류는
+논리 데이터베이스 설계시 사용하는 데이터 모델의 종류는 아래 4 가지로 나뉩니다.
 
 1. 관계 모델
     - 가장 많이 사용됨
