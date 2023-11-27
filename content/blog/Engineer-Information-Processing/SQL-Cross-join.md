@@ -1,5 +1,5 @@
 ---
-title: SQL cross join
+title: SQL Join의 Cross join에 대해
 date: 2023-11-24 21:56:29
 coverURL: https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 ---
