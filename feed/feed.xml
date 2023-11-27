@@ -4,12 +4,142 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-11-26T20:18:21Z</updated>
+	<updated>2023-11-27T21:45:56Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>SQL Join의 Self Join에 대해</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/"/>
+		<updated>2023-11-27T21:45:56Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;joins&quot; tabindex=&quot;-1&quot;&gt;논리적 joins &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;논리적 join은 크게 아래의 네 가지로 나뉘어집니다.
+오늘은 이 중에서 Cross Join에 대해 알아보겠습니다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Inner-join/&quot;&gt;Inner Join&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/&quot;&gt;Outer ️Join&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/&quot;&gt;Cross Join &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;Self Join ⭐&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;self-join&quot; tabindex=&quot;-1&quot;&gt;Self Join이란 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Self Join은 단일 테이블을 자기 자신과 조인하는 것을 의미합니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;조인은 Binary Operation입니다. 즉 피연산자가 둘이 필요합니다.&lt;/li&gt;
+&lt;li&gt;Inner, Outer, Cross는 모두 각각 서로 다른 테이블을 두 개 사용해 하나의 조인된 결과를 만들었습니다.&lt;/li&gt;
+&lt;li&gt;Self Join은 테이블 하나로 조인합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;테이블 하나로 조인하는 방법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;하나의 테이블로 자기 자신과 조인하는 방법은&lt;/p&gt;
+&lt;p&gt;하나의 테이블에 별칭을 붙여 두 번 참조하는 것으로 Binary Operation인 join을 수행합니다.&lt;/p&gt;
+&lt;h3 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;예시 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;아래와 같은 직원 테이블이 있습니다.&lt;/p&gt;
+&lt;h4 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;직원 테이블 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;직원ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;상사ID&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;노튼 소장&lt;/td&gt;
+&lt;td&gt;NULL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;캡틴 해들리&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;레드 레딩&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;앤디&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;상사ID와 직원ID는 서로 관련된 행입니다.
+직원은 상사ID를 속성으로 가지며 상사는 직원ID를 속성으로 갖습니다.
+튜플의 상사ID가 NULL인 경우 상사가 없는 것을 의미합니다.&lt;/p&gt;
+&lt;h4 id=&quot;sql-self-join&quot; tabindex=&quot;-1&quot;&gt;SQL 쿼리 (Self Join) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; A&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;이름 &lt;span class=&quot;token keyword&quot;&gt;AS&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; B&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;이름 &lt;span class=&quot;token keyword&quot;&gt;AS&lt;/span&gt; 상사
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; 직원 A &lt;span class=&quot;token comment&quot;&gt;# Alias 직원 테이블 = A&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;JOIN&lt;/span&gt; 직원 B &lt;span class=&quot;token keyword&quot;&gt;ON&lt;/span&gt; A&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;상사ID &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; B&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;직원ID&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;# Alias 직원 테이블 = B&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위 쿼리를 통해 하나의 테이블로 조인을 할 수 있습니다.&lt;/p&gt;
+&lt;h4 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;결과 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;직원&lt;/th&gt;
+&lt;th&gt;상사&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;캡틴 해들리&lt;/td&gt;
+&lt;td&gt;노튼 소장&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;레드 레딩&lt;/td&gt;
+&lt;td&gt;노튼 소장&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;앤디&lt;/td&gt;
+&lt;td&gt;캡틴 해들리&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;직원 테이블을 A, B로 한 쿼리에서 두 번 참조함으로써
+join의 테이블 두 개 참조 조건을 달성했습니다.&lt;/p&gt;
+&lt;h2 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;사용례 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;같은 테이블을 두 번 참조하는 self join은 아래와 같은 용도로 사용됩니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;위의 예와 같이 테이블 내에서의 연관 관계를 확인하는 용도,
+혹은 데이터 분석등을 위해 사용합니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;동일한 테이블 내의 행들을 서로 비교할 때 사용합니다.
+같은 테이블 내 다른 행들의 데이터 값을 비교해 차이점을 찾을 수 있습니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;alias&quot; tabindex=&quot;-1&quot;&gt;Alias 별칭 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;아래 쿼리에서 별칭을 부여하는 방식에 대해 알아보겠습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; A&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;이름 &lt;span class=&quot;token keyword&quot;&gt;AS&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; B&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;이름 &lt;span class=&quot;token keyword&quot;&gt;AS&lt;/span&gt; 상사
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; 직원 A
+&lt;span class=&quot;token keyword&quot;&gt;JOIN&lt;/span&gt; 직원 B &lt;span class=&quot;token keyword&quot;&gt;ON&lt;/span&gt; A&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;상사ID &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; B&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;직원ID&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;직원이라는 하나의 테이블에서 A, B로 별칭을 붙여주었는데요&lt;/p&gt;
+&lt;p&gt;별칭이 붙은 포인트를 짚어보겠습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;테이블명&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; A
+&lt;span class=&quot;token keyword&quot;&gt;JOIN&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;테이블명&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; B &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;별칭을 붙일 테이블의 이름을 FROM과 JOIN 뒤에 붙이고
+별칭을 붙여줍니다.&lt;/p&gt;
+&lt;p&gt;이 외에도 AS 등의 키워드로 참조를 하는 등의 방법이 있습니다.&lt;/p&gt;
+&lt;h2 id=&quot;-5&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Self-join/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;self join은 하나의 테이블을 별칭을 통해 두 개의 테이블인 것 처럼
+join하는 것입니다.&lt;/li&gt;
+&lt;li&gt;다른 테이블과 조인하지 않아 쿼리는 간소화됩니다.&lt;/li&gt;
+&lt;li&gt;여러 테이블에 데이터를 중복 저장하지 않습니다. (왜나면 이미 하나거든요!)&lt;/li&gt;
+&lt;li&gt;동일한 테이블 내에서 행들을 서로 비교하는 경우 유용합니다.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Relational model</title>
@@ -250,7 +380,7 @@
 	</entry>
 	
 	<entry>
-		<title>SQL cross join</title>
+		<title>SQL Join의 Cross join에 대해</title>
 		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/"/>
 		<updated>2023-11-24T21:56:29Z</updated>
 		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Cross-join/</id>
@@ -335,7 +465,7 @@ B 테이블의 모든 행과 결합해보겠습니다.&lt;/p&gt;
 	</entry>
 	
 	<entry>
-		<title>SQL Outer join</title>
+		<title>SQL Join의 Outer join에 대해</title>
 		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/"/>
 		<updated>2023-11-23T22:07:03Z</updated>
 		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/SQL-Outer-join/</id>
