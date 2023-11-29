@@ -4,12 +4,394 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-11-27T21:45:56Z</updated>
+	<updated>2023-11-29T22:04:06Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>관계 데이터베이스 모델 순수 관계 연산자</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/"/>
+		<updated>2023-11-29T22:04:06Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;순수 관계 연산자란? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;RDB에서 데이터를 조작하고 쿼리하는데 사용되는 연산자를 의미합니다.&lt;/p&gt;
+&lt;p&gt;주요 순수 관계 연산자 6 가지를 알아보겠습니다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;선택 연산자: σ (Sigma)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;조건에 맞는 튜플(레코드)을 선택합니다.
+&lt;ul&gt;
+&lt;li&gt;&amp;quot;남자에 안경을 쓴 사람&amp;quot;의 조건을 만족하는 튜플을 선택할 때 사용됩니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;프로젝션 연산자: π (Pi)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;하나 이상의 속성을 선택해 새로운 릴레이션(테이블)을 생성합니다.
+&lt;ul&gt;
+&lt;li&gt;&amp;quot;이름과 부서ID만을 선택&amp;quot;할 때 사용됩니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;교집합 연산자: ∩ (Cap)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;두 개의 릴레이션 간 공통된 튜플을 찾아 반환합니다.
+&lt;ul&gt;
+&lt;li&gt;MYSQL 기준 INNER JOIN 연산자&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&quot;4&quot;&gt;
+&lt;li&gt;합집합 연산자: ∪ (Cup)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;두 개의 릴레이션을 합쳐서 중복을 제거하고 모든 튜플을 반환합니다.
+&lt;ul&gt;
+&lt;li&gt;MYSQL 기준 UNION 연산자&lt;/li&gt;
+&lt;li&gt;합집합 연산자를 사용 할 때 각 SELECT 문의 열 수 와 데이터 유형이 동일해야 합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&quot;5&quot;&gt;
+&lt;li&gt;차집합 연산자: - (Minus)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;첫 번째 릴레이션에서 두 번째 릴레이션의 튜플을 제외한 결과를 반환합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&quot;6&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/relational-model/&quot;&gt;카티션 곱: x (Cross)&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;카티션 곱 = 카티션 프로덕트 = Cartesian Product&lt;/li&gt;
+&lt;li&gt;두 개의 릴레이션을 모든 가능한 조합으로 조합해 새 릴레이션을 생성합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;s-sigma&quot; tabindex=&quot;-1&quot;&gt;선택 연산자: σ (Sigma) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;선택 연산자는 &lt;strong&gt;WHERE&lt;/strong&gt;절에 속합니다.
+조건에 맞는 튜플을 선택하기 위해선 WHERE절을 사용하는데 바로 이 것이 선택 연산자
+&lt;strong&gt;σ (Sigma)입니다.&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; TABLE1
+&lt;span class=&quot;token keyword&quot;&gt;WHERE&lt;/span&gt; age &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;p-pi&quot; tabindex=&quot;-1&quot;&gt;프로젝션 연산자: π (Pi) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;프로젝션 연산자는 SQL에서 &amp;quot;선택&amp;quot;을 한다고 했습니다.
+특정 column을 선택하고 다른 column을 무시하므로 &lt;strong&gt;SELECT&lt;/strong&gt;연산자에 해당합니다.&lt;/p&gt;
+&lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; 이름
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; TABLE1
+&lt;span class=&quot;token keyword&quot;&gt;WHERE&lt;/span&gt; age &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;cap&quot; tabindex=&quot;-1&quot;&gt;교집합 연산자: ∩ (Cap) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;교집합 연산자는 INNER JOIN을 통해 교집합을 얻을 수 있습니다.
+조인의 조건에 따라 공통된 값을 가진 행만을 반환합니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;INNER JOIN은 MYSQL에서 INNER를 생략하고 JOIN으로 사용 할 수 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;1&quot; tabindex=&quot;-1&quot;&gt;테이블 1: 직원 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;직원ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;부서ID&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;홍길동&lt;/td&gt;
+&lt;td&gt;101&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;이순신&lt;/td&gt;
+&lt;td&gt;102&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;강감찬&lt;/td&gt;
+&lt;td&gt;103&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&quot;2&quot; tabindex=&quot;-1&quot;&gt;테이블 2: 부서 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;부서ID&lt;/th&gt;
+&lt;th&gt;부서명&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;101&lt;/td&gt;
+&lt;td&gt;개발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;102&lt;/td&gt;
+&lt;td&gt;마케팅&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;104&lt;/td&gt;
+&lt;td&gt;인사&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;위 두 테이블을 부서ID로 INNER JOIN 해보겠습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; 직원
+&lt;span class=&quot;token keyword&quot;&gt;INNER&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;JOIN&lt;/span&gt; 부서
+&lt;span class=&quot;token keyword&quot;&gt;ON&lt;/span&gt; 직원&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서ID &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; 부서&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;부서ID&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;결과 테이블 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;직원ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;부서ID&lt;/th&gt;
+&lt;th&gt;부서명&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;홍길동&lt;/td&gt;
+&lt;td&gt;101&lt;/td&gt;
+&lt;td&gt;개발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;이순신&lt;/td&gt;
+&lt;td&gt;102&lt;/td&gt;
+&lt;td&gt;마케팅&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;cup&quot; tabindex=&quot;-1&quot;&gt;합집합 연산자: ∪ (Cup) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;합집합 연산자는 UNION 연산자로 표현 할 수 있습니다.
+합집합은 집합 연산의 합집합의 그것과 같습니다.&lt;/p&gt;
+&lt;p&gt;테이블 두 개를 합집합 연산을 해보겠습니다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;직원 테이블 (employees):&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;직원ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;직급&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;홍길동&lt;/td&gt;
+&lt;td&gt;관리자&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;이순신&lt;/td&gt;
+&lt;td&gt;직원&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;강감찬&lt;/td&gt;
+&lt;td&gt;직원&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;계약직 테이블 (contractors):&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;계약직ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;직급&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;101&lt;/td&gt;
+&lt;td&gt;박재영&lt;/td&gt;
+&lt;td&gt;계약직&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;102&lt;/td&gt;
+&lt;td&gt;김민정&lt;/td&gt;
+&lt;td&gt;계약직&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;103&lt;/td&gt;
+&lt;td&gt;정성훈&lt;/td&gt;
+&lt;td&gt;계약직&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; 직원ID&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 이름&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 직급
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; employees
+&lt;span class=&quot;token keyword&quot;&gt;UNION&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; 계약직ID&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 이름&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 직급
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; contractors&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;직원ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;직급&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;홍길동&lt;/td&gt;
+&lt;td&gt;관리자&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;이순신&lt;/td&gt;
+&lt;td&gt;직원&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;강감찬&lt;/td&gt;
+&lt;td&gt;직원&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;101&lt;/td&gt;
+&lt;td&gt;박재영&lt;/td&gt;
+&lt;td&gt;계약직&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;102&lt;/td&gt;
+&lt;td&gt;김민정&lt;/td&gt;
+&lt;td&gt;계약직&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;103&lt;/td&gt;
+&lt;td&gt;정성훈&lt;/td&gt;
+&lt;td&gt;계약직&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;이렇게 두 테이블의 데이터가 하나의 결과로 합쳐졌습니다.&lt;/p&gt;
+&lt;h2 id=&quot;minus&quot; tabindex=&quot;-1&quot;&gt;차집합 연산자: - (Minus) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;차집합 연산자는 두 결과집합에서 첫 번째 집합에만 있는
+항목을 선택하는 연산으로 데이터베이스에서 두 테이블의 데이터를 비교,
+두 번째 테이블에는 없고 첫 번째 테이블에만 잇는 행을 가져옵니다.&lt;/p&gt;
+&lt;p&gt;직원 테이블과 이직한 직원 테이블이 있을 때,
+직원 테이블에서 이직한 직원 테이블의 차집합을 구해보겠습니다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;직원 테이블 (employees):&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;직원ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;부서&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;홍길동&lt;/td&gt;
+&lt;td&gt;개발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;이순신&lt;/td&gt;
+&lt;td&gt;마케팅&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;강감찬&lt;/td&gt;
+&lt;td&gt;영업&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;김철수&lt;/td&gt;
+&lt;td&gt;개발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;박지영&lt;/td&gt;
+&lt;td&gt;인사&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;이직한_직원 테이블 (former_employees):&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;직원ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;부서&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;이순신&lt;/td&gt;
+&lt;td&gt;마케팅&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;박지영&lt;/td&gt;
+&lt;td&gt;인사&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;정미영&lt;/td&gt;
+&lt;td&gt;영업&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;쿼리는 아래와 같이 선택 할 테이블을 앞에
+빼줄 테이블을 &lt;strong&gt;MINUS&lt;/strong&gt; 연산자 뒤에 둡니다.&lt;/p&gt;
+&lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; 직원ID&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 이름&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 부서
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; employees
+MINUS
+&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; 직원ID&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 이름&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 부서
+&lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; former_employees&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;결과는 다음과 같습니다&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;직원ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;부서&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;홍길동&lt;/td&gt;
+&lt;td&gt;개발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;강감찬&lt;/td&gt;
+&lt;td&gt;영업&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;김철수&lt;/td&gt;
+&lt;td&gt;개발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;x-cartesian-product&quot; tabindex=&quot;-1&quot;&gt;카티션 프로덕트 : x (Cartesian Product) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/relational-model/&quot;&gt;카티션 곱: x (Cross)&lt;/a&gt;에 대한 설명은 해당 링크로 대체합니다.&lt;/p&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;DBMS에서 사용되는 순수 관계 연산자를 알아봤습니다.&lt;/p&gt;
+&lt;p&gt;Relational algebra로 수학에서 사용되는 집합간 연산의 그 것을
+RDB로 사용하는 느낌으로 바라보면 될 것 같습니다.&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>SQL Join의 Self Join에 대해</title>
