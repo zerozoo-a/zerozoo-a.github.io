@@ -23,7 +23,12 @@ const createBase64FromURL = async (url, index = 1, rotate = 0) => {
 	}
 	const { cachedData, cachedBase64 } = await getFromBase64DB(url);
 	if (cachedBase64) return cachedBase64[index];
+
+	const isImageAvailable = (await fetch(url).status) === 200;
+	if (isImageAvailable) return [url, url];
+
 	if (!cachedData) cachedData = {};
+
 	const images = await convertToBase64(url, rotate);
 
 	/**
