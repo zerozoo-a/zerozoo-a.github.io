@@ -4,12 +4,179 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-11-30T23:59:00Z</updated>
+	<updated>2023-12-02T12:29:17Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>Database에서 Super key에 대해</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Super-key/"/>
+		<updated>2023-12-02T12:29:17Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Super-key/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;super-key&quot; tabindex=&quot;-1&quot;&gt;Super Key란? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Super-key/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;super key는 테이블의 각 행(레코드)을 고유하게 식별 할 수 있는 하나 이상의 속성(열, attribute)의 조합입니다.
+테이블에서 각 행을 유일하게 식별하는 데 필요한 모든 정보를 포함합니다.&lt;/p&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;특징 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Super-key/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;unique(유일성): super key는 모든 행을 유일하게 식별 할 수 있기 때문에 unique합니다.&lt;/li&gt;
+&lt;li&gt;redundancy(과잉성): super key는 필요 이상의 속성을 포함할 수 있기 때문에 최소성을 만족하지 않을 수 있습니다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;유일성의 예 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Super-key/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;학생 ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;연락처&lt;/th&gt;
+&lt;th&gt;주소&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;001&lt;/td&gt;
+&lt;td&gt;김영희&lt;/td&gt;
+&lt;td&gt;010-1234-5678&lt;/td&gt;
+&lt;td&gt;서울시 강남구&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;위 테이블에서
+학생 ID는 Super key이자 Primary key입니다. 이는 유일성을 가지는 key입니다.&lt;/p&gt;
+&lt;h3 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;과잉성의 예 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Super-key/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;학생 ID&lt;/th&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;연락처&lt;/th&gt;
+&lt;th&gt;주소&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;001&lt;/td&gt;
+&lt;td&gt;김영희&lt;/td&gt;
+&lt;td&gt;010-1234-5678&lt;/td&gt;
+&lt;td&gt;서울시 강남구&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;002&lt;/td&gt;
+&lt;td&gt;이철수&lt;/td&gt;
+&lt;td&gt;010-2345-6789&lt;/td&gt;
+&lt;td&gt;부산시 해운대구&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;003&lt;/td&gt;
+&lt;td&gt;박지민&lt;/td&gt;
+&lt;td&gt;010-3456-7890&lt;/td&gt;
+&lt;td&gt;대구시 중구&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;위 테이블에서 과잉성의 예를 위해
+학생 ID, 이름, 연락처, 주소를 super key로 잡아보겠습니다.&lt;/p&gt;
+&lt;p&gt;(당연하게도 학생 ID만으로 각 튜플을 조회 가능합니다.)&lt;/p&gt;
+&lt;pre class=&quot;language-sql&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; Students
+&lt;span class=&quot;token keyword&quot;&gt;WHERE&lt;/span&gt; StudentID &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;001&#39;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;AND&lt;/span&gt; Name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;김영희&#39;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;AND&lt;/span&gt; Contact &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;010-1234-5678&#39;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;AND&lt;/span&gt; Address &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;서울시 강남구&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이렇게 분별을 위해 과잉하게 key를 잡는 것을 의미합니다.&lt;/p&gt;
+&lt;h2 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;다른 키와의 관계 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Super-key/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Candidate Key: Super key에서 불필요한 속성을 제거, 최소성을 만족하는 key를 Candidate key라고 합니다.
+테이블을 유일하게 식별할 수 있는 가장 작은 속성의 집합입니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;그냥 key라고도 합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Primary Key: Candidate Key에서 선택된 주 Key입니다. 각 행을 고유하게 식별하는데 사용됩니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;key들의 관계를 정리하면 아래와 같습니다.&lt;/p&gt;
+&lt;p class=&quot;katex-block&quot;&gt;&lt;span class=&quot;katex-display&quot;&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mi&gt;K&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mo&gt;⊆&lt;/mo&gt;&lt;mi&gt;C&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;K&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mo&gt;⊆&lt;/mo&gt;&lt;mi&gt;S&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;K&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;Primary Keys ⊆ Candidate Keys ⊆ Super Keys
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8777699999999999em;vertical-align:-0.19444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.13889em;&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.02778em;&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.02778em;&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.03588em;&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.07153em;&quot;&gt;K&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.03588em;&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;⊆&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8888799999999999em;vertical-align:-0.19444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.07153em;&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.07153em;&quot;&gt;K&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.03588em;&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;⊆&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8777699999999999em;vertical-align:-0.19444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.05764em;&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.02778em;&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.07153em;&quot;&gt;K&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.03588em;&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;s&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;결론 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Super-key/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;super key에 대해 알아봤습니다.&lt;/p&gt;
+&lt;p&gt;Primary keys는 Candidate keys의 부분집합이다.
+Candidate keys는 Super keys의 부분집합이다.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>데이터베이스 필드의 값이 원자적이여야 하는 이유</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-database-atomicity/"/>
+		<updated>2023-12-02T11:44:34Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-database-atomicity/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;정규화의 원자성 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-database-atomicity/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;정규화의 1NF에서 DB의 속성값은 원자성을 가져야 한다는 말이 나옵니다.&lt;/p&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;원자성이란 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-database-atomicity/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;원자성은 테이블의 속성값이 원자적이여야 한다는 말입니다.&lt;/p&gt;
+&lt;p&gt;이는 테이블을 보면 바로 이해 할 수 있습니다.&lt;/p&gt;
+&lt;h4 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;원자성을 지키지 않는 테이블 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-database-atomicity/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;등록번호&lt;/th&gt;
+&lt;th&gt;주소&lt;/th&gt;
+&lt;th&gt;성별&lt;/th&gt;
+&lt;th&gt;나이&lt;/th&gt;
+&lt;th&gt;연락처&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;김민수&lt;/td&gt;
+&lt;td&gt;900101-1******&lt;/td&gt;
+&lt;td&gt;서울시 강남구&lt;/td&gt;
+&lt;td&gt;남&lt;/td&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;td&gt;010-1234-5678, 02-1234-5678&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;주민 테이블이 있고 테이블에는 연락처 속성이 있습니다.
+테이블의 연락처에는 김민수씨의 휴대전화 번호와 집 전화번호가 함께 들어있습니다.&lt;/p&gt;
+&lt;p&gt;이는 원자성을 지키지 않은 테이블입니다.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;원자성을 지키는 테이블 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-database-atomicity/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;이름&lt;/th&gt;
+&lt;th&gt;등록번호&lt;/th&gt;
+&lt;th&gt;주소&lt;/th&gt;
+&lt;th&gt;성별&lt;/th&gt;
+&lt;th&gt;나이&lt;/th&gt;
+&lt;th&gt;휴대전화&lt;/th&gt;
+&lt;th&gt;집전화&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;김민수&lt;/td&gt;
+&lt;td&gt;900101-1******&lt;/td&gt;
+&lt;td&gt;서울시 강남구&lt;/td&gt;
+&lt;td&gt;남&lt;/td&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;td&gt;010-1234-5678&lt;/td&gt;
+&lt;td&gt;02-1234-5678&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;연락처 속성을 나누어 휴대전화, 집전화로 분리했습니다.&lt;/p&gt;
+&lt;p&gt;이제 각 필드는 고유하며 원자성을 가집니다.&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>관계형 데이터베이스 - 정규화 - 이행적 종속성</title>
@@ -77,17 +244,17 @@ B -&amp;gt; C 일 때&lt;/p&gt;
 	</entry>
 	
 	<entry>
-		<title>관계형 데이터베이스 - 정규화 - 함수적 종속성</title>
-		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Dependent-attribute/"/>
+		<title>관계형 데이터베이스 - 정규화 - FD: 함수적 종속성</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Functional-Dependent-attribute/"/>
 		<updated>2023-11-30T23:37:41Z</updated>
-		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Dependent-attribute/</id>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Functional-Dependent-attribute/</id>
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;함수적 종속성에대해 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Dependent-attribute/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;함수적 종속성에대해 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Functional-Dependent-attribute/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
 &lt;p&gt;함수적 종속성은 테이블의 속성에서 한 속성이 다른 속성에 의해 값이 결정되는 관계를 뜻합니다.&lt;/p&gt;
 &lt;p&gt;하나의 속성이 다른 속성에 의존하는 경우 이 경우를 함수적 종속성이라 합니다.&lt;/p&gt;
-&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;예시 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Dependent-attribute/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;예시 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Functional-Dependent-attribute/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;학생 정보를 테이블이 있다고 합시다.&lt;/p&gt;
 &lt;p&gt;속성으로는 학생 ID, 이름, 주소와 같은 속성이 있을 수 있습니다.
 학생 ID는 학생마다 고유한 값을 가집니다.&lt;/p&gt;
@@ -106,18 +273,38 @@ B -&amp;gt; C 일 때&lt;/p&gt;
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;모델링에서 정규화에 대해 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;데이터 모델링에서 정규화에 대해 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
 &lt;p&gt;DB 정규화는 데이터를 구조화하여 중복을 최소화하고
 데이터 조작시 발생할 수 있는 오류와 데이터 중복을 방지합니다.&lt;/p&gt;
-&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;정규화의 단계 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;정규화는 1NF, 2NF, 3NF, BCNF, 4NF, 5NF 단계를 거칩니다.&lt;/p&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;정규화의 의미 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;pre class=&quot;language-md&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-md&quot;&gt;정규화는 데이터의 중복과 
+삽입(insertion), 삭제(deletion), 갱신(update)의 
+이상현상(anomaly)을 방지(최소화)하기 위해
+normal form을 수행하는 것을 말합니다.&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;정규화의 단계 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;NF = Normal Form&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;정규화는 1NF, 2NF, 3NF, BCNF, 4NF, 5NF, 6NF 단계를 거칩니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;NF 단계는 테이블이 달성한 정규화 수준을 나타내는 척도입니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;NF는 테이블이 생성된 후 다음 NF를 순서대로 만족해야 합니다.
+예를 들어 1NF에서 3NF로 바로 건너 뛸 수 없으며 3NF는 2NF를 만족해야 한다는 속성을 가집니다.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;NF 단계는 테이블이 달성한 정규화 수준을 나타내는 척도를 말합니다.&lt;/p&gt;
+&lt;h3 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;정규화의 특징 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;NF는 normal form을 의미합니다.&lt;/li&gt;
+&lt;li&gt;특정 테이블이 정규화 되었다라고 하기 위해선 &lt;strong&gt;최소 3NF는 만족&lt;/strong&gt;해야 합니다.&lt;/li&gt;
+&lt;li&gt;실무에선 3NF | BCNF까지만 진행하는 경우가 많습니다.&lt;/li&gt;
+&lt;li&gt;1NF 부터 BCNF까지는 &lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Functional-Dependent-attribute/&quot;&gt;FD = 함수적 종속성&lt;/a&gt;와 key만으로 정의되는 NF입니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;단계별 정규화 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;h3 id=&quot;1&quot; tabindex=&quot;-1&quot;&gt;제 1 정규형 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;ol&gt;
-&lt;li&gt;모든 필드의 값이 원자적이어야 합니다.&lt;/li&gt;
+&lt;li&gt;모든 필드의 값이 &lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Relational-database-atomicity/&quot;&gt;원자적&lt;/a&gt;이어야 합니다.&lt;/li&gt;
 &lt;li&gt;각 레코드가 유일해야 합니다.&lt;/li&gt;
 &lt;li&gt;테이블의 모든 컬럼은 중복되지 않고 단일 값을 가져야 합니다.&lt;/li&gt;
 &lt;/ol&gt;
@@ -128,7 +315,7 @@ B -&amp;gt; C 일 때&lt;/p&gt;
 &lt;/ol&gt;
 &lt;ul&gt;
 &lt;li&gt;비주요 속성: 테이블의 기본키가 아닌 다른 모든 속성을 뜻합니다.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Dependent-attribute/&quot;&gt;함수적 종속성: 하나의 속성이 다른 속성에 의해 결정되는 관계를 뜻합니다.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Functional-Dependent-attribute/&quot;&gt;함수적 종속성&lt;/a&gt;: 하나의 속성이 다른 속성에 의해 결정되는 관계를 뜻합니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;ol start=&quot;3&quot;&gt;
 &lt;li&gt;모든 비주요 속성이 기본키(PK)에만 의존합니다.&lt;/li&gt;
@@ -136,9 +323,21 @@ B -&amp;gt; C 일 때&lt;/p&gt;
 &lt;h3 id=&quot;3&quot; tabindex=&quot;-1&quot;&gt;제 3 정규형 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;2 NF를 만족합니다.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/transitive-dependency/&quot;&gt;모든 비주요 속성이 이행적 종속성을 갖지 않아야 합니다. (transitive-dependency)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;모든 비주요 속성이 &lt;a href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/transitive-dependency/&quot;&gt;이행적 종속성&lt;/a&gt;을 갖지 않아야 합니다. (transitive-dependency)&lt;/li&gt;
 &lt;li&gt;비주요 속성이 다른 비주요 속성을 의존하지 않아야 합니다.&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h3 id=&quot;bcnf&quot; tabindex=&quot;-1&quot;&gt;BCNF 정규형 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/Data-modeling-normalization/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+graph TD;
+    A[1NF: 모든 필드의 값이 원자적] --&gt;|모든 필드가 기본키에&lt;br&gt;완전 함수적으로 종속| B[2NF];
+    B[2NF: 부분적 종속성 제거] --&gt;|모든 필드가 기본키에만&lt;br&gt;함수적으로 종속| C[3NF];
+    C[3NF: 이행적 종속성 제거] --&gt;|모든 결정자가&lt;br&gt;후보키일 때| D[BCNF];
+    D[BCNF: 모든 결정자가 후보키] --&gt;|다치 종속성 제거| E[4NF];
+    E[4NF: 다치 종속성 제거] --&gt;|조인 종속성이&lt;br&gt;후보키에 의해서만&lt;br&gt;결정될 때| F[5NF];
+    F[5NF: 조인 종속성 제거] --&gt;|모든 조인이&lt;br&gt;손실 없이 가능할 때| G[6NF];
+    G[6NF: 최종 정규형]
+&lt;/div&gt;
 </content>
 	</entry>
 	
