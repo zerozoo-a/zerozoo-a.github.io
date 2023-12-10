@@ -51,9 +51,6 @@ function arrToObj(keys, item) {
 	let o = {};
 	for (let i = keys.length - 1; i >= 0; i--) {
 		if (i === keys.length - 1) {
-			// o[item.name] = {
-			// 	path: item.path.substring(7),
-			// };
 			o[item.name] = [
 				item.path.substring(7),
 				item.name.substring(0, item.name.length - 3),
@@ -86,72 +83,14 @@ async function recursiveAllFiles(path) {
 		}
 		return res;
 	} catch (err) {
-		console.log(
-			"🚀 ~ file: eleventy.config.categories.js:65 ~ recursiveAllFiles ~ err:",
-			err
-		);
 		return {};
 	}
-}
-
-/**
- *
- * @param {string} path
- * @returns {Promise<[string, string][]>}
- */
-async function recursiveAllFiles_origin(path) {
-	const want2Delete = "content/blog/";
-	let files = [];
-	const items = await readdir(path, { withFileTypes: true });
-
-	for (const item of items) {
-		if (item.isDirectory()) {
-			files = [...files, ...(await recursiveAllFiles(`${path}/${item.name}`))];
-		} else {
-			const variablePath = path.slice(want2Delete.length);
-			if (!variablePath.length) continue;
-			if (
-				isImagesDir(variablePath) ||
-				isDS_Store(item.name) ||
-				isImageFile(item.name)
-			)
-				continue;
-
-			const indexOfSlash = variablePath.indexOf("/");
-			const indexOfSlashOrZero = indexOfSlash > 0 ? indexOfSlash : 0;
-			const nameOfFirstCategory =
-				indexOfSlashOrZero > 0
-					? variablePath.slice(0, indexOfSlashOrZero)
-					: variablePath;
-
-			files.push([
-				nameOfFirstCategory,
-				variablePath,
-				item.name.replace(".md", ""),
-			]);
-		}
-	}
-
-	return files;
 }
 
 async function eleventyComputedGetCategories() {
 	const path = "content/blog";
 	const paths = await recursiveAllFiles(path);
-	console.log(
-		"🚀 ~ file: eleventy.config.categories.js:112 ~ eleventyComputedGetCategories ~ paths:",
-		paths
-	);
 	return paths;
-	// const categories = paths.reduce((acc, cur) => {
-	// 	if (!acc[cur[0]]) {
-	// 		acc[cur[0]] = [[cur[1], cur[2]]];
-	// 	} else {
-	// 		acc[cur[0]] = [...acc[cur[0]], [cur[1], cur[2]]];
-	// 	}
-	// 	return acc;
-	// }, {});
-	// return categories;
 }
 
 module.exports.eleventyComputedGetCategories = eleventyComputedGetCategories;

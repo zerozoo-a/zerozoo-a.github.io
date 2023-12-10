@@ -111,15 +111,16 @@ eleventyComputed:
 							<ul>
 								{% for key, value in cate %}
 									<li>
-										{% if value is mapping %}
-											<strong>{{ key }}</strong>:
-												{{ renderCate(value) }}
-										{% else %}
-											{# {{ key }}: {{ value }} #}
-											<a href="{{value[0]}}/{{value[1]}}">
-												{{value[1]}}
-											</a>
-										{% endif %}
+											{% if value is mapping %}
+											<details>
+												<summary>{{ key }}</summary>
+													{{ renderCate(value) }}
+											</details>
+											{% else %}
+												<a href="{{value[0]}}/{{value[1]}}">
+													{{value[1]}}
+												</a>
+											{% endif %}
 									</li>
 								{% endfor %}
 							</ul>
@@ -128,26 +129,6 @@ eleventyComputed:
 						{% set cate = eleventyComputedGetCategories %}
 
 						{{ renderCate(cate) }}
-
-						{# {%- for key ,value in eleventyComputedGetCategories  %}
-						<div>{{ key }} {{ typeof value }}</div>
-						{%- endfor %} #}
-						{# {%- for categories, posts in eleventyComputedGetCategories  %}
-							<li>
-									<details>
-										<summary>{{categories}}</summary>
-										<ul>
-											{%- for post in posts %}
-												<li>
-													<a href=/blog/{{ post[0] }}/{{ post[1] | urlencode }}>
-														{{post[1]}}
-													</a>
-												</li>
-											{%- endfor %}
-										</ul>
-									</details>
-							</li>
-						{%- endfor %} #}
 					</ul>
 			</nav>
 		</header>
