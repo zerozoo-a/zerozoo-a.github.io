@@ -107,7 +107,32 @@ eleventyComputed:
 					<ul>
 						<li><a href="/">home</a></li>
 						<li><a href="/about">about</a></li>
-						{%- for categories, posts in eleventyComputedGetCategories  %}
+						{% macro renderCate(cate) %}
+							<ul>
+								{% for key, value in cate %}
+									<li>
+										{% if value is mapping %}
+											<strong>{{ key }}</strong>:
+												{{ renderCate(value) }}
+										{% else %}
+											{# {{ key }}: {{ value }} #}
+											<a href="{{value[0]}}/{{value[1]}}">
+												{{value[1]}}
+											</a>
+										{% endif %}
+									</li>
+								{% endfor %}
+							</ul>
+						{% endmacro %}
+
+						{% set cate = eleventyComputedGetCategories %}
+
+						{{ renderCate(cate) }}
+
+						{# {%- for key ,value in eleventyComputedGetCategories  %}
+						<div>{{ key }} {{ typeof value }}</div>
+						{%- endfor %} #}
+						{# {%- for categories, posts in eleventyComputedGetCategories  %}
 							<li>
 									<details>
 										<summary>{{categories}}</summary>
@@ -122,7 +147,7 @@ eleventyComputed:
 										</ul>
 									</details>
 							</li>
-						{%- endfor %}
+						{%- endfor %} #}
 					</ul>
 			</nav>
 		</header>

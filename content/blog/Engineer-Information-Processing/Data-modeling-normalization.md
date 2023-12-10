@@ -56,7 +56,7 @@ normal form을 수행하는 것을 말합니다.
 ### 제 3 정규형
 
 1. 2 NF를 만족합니다.
-2. 모든 비주요 속성이 <a href="/blog/Engineer-Information-Processing/transitive-dependency/">이행적 종속성</a>을 갖지 않아야 합니다. (Transitive-Dependency)
+2. 모든 비주요 속성이 <a href="/blog/Engineer-Information-Processing/Transitive-Dependency/">이행적 종속성</a>을 갖지 않아야 합니다. (Transitive-Dependency)
 3. 비주요 속성이 다른 비주요 속성을 의존하지 않아야 합니다.
 
 ### BCNF 정규형
