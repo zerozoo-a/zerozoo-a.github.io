@@ -1,5 +1,5 @@
 ---
-title: Exponential Expansion rational
+title: "지수의 확장: 유리수의 지수"
 date: 2023-12-12 23:49:34
 coverURL: 
 ---
