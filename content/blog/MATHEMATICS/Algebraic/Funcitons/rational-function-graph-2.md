@@ -29,7 +29,7 @@ $$
 h(x) = x
 $$
 
-{% image "../images/rati-2-x.png", "h(x)=x" %}
+{% image "../../images/rati-2-x.png", "h(x)=x" %}
 
 
 ## 유리함수의 그래프 g(x)
@@ -38,7 +38,7 @@ $$
 g(x) = \frac{1}{x}
 $$
 
-{% image "../images/rati-2-y.png", "g(x)=\frac{1}{x}" %}
+{% image "../../images/rati-2-y.png", "g(x)=\frac{1}{x}" %}
 
 ## 이 둘을 더한 함수는 어떤 그래프일까요?
 
@@ -46,7 +46,7 @@ $$
 f(x) = h(x) + g(x)
 $$
 
-{% image "../images/rati-2-z.png", "f(x) = h(x) + g(x)" %}
+{% image "../../images/rati-2-z.png", "f(x) = h(x) + g(x)" %}
 
 ## 곂쳐서 보면 보이는
 
@@ -54,4 +54,4 @@ $$
 함수 $f(x) = h(x) + g(x)$는 유리함수 그래프 $g(x)$의 점근선이
 일차함수 $h(x)$ 를 따라가고 있다는 것을 알 수 있습니다.
 
-{% image "../images/rati-2-a.png", "f(x) = h(x) + g(x)" %}
+{% image "../../images/rati-2-a.png", "f(x) = h(x) + g(x)" %}
