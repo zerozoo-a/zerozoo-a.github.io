@@ -9,7 +9,7 @@ coverURL:
 
 ## 목차
 - <a href="/blog/Engineer-Information-Processing/concept-of-Operating-System/">운영체제의 개념</a>
-    - <a href="/blog/Engineer-Information-Processing/os-control-program/">운영체제의 제어 프로그램</a>
+    - <a href="/blog/Engineer-Information-Processing/os-control-programs/">운영체제의 제어 프로그램</a>
 
 
 
