@@ -23,6 +23,8 @@ coverURL: https://images.unsplash.com/photo-1544601139-f4dc3f5ddc51?ixlib=rb-4.0
 - 재귀로 인해 쌓여진 콜스택이 모두 해제되면 정렬된 배열이 만들어집니다.
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
+
 graph TD;
     A([4,1,2,3])-->B([4, 1])
     A-->C([2, 3])
