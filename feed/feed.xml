@@ -4,12 +4,247 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2023-12-26T22:41:14Z</updated>
+	<updated>2023-12-29T23:36:31Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>git의 revert와 `is a merge but no -m option was given.`</title>
+		<link href="https://zerozoo-a.github.io/blog/git/git-revert-with-head/"/>
+		<updated>2023-12-29T23:36:31Z</updated>
+		<id>https://zerozoo-a.github.io/blog/git/git-revert-with-head/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;git-revert-head-conflict&quot; tabindex=&quot;-1&quot;&gt;git, revert, head, 🪦conflict &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;프로젝트에 투입되다 보면 여러 작업자들과 함께 일하게 됩니다.&lt;/p&gt;
+&lt;p&gt;자연스럽게 conflict는 발생하게 됩니다.&lt;/p&gt;
+&lt;p&gt;conflict를 피하기 위한
+revert, head에 대해 알아보겠습니다.&lt;/p&gt;
+&lt;h2 id=&quot;conflict&quot; tabindex=&quot;-1&quot;&gt;conflict 만들어보기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;conflict를 만들어서 문제 상황을 재현하겠습니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;요약&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;main branch에서 foo와 bar 브랜치를 각각 생성합니다.&lt;/li&gt;
+&lt;li&gt;같은 라인을 수정합니다.&lt;/li&gt;
+&lt;li&gt;각각 main branch에 foo를 merge하고, bar를 merge합니다.&lt;/li&gt;
+&lt;li&gt;conflict를 만들었습니다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;head-main-branch&quot; tabindex=&quot;-1&quot;&gt;[head &amp;gt;] main branch &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;main branch에서 hello.txt 파일을 생성하고
+아래와 같이 Hello, World를 입력합니다.&lt;/p&gt;
+&lt;pre class=&quot;language-md&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-md&quot;&gt;Hello, World&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;head-foo-branch&quot; tabindex=&quot;-1&quot;&gt;[head &amp;gt;] foo branch &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;main branch에서 foo branch를 만들고,
+foo branch로 이동합니다.&lt;/p&gt;
+&lt;p&gt;Hello, world위에 Oh,를 작성하고 커밋하겠습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-md&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-md&quot;&gt;Hello, World&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;⬇️⬇️⬇️️⬇️️&lt;/p&gt;
+&lt;pre class=&quot;language-md&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-md&quot;&gt;Oh, 
+Hello, World&lt;/code&gt;&lt;/pre&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;head-bar-branch&quot; tabindex=&quot;-1&quot;&gt;[head &amp;gt;] bar branch &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;다시 main branch에서 bar branch를 만들고,
+bar branch로 이동합니다.&lt;/p&gt;
+&lt;p&gt;Hello, world위에 Huh,를 작성하고 커밋하겠습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-md&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-md&quot;&gt;Hello, World&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;⬇️⬇️⬇️️⬇️️&lt;/p&gt;
+&lt;pre class=&quot;language-md&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-md&quot;&gt;Huh,
+Hello, World&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;conflict-merge&quot; tabindex=&quot;-1&quot;&gt;conflict 해결하고 merge하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;head-main-branch-1&quot; tabindex=&quot;-1&quot;&gt;[head &amp;gt;] main branch &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;main branch로 이동해 아래와 같이 foo, bar branch를 merge합니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;main branch에서 foo branch를 merge합니다.&lt;/li&gt;
+&lt;li&gt;main branch에서 bar branch를 merge합니다.&lt;/li&gt;
+&lt;li&gt;같은 영역을 수정한 foo와 bar의 conflict 발생&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;conflict가 나면 아래와 같은 화면을 보게 됩니다. (vscode 기준)&lt;/p&gt;
+&lt;pre class=&quot;language-md&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-md&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD
+&lt;span class=&quot;token title important&quot;&gt;Oh,
+&lt;span class=&quot;token punctuation&quot;&gt;=======&lt;/span&gt;&lt;/span&gt;
+Huh,
+&lt;span class=&quot;token blockquote punctuation&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;/span&gt; bar
+Hello, World&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이 때의 git graph를 확인하면 아래와 같습니다.&lt;/p&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/jrBNECr0cZ-796.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;image alt&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
+&lt;p&gt;conflict를 해결하고 commit 하면 merged 상태가 됩니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;적당히 conflict를 해결만 하면 됩니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;merge를 하는 것으로 하나의 commit hash가 생긴것을 확인 할 수 있습니다.&lt;/p&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/Ow8njHH-9B-776.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;image alt&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;05bbbb51이라는 이름의 commit 내역이 생겼습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;head&quot; tabindex=&quot;-1&quot;&gt;HEAD에 대해 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;head란 git의 커밋 혹은 브랜치를 가리키는 pointer입니다.
+메모리에서 메모리 주소를 담고 있는 pointer와 같은 역할을 합니다.&lt;/p&gt;
+&lt;p&gt;git 명령어에서 commit hash를 작성하기 힘들 때,
+HEAD~0을 쓰면 현재 가리키고 있는 브랜치의 hash를 의미합니다.&lt;/p&gt;
+&lt;p&gt;HEAD~1은 브랜치의 부모 커밋을 의미합니다.
+HEAD~2는 그 부모의 부모..&lt;/p&gt;
+&lt;p&gt;이런식입니다.&lt;/p&gt;
+&lt;h2 id=&quot;merge-commit-revert&quot; tabindex=&quot;-1&quot;&gt;merge commit에 revert하는 것이 거절되는 이유 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;merge commit을 revert&lt;/p&gt;
+&lt;p&gt;merge commit은 여러 commit들이 &lt;strong&gt;동시&lt;/strong&gt;에 merge되어 있는 commit입니다.&lt;/p&gt;
+&lt;p&gt;revert를 했을 때, 어떤 상태가 되어야 하는 것일까요?&lt;/p&gt;
+&lt;p&gt;위 예시에서 Oh,와 Huh,는 conflict 발생 후 merge 되었습니다.
+revert로 merge를 풀면 git은 main에 merge되어진 foo 혹은 bar 중 어떤 부모를
+revert 할 것인지 물어봅니다.&lt;/p&gt;
+&lt;p&gt;선택한 부모를 revert하고 선택되지 않은 부모의 commit(변경 이력)은 살아남게 됩니다.&lt;/p&gt;
+&lt;h3 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;예시 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/Ow8njHH-9B-776.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;image alt&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;여기서 부모의 번호가 정해지는 기준은 stack입니다.&lt;/li&gt;
+&lt;li&gt;선택된 부모의 commit을 revert합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;즉 아래의 명령어는&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; revert HEAD~0 &lt;span class=&quot;token parameter variable&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;현재 내가 바라보고 있는 commit을 revert할 것&lt;/li&gt;
+&lt;li&gt;해당 commit은 merge commit&lt;/li&gt;
+&lt;li&gt;revert 할 부모는 1번 (foo)&lt;/li&gt;
+&lt;li&gt;즉 bar commit은 살리고 foo commit을 revert 함&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/git/git-revert-with-head/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;HEAD는 branch 혹은 commit을 가리키는 pointer이다.&lt;/li&gt;
+&lt;li&gt;HEAD~0은 제자리,&lt;/li&gt;
+&lt;li&gt;HEAD~1은 한 부모 위를 가리킨다.&lt;/li&gt;
+&lt;li&gt;merge commit을 revert하는 경우 삭제할 부모를 선택해야 한다.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>메모리 저장 방식인 페이지와 세그먼트</title>
+		<link href="https://zerozoo-a.github.io/blog/temp/os-memory-page-and-segment/"/>
+		<updated>2023-12-28T22:19:30Z</updated>
+		<id>https://zerozoo-a.github.io/blog/temp/os-memory-page-and-segment/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;페이지와 세그먼트 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/os-memory-page-and-segment/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;페이지와 세그먼트는 os가 &lt;strong&gt;메모리를 관리하는 방식&lt;/strong&gt;입니다.&lt;/p&gt;
+&lt;p&gt;페이지와 세그먼트는 각각 관리 방식에 차이를 가집니다.&lt;/p&gt;
+&lt;h2 id=&quot;page&quot; tabindex=&quot;-1&quot;&gt;고정크기의 페이지(Page) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/os-memory-page-and-segment/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;페이지는 메모리를 고정된 크기의 블록으로 나눕니다.
+&lt;ul&gt;
+&lt;li&gt;일반적으로 킬로바이트, 메가바이트 크기를 가집니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;주로 가상 메모리에 사용됩니다.
+&lt;ol&gt;
+&lt;li&gt;프로그램이 여러 페이지로 나뉘어집니다.&lt;/li&gt;
+&lt;li&gt;필요에 따라 실제 물리 메모리에 적재됩니다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;가상 주소를 물리 주소로 변환하기 위한 테이블을 사용합니다.&lt;/li&gt;
+&lt;li&gt;고정된 크기에 의해 내부 단편화 문제가 발생할 수 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;segment&quot; tabindex=&quot;-1&quot;&gt;가변크기의 세그먼트(Segment) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/os-memory-page-and-segment/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;세그먼트는 메모리를 가변적인 크기의 블록으로 나눕니다.
+&lt;ul&gt;
+&lt;li&gt;프로그램의 논리적 단위를 기반으로 크기가 정해집니다.
+&lt;ul&gt;
+&lt;li&gt;예를 들어 함수, 배열, 객체, 프로시저, 스택, 자료구조 등이 세그먼트로 구분됩니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;프로그램의 논리적 구조를 메모리에 반영합니다.
+&lt;ul&gt;
+&lt;li&gt;디버깅에 직관적입니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;가변적인 크기를 설정하기 때문에 메모리 상에서 사용되지 않는 공간 낭비가 발생 할 수 있습니다.&lt;/li&gt;
+&lt;li&gt;세그먼트의 물리적 주소와 크기 정보를 보관하기 위해 가상 주소를
+물리주소로 변환하는 테이블을 사용합니다.&lt;/li&gt;
+&lt;li&gt;세그먼트 메모리 관리는 프로그램의 논리적 구조를 반영합니다.
+&lt;ul&gt;
+&lt;li&gt;세그먼트로 나누어진 메모리들 중 하나의 세그먼트는 힙 메모리일 수 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>os management memory</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/os-management-memory/"/>
+		<updated>2023-12-28T22:01:21Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/os-management-memory/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;메모리 관리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/os-management-memory/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;메모리 관리 기법들 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/os-management-memory/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;반입 기법&lt;/li&gt;
+&lt;li&gt;배치 기법&lt;/li&gt;
+&lt;li&gt;할당 기법&lt;/li&gt;
+&lt;li&gt;교체 기법&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;반입 기법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/os-management-memory/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/temp/os-memory-page-and-segment/&quot;&gt;페이지나 세그먼트&lt;/a&gt;가 보조 기억장치(ex: HDD, SSD)에서 주기억장치로 적재될 때,
+어느 시기에 적재 할 것인지를 결정하는 전략입니다.&lt;/p&gt;
+&lt;p&gt;반입 기법은 다시 2가지로 나뉩니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;요구 반입
+&lt;ul&gt;
+&lt;li&gt;가장 일반적입니다&lt;/li&gt;
+&lt;li&gt;프로그램이 특정 메모리를 요구할 때 요구된 페이지를 주 메모리로 반입합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;예측 반입
+&lt;ul&gt;
+&lt;li&gt;시스템이 필요 할 것으로 예상되는 메모리를 미리 주 메모리로 반입합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;배치 기법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/os-management-memory/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;배치 기법은 프로그램이나 작업을 메모리에 할당하는 방법을 의미합니다.&lt;/p&gt;
+&lt;p&gt;배치는 말그대로 적당한 프로그램을 메모리의 &lt;strong&gt;어디에 배치&lt;/strong&gt; 할 것인지를 다룹니다.&lt;/p&gt;
+&lt;p&gt;배치 기법은 다시 3가지로 나뉩니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;First-Fit (첫 번째 적합)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;배치할 메모리 공간중 가장 처음 만나는 적재 가능한 공간에 적재합니다.&lt;/li&gt;
+&lt;li&gt;탐색시간이 매우 빠릅니다. 메모리 앞부분에 작은 빈 공간을 많이 만들 수 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Best-Fit (최적 적합)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;남은 메모리 공간중 가장 빈공간이 적은 공간에 적재합니다.&lt;/li&gt;
+&lt;li&gt;모든 공간을 탐색하기 때문에 타 방법에 비해 시간이 걸립니다.&lt;/li&gt;
+&lt;li&gt;외부 단편화가 줄어들지만 사용하기 힘든 매우 작은 공간이 생겨날 수 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Worst-Fit (최악 적합)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;가장 큰 공간에 적재합니다.&lt;/li&gt;
+&lt;li&gt;큰 공간이 다 차게되면 빈 공간을 찾기 어려워집니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;할당 기법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/os-management-memory/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;-5&quot; tabindex=&quot;-1&quot;&gt;교체 기법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/os-management-memory/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>자바스크립트 깊이 우선 탐색(DFS) iterative 접근</title>
