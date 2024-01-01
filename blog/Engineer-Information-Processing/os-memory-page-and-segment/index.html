@@ -66,11 +66,11 @@
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
 		<meta property="og:title" content=메모리 저장 방식인 페이지와 세그먼트/>
-		<meta property="og:url" content=/blog/temp/os-memory-page-and-segment/ />
+		<meta property="og:url" content=/blog/Engineer-Information-Processing/os-memory-page-and-segment/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/temp/os-memory-page-and-segment/ />
+		<link rel="canonical" href=/blog/Engineer-Information-Processing/os-memory-page-and-segment/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -3076,6 +3076,14 @@ h2 + .header-anchor {
 								
 									<li>
 											
+												<a href="/blog/Engineer-Information-Processing/os-address-translation">
+													os-address-translation
+												</a>
+											
+									</li>
+								
+									<li>
+											
 												<a href="/blog/Engineer-Information-Processing/os-control-programs">
 													os-control-programs
 												</a>
@@ -3084,8 +3092,8 @@ h2 + .header-anchor {
 								
 									<li>
 											
-												<a href="/blog/Engineer-Information-Processing/os-management-memory">
-													os-management-memory
+												<a href="/blog/Engineer-Information-Processing/os-memory-page-and-segment">
+													os-memory-page-and-segment
 												</a>
 											
 									</li>
@@ -3837,8 +3845,8 @@ h2 + .header-anchor {
 								
 									<li>
 											
-												<a href="/blog/temp/os-memory-page-and-segment">
-													os-memory-page-and-segment
+												<a href="/blog/temp/os-management-memory">
+													os-management-memory
 												</a>
 											
 									</li>
@@ -4011,7 +4019,7 @@ h2 + .header-anchor {
 
 		<aside>
 			<nav class="toc" >
-        <ol><li><a href="#page">고정크기의 페이지(Page)</a></li><li><a href="#segment">가변크기의 세그먼트(Segment)</a></li></ol>
+        <ol><li><a href="#page">고정크기의 페이지(Page)</a></li><li><a href="#segment">가변크기의 세그먼트(Segment)</a><ol><li><a href="#-1">세그먼트 테이블 예시</a></li><li><a href="#-2">세그먼트 테이블 찾아가보기</a></li></ol></li><li><a href="#-3">페이지와 세그멘테이션 혼용 기법</a></li></ol>
       </nav>
 		</aside>
 
@@ -4041,7 +4049,8 @@ h2 + .header-anchor {
 </ul>
 <h2 id="segment" tabindex="-1">가변크기의 세그먼트(Segment) <a class="header-anchor" href="#segment">#</a></h2>
 <ul>
-<li>세그먼트는 메모리를 가변적인 크기의 블록으로 나눕니다.
+<li>
+<p>세그먼트는 메모리를 가변적인 크기의 블록으로 나눕니다.</p>
 <ul>
 <li>프로그램의 논리적 단위를 기반으로 크기가 정해집니다.
 <ul>
@@ -4050,26 +4059,143 @@ h2 + .header-anchor {
 </li>
 </ul>
 </li>
-<li>프로그램의 논리적 구조를 메모리에 반영합니다.
+<li>
+<p>프로그램의 논리적 구조를 메모리에 반영합니다.</p>
 <ul>
 <li>디버깅에 직관적입니다.</li>
 </ul>
 </li>
-<li>가변적인 크기를 설정하기 때문에 메모리 상에서 사용되지 않는 공간 낭비가 발생 할 수 있습니다.</li>
-<li>세그먼트의 물리적 주소와 크기 정보를 보관하기 위해 가상 주소를
-물리주소로 변환하는 테이블을 사용합니다.</li>
-<li>세그먼트 메모리 관리는 프로그램의 논리적 구조를 반영합니다.
+<li>
+<p>가변적인 크기를 설정하기 때문에 메모리 상에서 사용되지 않는 공간 낭비가 발생 할 수 있습니다.</p>
+</li>
+<li>
+<p>세그먼트의 물리적 주소와 크기 정보를 보관하기 위해 가상 주소를
+물리주소로 변환하는 테이블을 사용합니다.</p>
+</li>
+<li>
+<p>세그먼트 메모리 관리는 프로그램의 논리적 구조를 반영합니다.</p>
 <ul>
 <li>세그먼트로 나누어진 메모리들 중 하나의 세그먼트는 힙 메모리일 수 있습니다.</li>
 </ul>
 </li>
+<li>
+<p>세그먼트 테이블을 가지는 시스템에서 논리 주소(s, d)가 주어지면
+논리주소 (s)에 속하는 세그먼트 테이블에서 s에 속하는 해당 base주소를 찾고,
+해당 base 주소에 변위 d값을 더해줘서 물리주소를 계산합니다.</p>
+</li>
+</ul>
+<h3 id="-1" tabindex="-1">세그먼트 테이블 예시 <a class="header-anchor" href="#-1">#</a></h3>
+<p>세그먼트 테이블은 각 세그먼트의 시작 주소와 길이를 관리합니다.</p>
+<p>아래는 이를 나타낸 예시 표입니다.</p>
+<table>
+<thead>
+<tr>
+<th>세그먼트 번호</th>
+<th>시작 주소 (Base)</th>
+<th>길이 (Limit)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0x0000</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0x1000</td>
+<td>0x2000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0x3000</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0x4000</td>
+<td>0x3000</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>세그먼트 번호</strong>: 프로세스 내 각 세그먼트를 식별하는 번호입니다.</li>
+<li><strong>시작 주소 (Base)</strong>: 해당 세그먼트의 물리적 메모리 시작 주소입니다.</li>
+<li><strong>길이 (Limit)</strong>: 세그먼트의 길이를 나타내며, 시작 주소로부터 얼마나 많은 메모리가 할당되었는지를 나타냅니다.</li>
+</ul>
+<p>이 표는 각 세그먼트가 메모리 상에서 어떻게 배치되어 있는지를 보여줍니다.
+예를 들어, 세그먼트 번호 0은 물리적 주소 0x0000부터 시작하여, 0x1000 크기의 메모리를 차지합니다.</p>
+<h3 id="-2" tabindex="-1">세그먼트 테이블 찾아가보기 <a class="header-anchor" href="#-2">#</a></h3>
+<p>세그먼트 테이블은 pagination과 비슷합니다.</p>
+<p>세그먼트 번호와 오프셋이 주어지면 아래의 테이블에서
+메모리 주소를 찾아가고 저장 가능한지 확인 할 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>세그먼트 번호</th>
+<th>시작 주소 (Base)</th>
+<th>길이 (Limit)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0x0000</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0x1000</td>
+<td>0x2000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0x3000</td>
+<td>0x1000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0x4000</td>
+<td>0x3000</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>세그먼트 번호: 2</li>
+<li>오프셋: 0x0800
+을 예시로 들겠습니다.</li>
+</ul>
+<ol>
+<li>
+<p>세그먼트 확인: 테이블에서 세그먼트 번호를 찾아갑니다.</p>
+</li>
+<li>
+<p>오프셋 검증: 시작 주소가 0x3000입니다.
+해당 세그먼트의 길이가 0x1000으로 오프셋은
+유효 범위 내에 있습니다.</p>
+</li>
+<li>
+<p>논리주소를 물리주소로 변환하기: 논리주소의 물리적 주소를 찾아가기 위해 세그먼트의 시작 주소에 오프셋을 더합니다.</p>
+</li>
+</ol>
+<ul>
+<li>물리주소 = 세그먼트의 시작주소 + 오프셋입니다.</li>
+<li>0x3000 + 0x08000 = 0x38000</li>
+</ul>
+<p>논리주소는 (2, 0x0800)입니다.
+물리주소는 0x38000입니다.</p>
+<p>만약 오프셋이 세그먼트 테이블의 길이를 넘으면 적재 할 수 없게 됩니다.</p>
+<h2 id="-3" tabindex="-1">페이지와 세그멘테이션 혼용 기법 <a class="header-anchor" href="#-3">#</a></h2>
+<ul>
+<li>페이지의 외부 단편화, 세그멘테이션의 내부 단편화 문제를 최소화 하기 위해 개발됨</li>
+<li>세그멘트로 메모리를 나눈 후, 세그먼트 내부에서 동일한 크기로 페이징하는 기법이다.</li>
 </ul>
 
 	</section>
 <br>
 <br>
 <br>
-<ul><li>이전 글: <a href="/blog/Engineer-Information-Processing/os-management-memory/">os management memory</a></li><li>다음 글: <a href="/blog/git/git-revert-with-head/">git의 revert와 `is a merge but no -m option was given.`</a></li>
+<ul><li>이전 글: <a href="/blog/temp/os-management-memory/">운영체제의 메모리 관리 기법</a></li><li>다음 글: <a href="/blog/git/git-revert-with-head/">git의 revert와 `is a merge but no -m option was given.`</a></li>
 </ul>
 
 </article>

@@ -19,7 +19,7 @@
 </script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>os management memory | zerozoo-a의 블로그</title>
+		<title>운영체제의 메모리 관리 기법 | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 		<script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -40,7 +40,7 @@
       "isPartOf": {
         "@id": "https://zerozoo-a.github.io/#website"
       },
-      "headline": "os management memory",
+      "headline": "운영체제의 메모리 관리 기법",
       "description": "안녕하세요 반갑습니다. 건강하고 행복하세요",
       "image": "",
       "inLanguage": "ko-KR",
@@ -65,12 +65,12 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		<meta property="og:title" content=os management memory/>
-		<meta property="og:url" content=/blog/Engineer-Information-Processing/os-management-memory/ />
+		<meta property="og:title" content=운영체제의 메모리 관리 기법/>
+		<meta property="og:url" content=/blog/temp/os-management-memory/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/Engineer-Information-Processing/os-management-memory/ />
+		<link rel="canonical" href=/blog/temp/os-management-memory/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -3076,6 +3076,14 @@ h2 + .header-anchor {
 								
 									<li>
 											
+												<a href="/blog/Engineer-Information-Processing/os-address-translation">
+													os-address-translation
+												</a>
+											
+									</li>
+								
+									<li>
+											
 												<a href="/blog/Engineer-Information-Processing/os-control-programs">
 													os-control-programs
 												</a>
@@ -3084,8 +3092,8 @@ h2 + .header-anchor {
 								
 									<li>
 											
-												<a href="/blog/Engineer-Information-Processing/os-management-memory">
-													os-management-memory
+												<a href="/blog/Engineer-Information-Processing/os-memory-page-and-segment">
+													os-memory-page-and-segment
 												</a>
 											
 									</li>
@@ -3837,8 +3845,8 @@ h2 + .header-anchor {
 								
 									<li>
 											
-												<a href="/blog/temp/os-memory-page-and-segment">
-													os-memory-page-and-segment
+												<a href="/blog/temp/os-management-memory">
+													os-management-memory
 												</a>
 											
 									</li>
@@ -4002,7 +4010,7 @@ h2 + .header-anchor {
 	
 	
 
-<h1>os management memory</h1>
+<h1>운영체제의 메모리 관리 기법</h1>
 
 <ul class="post-metadata pt-2">
 	<li><time datetime="2023-12-28">28 December 2023</time></li>
@@ -4011,7 +4019,7 @@ h2 + .header-anchor {
 
 		<aside>
 			<nav class="toc" >
-        <ol><li><a href="#-1">메모리 관리 기법들</a><ol><li><a href="#-2">반입 기법</a></li><li><a href="#-3">배치 기법</a></li><li><a href="#-4">할당 기법</a></li><li><a href="#-5">교체 기법</a></li></ol></li></ol>
+        <ol><li><a href="#-1">메모리 관리 기법들</a><ol><li><a href="#-2">반입 기법</a></li><li><a href="#-3">배치 기법</a></li><li><a href="#-4">할당 기법</a></li></ol></li><li><a href="#-5">교체 기법</a></li></ol>
       </nav>
 		</aside>
 
@@ -4074,13 +4082,101 @@ h2 + .header-anchor {
 </li>
 </ul>
 <h3 id="-4" tabindex="-1">할당 기법 <a class="header-anchor" href="#-4">#</a></h3>
-<h3 id="-5" tabindex="-1">교체 기법 <a class="header-anchor" href="#-5">#</a></h3>
+<p>실행해야 할 프로세스를 주기억장치에 어떤 방법으로
+할당할 것인지 결정하는 기법을 의미합니다.</p>
+<p>할당 기법은 다시 2가지로 나뉩니다.</p>
+<ul>
+<li>
+<p>연속 할당</p>
+<ul>
+<li>하나의 프로세스가 필요로 하는 메모리를 메모리 상의 연속적인 위치에 할당합니다.</li>
+</ul>
+<p>연속 할당은 다시 3가지로 나뉘어집니다.</p>
+<ul>
+<li>단일 분할 할당
+<ul>
+<li>모든 사용 가능한 메모리가 하나의 큰 블록으로 할당됩니다.</li>
+<li>가장 간단하고, 비효율적입니다..</li>
+</ul>
+</li>
+<li>고정 분할 할당
+<ul>
+<li>메모리를 고정된 크기의 분할로 나눕니다.</li>
+<li>각 분할당 하나의 프로세스를 매핑합니다.</li>
+</ul>
+</li>
+<li>동적 분할 할당
+<ul>
+<li>프로세스 요구에 따라 동적 분할 합니다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>분산 할당</p>
+<ul>
+<li>페이징</li>
+<li>세그멘테이션</li>
+<li><a href="/blog/Engineer-Information-Processing/os-memory-page-and-**segment**/"> 페이징과 세그멘테이션 </a></li>
+</ul>
+</li>
+<li>
+<p><a href="/blog/Engineer-Information-Processing/os-address-translation/">논리 주소와 물리주소, 주소 사상 기법</a></p>
+</li>
+</ul>
+<h2 id="-5" tabindex="-1">교체 기법 <a class="header-anchor" href="#-5">#</a></h2>
+<p>교체 기법(Replacement Algorithms)은 운영 체제가 시스템의 사용 가능한 메모리가 부족할 때, 어떤 페이지(또는 세그먼트)를 제거하고 새로운 페이지를 로드할지 결정하는 방법을 말합니다.</p>
+<ul>
+<li>주기억 장치에 있는 프로세스 중 어떤 프로세스를 제거할 것인지 결정하는 기법</li>
+<li>새로운 페이지를 할당하기 위해 현재 할당된 페이지 중 어느 것과 교체할지 결정</li>
+<li>메모리 교체 대상을 결정한다.</li>
+<li>교체 기법의 유형으로는
+<ul>
+<li>FIFO (First-In, First-Out)
+<ul>
+<li>원리: 가장 오래 전에 메모리에 로드된 페이지를 가장 먼저 교체</li>
+<li>특징: 구현이 간단하나, 중요한 페이지가 교체되는 경우가 있을 수 있음</li>
+</ul>
+</li>
+<li>LRU (Least Recently Used)
+<ul>
+<li>원리: 가장 오랫동안 사용되지 않은 페이지를 교체</li>
+<li>특징: <a href="https://en.wikipedia.org/wiki/Locality_of_reference">프로그램의 지역성 원리</a>를 잘 활용하나, 구현이 복잡하고 오버헤드가 있을 수 있음</li>
+</ul>
+</li>
+<li>LFU (Least Frequently Used)
+<ul>
+<li>원리: 가장 적게 사용된 페이지를 교체합니다.</li>
+<li>특징: 사용 빈도를 추적해 초기에 자주 사용되었던 페이지가 장기적으로 사용되지 않더라도 메모리에 남아있을 수 있습니다.</li>
+</ul>
+</li>
+<li>NRU (Not Recently Used)
+<ul>
+<li>원리: 최근에 사용되지 않은 페이지 중 하나를 무작위로 교체합니다.</li>
+<li>특징: 구현이 간단하며, 일반적인 성능이 좋습니다.</li>
+</ul>
+</li>
+<li>Clock (Second Change Algorithm)
+<ul>
+<li>원리: FIFO에 사용됨 플래그를 추가해 구현합니다. 페이지에 두 번째 기회를 주어 사용됨 플래그가 설정된 페이지는 플래그를 해제하고 다시 순환하도록 합니다.</li>
+<li>특징: LRU의 <a href="https://ko.wikipedia.org/wiki/%EA%B7%BC%EC%82%AC_%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98">근사 알고리즘</a>으로, 구현이 간단하고 효과적입니다.</li>
+</ul>
+</li>
+<li>Optimal Page Replacement
+<ul>
+<li>원리: 미래에 가장 오랫동안 사용되지 않을 페이지를 교체합니다.</li>
+<li>특징: 이론적 모델로 실제 시스템에서는 미래의 참조를 예측 할 수 없기에 구현 할 수 는 없습니다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
 	</section>
 <br>
 <br>
 <br>
-<ul><li>이전 글: <a href="/blog/temp/DFS-recursive-iterable/">자바스크립트 깊이 우선 탐색(DFS) iterative 접근</a></li><li>다음 글: <a href="/blog/temp/os-memory-page-and-segment/">메모리 저장 방식인 페이지와 세그먼트</a></li>
+<ul><li>이전 글: <a href="/blog/temp/DFS-recursive-iterable/">자바스크립트 깊이 우선 탐색(DFS) iterative 접근</a></li><li>다음 글: <a href="/blog/Engineer-Information-Processing/os-memory-page-and-segment/">메모리 저장 방식인 페이지와 세그먼트</a></li>
 </ul>
 
 </article>
