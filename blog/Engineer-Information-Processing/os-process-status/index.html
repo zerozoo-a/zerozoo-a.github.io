@@ -19,7 +19,7 @@
 </script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>자바스크립트 깊이 우선 탐색(DFS) iterative 접근 | zerozoo-a의 블로그</title>
+		<title>os process의 상태 | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 		<script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -40,7 +40,7 @@
       "isPartOf": {
         "@id": "https://zerozoo-a.github.io/#website"
       },
-      "headline": "자바스크립트 깊이 우선 탐색(DFS) iterative 접근",
+      "headline": "os process의 상태",
       "description": "안녕하세요 반갑습니다. 건강하고 행복하세요",
       "image": "",
       "inLanguage": "ko-KR",
@@ -54,7 +54,7 @@
         "name": "zerozoo-a"
       },
       "keywords": "posts",
-      "datePublished": "2023-12-26T22:41:14.000Z"
+      "datePublished": "2024-01-04T22:19:20.000Z"
     }
   ]
 }</script>
@@ -65,12 +65,12 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		<meta property="og:title" content=자바스크립트 깊이 우선 탐색(DFS) iterative 접근/>
-		<meta property="og:url" content=/blog/temp/DFS-recursive-iterable/ />
+		<meta property="og:title" content=os process의 상태/>
+		<meta property="og:url" content=/blog/Engineer-Information-Processing/os-process-status/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/temp/DFS-recursive-iterable/ />
+		<link rel="canonical" href=/blog/Engineer-Information-Processing/os-process-status/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -3092,8 +3092,32 @@ h2 + .header-anchor {
 								
 									<li>
 											
+												<a href="/blog/Engineer-Information-Processing/os-management-memory">
+													os-management-memory
+												</a>
+											
+									</li>
+								
+									<li>
+											
 												<a href="/blog/Engineer-Information-Processing/os-memory-page-and-segment">
 													os-memory-page-and-segment
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-process-scheduling">
+													os-process-scheduling
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-process-status">
+													os-process-status
 												</a>
 											
 									</li>
@@ -3701,6 +3725,27 @@ h2 + .header-anchor {
 											
 									</li>
 								
+									<li>
+											
+											<details>
+												<summary>traversal</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/traversal/DFS-recursive-iterable">
+													DFS-recursive-iterable
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
 							</ul>
 						
 											</details>
@@ -3810,43 +3855,6 @@ h2 + .header-anchor {
 											
 												<a href="/blog/rust/rust-analyzer-for-vscode">
 													rust-analyzer-for-vscode
-												</a>
-											
-									</li>
-								
-							</ul>
-						
-											</details>
-											
-									</li>
-								
-									<li>
-											
-											<details>
-												<summary>temp</summary>
-													
-							<ul>
-								
-									<li>
-											
-												<a href="/blog/temp/DFS-recursive-iterable">
-													DFS-recursive-iterable
-												</a>
-											
-									</li>
-								
-									<li>
-											
-												<a href="/blog/temp/inverse-logarithm-function">
-													inverse-logarithm-function
-												</a>
-											
-									</li>
-								
-									<li>
-											
-												<a href="/blog/temp/os-management-memory">
-													os-management-memory
 												</a>
 											
 									</li>
@@ -4010,16 +4018,16 @@ h2 + .header-anchor {
 	
 	
 
-<h1>자바스크립트 깊이 우선 탐색(DFS) iterative 접근</h1>
+<h1>os process의 상태</h1>
 
 <ul class="post-metadata pt-2">
-	<li><time datetime="2023-12-26">26 December 2023</time></li>
+	<li><time datetime="2024-01-04">04 January 2024</time></li>
 </ul>
 
 
 		<aside>
 			<nav class="toc" >
-        <ol><li><a href="#iterative-dfs">iterative dfs</a></li><li><a href="#-1">사유실험하기</a></li><li><a href="#-2">정리</a></li></ol>
+        <ol><li><a href="#dispatch">dispatch(디스패치)</a></li><li><a href="#timeout">timeout | 선점형 스케줄링에 의해 뺏김</a></li><li><a href="#i-o">I/O</a></li><li><a href="#wake-up">Wake up</a></li></ol>
       </nav>
 		</aside>
 
@@ -4028,170 +4036,86 @@ h2 + .header-anchor {
 		<br />
 <br />
 <br />
-<h1 id="dfs" tabindex="-1">깊이 우선 탐색(DFS)이란 <a class="header-anchor" href="#dfs">#</a></h1>
-<p>깊이 우선 탐색은 트리나 그래프 자료구조를 깊이를 우선해서 탐색하는
-알고리즘을 의미합니다.</p>
-<h2 id="" tabindex="-1">수도 코드 예시 <a class="header-anchor" href="#">#</a></h2>
-<p>대략 아래와 같은 그래프가 존재할 때,</p>
+<h1 id="" tabindex="-1">프로세스의 상태 <a class="header-anchor" href="#">#</a></h1>
+<p>프로세스는 <code>라이프사이클</code>을 갖습니다.</p>
+<p>프로세스 라이프사이클은 프로세스의 생애주기를 나타냅니다.</p>
+<p>그 주요 주기는 아래의 5가지입니다.</p>
+<ul>
+<li>
+<p>생성: 프로세스가 생성되고 초기화됩니다.</p>
+<ul>
+<li>전환: 프로세스가 모든 자원을 필요한 자원을 할당받으면, <code>준비 상태로 전환</code>됩니다.</li>
+</ul>
+</li>
+<li>
+<p>준비: 프로세스가 CPU를 제외한 모든 자원을 할당받은 상태입니다.</p>
+<ul>
+<li>전환: 프로세스가 CPU 할당을 받으면 <code>실행 상태로 전환</code>됩니다.</li>
+</ul>
+</li>
+<li>
+<p>실행: CPU를 할당받아 명령어를 실행하는 상태입니다.</p>
+<ul>
+<li>전환 1: I/O 요청에 들어가면 <code>대기 상태로 전환</code>되며 프로세스를 놓아줍니다.</li>
+<li>전환 2: <a href="/blog/Engineer-Information-Processing/os-process-scheduling/">선점형 스케줄링</a>에 의해 CPU를 빼앗기면, <code>준비 상태로 전환</code>됩니다.</li>
+<li>전환 3: 실행을 완료하면, <code>종료 상태로 전환</code>됩니다.</li>
+</ul>
+</li>
+<li>
+<p>대기: 프로세스가 I/O 작업과 같은 이벤트의 완료를 기다립니다.</p>
+<ul>
+<li>전환: CPU가 언제 끝날지 알 수 없는 대기 작업에 할당되지 않도록
+<code>준비 상태로 전환</code>됩니다.</li>
+</ul>
+</li>
+<li>
+<p>종료: 실행이 완료된 상태입니다. 할당받은 자원을 모두 OS에 반납하고 프로세스 테이블에서 제거됩니다.</p>
+<ul>
+<li>전환: 없음</li>
+</ul>
+<p><code>graph</code>로 나타내면 아래와 같이 표현됩니다.</p>
+</li>
+</ul>
 <div class="mermaid">
 %%{init: {'theme':'dark'}}%%
 
-classDiagram
-    class A {
-    }
+graph LR;
+A("생성")
+B("준비")
+C("실행")
+D("대기")
+E("종료")
 
-    A <--> B
-    A <--> C
+A --> B
+B --> |"dispatch"| C
+D --> |"wake up"| B
+C --> |"할당시간 초과 | 선점형에 의해 뺏김"| B
+C --> |"I/O"| D
+C --> E
 </div>
-<p>서로 존재를 알고 있어야 하는 그래프이므로
-간단한 수도코드처럼 작성해보겠습니다.</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// 그래프</span>
-<span class="token keyword">const</span> graph <span class="token operator">=</span> <span class="token punctuation">{</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token comment">// 각 vertex 생성</span>
-graph<span class="token punctuation">.</span><span class="token constant">A</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-graph<span class="token punctuation">.</span><span class="token constant">B</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-graph<span class="token punctuation">.</span><span class="token constant">C</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-<span class="token comment">// edge 연결</span>
-
-<span class="token comment">// A와 B연결 </span>
-graph<span class="token punctuation">.</span><span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-graph<span class="token punctuation">.</span><span class="token constant">B</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment">// C와 A연결</span>
-graph<span class="token punctuation">.</span><span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"C"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-graph<span class="token punctuation">.</span><span class="token constant">C</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>연결이라고 해도, 각 vertex를 서로 찾아갈 수 있는
-해시 키를 상호간 등록하는 것이 전부입니다.</p>
-<p>위 코드로인해 각 vertex의 간선(edge)들은 연결되었습니다.</p>
-<h2 id="iterative-dfs" tabindex="-1">iterative dfs <a class="header-anchor" href="#iterative-dfs">#</a></h2>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">function</span> <span class="token function">iterativeDFS</span><span class="token punctuation">(</span><span class="token parameter">startVertex<span class="token punctuation">,</span> adjacencyGraph</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>startVertex <span class="token operator">||</span> <span class="token operator">!</span>adjacencyGraph<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
-
-  <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span>startVertex<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// stack에 가장 첫 vertex 값을 넣습니다.</span>
-  <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> 
-  <span class="token keyword">const</span> visited <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// 방문한 vertex를 기록하고 두번 방문하지 않도록 체크하는 용도입니다.</span>
-  <span class="token keyword">let</span> currentVertex<span class="token punctuation">;</span>
-
-  visited<span class="token punctuation">[</span>startVertex<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment">// 첫 vertex</span>
-
-  <span class="token keyword">while</span> <span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    currentVertex <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 현재 stack을 Pop해서 현재 vertex로 이동합니다.</span>
-    result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>currentVertex<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// vertex에 도착했으므로 중복된 방문이 아닙니다, result에 값을 밀어 넣습니다.</span>
-
-    adjacencyGraph<span class="token punctuation">[</span>currentVertex<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">neighbor</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token comment">// 현재 vertex와 연결된 vertex 수 만큼 반복문을 실행합니다.</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span>visited<span class="token punctuation">[</span>neighbor<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span> <span class="token comment">// 이미 방문한적이 있다면 스킵합니다.</span>
-
-      visited<span class="token punctuation">[</span>neighbor<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment">// 방문한적이 없다면 visited에 해당 vertex를 true로 기록합니다.</span>
-      stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>neighbor<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// stack에 밀어 넣습니다.</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token comment">// 반복문이 종료되면 stack의 수가 늘어나 while문이 종료되지 않습니다. stack에 밀어넣어 두었던</span>
-    <span class="token comment">// vertex들이 stack pop에 의해 currentVertex가 됩니다.</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<h2 id="-1" tabindex="-1">사유실험하기 <a class="header-anchor" href="#-1">#</a></h2>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// 그래프</span>
-<span class="token keyword">const</span> graph <span class="token operator">=</span> <span class="token punctuation">{</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token comment">// 각 vertex 생성</span>
-graph<span class="token punctuation">.</span><span class="token constant">A</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-graph<span class="token punctuation">.</span><span class="token constant">B</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-graph<span class="token punctuation">.</span><span class="token constant">C</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-<span class="token comment">// edge 연결</span>
-
-<span class="token comment">// A와 B연결 </span>
-graph<span class="token punctuation">.</span><span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-graph<span class="token punctuation">.</span><span class="token constant">B</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment">// C와 A연결</span>
-graph<span class="token punctuation">.</span><span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"C"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-graph<span class="token punctuation">.</span><span class="token constant">C</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">function</span> <span class="token function">iterativeDFS</span><span class="token punctuation">(</span><span class="token parameter">startVertex<span class="token punctuation">,</span> adjacencyGraph</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>startVertex<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
-
-  <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span>startVertex<span class="token punctuation">]</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> visited <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-  <span class="token keyword">let</span> currentVertex<span class="token punctuation">;</span>
-
-  visited<span class="token punctuation">[</span>startVertex<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-
-  <span class="token keyword">while</span> <span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    currentVertex <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>currentVertex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    adjacencyGraph<span class="token punctuation">[</span>currentVertex<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">neighbor</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span>visited<span class="token punctuation">[</span>neighbor<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
-
-      visited<span class="token punctuation">[</span>neighbor<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-      stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>neighbor<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<p>위 코드를 머리속으로 실행해보겠습니다.</p>
-<p>DFS의 시작점이되는 A는 visited에 true로 표기되어집니다. ⤵️</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> visited <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token constant">A</span><span class="token operator">:</span> <span class="token boolean">true</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
-<p>vertex A는 vertex B, C를 가리키고 있고,
-B, C는 A를 가리키고 있습니다. ⤵️</p>
-<pre class="language-js" tabindex="0"><code class="language-js"> <span class="token keyword">const</span> graph <span class="token operator">=</span> <span class="token punctuation">{</span>
-   <span class="token constant">A</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-   <span class="token constant">B</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-   <span class="token constant">C</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
- <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
-<p><code>vertex A</code>의 배열 값을 순회하면서</p>
-<ul>
-<li><code>stack</code>에 <code>B, C</code>를 추가합니다.</li>
-<li><code>B, C</code>를 <code>visited</code>에 추가합니다.
-<ul>
-<li>현재 vertex에서 이동 가능한 모든 경로를 확인하고 <code>visited</code>에 추가하는 것입니다.</li>
-<li>그 후에 stack에 모두 밀어넣습니다.</li>
-</ul>
-</li>
-</ul>
-<p><code>stack.pop()</code>을 통해 값을 꺼내오므로
-<code>C</code> 값을 먼저 꺼내옵니다.</p>
-<p><code>C</code>가 가진 근접 <code>vertex</code>들을 순회합니다.
-<code>A</code>밖에 없습니다. visited에 의해 더 확인할 vertex가 없습니다.</p>
-<p>다시 <code>while</code>문 검사로 올라갑니다.
-stack을 터트려 <code>B</code>를 확인합니다.</p>
-<p><code>B</code> 또한 근접 <code>vertex</code>는 <code>A</code>밖에 없습니다.</p>
-<p><code>stack</code>의 길이는 모두 소진되어 반복문을 빠져나오게 됩니다.
-<code>dfs함수</code>는 <code>result</code>를 반환하고 종료됩니다.</p>
-<h2 id="-2" tabindex="-1">정리 <a class="header-anchor" href="#-2">#</a></h2>
-<ul>
-<li>각 vertex는 서로를 link하기 위해 아래와 같은 형태로 저장 될 수 있다.</li>
-</ul>
-<pre class="language-js" tabindex="0"><code class="language-js"> <span class="token keyword">const</span> graph <span class="token operator">=</span> <span class="token punctuation">{</span>
-   <span class="token constant">A</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-   <span class="token constant">B</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-   <span class="token constant">C</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">]</span>
- <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
-<ul>
-<li>첫 시작 vertex는 근접 vertex를 방문한적 있는지 검사한다.</li>
-<li>방문한적이 없다면 stack에 밀어넣는다.</li>
-<li>처음 방문한 vertex는 result stack에 push한다.</li>
-</ul>
+<h3 id="dispatch" tabindex="-1">dispatch(디스패치) <a class="header-anchor" href="#dispatch">#</a></h3>
+<p>준비 상태에 있는 여러 프로세스 중 실행될 프로세스를 선정해
+CPU를 할당(dispatch)합니다. 이 때, context switch 비용이 발생됩니다.</p>
+<h3 id="timeout" tabindex="-1">timeout | 선점형 스케줄링에 의해 뺏김 <a class="header-anchor" href="#timeout">#</a></h3>
+<p>프로세스는 스케줄링된 조건에 따라 CPU 할당을 빼앗길 수 있습니다.
+스케줄러에 의해 PCB에 내용을 저장, CPU를 반납하게 되고
+<code>준비상태로 전환</code>됩니다.</p>
+<h3 id="i-o" tabindex="-1">I/O <a class="header-anchor" href="#i-o">#</a></h3>
+<p>I/O와 즉시 실행 불가능한 시스템 콜, 프로세스간 통신(IPC)등 Block이 발생됩니다.</p>
+<p>이 때 CPU를 할당을 반납하고 <code>대기상태로 전환</code>됩니다.</p>
+<h3 id="wake-up" tabindex="-1">Wake up <a class="header-anchor" href="#wake-up">#</a></h3>
+<p>입출력이 종료되면 대기 상태의 프로세스에게 전달합니다.
+대기 상태에서 <code>준비 상태로 전환</code>되며 스케줄링에 의해 다시 실행을 기다립니다.</p>
 
 	</section>
 <br>
 <br>
 <br>
-<ul><li>이전 글: <a href="/blog/Engineer-Information-Processing/os-control-programs/">운영체제의 제어 프로그램들</a></li><li>다음 글: <a href="/blog/temp/os-management-memory/">운영체제의 메모리 관리 기법</a></li>
+<ul><li>이전 글: <a href="/blog/Engineer-Information-Processing/os-process-scheduling/">os 프로세스 스케줄링</a></li>
 </ul>
 
 </article>
-<script type="module" async>import mermaid from "/js/mermaid/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({startOnLoad:true}));</script>
+<script type="module" async>import mermaid from "/js/mermaid/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({"loadOnSave":true}));</script>
 <script 
 type="text/javascript"
 src="/js/lib/mutationObserver.js"

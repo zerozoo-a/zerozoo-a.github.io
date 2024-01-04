@@ -19,7 +19,7 @@
 </script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>로그함수의 역함수 | zerozoo-a의 블로그</title>
+		<title>os 프로세스 스케줄링 | zerozoo-a의 블로그</title>
 		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
 		<script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -40,7 +40,7 @@
       "isPartOf": {
         "@id": "https://zerozoo-a.github.io/#website"
       },
-      "headline": "로그함수의 역함수",
+      "headline": "os 프로세스 스케줄링",
       "description": "안녕하세요 반갑습니다. 건강하고 행복하세요",
       "image": "",
       "inLanguage": "ko-KR",
@@ -54,7 +54,7 @@
         "name": "zerozoo-a"
       },
       "keywords": "posts",
-      "datePublished": "2023-12-13T23:12:36.000Z"
+      "datePublished": "2024-01-04T21:52:22.000Z"
     }
   ]
 }</script>
@@ -65,12 +65,12 @@
 		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
-		<meta property="og:title" content=로그함수의 역함수/>
-		<meta property="og:url" content=/blog/temp/inverse-logarithm-function/ />
+		<meta property="og:title" content=os 프로세스 스케줄링/>
+		<meta property="og:url" content=/blog/Engineer-Information-Processing/os-process-scheduling/ />
 		<meta property="og:description" content= />
 		<meta property="og:image" content="/static/img/logo.png" />
 		<meta property="og:type" content="article" />
-		<link rel="canonical" href=/blog/temp/inverse-logarithm-function/ />
+		<link rel="canonical" href=/blog/Engineer-Information-Processing/os-process-scheduling/ />
 		<meta name="robots" content="index, follow" />
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
 		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
@@ -3092,8 +3092,32 @@ h2 + .header-anchor {
 								
 									<li>
 											
+												<a href="/blog/Engineer-Information-Processing/os-management-memory">
+													os-management-memory
+												</a>
+											
+									</li>
+								
+									<li>
+											
 												<a href="/blog/Engineer-Information-Processing/os-memory-page-and-segment">
 													os-memory-page-and-segment
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-process-scheduling">
+													os-process-scheduling
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-process-status">
+													os-process-status
 												</a>
 											
 									</li>
@@ -3701,6 +3725,27 @@ h2 + .header-anchor {
 											
 									</li>
 								
+									<li>
+											
+											<details>
+												<summary>traversal</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/traversal/DFS-recursive-iterable">
+													DFS-recursive-iterable
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
 							</ul>
 						
 											</details>
@@ -3810,43 +3855,6 @@ h2 + .header-anchor {
 											
 												<a href="/blog/rust/rust-analyzer-for-vscode">
 													rust-analyzer-for-vscode
-												</a>
-											
-									</li>
-								
-							</ul>
-						
-											</details>
-											
-									</li>
-								
-									<li>
-											
-											<details>
-												<summary>temp</summary>
-													
-							<ul>
-								
-									<li>
-											
-												<a href="/blog/temp/DFS-recursive-iterable">
-													DFS-recursive-iterable
-												</a>
-											
-									</li>
-								
-									<li>
-											
-												<a href="/blog/temp/inverse-logarithm-function">
-													inverse-logarithm-function
-												</a>
-											
-									</li>
-								
-									<li>
-											
-												<a href="/blog/temp/os-management-memory">
-													os-management-memory
 												</a>
 											
 									</li>
@@ -4010,41 +4018,100 @@ h2 + .header-anchor {
 	
 	
 
-<h1>로그함수의 역함수</h1>
+<h1>os 프로세스 스케줄링</h1>
 
 <ul class="post-metadata pt-2">
-	<li><time datetime="2023-12-13">13 December 2023</time></li>
+	<li><time datetime="2024-01-04">04 January 2024</time></li>
 </ul>
 
+
+		<aside>
+			<nav class="toc" >
+        <ol><ol><li><a href="#-1">선점형 스케줄링에서 사용되는 알고리즘</a></li></ol><li><a href="#-2">비선점형 스케줄링</a><ol><li><a href="#-3">비선점형 스케줄링에서 사용되는 알고리즘</a></li></ol></li></ol>
+      </nav>
+		</aside>
 
 
 	<section class="post-content markdown-body" data-pagefind-body>
 		<br />
 <br />
 <br />
+<h1 id="os" tabindex="-1">OS의 프로세스 스케줄링 <a class="header-anchor" href="#os">#</a></h1>
+<p>서로 다른 프로세스에서 돌고 있는 프로그램들은
+하나의 CPU를 두고 함께 사용해야 합니다.</p>
+<p>이는 공유 자원에 접근하는 쓰레드의 그것과
+DB의 transition의 그것과 동일한 내용입니다.</p>
+<p>스케줄링은 크게 아래와 같이 두가지로 나뉩니다.</p>
+<div class="mermaid">
+%%{init: {'theme':'dark'}}%%
+
+graph TD;
+A("스케줄링") --> B("선점형 스케줄링")
+A --> C("비선점형 스케줄링")
+</div>
+<p>선점형과 비선점형 스케줄링의 차이를 알아보겠습니다.</p>
+<h2 id="" tabindex="-1">선점형 스케줄링 <a class="header-anchor" href="#">#</a></h2>
+<blockquote>
+<p>선점형 스케줄링은 한 프로세스가 CPU를 사용중이더라도
+해당 CPU의 사용을 중단,
+다른 스케줄링을 CPU에 선점 할 수 있게 합니다.</p>
+</blockquote>
 <ul>
-<li><a href="/blog/MATHEMATICS/Algebraic/Funcitons/inverse-function/">역함수에 대해</a></li>
+<li>특징:
+<ul>
+<li><code>응답 시간의 개선</code>: 다수의 사용자, 중요한 프로세스에 대해 빠른 응답을 제공합니다.</li>
+<li><code>자원의 공유</code>: CPU를 공정하게 여러 프로세스 간에 공유되도록 합니다.</li>
+<li><code>복잡성</code>: 스케줄링 알고리즘이 이미 CPU를 점유하고 있는 프로그램의 실행 상태를 대기로 변경시키고 자신의 프로세스를 CPU에 태우는 것이므로 보다 복잡해집니다.
+<ul>
+<li>스케줄링 알고리즘에 따라 특정 프로세스는 <code>기아 상태</code>에 빠질 수 있습니다.</li>
 </ul>
-<!-- # 로그함수의 역함수 찾기
-
-$f(x) = log_2{x}$에 대해 역함수를 찾아보겠습니다.
-
-위 함수를 한국어로 풀어써보면 아래와 같습니다.
-
-> 2의 몇 거듭제곱이 x와 같은가
-
-감이 오질 않는다면 x에 적당한 2의 제곱수를 넣어보겠습니다.
- -->
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="-1" tabindex="-1">선점형 스케줄링에서 사용되는 알고리즘 <a class="header-anchor" href="#-1">#</a></h3>
+<ul>
+<li>Round Robin: <a href="https://ko.wikipedia.org/wiki/%EB%9D%BC%EC%9A%B4%EB%93%9C_%EB%A1%9C%EB%B9%88_%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81">라운드 로빈 스케줄링</a>은 시분할 시스템을 위해 설계된 선점형 스케줄링입니다.</li>
+</ul>
+<p>프로세스들간의 우선순위 없이 각 프로세스를 공평하게 시분할로 나누어
+Queue에 담아둡니다.</p>
+<p>시간만큼 CPU를 차지한 프로세스는 종료 상태가 아니라면 Queue의 맨 뒤에 다시 추가합니다.</p>
+<ul>
+<li>우선순위 기반 스케줄링</li>
+<li>다단계 피드백 큐 스케줄링
+등이 있습니다.</li>
+</ul>
+<h2 id="-2" tabindex="-1">비선점형 스케줄링 <a class="header-anchor" href="#-2">#</a></h2>
+<blockquote>
+<p>비선점형 스케줄링은 한 프로세스가 CPU를 할당받으면 작업을 완료하거나 I/O요청으로 블록될 때까지 CPU를 선점합니다.</p>
+</blockquote>
+<ul>
+<li>특징:
+<ul>
+<li>단순함: 이미 CPU를 차지한 경우 프로세스가 완료되기 전까지
+혹은 I/O 블록이 생기기 전까지 CPU를 계속 독점합니다.</li>
+<li>자원 활용 문제: 프로세스가 긴 경우 자원이 독점될 수 있습니다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="-3" tabindex="-1">비선점형 스케줄링에서 사용되는 알고리즘 <a class="header-anchor" href="#-3">#</a></h3>
+<ul>
+<li>First-Come</li>
+<li>First-Served</li>
+<li>Shortest Job First</li>
+<li>우선순위 스케줄링(비선점형 버전)
+등이 존재합니다.</li>
+</ul>
 
 	</section>
 <br>
 <br>
 <br>
-<ul><li>이전 글: <a href="/blog/MATHEMATICS/Algebraic/Funcitons/product-rule-of-logarithms/">로그 곱셈 법칙</a></li><li>다음 글: <a href="/blog/MATHEMATICS/Algebraic/Funcitons/inverse-function/">역함수</a></li>
+<ul><li>이전 글: <a href="/blog/Engineer-Information-Processing/os-address-translation/">os address translation</a></li><li>다음 글: <a href="/blog/Engineer-Information-Processing/os-process-status/">os process의 상태</a></li>
 </ul>
 
 </article>
-<script type="module" async>import mermaid from "/js/mermaid/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({startOnLoad:true}));</script>
+<script type="module" async>import mermaid from "/js/mermaid/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({"loadOnSave":true}));</script>
 <script 
 type="text/javascript"
 src="/js/lib/mutationObserver.js"
