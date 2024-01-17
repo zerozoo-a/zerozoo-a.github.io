@@ -1,7 +1,7 @@
 ---
 title: 네트워크 7계층 OSI의 L1 스위치 
 date: 2024-01-10 22:21:32
-coverURL: 
+coverURL: https://images.unsplash.com/photo-1526073733167-1b6d55175336?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 ---
 <br />
 <br />
