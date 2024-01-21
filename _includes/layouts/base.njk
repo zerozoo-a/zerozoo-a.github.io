@@ -93,8 +93,6 @@ eleventyComputed:
 
 	</head>
 	<body>
-
-
 		<div id="dimLayer"></div>
 			<header>
 				<button id="openDrawerBtn">
@@ -135,24 +133,51 @@ eleventyComputed:
 		<main>
 			{{ content | safe }}
 		</main>
-		  <footer></footer>
-		  <script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
+		<script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
 		<script type="text/javascript" async>
 		const openDrawerBtn = document.getElementById('openDrawerBtn');
 		const drawerMenu = document.getElementById('drawerMenu');
-		const dimLayer = document.getElementById("dimLayer")
+		const dimLayer = document.getElementById("dimLayer");
+		const body = document.getElementsByTagName("body")[0];
+
+
+		const isDrawerMenuOpen = () => {
+			return drawerMenu.style.left === '' || drawerMenu.style.left === '0px';
+			}
+		const isPc = () => window.outerWidth > 768;
+
 
 		openDrawerBtn.addEventListener('click', () => {
+			if(isPc() && isDrawerMenuOpen()) {
+			/** insert menu */
+			    drawerMenu.style.left = '-280px';
+				body.style.marginLeft = '0';
+				return
+			} else if(isPc() && !isDrawerMenuOpen()) {
+			/** draw menu */
+				drawerMenu.style.left = '0';
+				body.style.marginLeft = '290px';
+				return
+			} else {
+			/** mobile **/
 			dimLayer.classList.add('appear-dim');
 			drawerMenu.style.left = '0';
+			}
 		})
 
 		dimLayer.addEventListener('click', () => {
+			console.log('isPc?', isPc())
+			if(isDrawerMenuOpen()) return
+
 			dimLayer.classList.remove('appear-dim')
    		    drawerMenu.style.left = '-280px';
 		})
 
 		document.addEventListener('click', (event) => {
+			if(isPc()) {
+			   dimLayer.classList.remove('appear-dim')
+			   return;
+			}
 			/**
 			* drawerMenu의 하위 메뉴면서, 이벤트 타겟이 drawerMenu인 경우
 			* 이는 카테고리의 하위 메뉴들이 선택 되었을 때 해당되지 않습니다.
@@ -161,7 +186,7 @@ eleventyComputed:
 			if(drawerMenu.contains(event.target) && event.target === drawerMenu) {
 				dimLayer.classList.remove('appear-dim')
    		        drawerMenu.style.left = '-280px';
-				return
+				return;
 			}
 
 			/**
