@@ -13,10 +13,11 @@ const pluginDrafts = require("./eleventy.config.drafts.js");
 const pluginImages = require("./eleventy.config.images.js");
 const pluginGetAllCategories = require("./eleventy.config.categories.js");
 const pluginTOC = require("eleventy-plugin-toc");
-const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginBundle = require("@11ty/eleventy-plugin-bundle");
 const pluginNavigation = require("@11ty/eleventy-navigation");
+const pluginRss = require("@11ty/eleventy-plugin-rss");
+
 const { execSync } = require("child_process");
 
 /**
@@ -34,6 +35,15 @@ module.exports = function (eleventyConfig) {
 	});
 	eleventyConfig.addPassthroughCopy("./covers");
 	eleventyConfig.addPlugin(schema);
+	eleventyConfig.addPlugin(pluginRss, {
+		posthtmlRenderOptions: {
+			closingSingleTag: "default", // opt-out of <img/>-style XHTML single tags
+		},
+	});
+	eleventyConfig.addLiquidFilter("dateToRfc3339", pluginRss.dateToRfc3339);
+
+	// New in RSS 1.2.0
+	eleventyConfig.addLiquidFilter("dateToRfc822", pluginRss.dateToRfc822);
 
 	// ADD TOC
 	eleventyConfig.addPlugin(pluginTOC);
@@ -62,7 +72,7 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPlugin(pluginImages);
 	eleventyConfig.addPlugin(pluginGetAllCategories);
 	// Official plugins
-	eleventyConfig.addPlugin(pluginRss);
+	// eleventyConfig.addPlugin(pluginRss);
 	eleventyConfig.addPlugin(pluginSyntaxHighlight, {
 		preAttributes: { tabindex: 0 },
 	});
