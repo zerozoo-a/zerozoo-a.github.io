@@ -116,19 +116,16 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+    transition: margin-left 0.3s ease-in-out;
 }
 ol, ul {
 	list-style: none;
 }
-/* Defaults */
+/* Theme colors */
 :root {
 	--font-family: -apple-system, system-ui, sans-serif;
 	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
     --img-max-width: 607px;
-}
-
-/* Theme colors */
-:root {
     --boxShadow-thin: inset 0 0 0 max(1px, 0.0625rem);
     --boxShadow-thick: inset 0 0 0 max(2px, 0.125rem);
     --boxShadow-thicker: inset 0 0 0 max(4px, 0.25rem);
@@ -606,8 +603,6 @@ ol, ul {
     --color-scale-coral-6: #ac3220;
     --color-scale-coral-7: #872012;
     --color-scale-coral-8: #640d04;
-}
-:root {
     --base-size-4: 0.25rem;
     --base-size-8: 0.5rem;
     --base-size-12: 0.75rem;
@@ -626,8 +621,6 @@ ol, ul {
     --base-size-112: 7rem;
     --base-size-128: 8rem;
 }
-
-
 
 @media (prefers-color-scheme: dark) {
 	:root {
@@ -693,7 +686,6 @@ a[href] {
 	color: var(--text-color-link);
 }
 a[href]:visited {
-    /* color:var(--fgColor-default), var(--color-fg-default); */
     color:var(--color-prettylights-syntax-constant-other-reference-link), var(--color-fg-default);
 }
 a[href]:hover,
@@ -838,8 +830,6 @@ header {
 .postlist-date {
 	font-size: 0.8125em; /* 13px /16 */
     color:var(--color-fg-default);
-}
-.postlist-date {
 	word-spacing: -0.5px;
 }
 .postlist-link {
@@ -1032,7 +1022,6 @@ h2 + .header-anchor {
     margin:12px 0 0 0;
 }
 .m-3 {
-    /* margin: var(--base-size-16, 16px) !important; */
     margin: 16px 0;
 }
 .m-3p {
@@ -1088,7 +1077,6 @@ h2 + .header-anchor {
 
 .contact .contact-title {
     position: relative;
-	font-size: 0.8125em; /* 13px /16 */
 	color: var(--color-gray-90);
     font-weight: 400;
     font-size: 12px;
@@ -1121,7 +1109,6 @@ h2 + .header-anchor {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
 }
 .post-container {
@@ -1158,18 +1145,18 @@ h2 + .header-anchor {
 
   /* header */
 
-  #drawerMenu {
-    position: fixed;
-    top: 0;
-    left: -280px; /* Start offscreen */
-    width: 280px;
-    height: 100%;
-    background-color: #24292e;
-    color: #ffffff;
-    transition: left 0.3s ease-in-out;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: auto;
-    z-index: 2;
+#drawerMenu {
+   position: fixed;
+   top: 0;
+   left: -280px;
+   width: 280px;
+   height: 100%;
+   background-color: #24292e;
+   color: #ffffff;
+   transition: left 0.3s ease-in-out;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   overflow: hidden;
+   z-index: 2;
 }
 
 #drawerMenu ul {
@@ -1184,6 +1171,14 @@ h2 + .header-anchor {
 
 #drawerMenu li:hover {
     color: #f1f1f1;
+}
+
+@media screen and (min-width: 768px){
+    body { margin-left:290px; }
+    #drawerMenu {
+        left: 0;
+        z-index: 0;
+    }
 }
 
 #openDrawerBtn {
@@ -1248,8 +1243,6 @@ h2 + .header-anchor {
 
 	</head>
 	<body>
-
-
 		<div id="dimLayer"></div>
 			<header>
 				<button id="openDrawerBtn">
@@ -1790,6 +1783,14 @@ h2 + .header-anchor {
 								
 									<li>
 											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-layer-L3-router">
+													OSI-7-layer-L3-router
+												</a>
+											
+									</li>
+								
+									<li>
+											
 												<a href="/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS">
 													Relational-algebra-in-DBMS
 												</a>
@@ -1984,6 +1985,14 @@ h2 + .header-anchor {
 											
 												<a href="/blog/Engineer-Information-Processing/relational-model">
 													relational-model
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/sliding-window">
+													sliding-window
 												</a>
 											
 									</li>
@@ -2726,27 +2735,6 @@ h2 + .header-anchor {
 									<li>
 											
 											<details>
-												<summary>temp</summary>
-													
-							<ul>
-								
-									<li>
-											
-												<a href="/blog/temp/OSI-7-layer-L3-router">
-													OSI-7-layer-L3-router
-												</a>
-											
-									</li>
-								
-							</ul>
-						
-											</details>
-											
-									</li>
-								
-									<li>
-											
-											<details>
 												<summary>wiki</summary>
 													
 							<ul>
@@ -2905,6 +2893,20 @@ h2 + .header-anchor {
 <div class="posts-container">
     
       
+        <a href="/blog/Engineer-Information-Processing/DDL-DML-DCL/">
+          <div class="d-flex color-bg-default m-3p border rounded-2 color-border-default p-6 pb-3">
+            
+            <div class="d-flex pl-3 flex-direction-col post-title-container mt-12">
+                <h4 class="d-flex flex-items-center post-title">
+                    DDL DML DCL
+                </h4>
+                <time class="postlist-date" datetime="2023-10-26">2023/10/26</time>
+            </div>
+          </div>
+        </a>
+      
+    
+      
         <a href="/blog/Engineer-Information-Processing/OSI-7-Layer/">
           <div class="d-flex color-bg-default m-3p border rounded-2 color-border-default p-6 pb-3">
             
@@ -2960,22 +2962,6 @@ h2 + .header-anchor {
         </a>
       
     
-      
-        <a href="/blog/erros/db/Cannot-delete-or-update-a-parent-row:-a-foreign-key/">
-          <div class="d-flex color-bg-default m-3p border rounded-2 color-border-default p-6 pb-3">
-            
-              <img class="cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
-            
-            <div class="d-flex pl-3 flex-direction-col post-title-container mt-12">
-                <h4 class="d-flex flex-items-center post-title">
-                    Cannot delete or update a parent row a foreign key
-                </h4>
-                <time class="postlist-date" datetime="2023-10-11">2023/10/11</time>
-            </div>
-          </div>
-        </a>
-      
-    
 </div>
 <div class="wrapper">
   <ul id="pagination" class="sticky-bottom-nav"></ul>
@@ -2986,7 +2972,7 @@ h2 + .header-anchor {
 
 <script type="text/javascript" async>
   const links = `[&quot;/index.html&quot;,&quot;/page1/index.html&quot;,&quot;/page2/index.html&quot;,&quot;/page3/index.html&quot;,&quot;/page4/index.html&quot;,&quot;/page5/index.html&quot;,&quot;/page6/index.html&quot;,&quot;/page7/index.html&quot;,&quot;/page8/index.html&quot;,&quot;/page9/index.html&quot;,&quot;/page10/index.html&quot;,&quot;/page11/index.html&quot;,&quot;/page12/index.html&quot;,&quot;/page13/index.html&quot;,&quot;/page14/index.html&quot;,&quot;/page15/index.html&quot;,&quot;/page16/index.html&quot;,&quot;/page17/index.html&quot;,&quot;/page18/index.html&quot;,&quot;/page19/index.html&quot;,&quot;/page20/index.html&quot;,&quot;/page21/index.html&quot;,&quot;/page22/index.html&quot;,&quot;/page23/index.html&quot;,&quot;/page24/index.html&quot;,&quot;/page25/index.html&quot;]`.replaceAll('&quot;','').replaceAll('[','').replaceAll(']','').split(',')
-  const postsCount = 129
+  const postsCount = 130
   let allPages = links.length
   const pagination = document.getElementById("pagination")
   const NOTHING_BUTTON = (dir='<')=>`<li class="btn">${dir}</li>`
@@ -3109,24 +3095,51 @@ elem(allPages, 10);
 
 
 		</main>
-		  <footer></footer>
-		  <script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
+		<script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
 		<script type="text/javascript" async>
 		const openDrawerBtn = document.getElementById('openDrawerBtn');
 		const drawerMenu = document.getElementById('drawerMenu');
-		const dimLayer = document.getElementById("dimLayer")
+		const dimLayer = document.getElementById("dimLayer");
+		const body = document.getElementsByTagName("body")[0];
+
+
+		const isDrawerMenuOpen = () => {
+			return drawerMenu.style.left === '' || drawerMenu.style.left === '0px';
+			}
+		const isPc = () => window.outerWidth > 768;
+
 
 		openDrawerBtn.addEventListener('click', () => {
+			if(isPc() && isDrawerMenuOpen()) {
+			/** insert menu */
+			    drawerMenu.style.left = '-280px';
+				body.style.marginLeft = '0';
+				return
+			} else if(isPc() && !isDrawerMenuOpen()) {
+			/** draw menu */
+				drawerMenu.style.left = '0';
+				body.style.marginLeft = '290px';
+				return
+			} else {
+			/** mobile **/
 			dimLayer.classList.add('appear-dim');
 			drawerMenu.style.left = '0';
+			}
 		})
 
 		dimLayer.addEventListener('click', () => {
+			console.log('isPc?', isPc())
+			if(isDrawerMenuOpen()) return
+
 			dimLayer.classList.remove('appear-dim')
    		    drawerMenu.style.left = '-280px';
 		})
 
 		document.addEventListener('click', (event) => {
+			if(isPc()) {
+			   dimLayer.classList.remove('appear-dim')
+			   return;
+			}
 			/**
 			* drawerMenu의 하위 메뉴면서, 이벤트 타겟이 drawerMenu인 경우
 			* 이는 카테고리의 하위 메뉴들이 선택 되었을 때 해당되지 않습니다.
@@ -3135,7 +3148,7 @@ elem(allPages, 10);
 			if(drawerMenu.contains(event.target) && event.target === drawerMenu) {
 				dimLayer.classList.remove('appear-dim')
    		        drawerMenu.style.left = '-280px';
-				return
+				return;
 			}
 
 			/**

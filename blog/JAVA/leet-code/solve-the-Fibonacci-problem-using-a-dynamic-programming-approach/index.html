@@ -1272,19 +1272,16 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+    transition: margin-left 0.3s ease-in-out;
 }
 ol, ul {
 	list-style: none;
 }
-/* Defaults */
+/* Theme colors */
 :root {
 	--font-family: -apple-system, system-ui, sans-serif;
 	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
     --img-max-width: 607px;
-}
-
-/* Theme colors */
-:root {
     --boxShadow-thin: inset 0 0 0 max(1px, 0.0625rem);
     --boxShadow-thick: inset 0 0 0 max(2px, 0.125rem);
     --boxShadow-thicker: inset 0 0 0 max(4px, 0.25rem);
@@ -1762,8 +1759,6 @@ ol, ul {
     --color-scale-coral-6: #ac3220;
     --color-scale-coral-7: #872012;
     --color-scale-coral-8: #640d04;
-}
-:root {
     --base-size-4: 0.25rem;
     --base-size-8: 0.5rem;
     --base-size-12: 0.75rem;
@@ -1782,8 +1777,6 @@ ol, ul {
     --base-size-112: 7rem;
     --base-size-128: 8rem;
 }
-
-
 
 @media (prefers-color-scheme: dark) {
 	:root {
@@ -1849,7 +1842,6 @@ a[href] {
 	color: var(--text-color-link);
 }
 a[href]:visited {
-    /* color:var(--fgColor-default), var(--color-fg-default); */
     color:var(--color-prettylights-syntax-constant-other-reference-link), var(--color-fg-default);
 }
 a[href]:hover,
@@ -1994,8 +1986,6 @@ header {
 .postlist-date {
 	font-size: 0.8125em; /* 13px /16 */
     color:var(--color-fg-default);
-}
-.postlist-date {
 	word-spacing: -0.5px;
 }
 .postlist-link {
@@ -2188,7 +2178,6 @@ h2 + .header-anchor {
     margin:12px 0 0 0;
 }
 .m-3 {
-    /* margin: var(--base-size-16, 16px) !important; */
     margin: 16px 0;
 }
 .m-3p {
@@ -2244,7 +2233,6 @@ h2 + .header-anchor {
 
 .contact .contact-title {
     position: relative;
-	font-size: 0.8125em; /* 13px /16 */
 	color: var(--color-gray-90);
     font-weight: 400;
     font-size: 12px;
@@ -2277,7 +2265,6 @@ h2 + .header-anchor {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
 }
 .post-container {
@@ -2314,18 +2301,18 @@ h2 + .header-anchor {
 
   /* header */
 
-  #drawerMenu {
-    position: fixed;
-    top: 0;
-    left: -280px; /* Start offscreen */
-    width: 280px;
-    height: 100%;
-    background-color: #24292e;
-    color: #ffffff;
-    transition: left 0.3s ease-in-out;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: auto;
-    z-index: 2;
+#drawerMenu {
+   position: fixed;
+   top: 0;
+   left: -280px;
+   width: 280px;
+   height: 100%;
+   background-color: #24292e;
+   color: #ffffff;
+   transition: left 0.3s ease-in-out;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   overflow: hidden;
+   z-index: 2;
 }
 
 #drawerMenu ul {
@@ -2340,6 +2327,14 @@ h2 + .header-anchor {
 
 #drawerMenu li:hover {
     color: #f1f1f1;
+}
+
+@media screen and (min-width: 768px){
+    body { margin-left:290px; }
+    #drawerMenu {
+        left: 0;
+        z-index: 0;
+    }
 }
 
 #openDrawerBtn {
@@ -2404,8 +2399,6 @@ h2 + .header-anchor {
 
 	</head>
 	<body>
-
-
 		<div id="dimLayer"></div>
 			<header>
 				<button id="openDrawerBtn">
@@ -2946,6 +2939,14 @@ h2 + .header-anchor {
 								
 									<li>
 											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-layer-L3-router">
+													OSI-7-layer-L3-router
+												</a>
+											
+									</li>
+								
+									<li>
+											
 												<a href="/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS">
 													Relational-algebra-in-DBMS
 												</a>
@@ -3140,6 +3141,14 @@ h2 + .header-anchor {
 											
 												<a href="/blog/Engineer-Information-Processing/relational-model">
 													relational-model
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/sliding-window">
+													sliding-window
 												</a>
 											
 									</li>
@@ -3882,27 +3891,6 @@ h2 + .header-anchor {
 									<li>
 											
 											<details>
-												<summary>temp</summary>
-													
-							<ul>
-								
-									<li>
-											
-												<a href="/blog/temp/OSI-7-layer-L3-router">
-													OSI-7-layer-L3-router
-												</a>
-											
-									</li>
-								
-							</ul>
-						
-											</details>
-											
-									</li>
-								
-									<li>
-											
-											<details>
 												<summary>wiki</summary>
 													
 							<ul>
@@ -4249,24 +4237,51 @@ src="/js/lib/getReadTime.js"
 async
 ></script>
 		</main>
-		  <footer></footer>
-		  <script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
+		<script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
 		<script type="text/javascript" async>
 		const openDrawerBtn = document.getElementById('openDrawerBtn');
 		const drawerMenu = document.getElementById('drawerMenu');
-		const dimLayer = document.getElementById("dimLayer")
+		const dimLayer = document.getElementById("dimLayer");
+		const body = document.getElementsByTagName("body")[0];
+
+
+		const isDrawerMenuOpen = () => {
+			return drawerMenu.style.left === '' || drawerMenu.style.left === '0px';
+			}
+		const isPc = () => window.outerWidth > 768;
+
 
 		openDrawerBtn.addEventListener('click', () => {
+			if(isPc() && isDrawerMenuOpen()) {
+			/** insert menu */
+			    drawerMenu.style.left = '-280px';
+				body.style.marginLeft = '0';
+				return
+			} else if(isPc() && !isDrawerMenuOpen()) {
+			/** draw menu */
+				drawerMenu.style.left = '0';
+				body.style.marginLeft = '290px';
+				return
+			} else {
+			/** mobile **/
 			dimLayer.classList.add('appear-dim');
 			drawerMenu.style.left = '0';
+			}
 		})
 
 		dimLayer.addEventListener('click', () => {
+			console.log('isPc?', isPc())
+			if(isDrawerMenuOpen()) return
+
 			dimLayer.classList.remove('appear-dim')
    		    drawerMenu.style.left = '-280px';
 		})
 
 		document.addEventListener('click', (event) => {
+			if(isPc()) {
+			   dimLayer.classList.remove('appear-dim')
+			   return;
+			}
 			/**
 			* drawerMenu의 하위 메뉴면서, 이벤트 타겟이 drawerMenu인 경우
 			* 이는 카테고리의 하위 메뉴들이 선택 되었을 때 해당되지 않습니다.
@@ -4275,7 +4290,7 @@ async
 			if(drawerMenu.contains(event.target) && event.target === drawerMenu) {
 				dimLayer.classList.remove('appear-dim')
    		        drawerMenu.style.left = '-280px';
-				return
+				return;
 			}
 
 			/**
