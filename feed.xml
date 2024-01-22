@@ -4,12 +4,88 @@
   <subtitle>Hola!, World</subtitle>
   <link href="https://zerozoo-a.github.io/feed.xml" rel="self"/>
   <link href="https://zerozoo-a.github.io/"/>
-  <updated>2024-01-21T20:17:37Z</updated>
+  <updated>2024-01-22T22:23:52Z</updated>
   <id>https://zerozoo-a.github.io/</id>
   <author>
     <name>zerozoo-a</name>
     <email>zerozoo385@gmail.com</email>
   </author>
+  <entry>
+    <title>IPv4 address에 대해</title>
+    <link href="https://zerozoo-a.github.io/blog/temp/IP-address/"/>
+    <updated>2024-01-22T22:23:52Z</updated>
+    <id>https://zerozoo-a.github.io/blog/temp/IP-address/</id>
+    <content xml:lang="kr" type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;ipv4-address&quot; tabindex=&quot;-1&quot;&gt;IPv4 address에 대해서 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/#ipv4-address&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;구조&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;구조 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/#&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;IPv4 주소는 network ID와 host ID로 이루어져있습니다.&lt;/p&gt;
+&lt;p&gt;이를 그래프로 표현하면 아래와 같습니다.&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+graph TD;
+
+IPv4 --&gt; network_ID
+IPv4 --&gt; host_ID
+&lt;/div&gt;
+&lt;p&gt;실제 값을 대입해서 다시 그래프를 그려보겠습니다.&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+graph TD;
+
+IPv4[&quot;IPv4 = 192.168.0.10&quot;] --&gt; network_ID[&quot;network_ID = 192.168.0&quot;]
+IPv4 --&gt; host_ID[&quot;host_ID = 10&quot;]
+&lt;/div&gt;
+&lt;h3 id=&quot;network-id-host-id&quot; tabindex=&quot;-1&quot;&gt;클래스에 따라 달라지는 network ID와 host ID의 길이 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/#network-id-host-id&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;network ID와 host ID는 IPv4의 네트워크 클래스에 따라
+network ID의 길이가 달라집니다.&lt;/p&gt;
+&lt;p&gt;총 32비트 길이에서 network ID가 네트워크 클래스에 의해 정해지면
+나머지 비트는 host ID로 지정됩니다.&lt;/p&gt;
+&lt;p&gt;예를 들어 &lt;code&gt;클래스 A&lt;/code&gt;는 &lt;code&gt;0.0.0.0 ~ 127.255.255.255&lt;/code&gt;의 범위를 가지며
+&lt;code&gt;클래스 A&lt;/code&gt;의 host는 &lt;code&gt;0 ~ 127&lt;/code&gt;까지이며
+나머지는 255.255.255 host ID가 됩니다.&lt;/p&gt;
+&lt;p&gt;클래스 A의 경우 호스트 하나당 &lt;code&gt;2^8 * 2^8 * 2^8 -2&lt;/code&gt;의 범위를 가집니다.
+이 때, -2는 network ID와 broadcast 주소를 빼준 값입니다.&lt;/p&gt;
+&lt;h4 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;서브넷 마스크 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/#-1&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;위에서 32비트로 IP주소를 표현한 것을 서브넷 마스크라고 합니다.&lt;/p&gt;
+&lt;h2 id=&quot;ipv4-32&quot; tabindex=&quot;-1&quot;&gt;IPv4 주소를 이루는 32비트 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/#ipv4-32&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;IPv4는 &lt;code&gt;0.0.0.0 ~ 255.255.255.255&lt;/code&gt;까지 각 자리수는 8비트입니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;0부터 255까지 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mn&gt;8&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;256&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;2^8 = 256&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8141079999999999em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8141079999999999em;&quot;&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;8&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.64444em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;입니다. 반대로 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;msub&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mn&gt;256&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;8&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;log_2{256}=8&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8888799999999999em;vertical-align:-0.19444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.01968em;&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.03588em;&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.30110799999999993em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.64444em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;8&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;입니다. 이 때, 0을 포함해야하므로 -1을 해주면 255까지 입니다.&lt;/li&gt;
+&lt;li&gt;255는 &lt;code&gt;11111111&lt;/code&gt;으로 8비트를 나타냅니다.&lt;/li&gt;
+&lt;li&gt;이를 4번 반복하여 IPv4는 32비트로 구성된다고 합니다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;192.168.1.10&lt;/code&gt;을 2진수로 치환하면 &lt;code&gt;11000000.10101000.00000001.00001010&lt;/code&gt;이 됩니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;host-id&quot; tabindex=&quot;-1&quot;&gt;host ID &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/#host-id&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;192.168.1.10&lt;/code&gt;에서 &lt;code&gt;10&lt;/code&gt;은 host ID를 나타냅니다.
+&lt;code&gt;192.168.1&lt;/code&gt;이라는 네트워크 ID에서 특정 기기를 구분하기 위해 host ID가 존재합니다.&lt;/p&gt;
+&lt;p&gt;네트워크 모두에게 패킷을 보내는 특별한 주소를 broadcast IP라고 합니다.&lt;/p&gt;
+&lt;p&gt;host ID를 모두 1로 채운 경우 해당 네트워크의 broadcast IP가 됩니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;192.168.1.0&lt;/code&gt;의 네트워크를 사용하는 경우 &lt;code&gt;192.168.1.255&lt;/code&gt;가 broadcast IP가됩니다.&lt;/p&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/#-2&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;IPv4는 &lt;a href=&quot;https://ko.wikipedia.org/wiki/%EB%B6%80%EB%B6%84%EB%A7%9D&quot;&gt;서브넷마스크&lt;/a&gt; 형태로 제공됩니다. &lt;code&gt;0.0.0.0 ~ 255.255.255.255&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;서브넷 마스크는 A클래스부터 E클래스까지 구분됩니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;서브넷 마스크의 network ID를 제외한 부분은 host ID가 되며, network ID는 네트워크에서 네트워크를 특정하기 위함이며 host ID는 특정 네트워크에서 각 기기를 특정하기 위함입니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;서브넷 마스크의 각 자리는 0부터 255까지 8비트이며 8비트가 4개 모여 32비트로 표현됩니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;브로드캐스트 IP와 네트워크 IP등 미리 지정된 IP가 존재합니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
   <entry>
     <title>sliding window</title>
     <link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/sliding-window/"/>
