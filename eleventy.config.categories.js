@@ -56,7 +56,7 @@ async function recursiveAllFiles(path) {
 			if (item.isDirectory()) {
 				res = deepMerge(res, await recursiveAllFiles(`${path}/${item.name}`));
 			} else {
-				if (!item.name.endsWith(".md")) continue;
+				if (!item.name.endsWith(".md") || item.name.endsWith(".html")) continue;
 				res = deepMerge(res, arrToObj(paths, item));
 			}
 		}
@@ -68,7 +68,11 @@ async function recursiveAllFiles(path) {
 
 async function eleventyComputedGetCategories() {
 	/** dir과 dir내부의 파일들을 key value로 묶는 재귀 함수 dir = key */
-	return await recursiveAllFiles("content/blog");
+	const [posts, examples] = await Promise.all([
+		recursiveAllFiles("content/blog"),
+		recursiveAllFiles("content/examples"),
+	]);
+	return { ...posts, examples };
 }
 
 module.exports.eleventyComputedGetCategories = eleventyComputedGetCategories;
