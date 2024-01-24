@@ -4,7 +4,7 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2024-01-22T22:23:52Z</updated>
+	<updated>2024-01-24T21:47:32Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
@@ -12,18 +12,190 @@
 	</author>
 	
 	<entry>
-		<title>IPv4 address에 대해</title>
-		<link href="https://zerozoo-a.github.io/blog/temp/IP-address/"/>
-		<updated>2024-01-22T22:23:52Z</updated>
-		<id>https://zerozoo-a.github.io/blog/temp/IP-address/</id>
+		<title>큰 네트워크를 나누는 subnet</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/"/>
+		<updated>2024-01-24T21:47:32Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/</id>
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h1 id=&quot;ipv4-address&quot; tabindex=&quot;-1&quot;&gt;IPv4 address에 대해서 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;할당된 주소 범위를 나누는 서브넷 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;서브넷은 큰 네트워크를 정적 혹은 동적으로 나누는 것을 의미합니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;여기서 말하는 큰 네트워크라는 것은 할당된 주소 범위를 의미합니다.
+단일 주소가 아닌 주소의 범위를 ISP로부터 할당받은 주소 범위를 가리킵니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;서브넷을 나누는 두가지 방법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;이 주소 범위를 나누는 것을 서브넷이라고 하며 서브넷은 두가지로 방법으로 나뉩니다.&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+graph TD;
+A(&quot;서브넷&quot;) --&gt; B(&quot;가변길이 서브넷마스크 (FLSM)&quot;)
+A(&quot;서브넷&quot;) --&gt; C(&quot;고정길이 서브넷마스크 (VLSM)&quot;)
+&lt;/div&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;장점 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;서브넷은 네트워크 트래픽을 분산해 성능을 개선합니다.&lt;/li&gt;
+&lt;li&gt;각 서브넷은 서로 격리되어 있어 서브넷간 간섭이 없습니다.&lt;/li&gt;
+&lt;li&gt;서브넷은 네트워크 관리를 단순하게합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;예시 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;예를 들어,&lt;/p&gt;
+&lt;p&gt;IP 주소 범위가 192.168.0.0에서 192.168.255.255인 큰 네트워크를&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;192.168.1.0/24&lt;/li&gt;
+&lt;li&gt;192.168.2.0/24&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+graph TD;
+A(&quot;192.168.0.0 ~ 192.168.255.255&quot;) --&gt; B(&quot;192.168.1.0/24&quot;)
+A --&gt; C(&quot;192.168.2.0/24&quot;)
+A --&gt; D(&quot;192.168.N.0/24&quot;)
+&lt;/div&gt;
+&lt;p&gt;등과 같이 여러 개의 서브넷으로 나눌 수 있습니다.&lt;/p&gt;
+&lt;p&gt;각 서브넷은 256개(0-255)의 IP 주소를 가질 수 있으며, 각각 독립적으로 작동합니다.&lt;/p&gt;
+&lt;h2 id=&quot;flsm&quot; tabindex=&quot;-1&quot;&gt;고정 길이 서브넷 마스크 (FLSM) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;정의: FLSM은 모든 서브넷이 동일한 크기를 가지는 서브넷팅 방식입니다. 즉, 모든 서브넷에 동일한 길이의 서브넷 마스크를 사용합니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;사용: FLSM은 네트워크의 각 부분이 유사한 크기의 호스트 그룹을 필요로 할 때 사용됩니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;단점: IP 주소 공간이 낭비될 수 있습니다. 예를 들어, 몇 개의 호스트만 필요한 작은 네트워크에도 불구하고, 더 큰 서브넷을 할당해야 할 수 있습니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;예시 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;네트워크 주소 &lt;code&gt;192.168.1.0&lt;/code&gt;를 가진 &lt;code&gt;/24&lt;/code&gt; 서브넷 마스크를 가진 네트워크가 있는 경우를 가정하겠습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;/24&lt;/code&gt;는 CIDR 표기법으로 첫 24비트 즉 3 옥텟이 네트워크 ID로 사용되는 것을 의미하며
+3 옥텟이 네트워크 ID로 사용되었으므로 마지막 옥텟을 호스트 ID로 사용 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;따라서 0부터 255까지 256개의 IP 주소를 포함하게 됩니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;단, 실제 사용가능한 주소는 &lt;code&gt;256 - 2&lt;/code&gt;개인데 두 주소를 빼는 이유는 prefix된 주소이기 때문입니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;네트워크 주소: &lt;code&gt;192.168.1.0&lt;/code&gt;은 해당 주소를 식별하기 위한 네트워크 주소로 이미 정해져 있는 값입니다.&lt;/li&gt;
+&lt;li&gt;브로드캐스트 주소: &lt;code&gt;192.168.1.255&lt;/code&gt;는 해당 네트워크를 사용하는 모두에게 데이터를 동시에 전송하기 위한 주소입니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;256개의 호스트를 4개의 서브넷으로 나누기 위해 호스트 주소 공간에서 2 비트를 네트워크 주소 공간으로 재할당합니다.
+이는 위에서 설명한 &lt;code&gt;/24&lt;/code&gt;가 &lt;code&gt;/26&lt;/code&gt;이 된다는 의미입니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2 비트는 00, 01, 10, 11로 4개의 서브넷을 만들 수 있는 자리로 충분합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;네트워크 주소: &lt;code&gt;11111111 11111111 11111111&lt;/code&gt; + 호스트 주소: &lt;code&gt;11111111&lt;/code&gt;&lt;br&gt;
+네트워크 주소: &lt;code&gt;11111111 11111111 11111111 11&lt;/code&gt; + 호스트 주소: &lt;code&gt;111111&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;호스트 주소 2비트를 네트워크 주소로 재할당했기 때문에 이제 호스트 주소는 6비트만이 남았습니다.&lt;/p&gt;
+&lt;p&gt;네트워크 주소 &lt;code&gt;192.168.1.0/26&lt;/code&gt;일 때 서브넷을 4개로 나누어보면&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;첫 서브넷: &lt;code&gt;192.168.1.0/26&lt;/code&gt; (&lt;code&gt;192.168.1.0 - 192.168.1.63&lt;/code&gt;)입니다.
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;192.168.1.0/26&lt;/code&gt;를 서브넷 마스크로 표현하면 네트워크 주소를 1로 치환할 수 있습니다.
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;11111111.11111111.11111111.11000000&lt;/code&gt;가 위 주소를 서브넷 마스크로 표현한 값입니다.&lt;/li&gt;
+&lt;li&gt;위 서브넷 마스크에서 호스트ID 부분인 &lt;code&gt;**0은 2진수로 6자리입니다.**&lt;/code&gt; &lt;code&gt;6자리를 모두 1로 채울 경우 값은 63입니다.&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;호스트ID 2자리를 네트워크ID로 치환한 부분은 &lt;strong&gt;&lt;code&gt;00 ~ 11로 총 4가지 다른 네트워크를 가질 수 있습니다.&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;4가지 다른 네트워크에 각각 63개의 서브넷팅&lt;/code&gt;이 가능합니다.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- 한 기업에서 위 네트워크 주소를 /24인 C클래스로 
+
+고정 길이 서브넷 마스크 방식으로 4개의 서브넷을 생성합니다. --&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>IPv4를 용도별로 나눈 IPv4의 class</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-class/"/>
+		<updated>2024-01-24T21:22:09Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-class/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;ipv4-ip&quot; tabindex=&quot;-1&quot;&gt;IPv4의 IP를 나누는 방법인 클래스 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-class/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;IPv4는 4개의 옥텟으로 이루어진 주소입니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;옥텟은 8비트를 뜻합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;4개의 옥텟으로 나누어진 IPv4의 주소는 아래의 표와 같이&lt;/p&gt;
+&lt;p&gt;첫 옥텟부터 세번째 옥텟까지 네트워크 ID를 할당하는 방식에 따라 클래스가 나뉩니다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;클래스&lt;/th&gt;
+&lt;th&gt;주소 범위&lt;/th&gt;
+&lt;th&gt;네트워크 ID와 호스트 ID&lt;/th&gt;
+&lt;th&gt;특징&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A&lt;/td&gt;
+&lt;td&gt;1.0.0.0 - 126.255.255.255&lt;/td&gt;
+&lt;td&gt;첫 번째 옥텟은 네트워크 ID,&lt;br&gt;나머지는 호스트 ID&lt;/td&gt;
+&lt;td&gt;큰 조직 또는 ISP에 할당,&lt;br&gt;첫 비트는 항상 0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;B&lt;/td&gt;
+&lt;td&gt;128.0.0.0 - 191.255.255.255&lt;/td&gt;
+&lt;td&gt;첫 두 옥텟은 네트워크 ID,&lt;br&gt;나머지는 호스트 ID&lt;/td&gt;
+&lt;td&gt;중간 규모 네트워크에 적합,&lt;br&gt;첫 두 비트는 항상 10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;C&lt;/td&gt;
+&lt;td&gt;192.0.0.0 - 223.255.255.255&lt;/td&gt;
+&lt;td&gt;첫 세 옥텟은 네트워크 ID,&lt;br&gt;마지막 옥텟은 호스트 ID&lt;/td&gt;
+&lt;td&gt;소규모 네트워크에 적합,&lt;br&gt;첫 세 비트는 항상 110&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;D&lt;/td&gt;
+&lt;td&gt;224.0.0.0 - 239.255.255.255&lt;/td&gt;
+&lt;td&gt;네트워크 ID와 호스트 ID 구분 없음&lt;/td&gt;
+&lt;td&gt;멀티캐스트 주소에 사용, &lt;br&gt;첫 네 비트는 항상 1110&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;E&lt;/td&gt;
+&lt;td&gt;240.0.0.0 - 255.255.255.255&lt;/td&gt;
+&lt;td&gt;네트워크 ID와 호스트 ID 구분 없음&lt;/td&gt;
+&lt;td&gt;실험 및 연구 용도,&lt;br&gt;첫 다섯 비트는 항상 11110&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;isp-internet-service-provider&quot; tabindex=&quot;-1&quot;&gt;ISP(Internet Service Provider) &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-class/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;인터넷 서비스를 제공하는 제공자를 말합니다. 한국에선 KT, SK, LG등의 통신사등을 의미합니다.&lt;/p&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;여러 수신자에게 동시에 전송하는 멀티캐스트 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-class/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;멀티캐스란 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-class/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;멀티캐스트는 여러 수신자에게 데이터를 동시에 전송하는 용도의 특별한 주소입니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;멀티캐스트의 효율 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-class/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;멀티캐스트는 같은 데이터를 여러 수신자에게 단 한번 전송하고 네트워크 내의 라우터들이 데이터를 멤버들에게 분산합니다.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>IPv4 address에 대해</title>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-address/"/>
+		<updated>2024-01-22T22:23:52Z</updated>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-address/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;ipv4-address&quot; tabindex=&quot;-1&quot;&gt;IPv4 address에 대해서 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-address/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;구조&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;구조 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;구조 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-address/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;IPv4 주소는 network ID와 host ID로 이루어져있습니다.&lt;/p&gt;
 &lt;p&gt;이를 그래프로 표현하면 아래와 같습니다.&lt;/p&gt;
 &lt;div class=&quot;mermaid&quot;&gt;
@@ -41,7 +213,7 @@ graph TD;
 IPv4[&quot;IPv4 = 192.168.0.10&quot;] --&gt; network_ID[&quot;network_ID = 192.168.0&quot;]
 IPv4 --&gt; host_ID[&quot;host_ID = 10&quot;]
 &lt;/div&gt;
-&lt;h3 id=&quot;network-id-host-id&quot; tabindex=&quot;-1&quot;&gt;클래스에 따라 달라지는 network ID와 host ID의 길이 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;network-id-host-id&quot; tabindex=&quot;-1&quot;&gt;클래스에 따라 달라지는 network ID와 host ID의 길이 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-address/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;network ID와 host ID는 IPv4의 네트워크 클래스에 따라
 network ID의 길이가 달라집니다.&lt;/p&gt;
 &lt;p&gt;총 32비트 길이에서 network ID가 네트워크 클래스에 의해 정해지면
@@ -51,9 +223,9 @@ network ID의 길이가 달라집니다.&lt;/p&gt;
 나머지는 255.255.255 host ID가 됩니다.&lt;/p&gt;
 &lt;p&gt;클래스 A의 경우 호스트 하나당 &lt;code&gt;2^8 * 2^8 * 2^8 -2&lt;/code&gt;의 범위를 가집니다.
 이 때, -2는 network ID와 broadcast 주소를 빼준 값입니다.&lt;/p&gt;
-&lt;h4 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;서브넷 마스크 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;서브넷 마스크 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-address/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;위에서 32비트로 IP주소를 표현한 것을 서브넷 마스크라고 합니다.&lt;/p&gt;
-&lt;h2 id=&quot;ipv4-32&quot; tabindex=&quot;-1&quot;&gt;IPv4 주소를 이루는 32비트 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;ipv4-32&quot; tabindex=&quot;-1&quot;&gt;IPv4 주소를 이루는 32비트 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-address/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;IPv4는 &lt;code&gt;0.0.0.0 ~ 255.255.255.255&lt;/code&gt;까지 각 자리수는 8비트입니다.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;0부터 255까지 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mn&gt;8&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;256&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;2^8 = 256&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8141079999999999em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8141079999999999em;&quot;&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;8&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.64444em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;입니다. 반대로 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;msub&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mn&gt;256&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;8&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;log_2{256}=8&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8888799999999999em;vertical-align:-0.19444em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.01968em;&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.03588em;&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t vlist-t2&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.30110799999999993em;&quot;&gt;&lt;span style=&quot;top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-s&quot;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.15em;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mrel&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2777777777777778em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.64444em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;8&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;입니다. 이 때, 0을 포함해야하므로 -1을 해주면 255까지 입니다.&lt;/li&gt;
@@ -61,13 +233,13 @@ network ID의 길이가 달라집니다.&lt;/p&gt;
 &lt;li&gt;이를 4번 반복하여 IPv4는 32비트로 구성된다고 합니다.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;192.168.1.10&lt;/code&gt;을 2진수로 치환하면 &lt;code&gt;11000000.10101000.00000001.00001010&lt;/code&gt;이 됩니다.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;host-id&quot; tabindex=&quot;-1&quot;&gt;host ID &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;host-id&quot; tabindex=&quot;-1&quot;&gt;host ID &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-address/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;192.168.1.10&lt;/code&gt;에서 &lt;code&gt;10&lt;/code&gt;은 host ID를 나타냅니다.
 &lt;code&gt;192.168.1&lt;/code&gt;이라는 네트워크 ID에서 특정 기기를 구분하기 위해 host ID가 존재합니다.&lt;/p&gt;
 &lt;p&gt;네트워크 모두에게 패킷을 보내는 특별한 주소를 broadcast IP라고 합니다.&lt;/p&gt;
 &lt;p&gt;host ID를 모두 1로 채운 경우 해당 네트워크의 broadcast IP가 됩니다.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;192.168.1.0&lt;/code&gt;의 네트워크를 사용하는 경우 &lt;code&gt;192.168.1.255&lt;/code&gt;가 broadcast IP가됩니다.&lt;/p&gt;
-&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/IP-address/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPv4-address/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;IPv4는 &lt;a href=&quot;https://ko.wikipedia.org/wiki/%EB%B6%80%EB%B6%84%EB%A7%9D&quot;&gt;서브넷마스크&lt;/a&gt; 형태로 제공됩니다. &lt;code&gt;0.0.0.0 ~ 255.255.255.255&lt;/code&gt;&lt;/p&gt;
@@ -293,23 +465,23 @@ network ID의 길이가 달라집니다.&lt;/p&gt;
 	
 	<entry>
 		<title>네트워크 종단 시스템</title>
-		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/end-system-of-network/"/>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/end-system-of-network/"/>
 		<updated>2024-01-17T21:45:08Z</updated>
-		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/end-system-of-network/</id>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/end-system-of-network/</id>
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;네트워크의 종단 시스템이란 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/end-system-of-network/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;네트워크의 종단 시스템이란 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/end-system-of-network/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;종단&lt;/strong&gt;（終段） 시스템은 말 그대로 network의 양 끝단에 위치하는 장치나 시스템을 의미합니다.&lt;/p&gt;
 &lt;p&gt;인터넷을 통해 데이터를 서로 주고받는 사용자 장치나 서버 같은 기기들입니다.&lt;/p&gt;
 &lt;p&gt;인터넷 통신의 시작점과 종료점의 역할을 하며 네트워크를 이어주는 라우터나 스위치 같은 중간지점의 네트워크와 구별되어집니다.&lt;/p&gt;
-&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;특징 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/end-system-of-network/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;특징 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/end-system-of-network/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;사용자 인터페이스: 종단 시스템은 사용자가 사용하는 기기(스마트폰, pc등)의 장치와 서비스를 제공하는 쪽의 서버(웹 서버, 메일 서버 등)으로 이루어집니다.&lt;/li&gt;
 &lt;li&gt;통신의 양 끝점: 웹 브라우징시 사용자가 보고 있는 기기는 통신의 종단 시스템이며, 이를 제공하는 서버는 반대편의 종단 시스템이 됩니다.&lt;/li&gt;
 &lt;li&gt;데이터의 생성과 처리: 이들은 데이터를 생성하고 처리하는 주체가 됩니다. (인터넷에 글이나 영상등을 올리면 서버는 이를 저장하고 다른 유저는 이를 제공받는 등)&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;용어 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/end-system-of-network/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;용어 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/end-system-of-network/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;호스트(host): 호스트는 종단 시스템에서 일반적으로 pc, 모바일 기기등이 됩니다. 호스트는 데이터를 생성, 전송, 수신을 처리하는 주체입니다.&lt;/p&gt;
@@ -3868,13 +4040,13 @@ RDB에서 테이블의 주요한 요소는 아래와 같습니다.&lt;/p&gt;
 	
 	<entry>
 		<title>IPSec에 대해</title>
-		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/"/>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPSec/"/>
 		<updated>2023-11-15T22:04:08Z</updated>
-		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/</id>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPSec/</id>
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h2 id=&quot;ipsec&quot; tabindex=&quot;-1&quot;&gt;IPSec &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;ipsec&quot; tabindex=&quot;-1&quot;&gt;IPSec &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;IPSec는 흔히 OSI 7 Layer의 3 계층인 IP계층에서 무결성과 인증을 보장하는 통신 프로토콜 세트입니다.
 IPSec은 암호와와 인증을 추가해 프로토콜을 더욱 안전하게 만듭니다.&lt;/p&gt;
 &lt;p&gt;IPSec는 IP 패킷의 보안성을 제공하기 위해 2가지 헤더를 정의합니다.&lt;/p&gt;
@@ -3882,7 +4054,7 @@ IPSec은 암호와와 인증을 추가해 프로토콜을 더욱 안전하게 �
 &lt;li&gt;AH 헤더: 무결성, 인증&lt;/li&gt;
 &lt;li&gt;ESP 헤더: 무결성, 인증, 암호화(기밀성)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&quot;ah-authentication-header&quot; tabindex=&quot;-1&quot;&gt;AH(Authentication Header) 헤더 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;ah-authentication-header&quot; tabindex=&quot;-1&quot;&gt;AH(Authentication Header) 헤더 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/0QnWFMZJ7b-357.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;image alt&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
 (이미지 출처: ktword.co.kr)
 &lt;p&gt;AH 헤더는 데이터의 무결성과 출처의 인증을 제공합니다.
@@ -3891,7 +4063,7 @@ IPSec은 암호와와 인증을 추가해 프로토콜을 더욱 안전하게 �
 &lt;li&gt;데이터가 패킷 단위로 쪼개져 이동하는데 이 패킷이 다른 악의적인 의도로 들어온 패킷인지(무결성, 인증) 아닌지를
 확인해야 하므로 AH헤더가 필요함&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&quot;esp-encapsulating-security-payload&quot; tabindex=&quot;-1&quot;&gt;ESP(Encapsulating Security Payload) 헤더 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;esp-encapsulating-security-payload&quot; tabindex=&quot;-1&quot;&gt;ESP(Encapsulating Security Payload) 헤더 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;div class=&quot;img-container&quot;&gt;&lt;img class=&quot;border-radius10&quot; src=&quot;https://zerozoo-a.github.io/img/YoAVz-62Na-412.webp&quot; width=&quot;100%&quot; height=&quot;auto&quot; alt=&quot;image alt&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/div&gt;
 (이미지 출처: ktword.co.kr)
 &lt;p&gt;ESP는 무결성, 인증, 그리고 기밀성을 제공합니다.&lt;/p&gt;
@@ -3901,7 +4073,7 @@ IPSec은 암호와와 인증을 추가해 프로토콜을 더욱 안전하게 �
 ESP 헤더가 payload 앞에,
 ESP Trailer가 payload 뒤에 위치합니다.&lt;/p&gt;
 &lt;p&gt;이는 암호화되고 인증되는 데이터를 감싸는 역할을 하게됩니다.&lt;/p&gt;
-&lt;h4 id=&quot;esp-header&quot; tabindex=&quot;-1&quot;&gt;ESP header &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;esp-header&quot; tabindex=&quot;-1&quot;&gt;ESP header &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;SPI (Security Parameter Index) (32 비트)
 &lt;ul&gt;
@@ -3916,7 +4088,7 @@ ESP Trailer가 payload 뒤에 위치합니다.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&quot;esp-trailer&quot; tabindex=&quot;-1&quot;&gt;ESP Trailer &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;esp-trailer&quot; tabindex=&quot;-1&quot;&gt;ESP Trailer &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IPSec/&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;payload 데이터
 &lt;ul&gt;
@@ -5682,9 +5854,9 @@ class Animal {
 	
 	<entry>
 		<title>LAN MAN WAN</title>
-		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/lan-man-wan/"/>
+		<link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/lan-man-wan/"/>
 		<updated>2023-10-26T20:46:44Z</updated>
-		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/lan-man-wan/</id>
+		<id>https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/lan-man-wan/</id>
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
@@ -5744,7 +5916,7 @@ class Animal {
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h2 id=&quot;dqdb&quot; tabindex=&quot;-1&quot;&gt;DQDB &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/lan-man-wan/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;dqdb&quot; tabindex=&quot;-1&quot;&gt;DQDB &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/lan-man-wan/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;출처: ktword.co.kr&lt;/li&gt;
 &lt;/ul&gt;
