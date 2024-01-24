@@ -64,7 +64,7 @@ module.exports = function (eleventyConfig) {
 
 	// App plugins
 	eleventyConfig.addPlugin(pluginMermaid, {
-		mermaid_js_src: "/js/mermaid/mermaid.esm.min.mjs",
+		// mermaid_js_src: "/js/mermaid/mermaid.esm.min.mjs",
 		html_tag: "div",
 		extra_classes: "graph",
 	});

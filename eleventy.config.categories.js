@@ -2,27 +2,6 @@ const fs = require("fs");
 const { readdir } = require("fs").promises;
 const path = require("path");
 
-/**
- *
- * @param {string} path
- */
-const isImagesDir = (path) => path.includes("/images");
-/**
- *
- * @param {string} name
- * @returns
- */
-const isDS_Store = (name) => name.includes(".DS_Store");
-
-/**
- *
- * @param {string} name
- */
-const isImageFile = (name) => {
-	const imageRegex = /\.(jpg|jpeg|png|gif|bmp|webp|tiff)$/i;
-	return imageRegex.test(name);
-};
-
 function deepMerge(obj1, obj2) {
 	const result = { ...obj1 }; // Create a copy of obj1
 
@@ -52,7 +31,7 @@ function arrToObj(keys, item) {
 	for (let i = keys.length - 1; i >= 0; i--) {
 		if (i === keys.length - 1) {
 			o[item.name] = [
-				item.path.substring(7),
+				item.path.substring(7), // substring(7)은 path값에 있는 필요없는 데이터를 지움
 				item.name.substring(0, item.name.length - 3),
 			];
 		}
@@ -64,7 +43,7 @@ function arrToObj(keys, item) {
 /**
  *
  * @param {string} path
- * @returns {Promise<string[]>}
+ * @returns {Promise<{[k:string]:any}>}
  */
 async function recursiveAllFiles(path) {
 	try {
@@ -88,9 +67,8 @@ async function recursiveAllFiles(path) {
 }
 
 async function eleventyComputedGetCategories() {
-	const path = "content/blog";
-	const paths = await recursiveAllFiles(path);
-	return paths;
+	/** dir과 dir내부의 파일들을 key value로 묶는 재귀 함수 dir = key */
+	return await recursiveAllFiles("content/blog");
 }
 
 module.exports.eleventyComputedGetCategories = eleventyComputedGetCategories;
@@ -106,7 +84,9 @@ module.exports = (eleventyConfig) => {
 
 					const directories = entries
 						.filter((entry) => entry.isDirectory())
-						.map((entry) => path.join(directoryPath, entry.name));
+						.map((entry) => path.join(directoryPath, entry.name))
+						.sort((a, b) => a - b);
+
 					// .map((path) => path.slice(want2Delete.length));
 
 					resolve(directories);
@@ -115,7 +95,6 @@ module.exports = (eleventyConfig) => {
 		}
 	);
 
-	// eleventyConfig.addAsyncShortcode("getCategories", getCategories);
 	eleventyConfig.addGlobalData(
 		"eleventyComputedGetCategories",
 		eleventyComputedGetCategories
