@@ -4083,6 +4083,40 @@ h2 + .header-anchor {
 													
 							<ul>
 								
+									<li>
+											
+											<details>
+												<summary>babylons</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>scaffold</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/examples/babylons/scaffold/index">
+													index
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
 							</ul>
 						
 											</details>
@@ -4110,7 +4144,7 @@ h2 + .header-anchor {
 
 		<aside>
 			<nav class="toc" >
-        <ol><li><a href="#-1">서브넷을 나누는 두가지 방법</a></li><li><a href="#-2">장점</a></li><li><a href="#-3">예시</a></li><li><a href="#flsm">고정 길이 서브넷 마스크 (FLSM)</a><ol><li><a href="#-4">예시</a></li></ol></li></ol>
+        <ol><li><a href="#-1">서브넷을 나누는 두가지 방법</a></li><li><a href="#-2">장점</a></li><li><a href="#-3">예시</a></li><li><a href="#flsm">고정 길이 서브넷 마스크 (FLSM)</a><ol><li><a href="#-4">예시</a></li><li><a href="#192-168-1-0-24-4">네트워크 주소 192.168.1.0/24일 때 서브넷을 4개로 나누기</a></li></ol></li><li><a href="#-5">정리</a></li></ol>
       </nav>
 		</aside>
 
@@ -4193,24 +4227,68 @@ A --> D("192.168.N.0/24")
 네트워크 주소: <code>11111111 11111111 11111111 11</code> + 호스트 주소: <code>111111</code></p>
 </blockquote>
 <p>호스트 주소 2비트를 네트워크 주소로 재할당했기 때문에 이제 호스트 주소는 6비트만이 남았습니다.</p>
-<p>네트워크 주소 <code>192.168.1.0/26</code>일 때 서브넷을 4개로 나누어보면</p>
+<h3 id="192-168-1-0-24-4" tabindex="-1">네트워크 주소 <code>192.168.1.0/24</code>일 때 서브넷을 4개로 나누기 <a class="header-anchor" href="#192-168-1-0-24-4">#</a></h3>
+<p>원래의 서브넷 마스크: <code>255.255.255.0</code> = (network)<code>11111111.11111111.11111111</code>.(host)<code>00000000</code>
+원래의 호스트 주소 범위: <code>192.168.1.1 ~ 192.168.1.254</code> = <code>11111111.11111111.11111111.00000000</code> (254개의 호스트)</p>
+<p>위 호스트 주소 범위를 4등분 하기 위해선 호스트 주소의 2 자리를 네트워크 주소에 내주어야 합니다.</p>
+<p>2 자리를 내주는 것은 서브넷 마스크를 아래와 같이 변경한다는 것입니다.
+<code>11111111.11111111.11111111.11000000</code> (CIDR = /26)</p>
+<p>4번째 옥텟이 <code>11000000</code>로 변경되었습니다. 이는 10진수로 192입니다.
+따라서 새로운 서브넷 마스크는 <code>255.255.255.192/26</code>입니다.</p>
+<ul>
+<li>첫 번째 서브넷:
+<ul>
+<li>유효 서브넷 ID: <code>11000000.10101000.00000001.00000000</code></li>
+<li>네트워크 주소: 192.168.1.0/26</li>
+<li>사용 가능한 호스트 범위: 192.168.1.1 ~ 192.168.1.62</li>
+<li>브로드캐스트 주소: 192.168.1.63</li>
+</ul>
+</li>
+<li>두 번째 서브넷:
+<ul>
+<li>유효 서브넷 ID: <code>11000000.10101000.00000001.01000000</code></li>
+<li>네트워크 주소: 192.168.1.64/26</li>
+<li>사용 가능한 호스트 범위: 192.168.1.65 ~ 192.168.1.126</li>
+<li>브로드캐스트 주소: 192.168.1.127</li>
+</ul>
+</li>
+<li>세 번째 서브넷:
+<ul>
+<li>유효 서브넷 ID: <code>11000000.10101000.00000001.10000000</code></li>
+<li>네트워크 주소: 192.168.1.128/26</li>
+<li>사용 가능한 호스트 범위: 192.168.1.129 ~ 192.168.1.190</li>
+<li>브로드캐스트 주소: 192.168.1.191</li>
+</ul>
+</li>
+<li>네 번째 서브넷:
+<ul>
+<li>유효 서브넷 ID: <code>11000000.10101000.00000001.11000000</code></li>
+<li>네트워크 주소: 192.168.1.192/26</li>
+<li>사용 가능한 호스트 범위: 192.168.1.193 ~ 192.168.1.254</li>
+<li>브로드캐스트 주소: 192.168.1.255</li>
+</ul>
+</li>
+</ul>
+<p>만약 3번째 서브넷의 4번째 사용 가능한 IP를 계산하라 하는 문제가 있다면</p>
+<p>세 번째 유효 서브넷 ID에서 네트워크 주소와 브로드캐스트 주소를 빼고 계산해야 합니다.</p>
 <ol>
-<li>첫 서브넷: <code>192.168.1.0/26</code> (<code>192.168.1.0 - 192.168.1.63</code>)입니다.
+<li>세 번째 서브넷: <code>11000000.10101000.00000001.10000000</code></li>
+<li>4번째 옥텟의 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">2^5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span>까지 사용 가능한 호스트 ID입니다: <code>000000</code></li>
+<li>주소들
 <ol>
-<li><code>192.168.1.0/26</code>를 서브넷 마스크로 표현하면 네트워크 주소를 1로 치환할 수 있습니다.
-<ol>
-<li><code>11111111.11111111.11111111.11000000</code>가 위 주소를 서브넷 마스크로 표현한 값입니다.</li>
-<li>위 서브넷 마스크에서 호스트ID 부분인 <code>**0은 2진수로 6자리입니다.**</code> <code>6자리를 모두 1로 채울 경우 값은 63입니다.</code></li>
-<li>호스트ID 2자리를 네트워크ID로 치환한 부분은 <strong><code>00 ~ 11로 총 4가지 다른 네트워크를 가질 수 있습니다.</code></strong></li>
-<li><strong><code>4가지 다른 네트워크에 각각 63개의 서브넷팅</code>이 가능합니다.</strong></li>
+<li>1번째 주소: <code>000001</code></li>
+<li>2번째 주소: <code>000010</code></li>
+<li>3번째 주소: <code>000011</code></li>
+<li>4번째 주소: <code>000100</code></li>
 </ol>
 </li>
+<li>이제 서브넷과 호스트ID를 전부 이어주면 <code>11000000.10101000.00000001.10000100</code>입니다.</li>
+<li>마지막으로 10진수로 치환하면 <code>192.168.1.132</code>가 됩니다.</li>
 </ol>
-</li>
-</ol>
-<!-- 한 기업에서 위 네트워크 주소를 /24인 C클래스로 
-
-고정 길이 서브넷 마스크 방식으로 4개의 서브넷을 생성합니다. -->
+<h2 id="-5" tabindex="-1">정리 <a class="header-anchor" href="#-5">#</a></h2>
+<p>서브넷팅은 할당 받은 IP 주소 범위를 나누어 사용하고
+나눌땐 호스트 ID 자리를 네트워크 ID로 바꿔주어야 한다.</p>
+<p>9개의 서브넷팅의 경우 2의 지수로 나누어 떨어지지 않아 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>4</mn></msup></mrow><annotation encoding="application/x-tex">2^4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span>개로 서브넷팅 해야 한다.</p>
 
 	</section>
 <br>

@@ -92,24 +92,68 @@ A --&gt; D(&quot;192.168.N.0/24&quot;)
 네트워크 주소: &lt;code&gt;11111111 11111111 11111111 11&lt;/code&gt; + 호스트 주소: &lt;code&gt;111111&lt;/code&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;호스트 주소 2비트를 네트워크 주소로 재할당했기 때문에 이제 호스트 주소는 6비트만이 남았습니다.&lt;/p&gt;
-&lt;p&gt;네트워크 주소 &lt;code&gt;192.168.1.0/26&lt;/code&gt;일 때 서브넷을 4개로 나누어보면&lt;/p&gt;
+&lt;h3 id=&quot;192-168-1-0-24-4&quot; tabindex=&quot;-1&quot;&gt;네트워크 주소 &lt;code&gt;192.168.1.0/24&lt;/code&gt;일 때 서브넷을 4개로 나누기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/#192-168-1-0-24-4&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;원래의 서브넷 마스크: &lt;code&gt;255.255.255.0&lt;/code&gt; = (network)&lt;code&gt;11111111.11111111.11111111&lt;/code&gt;.(host)&lt;code&gt;00000000&lt;/code&gt;
+원래의 호스트 주소 범위: &lt;code&gt;192.168.1.1 ~ 192.168.1.254&lt;/code&gt; = &lt;code&gt;11111111.11111111.11111111.00000000&lt;/code&gt; (254개의 호스트)&lt;/p&gt;
+&lt;p&gt;위 호스트 주소 범위를 4등분 하기 위해선 호스트 주소의 2 자리를 네트워크 주소에 내주어야 합니다.&lt;/p&gt;
+&lt;p&gt;2 자리를 내주는 것은 서브넷 마스크를 아래와 같이 변경한다는 것입니다.
+&lt;code&gt;11111111.11111111.11111111.11000000&lt;/code&gt; (CIDR = /26)&lt;/p&gt;
+&lt;p&gt;4번째 옥텟이 &lt;code&gt;11000000&lt;/code&gt;로 변경되었습니다. 이는 10진수로 192입니다.
+따라서 새로운 서브넷 마스크는 &lt;code&gt;255.255.255.192/26&lt;/code&gt;입니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;첫 번째 서브넷:
+&lt;ul&gt;
+&lt;li&gt;유효 서브넷 ID: &lt;code&gt;11000000.10101000.00000001.00000000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;네트워크 주소: 192.168.1.0/26&lt;/li&gt;
+&lt;li&gt;사용 가능한 호스트 범위: 192.168.1.1 ~ 192.168.1.62&lt;/li&gt;
+&lt;li&gt;브로드캐스트 주소: 192.168.1.63&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;두 번째 서브넷:
+&lt;ul&gt;
+&lt;li&gt;유효 서브넷 ID: &lt;code&gt;11000000.10101000.00000001.01000000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;네트워크 주소: 192.168.1.64/26&lt;/li&gt;
+&lt;li&gt;사용 가능한 호스트 범위: 192.168.1.65 ~ 192.168.1.126&lt;/li&gt;
+&lt;li&gt;브로드캐스트 주소: 192.168.1.127&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;세 번째 서브넷:
+&lt;ul&gt;
+&lt;li&gt;유효 서브넷 ID: &lt;code&gt;11000000.10101000.00000001.10000000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;네트워크 주소: 192.168.1.128/26&lt;/li&gt;
+&lt;li&gt;사용 가능한 호스트 범위: 192.168.1.129 ~ 192.168.1.190&lt;/li&gt;
+&lt;li&gt;브로드캐스트 주소: 192.168.1.191&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;네 번째 서브넷:
+&lt;ul&gt;
+&lt;li&gt;유효 서브넷 ID: &lt;code&gt;11000000.10101000.00000001.11000000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;네트워크 주소: 192.168.1.192/26&lt;/li&gt;
+&lt;li&gt;사용 가능한 호스트 범위: 192.168.1.193 ~ 192.168.1.254&lt;/li&gt;
+&lt;li&gt;브로드캐스트 주소: 192.168.1.255&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;만약 3번째 서브넷의 4번째 사용 가능한 IP를 계산하라 하는 문제가 있다면&lt;/p&gt;
+&lt;p&gt;세 번째 유효 서브넷 ID에서 네트워크 주소와 브로드캐스트 주소를 빼고 계산해야 합니다.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;첫 서브넷: &lt;code&gt;192.168.1.0/26&lt;/code&gt; (&lt;code&gt;192.168.1.0 - 192.168.1.63&lt;/code&gt;)입니다.
+&lt;li&gt;세 번째 서브넷: &lt;code&gt;11000000.10101000.00000001.10000000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;4번째 옥텟의 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mn&gt;5&lt;/mn&gt;&lt;/msup&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;2^5&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8141079999999999em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8141079999999999em;&quot;&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;5&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;까지 사용 가능한 호스트 ID입니다: &lt;code&gt;000000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;주소들
 &lt;ol&gt;
-&lt;li&gt;&lt;code&gt;192.168.1.0/26&lt;/code&gt;를 서브넷 마스크로 표현하면 네트워크 주소를 1로 치환할 수 있습니다.
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;11111111.11111111.11111111.11000000&lt;/code&gt;가 위 주소를 서브넷 마스크로 표현한 값입니다.&lt;/li&gt;
-&lt;li&gt;위 서브넷 마스크에서 호스트ID 부분인 &lt;code&gt;**0은 2진수로 6자리입니다.**&lt;/code&gt; &lt;code&gt;6자리를 모두 1로 채울 경우 값은 63입니다.&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;호스트ID 2자리를 네트워크ID로 치환한 부분은 &lt;strong&gt;&lt;code&gt;00 ~ 11로 총 4가지 다른 네트워크를 가질 수 있습니다.&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;code&gt;4가지 다른 네트워크에 각각 63개의 서브넷팅&lt;/code&gt;이 가능합니다.&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;1번째 주소: &lt;code&gt;000001&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;2번째 주소: &lt;code&gt;000010&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;3번째 주소: &lt;code&gt;000011&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;4번째 주소: &lt;code&gt;000100&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
+&lt;li&gt;이제 서브넷과 호스트ID를 전부 이어주면 &lt;code&gt;11000000.10101000.00000001.10000100&lt;/code&gt;입니다.&lt;/li&gt;
+&lt;li&gt;마지막으로 10진수로 치환하면 &lt;code&gt;192.168.1.132&lt;/code&gt;가 됩니다.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;!-- 한 기업에서 위 네트워크 주소를 /24인 C클래스로 
-
-고정 길이 서브넷 마스크 방식으로 4개의 서브넷을 생성합니다. --&gt;
+&lt;h2 id=&quot;-5&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/#-5&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;서브넷팅은 할당 받은 IP 주소 범위를 나누어 사용하고
+나눌땐 호스트 ID 자리를 네트워크 ID로 바꿔주어야 한다.&lt;/p&gt;
+&lt;p&gt;9개의 서브넷팅의 경우 2의 지수로 나누어 떨어지지 않아 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;/msup&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;2^4&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.8141079999999999em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8141079999999999em;&quot;&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;개로 서브넷팅 해야 한다.&lt;/p&gt;
 </content>
   </entry>
   <entry>
