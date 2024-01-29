@@ -4,12 +4,245 @@
   <subtitle>Hola!, World</subtitle>
   <link href="https://zerozoo-a.github.io/feed.xml" rel="self"/>
   <link href="https://zerozoo-a.github.io/"/>
-  <updated>2024-01-24T21:47:32Z</updated>
+  <updated>2024-01-29T23:55:48Z</updated>
   <id>https://zerozoo-a.github.io/</id>
   <author>
     <name>zerozoo-a</name>
     <email>zerozoo385@gmail.com</email>
   </author>
+  <entry>
+    <title>reference of stack</title>
+    <link href="https://zerozoo-a.github.io/blog/data-structure/reference-of-stack/"/>
+    <updated>2024-01-29T23:55:48Z</updated>
+    <id>https://zerozoo-a.github.io/blog/data-structure/reference-of-stack/</id>
+    <content xml:lang="kr" type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+비어있는 스택은 아래와 같이 표현하겠습니다.
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;nil&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+&lt;p&gt;값이 들어있다면 이렇게 표현됩니다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;A&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+&lt;p&gt;stack에 push를 해보겠습니다.
+B를 push하는 경우 아래와 같이 표현하겠습니다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;B&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;pop하는 경우 B가 stack에서 제거됩니다.
+이는 pop 될 stack에 (p)를 붙여 표현하겠습니다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;B(p)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;pop 되어 아래와 같이 되어짐 A만 남게 됩니다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;A&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+</content>
+  </entry>
+  <entry>
+    <title>반복문을 사용한 깊이 우선 탐색(dfs)에 대해</title>
+    <link href="https://zerozoo-a.github.io/blog/algos/dfs/iterative-dfs/"/>
+    <updated>2024-01-29T22:19:46Z</updated>
+    <id>https://zerozoo-a.github.io/blog/algos/dfs/iterative-dfs/</id>
+    <content xml:lang="kr" type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;깊이 우선 탐색 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/iterative-dfs/#&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;깊이 우선 탐색: 트리를 포함한 그래프에서 사용되는 알고리즘으로 &lt;br&gt; 시작 그래프에서부터 가능한 깊게 탐색해 &lt;br&gt; 원하는 결과값을 찾는 알고리즘입니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;대상이 될 그래프 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/iterative-dfs/#-1&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;그래프를 한눈에 보기 쉽게 표현하면 아래와 같습니다.&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    B--&gt;E;
+    C--&gt;F;
+    D--&gt;G;
+    E--&gt;H;
+    F--&gt;I;
+&lt;/div&gt;
+&lt;p&gt;자바스크립트로 표현하면 아래와 같이 표현 가능합니다. &lt;br&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; graph &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token constant&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;B&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;C&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token constant&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;D&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;E&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;F&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token constant&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;G&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token constant&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;H&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token constant&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;I&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이제 이 그래프를 dfs를 이용해서 탐색해보겠습니다.&lt;/p&gt;
+&lt;h2 id=&quot;dfs&quot; tabindex=&quot;-1&quot;&gt;dfs를 이용해서 탐색하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/iterative-dfs/#dfs&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;iterative한 dfs 탐색은 stack을 기반으로 탐색합니다.&lt;/p&gt;
+&lt;p&gt;위에서 예시로 든 그래프를 기반으로 탐색하는 것은 생각보다 시간이 너무 오래걸리니 그래프를
+작게 다시 만들어 보겠습니다.&lt;/p&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+%%{init: {&#39;theme&#39;:&#39;dark&#39;}}%%
+graph TD;
+A--&gt;B
+A--&gt;C
+B--&gt;D
+&lt;/div&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; graph &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token constant&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;B&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;C&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token constant&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;D&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;만만해진 그래프를 가지고 dfs 알고리즘을 설명하겠습니다.&lt;/p&gt;
+&lt;p&gt;dfs를 반복문으로 풀어내는 경우 stack이 사용됩니다.&lt;/p&gt;
+&lt;h2 id=&quot;dfs-stack&quot; tabindex=&quot;-1&quot;&gt;dfs와 잘어울리는 stack &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/iterative-dfs/#dfs-stack&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://zerozoo-a.github.io/blog/data-structure/reference-of-stack/&quot;&gt; stack의 표현&lt;/a&gt;은
+링크의 설명을 참고해주세요&lt;/p&gt;
+&lt;p&gt;위 그래프를 stack을 쌓고 터트리는 과정을 통해 설명하겠습니다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;nil&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;A(p)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;노드의 시작점인 A를 stack에 쌓습니다.&lt;/li&gt;
+&lt;li&gt;stack을 pop하면서 log를 통해 내보냅니다.&lt;/li&gt;
+&lt;li&gt;A가 가리키고 있는 노드에 대해 반복문을 돌고 차례대로 stack에 push 합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;C(p)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;stack을 pop하면서 log를 통해 내보냅니다.&lt;/li&gt;
+&lt;li&gt;C가 가리키고 있는 노드가 있는지 확인해보지만 C는 엣지를 가지고 있지 않습니다.&lt;/li&gt;
+&lt;li&gt;pop되어집니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;B(p)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;stack을 pop하면서 log를 통해 내보냅니다.&lt;/li&gt;
+&lt;li&gt;B가 가리키고 있는 노드에 대해 반복문을 돌고 차례대로 stack에 push 합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;D(p)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;stack을 pop하면서 log를 통해 내보냅니다.&lt;/li&gt;
+&lt;li&gt;D가 가리키고 있는 노드가 있는지 확인해보지만 D는 엣지를 가지고 있지 않습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;nil&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;stack이 모두 비워졌습니다. 그래프를 모두 순회했습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;visited&quot; tabindex=&quot;-1&quot;&gt;이미 방문한 노드를 체크하는 visited &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/iterative-dfs/#visited&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;위 스택의 설명에는 나와있지 않지만 아래 dfs에선 하나의 자료구조를 더 사용합니다.&lt;/li&gt;
+&lt;li&gt;Set입니다. 이는 이미 방문한적이 있는 node를 걸러주기 위해 존재합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;예를 들어 그래프를 아래와 같이 작성한다면 어떨까요?&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; graph &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token constant&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;B&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;C&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token constant&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;A&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A는 B를 가리키고 C는 따로 가리키는 노드가 없습니다.
+B는 다시 A를 가리킵니다.&lt;/p&gt;
+&lt;p&gt;반복문에서 B는 그래프의 A를 다시 지목해 B, C를 스택에 쌓고
+B를 pop할 때, B는 A를 다시 지목하여 무한 반복됩니다.
+따라서 이 순환을 끊기 위해서는 이를 기록하는 visited 변수가 필요합니다.&lt;/p&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;구현 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/iterative-dfs/#-2&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;위 모든 과정을 코드로 표현하면 아래와 같이 표현됩니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;graph&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; start&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; stack &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;start&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 시작 노드를 stack으로 만듭니다.&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; visited &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 방&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;stack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; currentNode &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; stack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    visited&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;currentNode&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;currentNode&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;graph&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentNode&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      graph&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentNode&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;forEach&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;visited&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;has&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;node&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; stack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;node&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; graph &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token constant&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;B&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;C&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token constant&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;D&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;graph&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;A&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/iterative-dfs/#-3&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;기본적인 구현은 위와 같으나 이를 다양하게 응용한 문제와 사용례들이 존재합니다.&lt;/p&gt;
+&lt;p&gt;다음엔 이를 응용한 미로탐색을 알아보겠습니다.&lt;/p&gt;
+&lt;p&gt;감사합니다.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>큰 네트워크를 나누는 subnet</title>
     <link href="https://zerozoo-a.github.io/blog/Engineer-Information-Processing/network/IP-subnet/"/>
