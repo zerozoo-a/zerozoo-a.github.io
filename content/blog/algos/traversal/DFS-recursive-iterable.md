@@ -181,6 +181,20 @@ stack을 터트려 `B`를 확인합니다.
 
 ## 정리
 
+- 사용예
+```js
+const graph = {
+  A: ['B', 'C'],
+  B: ['A', 'D'],
+  C: ['A', 'D'],
+  D: ['B', 'C']
+};
+
+const result = iterativeDFS('A', graph);
+console.log(result);
+// [A, C, D, B]
+```
+
 - 각 vertex는 서로를 link하기 위해 아래와 같은 형태로 저장 될 수 있다.
 ```js
  const graph = {
