@@ -31,7 +31,7 @@ function dfs(maze, x, y, visited, path) {
 
   // 현재 위치 방문 처리
   visited[x][y] = true;
-  path.push([y, x]);
+  path.push([x, y]);
 
   // 상, 하, 좌, 우 방향으로 DFS 탐색
   if (
@@ -87,15 +87,5 @@ const maze3 = [
 console.log(findPath(maze));
 console.log(findPath(maze2));
 console.log(findPath(maze3));
-/**
- * maze 3
- * 
- * [x, y]로 이동경로를 나타냄
- * [
-  [ 0, 0 ], [ 0, 1 ],
-  [ 0, 2 ], [ 0, 3 ],
-  [ 0, 4 ], [ 1, 4 ],
-  [ 2, 4 ], [ 4, 3 ]
-]
- * */
+
 ```
