@@ -4204,7 +4204,7 @@ h2 + .header-anchor {
     y <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token comment">// dfs 재귀에서 좌표가 음수일 경우</span>
     x <span class="token operator">>=</span> maze<span class="token punctuation">.</span>length <span class="token operator">||</span> <span class="token comment">// maze를 벗어납니다.</span>
     y <span class="token operator">>=</span> maze<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length <span class="token operator">||</span> <span class="token comment">// maze를 벗어납니다.</span>
-    maze<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token number">1</span> <span class="token operator">||</span> <span class="token comment">// 1은 벽입니다.</span>
+    maze<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token number">1</span> <span class="token operator">||</span> <span class="token comment">// 현재 노드가 벽인 경우.</span>
     visited<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token comment">// 이미 방문했다면 stack을 회수</span>
   <span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
@@ -4274,6 +4274,76 @@ h2 + .header-anchor {
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">findPath</span><span class="token punctuation">(</span>maze<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">findPath</span><span class="token punctuation">(</span>maze2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">findPath</span><span class="token punctuation">(</span>maze3<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/**
+ * maze 3
+ * 
+ * [x, y]로 이동경로를 나타냄
+ * [
+  [ 0, 0 ], [ 0, 1 ],
+  [ 0, 2 ], [ 0, 3 ],
+  [ 0, 4 ], [ 1, 4 ],
+  [ 2, 4 ], [ 4, 3 ]
+]
+ * */</span></code></pre>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">function</span> <span class="token function">solveMaze</span><span class="token punctuation">(</span><span class="token parameter">maze<span class="token punctuation">,</span> startX<span class="token punctuation">,</span> startY</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> rows <span class="token operator">=</span> maze<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+  <span class="token keyword">let</span> cols <span class="token operator">=</span> maze<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+  <span class="token keyword">let</span> visited <span class="token operator">=</span> Array<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">length</span><span class="token operator">:</span> rows <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">Array</span><span class="token punctuation">(</span>cols<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span>startX<span class="token punctuation">,</span> startY<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// Each element: [[x, y], path]</span>
+
+  <span class="token comment">// Directions: up, right, down, left</span>
+  <span class="token keyword">let</span> directions <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+  visited<span class="token punctuation">[</span>startX<span class="token punctuation">]</span><span class="token punctuation">[</span>startY<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>stack<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>x<span class="token punctuation">,</span> y<span class="token punctuation">]</span><span class="token punctuation">,</span> path<span class="token punctuation">]</span> <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// If we've reached the end, return the path including the end position</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>maze<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">"E"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token operator">...</span>path<span class="token punctuation">,</span> <span class="token punctuation">[</span>x<span class="token punctuation">,</span> y<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Explore neighbors</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">[</span>dx<span class="token punctuation">,</span> dy<span class="token punctuation">]</span> <span class="token keyword">of</span> directions<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">let</span> newX <span class="token operator">=</span> x <span class="token operator">+</span> dx<span class="token punctuation">;</span>
+      <span class="token keyword">let</span> newY <span class="token operator">=</span> y <span class="token operator">+</span> dy<span class="token punctuation">;</span>
+
+      <span class="token comment">// Check bounds and if the cell is a path and not visited</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>
+        newX <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span>
+        newX <span class="token operator">&lt;</span> rows <span class="token operator">&amp;&amp;</span>
+        newY <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span>
+        newY <span class="token operator">&lt;</span> cols <span class="token operator">&amp;&amp;</span>
+        maze<span class="token punctuation">[</span>newX<span class="token punctuation">]</span><span class="token punctuation">[</span>newY<span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token string">"0"</span> <span class="token operator">&amp;&amp;</span>
+        <span class="token operator">!</span>visited<span class="token punctuation">[</span>newX<span class="token punctuation">]</span><span class="token punctuation">[</span>newY<span class="token punctuation">]</span>
+      <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+          <span class="token punctuation">[</span>newX<span class="token punctuation">,</span> newY<span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">...</span>path<span class="token punctuation">,</span> <span class="token punctuation">[</span>x<span class="token punctuation">,</span> y<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        visited<span class="token punctuation">[</span>newX<span class="token punctuation">]</span><span class="token punctuation">[</span>newY<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// If we reach this point, no path was found</span>
+  <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Example maze</span>
+<span class="token comment">// 0 = wall, 1 = path, S = start, E = end</span>
+<span class="token keyword">let</span> maze <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">[</span><span class="token string">"S"</span><span class="token punctuation">,</span> <span class="token string">"1"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">"1"</span><span class="token punctuation">,</span> <span class="token string">"E"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">solveMaze</span><span class="token punctuation">(</span>maze<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// The starting point coordinates</span>
 </code></pre>
 
 	</section>
