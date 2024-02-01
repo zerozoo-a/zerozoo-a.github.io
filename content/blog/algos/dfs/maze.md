@@ -17,7 +17,7 @@ function dfs(maze, x, y, visited, path) {
     y < 0 || // dfs 재귀에서 좌표가 음수일 경우
     x >= maze.length || // maze를 벗어납니다.
     y >= maze[0].length || // maze를 벗어납니다.
-    maze[x][y] === 1 || // 1은 벽입니다.
+    maze[x][y] === 1 || // 현재 노드가 벽인 경우.
     visited[x][y] // 이미 방문했다면 stack을 회수
   ) {
     return false;
@@ -98,4 +98,67 @@ console.log(findPath(maze3));
   [ 2, 4 ], [ 4, 3 ]
 ]
  * */
+```
+
+```js
+function solveMaze(maze, startX, startY) {
+  let rows = maze.length;
+  let cols = maze[0].length;
+  let visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+  let stack = [[[startX, startY], []]]; // Each element: [[x, y], path]
+
+  // Directions: up, right, down, left
+  let directions = [
+    [-1, 0],
+    [0, 1],
+    [1, 0],
+    [0, -1],
+  ];
+
+  visited[startX][startY] = true;
+
+  while (stack.length > 0) {
+    let [[x, y], path] = stack.pop();
+
+    // If we've reached the end, return the path including the end position
+    if (maze[x][y] === "E") {
+      return [...path, [x, y]];
+    }
+
+    // Explore neighbors
+    for (let [dx, dy] of directions) {
+      let newX = x + dx;
+      let newY = y + dy;
+
+      // Check bounds and if the cell is a path and not visited
+      if (
+        newX >= 0 &&
+        newX < rows &&
+        newY >= 0 &&
+        newY < cols &&
+        maze[newX][newY] !== "0" &&
+        !visited[newX][newY]
+      ) {
+        stack.push([
+          [newX, newY],
+          [...path, [x, y]],
+        ]);
+        visited[newX][newY] = true;
+      }
+    }
+  }
+
+  // If we reach this point, no path was found
+  return null;
+}
+
+// Example maze
+// 0 = wall, 1 = path, S = start, E = end
+let maze = [
+  ["S", "1"],
+  ["1", "E"],
+];
+
+console.log(solveMaze(maze, 0, 0)); // The starting point coordinates
+
 ```
