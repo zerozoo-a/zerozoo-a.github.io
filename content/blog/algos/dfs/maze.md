@@ -31,7 +31,7 @@ function dfs(maze, x, y, visited, path) {
 
   // 현재 위치 방문 처리
   visited[x][y] = true;
-  path.push([y, x]);
+  path.push([x, y]);
 
   // 상, 하, 좌, 우 방향으로 DFS 탐색
   if (
