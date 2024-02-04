@@ -32,7 +32,7 @@ function arrToObj(keys, item) {
 		if (i === keys.length - 1) {
 			o[item.name] = [
 				item.path.replace("content", ""), // substring(7)은 path값에 있는 필요없는 데이터를 지움
-				item.name.replace(".md", "").replace(".html", ""),
+				item.name.replace(".md", "").replace(".html", "").replace(".njk", ""),
 			];
 		}
 		o = { [keys[i]]: o };
@@ -56,7 +56,13 @@ async function recursiveAllFiles(path) {
 			if (item.isDirectory()) {
 				res = deepMerge(res, await recursiveAllFiles(`${path}/${item.name}`));
 			} else {
-				if (!item.name.endsWith(".md") && !item.name.endsWith(".html")) {
+				const extensions = [".md", ".html", ".njk"];
+
+				if (
+					!item.name.endsWith(extensions[0]) &&
+					!item.name.endsWith(extensions[1]) &&
+					!item.name.endsWith(extensions[2])
+				) {
 					continue;
 				}
 

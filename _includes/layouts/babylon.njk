@@ -1,0 +1,35 @@
+---
+type: page
+layout: layouts/base.njk
+meta:
+  language: ko-KR
+eleventyComputed:
+  meta:
+    site:
+      name: "{{ metadata.title }}"
+      description: "{{ metadata.description }}"
+      url: "{{ metadata.url }}"
+    title: "{{ title or metadata.title }}"
+    description: "{{ description or metadata.description }}"
+    image:
+      src: "{% if image %}{{ metadata.url }}{{ image }}{% endif %}"
+---
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <title>babylons</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src=""></script>
+    <script async src="https://cdn.babylonjs.com/babylon.js"
+    onload="typeof renderBabylon !== 'undefined' && renderBabylon()"
+    ></script>
+    <script async src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <style>
+        body,#renderCanvas { width: 100%; height: 100%;}
+    </style>
+</head>
+<body>
+	{{ content | safe }}
+</body>
+</html>

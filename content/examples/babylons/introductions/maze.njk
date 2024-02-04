@@ -1,0 +1,59 @@
+<canvas id="renderCanvas"></canvas>
+aaaaaa
+<script>
+    function renderBabylon(){
+    var canvas = document.getElementById('renderCanvas');
+    var engine = new BABYLON.Engine(canvas, true);
+
+    var createScene = function () {
+        var scene = new BABYLON.Scene(engine);
+        scene.clearColor = new BABYLON.Color3.White();
+
+        var camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, Math.PI / 4, 10, BABYLON.Vector3.Zero(), scene);
+        camera.attachControl(canvas, true);
+
+        var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
+        // Maze generation logic
+        var mazeSize = 10; // 10x10 grid
+        var maze = generateMaze(mazeSize);
+        drawMaze(maze, scene);
+
+        return scene;
+    };
+
+    var generateMaze = function(size) {
+        // Placeholder for maze generation logic
+        // For simplicity, this will return a 2D array representing the maze
+        // where 0 is an open space and 1 is a wall
+        var maze = [];
+        for (var y = 0; y < size; y++) {
+            maze[y] = [];
+            for (var x = 0; x < size; x++) {
+                maze[y][x] = Math.round(Math.random()); // Randomly decide if it's a wall or not
+            }
+        }
+        return maze;
+    };
+
+    var drawMaze = function(maze, scene) {
+        var size = maze.length;
+        for (var y = 0; y < size; y++) {
+            for (var x = 0; x < size; x++) {
+                if (maze[y][x] === 1) {
+                    var box = BABYLON.MeshBuilder.CreateBox("box", {height: 1, width: 1, depth: 1}, scene);
+                    box.position.x = x - size / 2;
+                    box.position.y = 0.5;
+                    box.position.z = y - size / 2;
+                }
+            }
+        }
+    };
+
+    var scene = createScene();
+
+    engine.runRenderLoop(function () {
+        scene.render();
+    });
+    }
+</script>

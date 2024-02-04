@@ -6,8 +6,14 @@ const schema = require("@quasibit/eleventy-plugin-schema");
 const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 
 /**
+ * island
+ */
+const EleventyPreactPlugin = require("./11ty/PreactPlugin.cjs");
+
+/**
  * plugis
  */
+
 const pluginMermaid = require("@kevingimbel/eleventy-plugin-mermaid");
 const pluginDrafts = require("./eleventy.config.drafts.js");
 const pluginImages = require("./eleventy.config.images.js");
@@ -17,7 +23,6 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginBundle = require("@11ty/eleventy-plugin-bundle");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
-
 const { execSync } = require("child_process");
 
 /**
@@ -79,6 +84,11 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPlugin(pluginNavigation);
 	eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
 	eleventyConfig.addPlugin(pluginBundle);
+	eleventyConfig.addPlugin(EleventyPreactPlugin);
+
+	/**
+	 * add filter
+	 */
 
 	eleventyConfig.addFilter("readableDate", (dateObj, format, zone) => {
 		// Formatting tokens for Luxon: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
