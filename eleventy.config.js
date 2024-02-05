@@ -6,11 +6,6 @@ const schema = require("@quasibit/eleventy-plugin-schema");
 const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 
 /**
- * island
- */
-const EleventyPreactPlugin = require("./11ty/PreactPlugin.cjs");
-
-/**
  * plugis
  */
 
@@ -84,7 +79,7 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPlugin(pluginNavigation);
 	eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
 	eleventyConfig.addPlugin(pluginBundle);
-	eleventyConfig.addPlugin(EleventyPreactPlugin);
+	
 
 	/**
 	 * add filter
