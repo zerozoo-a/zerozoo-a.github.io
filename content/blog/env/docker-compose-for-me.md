@@ -7,10 +7,13 @@ coverURL: https://images.unsplash.com/photo-1504383633899-a17806f7e9ad?q=80&w=30
 <br />
 <br />
 
+
+
 ## docker로 nest.js를 말고 compose로 띄워보자
 - `docker`와 `docker-compose`의 기본적인 사용법을 알고 있다는 가정하에 진행됩니다.
 - `docker, docker-compose, npm, node`등의 개발 환경은 이미 갖추어진 상태라고 가정합니다.
 - `nest.js`만을 띄웁니다.
+- 완성된 repo: `git clone https://github.com/zerozoo-a/docker_compose_nestjs`
 
 ### nest.js 프로젝트 준비
 `docker`를 사용해 `nest.js` 프로젝트를 말아보겠습니다.
