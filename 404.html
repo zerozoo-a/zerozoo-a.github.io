@@ -2902,6 +2902,27 @@ h2 + .header-anchor {
 									<li>
 											
 											<details>
+												<summary>web_gpu</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/web_gpu/web-gpu-api">
+													web-gpu-api
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
 												<summary>wiki</summary>
 													
 							<ul>
@@ -3116,18 +3137,30 @@ h2 + .header-anchor {
 
 
 
-<h1 id="content-not-found" tabindex="-1">Content not found. <a class="header-anchor" href="#content-not-found">#</a></h1>
-<p>여긴.. 아직 올 곳이 못됩니다. <a href="/">home</a>.</p>
-<!--
+<h1 id="404-content-not-found" tabindex="-1">404 Content not found. <a class="header-anchor" href="#404-content-not-found">#</a></h1>
+<h2 id="click-to-home" tabindex="-1"><a href="/">click to home</a> <a class="header-anchor" href="#click-to-home">#</a></h2>
+<p><canvas id="canvas"></canvas></p>
+<script type="module">
+    (function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const o of r.addedNodes)o.tagName==="LINK"&&o.rel==="modulepreload"&&i(o)}).observe(document,{childList:!0,subtree:!0});function s(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function i(e){if(e.ep)return;e.ep=!0;const r=s(e);fetch(e.href,r)}})();
 
-Read more: https://www.11ty.dev/docs/quicktips/not-found/
+    async function v(){const r=document.getElementById("canvas"),t=await navigator.gpu.requestAdapter(),e=await(t==null?void 0:t.requestDevice()),n=r.getContext("webgpu");if(!r||!n||!e)return;const i="bgra8unorm";n.configure({device:e,format:i});const c=`
+        @vertex
+        fn main(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4<f32> {
+            var positions = array<vec2<f32>, 3>(
+                vec2<f32>(0.0, 0.5),
+                vec2<f32>(-0.5, -0.5),
+                vec2<f32>(0.5, -0.5)
+            );
+            let position = positions[VertexIndex];
+            return vec4<f32>(position, 0.0, 1.0);
+        }`,s=`
+        @fragment
+        fn main() -> @location(0) vec4<f32> {
+            return vec4<f32>(0.0, 1.0, 0.0, 1.0); // RGBA: Green
+        }`,d=e.createShaderModule({code:c}),u=e.createShaderModule({code:s}),l=e.createRenderPipeline({vertex:{module:d,entryPoint:"main"},fragment:{module:u,entryPoint:"main",targets:[{format:i}]},primitive:{topology:"triangle-list"},layout:"auto"}),a=e.createCommandEncoder(),m={colorAttachments:[{view:n.getCurrentTexture().createView(),clearValue:{r:0,g:0,b:0,a:1},loadOp:"clear",storeOp:"store"}]},o=a.beginRenderPass(m);o.setPipeline(l),o.draw(3,1,0,0),o.end(),e.queue.submit([a.finish()])}window.onload=v;
 
-This will work for both GitHub pages and Netlify:
 
-* https://help.github.com/articles/creating-a-custom-404-page-for-your-github-pages-site/
-* https://www.netlify.com/docs/redirects/#custom-404
-
--->
+</script>
 
 
 		</main>
