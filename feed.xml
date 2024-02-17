@@ -11,29 +11,28 @@
     <email>zerozoo385@gmail.com</email>
   </author>
   <entry>
-    <title>나를 위한 docker compose와 nest.js와 5.x typescript 세팅하기</title>
-    <link href="https://zerozoo-a.github.io/blog/env/docker-compose-for-me/"/>
+    <title>docker compose와 nest.js와 5.x typescript 세팅하기</title>
+    <link href="https://zerozoo-a.github.io/blog/env/docker-compose-nestjs-typescript/"/>
     <updated>2024-02-14T23:44:58Z</updated>
-    <id>https://zerozoo-a.github.io/blog/env/docker-compose-for-me/</id>
+    <id>https://zerozoo-a.github.io/blog/env/docker-compose-nestjs-typescript/</id>
     <content xml:lang="kr" type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h2 id=&quot;docker-nest-js-compose&quot; tabindex=&quot;-1&quot;&gt;docker로 nest.js를 말고 compose로 띄워보자 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-for-me/#docker-nest-js-compose&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;docker-nest-js-compose&quot; tabindex=&quot;-1&quot;&gt;docker로 nest.js를 말고 compose로 띄워보자 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-nestjs-typescript/#docker-nest-js-compose&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;docker&lt;/code&gt;와 &lt;code&gt;docker-compose&lt;/code&gt;의 기본적인 사용법을 알고 있다는 가정하에 진행됩니다.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;docker, docker-compose, npm, node&lt;/code&gt;등의 개발 환경은 이미 갖추어진 상태라고 가정합니다.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;nest.js&lt;/code&gt;만을 띄웁니다.&lt;/li&gt;
 &lt;li&gt;완성된 repo: &lt;code&gt;git clone https://github.com/zerozoo-a/docker_compose_nestjs&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&quot;nest-js&quot; tabindex=&quot;-1&quot;&gt;nest.js 프로젝트 준비 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-for-me/#nest-js&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;nest-js&quot; tabindex=&quot;-1&quot;&gt;nest.js 프로젝트 준비 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-nestjs-typescript/#nest-js&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;docker&lt;/code&gt;를 사용해 &lt;code&gt;nest.js&lt;/code&gt; 프로젝트를 말아보겠습니다.
 적당히 &lt;code&gt;nest.js&lt;/code&gt; 프로젝트를 생성해주세요.&lt;/p&gt;
 &lt;p&gt;간단히 실험해보고 싶다면 아래의 &lt;code&gt;repo&lt;/code&gt;를 클론해주세요&lt;/p&gt;
 &lt;pre class=&quot;language-sh&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; clone https://github.com/nestjs/typescript-starter.git project&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;dockerfile&quot; tabindex=&quot;-1&quot;&gt;Dockerfile 만들기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-for-me/#dockerfile&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;dockerfile&quot; tabindex=&quot;-1&quot;&gt;Dockerfile 만들기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-nestjs-typescript/#dockerfile&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;아래의 환경을 그대로 사용해도 좋으나 원한다면 조금씩 변경해주세요.
-&lt;s&gt;slim 버전을 사용했을 때, sh등이 없다는 에러가 발생했었습니다. 그냥 alpine이나 그에 준하는 녀석을 써주세요&lt;/s&gt;&lt;/p&gt;
-&lt;p&gt;프로젝트의 루트에 &lt;code&gt;Dockerfile&lt;/code&gt;이라는 이름의 파일을 생성하고 아래의 설정을 작성합니다.&lt;/p&gt;
+프로젝트의 루트에 &lt;code&gt;Dockerfile&lt;/code&gt;이라는 이름의 파일을 생성하고 아래의 설정을 작성합니다.&lt;/p&gt;
 &lt;pre class=&quot;language-Dockerfile&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-Dockerfile&quot;&gt;FROM node:21-alpine
 
 WORKDIR /usr/src/app
@@ -47,7 +46,7 @@ COPY . .
 EXPOSE 8080
 
 CMD [&quot;npm&quot;, &quot;run&quot;, &quot;start:dev&quot;]&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;docker-compose-yml&quot; tabindex=&quot;-1&quot;&gt;docker-compose.yml 파일 만들기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-for-me/#docker-compose-yml&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;docker-compose-yml&quot; tabindex=&quot;-1&quot;&gt;docker-compose.yml 파일 만들기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-nestjs-typescript/#docker-compose-yml&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;똑같이 프로젝트의 루트에 &lt;code&gt;docker-compose.yml&lt;/code&gt; 파일을 생성하고
 아래의 설정을 넣어주세요&lt;/p&gt;
 &lt;pre class=&quot;language-yml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
@@ -62,14 +61,14 @@ CMD [&quot;npm&quot;, &quot;run&quot;, &quot;start:dev&quot;]&lt;/code&gt;&lt;/p
       &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; /usr/src/app/node_modules
     &lt;span class=&quot;token key atrule&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; NODE_ENV=development&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;특이사항 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-for-me/#&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;특이사항 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-nestjs-typescript/#&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;nest.js&lt;/code&gt;는 기본적으로 &lt;code&gt;typescript template&lt;/code&gt;을 제공합니다.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;typescript 5.1.3버전 부터는 &lt;code&gt;hot reload&lt;/code&gt;에 &lt;code&gt;tsconfig.json&lt;/code&gt; 파일의 설정을 추가할 것을 강제합니다.
 이 세팅을 추가하지 않을 경우 컨테이너를 띄운 상태에서 volume 범위에 속하는 파일을 변경할 때,
-container가 죽습니다.&lt;/p&gt;
+container는 에러를 표시하고 컨테이너가 내려갑니다.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;기존의 tsconfig.json에 아래의 옵션을 추가해주세요&lt;/p&gt;
+&lt;p&gt;기존의 &lt;code&gt;tsconfig.json&lt;/code&gt;에 아래의 옵션을 추가해주세요&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://blog.stackademic.com/using-docker-compose-to-run-nestjs-applications-with-redis-and-postgres-586ab132b60c&quot;&gt;출처&lt;/a&gt;&lt;/p&gt;
 &lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token property&quot;&gt;&quot;watchOptions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token comment&quot;&gt;// Use native file system events for files and directories&lt;/span&gt;
@@ -84,7 +83,7 @@ container가 죽습니다.&lt;/p&gt;
     &lt;span class=&quot;token comment&quot;&gt;// files to track  work from these directories&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;excludeDirectories&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;**/node_modules&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dist&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;실행하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-for-me/#-1&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;실행하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/env/docker-compose-nestjs-typescript/#-1&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;CLI&lt;/code&gt;를 통해 실행해도 좋지만 번거러우므로 &lt;code&gt;package.json&lt;/code&gt;에 아래의 &lt;code&gt;script&lt;/code&gt;를 추가해주세요&lt;/p&gt;
 &lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;scripts&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
@@ -92,7 +91,7 @@ container가 죽습니다.&lt;/p&gt;
         &lt;span class=&quot;token property&quot;&gt;&quot;stop&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;docker-compose down&quot;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;이제 &lt;code&gt;npm run dev&lt;/code&gt;를 입력하면 docker-compose를 통해 image가 생성되고 container까지 띄워집니다.&lt;/p&gt;
+&lt;p&gt;이제 &lt;code&gt;npm run dev&lt;/code&gt;를 입력하면 &lt;code&gt;docker-compose&lt;/code&gt;를 통해 &lt;code&gt;image&lt;/code&gt;가 생성되고 &lt;code&gt;container&lt;/code&gt;까지 띄워집니다.&lt;/p&gt;
 </content>
   </entry>
   <entry>
