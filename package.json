@@ -3,16 +3,17 @@
 	"version": "8.0.0",
 	"description": "A starter repository for a blog web site using the Eleventy site generator.",
 	"scripts": {
-		"build": "npx @11ty/eleventy",
-		"build-ghpages": "npx @11ty/eleventy",
-		"start": "npx @11ty/eleventy --serve --quiet --incremental",
+		"build": "npx @11ty/eleventy --quiet",
+		"build-ghpages": "pnpm build_sub_domain_web_gpu && npx @11ty/eleventy --quiet",
+		"d": "pnpm build_sub_domain_web_gpu && npx @11ty/eleventy --serve --quiet --incremental",
+		"dev": "pnpm build_sub_domain_web_gpu && npx @11ty/eleventy --serve --quiet --incremental",
 		"debug": "DEBUG=Eleventy* npx @11ty/eleventy",
 		"debugstart": "DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
 		"benchmark": "DEBUG=Eleventy:Benchmark* npx @11ty/eleventy",
 		"post": "node createPost.js",
-		"dd": "docker run -d -p 8080:8080 -v $pwd:/usr/src/app blog",
-		"bb": "docker build -t blog .",
-		"clear-db": "rm imageURL2base64Db.json"
+		"clear-db": "rm imageURL2base64Db.json",
+		"build_sub_domain_web_gpu":"pnpm run rid_web_gpu && pnpm --prefix ./sub_domains/web_gpu/ run build && cp -r ./sub_domains/web_gpu/dist ./content/sub_domains/web_gpu",
+		"rid_web_gpu":"rm -rf ./content/sub_domains/web_gpu"
 	},
 	"repository": {
 		"type": "git",
@@ -49,9 +50,6 @@
 		"nodemon": "latest"
 	},
 	"dependencies": {
-		"@11ty/eleventy-plugin-vite": "^4.0.0",
-		"@11ty/is-land": "^4.0.0",
-		"@babylonjs/core": "^6.41.0",
 		"@iktakahiro/markdown-it-katex": "latest",
 		"@kevingimbel/eleventy-plugin-mermaid": "latest",
 		"dotenv": "latest",
@@ -59,6 +57,7 @@
 		"markdown-it": "latest",
 		"markdown-it-textual-uml": "0.14.0",
 		"mermaid": "10.6.0",
-		"sharp": "latest"
+		"sharp": "latest",
+		"vite": "^5.1.3"
 	}
 }

@@ -33,7 +33,11 @@ module.exports = function (eleventyConfig) {
 		"./favicon/": "/",
 		"./public/css/gh-syntax.css": "/css/gh-syntax.css",
 	});
-	eleventyConfig.addPassthroughCopy("./covers");
+	// eleventyConfig.addPassthroughCopy("./covers");
+	eleventyConfig.addPassthroughCopy({
+		"./sub_domains/web_gpu/dist/assets": "/sub_domains/web_gpu/assets",
+	});
+
 	eleventyConfig.addPlugin(schema);
 	eleventyConfig.addPlugin(pluginRss, {
 		posthtmlRenderOptions: {
@@ -79,7 +83,6 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPlugin(pluginNavigation);
 	eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
 	eleventyConfig.addPlugin(pluginBundle);
-	
 
 	/**
 	 * add filter
