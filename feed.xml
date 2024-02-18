@@ -11,15 +11,15 @@
     <email>zerozoo385@gmail.com</email>
   </author>
   <entry>
-    <title>Hello, WebGPU 정리하기</title>
-    <link href="https://zerozoo-a.github.io/blog/web_gpu/web-gpu-api/"/>
+    <title>Hello, WebGPU</title>
+    <link href="https://zerozoo-a.github.io/blog/web_gpu/hello-web-gpu/"/>
     <updated>2024-02-17T21:47:50Z</updated>
-    <id>https://zerozoo-a.github.io/blog/web_gpu/web-gpu-api/</id>
+    <id>https://zerozoo-a.github.io/blog/web_gpu/hello-web-gpu/</id>
     <content xml:lang="kr" type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h1 id=&quot;webgpu&quot; tabindex=&quot;-1&quot;&gt;WebGPU 정리 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/web_gpu/web-gpu-api/#webgpu&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
-&lt;h2 id=&quot;webgpu-1&quot; tabindex=&quot;-1&quot;&gt;글의 목적: WebGPU의 대략적인 작동방식의 이해 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/web_gpu/web-gpu-api/#webgpu-1&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h1 id=&quot;webgpu&quot; tabindex=&quot;-1&quot;&gt;WebGPU 이해하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/web_gpu/hello-web-gpu/#webgpu&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;h2 id=&quot;webgpu-1&quot; tabindex=&quot;-1&quot;&gt;글의 목적: WebGPU의 대략적인 작동방식의 이해 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/web_gpu/hello-web-gpu/#webgpu-1&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;WebGPU를 사용하기전 참고차 정리합니다.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -39,7 +39,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;렌더링 파이프라인 간보기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/web_gpu/web-gpu-api/#&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;렌더링 파이프라인 간보기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/web_gpu/hello-web-gpu/#&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;렌더링 파이프라인은 개발자가 GPU의 계산 능력을 활용해 고성능 그래픽스 및 계산 작업을 수행하도록 합니다.
 WebGPU는 아래와 같은 렌더링 파이프라인을 지나가며 그래픽 작업을 수행합니다.&lt;/p&gt;
 &lt;div class=&quot;mermaid&quot;&gt;
@@ -52,7 +52,7 @@ graph TD;
     D --&gt; E[Output Merging];
 &lt;/div&gt;
 &lt;p&gt;렌더링 파이프라인은 컴퓨터 그래픽스에서 아주 중요한 내용인지라 나중에 다시 다루어보겠습니다.&lt;/p&gt;
-&lt;h2 id=&quot;hello&quot; tabindex=&quot;-1&quot;&gt;Hello, 삼각형 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/web_gpu/web-gpu-api/#hello&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;hello&quot; tabindex=&quot;-1&quot;&gt;Hello, 삼각형 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/web_gpu/hello-web-gpu/#hello&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;WebGPU를 사용해 삼각형을 그려보겠습니다.&lt;/p&gt;
 &lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// 최신 browser 환경 기준&lt;/span&gt;
 
@@ -252,11 +252,14 @@ window&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span cla
 &lt;p&gt;아래에 위 코드를 작동시켰을 경우 WebGPU를 사용 할 수 있는 환경이라면,
 검은 바탕에 초록색 삼각형이 canvas에 그려진 것을 확인 할 수 있습니다.&lt;/p&gt;
 &lt;p&gt;혹은 &lt;a href=&quot;https://zerozoo-a.github.io/sub_domains/web_gpu/src/examples/triangle/&quot;&gt;이 링크를 통해서도 확인 가능합니다.&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;canvas id=&quot;canvas&quot;&gt;&lt;/canvas&gt;&lt;/p&gt;
+&lt;p&gt;&lt;canvas id=&quot;triangle&quot;&gt;&lt;/canvas&gt;&lt;/p&gt;
 &lt;script&gt;
-        (function(){const t=document.createElement(&quot;link&quot;).relList;if(t&amp;&amp;t.supports&amp;&amp;t.supports(&quot;modulepreload&quot;))return;for(const e of document.querySelectorAll(&#39;link[rel=&quot;modulepreload&quot;]&#39;))i(e);new MutationObserver(e=&gt;{for(const r of e)if(r.type===&quot;childList&quot;)for(const o of r.addedNodes)o.tagName===&quot;LINK&quot;&amp;&amp;o.rel===&quot;modulepreload&quot;&amp;&amp;i(o)}).observe(document,{childList:!0,subtree:!0});function s(e){const r={};return e.integrity&amp;&amp;(r.integrity=e.integrity),e.referrerPolicy&amp;&amp;(r.referrerPolicy=e.referrerPolicy),e.crossOrigin===&quot;use-credentials&quot;?r.credentials=&quot;include&quot;:e.crossOrigin===&quot;anonymous&quot;?r.credentials=&quot;omit&quot;:r.credentials=&quot;same-origin&quot;,r}function i(e){if(e.ep)return;e.ep=!0;const r=s(e);fetch(e.href,r)}})();
+	var l=Object.defineProperty;var d=(s,r,i)=&gt;r in s?l(s,r,{enumerable:!0,configurable:!0,writable:!0,value:i}):s[r]=i;var n=(s,r,i)=&gt;(d(s,typeof r!=&quot;symbol&quot;?r+&quot;&quot;:r,i),i);(function(){const r=document.createElement(&quot;link&quot;).relList;if(r&amp;&amp;r.supports&amp;&amp;r.supports(&quot;modulepreload&quot;))return;for(const e of document.querySelectorAll(&#39;link[rel=&quot;modulepreload&quot;]&#39;))c(e);new MutationObserver(e=&gt;{for(const t of e)if(t.type===&quot;childList&quot;)for(const o of t.addedNodes)o.tagName===&quot;LINK&quot;&amp;&amp;o.rel===&quot;modulepreload&quot;&amp;&amp;c(o)}).observe(document,{childList:!0,subtree:!0});function i(e){const t={};return e.integrity&amp;&amp;(t.integrity=e.integrity),e.referrerPolicy&amp;&amp;(t.referrerPolicy=e.referrerPolicy),e.crossOrigin===&quot;use-credentials&quot;?t.credentials=&quot;include&quot;:e.crossOrigin===&quot;anonymous&quot;?t.credentials=&quot;omit&quot;:t.credentials=&quot;same-origin&quot;,t}function c(e){if(e.ep)return;e.ep=!0;const t=i(e);fetch(e.href,t)}})();class f{constructor(){n(this,&quot;wgls&quot;);n(this,&quot;canvasRef&quot;);n(this,&quot;canvas&quot;);n(this,&quot;adapter&quot;,null);n(this,&quot;context&quot;,null);n(this,&quot;device&quot;,null);n(this,&quot;isInitialized&quot;,!1)}async init(r){var i,c;try{const e=document.getElementById(r);if(!e)throw Error(&quot;canvas is required&quot;);this.canvas=e;const t=await navigator.gpu.requestAdapter();if(!t)throw Error(&quot;navigator gpu&quot;);this.adapter=t;const o=await t.requestDevice();this.device=o;const a=e.getContext(&quot;webgpu&quot;);if(this.context=a,!e||!a||!o)throw Error(&quot;canvas, context, device is required&quot;)}catch(e){console.error(e);const t=document==null?void 0:document.createElement(&quot;div&quot;);t.innerText=`${e}`,t.id=r,(c=(i=this.canvas)==null?void 0:i.parentElement)==null||c.replaceChild(t,this.canvas),this.canvas=this.adapter=this.context=this.device=null}finally{this.isInitialized=!0}}}
+	// export{f as W};
 
-    async function v(){const r=document.getElementById(&quot;canvas&quot;),t=await navigator.gpu.requestAdapter(),e=await(t==null?void 0:t.requestDevice()),n=r.getContext(&quot;webgpu&quot;);if(!r||!n||!e)return;const i=&quot;bgra8unorm&quot;;n.configure({device:e,format:i});const c=`
+
+// import{W as d}from&quot;./web_gpu_instance-D-KTR6md.js&quot;;
+const s=async function(){const t=&quot;bgra8unorm&quot;,r=&quot;triangle&quot;,o=`
         @vertex
         fn main(@builtin(vertex_index) VertexIndex : u32) -&gt; @builtin(position) vec4&lt;f32&gt; {
             var positions = array&lt;vec2&lt;f32&gt;, 3&gt;(
@@ -266,11 +269,12 @@ window&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span cla
             );
             let position = positions[VertexIndex];
             return vec4&lt;f32&gt;(position, 0.0, 1.0);
-        }`,s=`
+        }`,a=`
         @fragment
         fn main() -&gt; @location(0) vec4&lt;f32&gt; {
-            return vec4&lt;f32&gt;(0.0, 1.0, 0.0, 1.0); // RGBA: Green
-        }`,d=e.createShaderModule({code:c}),u=e.createShaderModule({code:s}),l=e.createRenderPipeline({vertex:{module:d,entryPoint:&quot;main&quot;},fragment:{module:u,entryPoint:&quot;main&quot;,targets:[{format:i}]},primitive:{topology:&quot;triangle-list&quot;},layout:&quot;auto&quot;}),a=e.createCommandEncoder(),m={colorAttachments:[{view:n.getCurrentTexture().createView(),clearValue:{r:0,g:0,b:0,a:1},loadOp:&quot;clear&quot;,storeOp:&quot;store&quot;}]},o=a.beginRenderPass(m);o.setPipeline(l),o.draw(3,1,0,0),o.end(),e.queue.submit([a.finish()])}window.onload=v;
+            return vec4&lt;f32&gt;(0.0, 0.1, 0.8, 1.0); // RGBA: Green
+        }`,e=new f;if(await e.init(r),!(e.device&amp;&amp;e.context&amp;&amp;e.canvas&amp;&amp;e.adapter))return;e.context.configure({device:e.device,format:t});const c=await e.device.createRenderPipelineAsync({vertex:{module:e.device.createShaderModule({code:o}),entryPoint:&quot;main&quot;},fragment:{module:e.device.createShaderModule({code:a}),entryPoint:&quot;main&quot;,targets:[{format:t}]},primitive:{topology:&quot;triangle-list&quot;},layout:&quot;auto&quot;}),i=e.device.createCommandEncoder(),n=i.beginRenderPass({colorAttachments:[{view:e.context.getCurrentTexture().createView(),clearValue:{r:0,g:0,b:0,a:1},loadOp:&quot;clear&quot;,storeOp:&quot;store&quot;}]});n.setPipeline(c),n.draw(3,1,0,0),n.end(),e.device.queue.submit([i.finish()])};(async function(){await s()})();
+
 
 &lt;/script&gt;</content>
   </entry>
