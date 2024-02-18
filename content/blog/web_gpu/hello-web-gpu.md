@@ -1,5 +1,5 @@
 ---
-title: Hello, WebGPU 정리하기
+title: Hello, WebGPU 
 date: 2024-02-17 21:47:50
 coverURL: 
 ---
@@ -7,7 +7,7 @@ coverURL:
 <br />
 <br />
 
-# WebGPU 정리
+# WebGPU 이해하기
 
 ## 글의 목적: WebGPU의 대략적인 작동방식의 이해
 
@@ -254,12 +254,15 @@ window.onload = () => main([vertexShaderCode, fragmentShaderCode]);
 
 혹은 <a href="/sub_domains/web_gpu/src/examples/triangle/">이 링크를 통해서도 확인 가능합니다.</a>
 
-<canvas id="canvas"></canvas>
+<canvas id="triangle"></canvas>
 
 <script>
-        (function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const o of r.addedNodes)o.tagName==="LINK"&&o.rel==="modulepreload"&&i(o)}).observe(document,{childList:!0,subtree:!0});function s(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function i(e){if(e.ep)return;e.ep=!0;const r=s(e);fetch(e.href,r)}})();
+	var l=Object.defineProperty;var d=(s,r,i)=>r in s?l(s,r,{enumerable:!0,configurable:!0,writable:!0,value:i}):s[r]=i;var n=(s,r,i)=>(d(s,typeof r!="symbol"?r+"":r,i),i);(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))c(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const o of t.addedNodes)o.tagName==="LINK"&&o.rel==="modulepreload"&&c(o)}).observe(document,{childList:!0,subtree:!0});function i(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function c(e){if(e.ep)return;e.ep=!0;const t=i(e);fetch(e.href,t)}})();class f{constructor(){n(this,"wgls");n(this,"canvasRef");n(this,"canvas");n(this,"adapter",null);n(this,"context",null);n(this,"device",null);n(this,"isInitialized",!1)}async init(r){var i,c;try{const e=document.getElementById(r);if(!e)throw Error("canvas is required");this.canvas=e;const t=await navigator.gpu.requestAdapter();if(!t)throw Error("navigator gpu");this.adapter=t;const o=await t.requestDevice();this.device=o;const a=e.getContext("webgpu");if(this.context=a,!e||!a||!o)throw Error("canvas, context, device is required")}catch(e){console.error(e);const t=document==null?void 0:document.createElement("div");t.innerText=`${e}`,t.id=r,(c=(i=this.canvas)==null?void 0:i.parentElement)==null||c.replaceChild(t,this.canvas),this.canvas=this.adapter=this.context=this.device=null}finally{this.isInitialized=!0}}}
+	// export{f as W};
 
-    async function v(){const r=document.getElementById("canvas"),t=await navigator.gpu.requestAdapter(),e=await(t==null?void 0:t.requestDevice()),n=r.getContext("webgpu");if(!r||!n||!e)return;const i="bgra8unorm";n.configure({device:e,format:i});const c=`
+
+// import{W as d}from"./web_gpu_instance-D-KTR6md.js";
+const s=async function(){const t="bgra8unorm",r="triangle",o=`
         @vertex
         fn main(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4<f32> {
             var positions = array<vec2<f32>, 3>(
@@ -269,10 +272,11 @@ window.onload = () => main([vertexShaderCode, fragmentShaderCode]);
             );
             let position = positions[VertexIndex];
             return vec4<f32>(position, 0.0, 1.0);
-        }`,s=`
+        }`,a=`
         @fragment
         fn main() -> @location(0) vec4<f32> {
-            return vec4<f32>(0.0, 1.0, 0.0, 1.0); // RGBA: Green
-        }`,d=e.createShaderModule({code:c}),u=e.createShaderModule({code:s}),l=e.createRenderPipeline({vertex:{module:d,entryPoint:"main"},fragment:{module:u,entryPoint:"main",targets:[{format:i}]},primitive:{topology:"triangle-list"},layout:"auto"}),a=e.createCommandEncoder(),m={colorAttachments:[{view:n.getCurrentTexture().createView(),clearValue:{r:0,g:0,b:0,a:1},loadOp:"clear",storeOp:"store"}]},o=a.beginRenderPass(m);o.setPipeline(l),o.draw(3,1,0,0),o.end(),e.queue.submit([a.finish()])}window.onload=v;
+            return vec4<f32>(0.0, 0.1, 0.8, 1.0); // RGBA: Green
+        }`,e=new f;if(await e.init(r),!(e.device&&e.context&&e.canvas&&e.adapter))return;e.context.configure({device:e.device,format:t});const c=await e.device.createRenderPipelineAsync({vertex:{module:e.device.createShaderModule({code:o}),entryPoint:"main"},fragment:{module:e.device.createShaderModule({code:a}),entryPoint:"main",targets:[{format:t}]},primitive:{topology:"triangle-list"},layout:"auto"}),i=e.device.createCommandEncoder(),n=i.beginRenderPass({colorAttachments:[{view:e.context.getCurrentTexture().createView(),clearValue:{r:0,g:0,b:0,a:1},loadOp:"clear",storeOp:"store"}]});n.setPipeline(c),n.draw(3,1,0,0),n.end(),e.device.queue.submit([i.finish()])};(async function(){await s()})();
+
 
 </script>

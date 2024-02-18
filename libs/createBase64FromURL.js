@@ -26,7 +26,6 @@ const createBase64FromURL = async (url, index = 1, rotate = 0) => {
 
 	const isImageAvailable = (await fetch(url).status) === 200;
 	if (isImageAvailable) return [url, url];
-	// else return ["", ""];
 
 	if (!cachedData) cachedData = {};
 
