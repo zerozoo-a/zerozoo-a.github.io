@@ -250,7 +250,8 @@ const fragmentShaderCode = `
 window.onload = () => main([vertexShaderCode, fragmentShaderCode]);
 ```
 아래에 위 코드를 작동시켰을 경우 WebGPU를 사용 할 수 있는 환경이라면,
-검은 바탕에 초록색 삼각형이 canvas에 그려진 것을 확인 할 수 있습니다.
+삼각형이 canvas에 그려진 것을 확인 할 수 있습니다.
+아직 web gpu를 지원하지 않는 환경에선 에러메시지가 보입니다.
 
 혹은 <a href="/sub_domains/web_gpu/src/examples/triangle/">이 링크를 통해서도 확인 가능합니다.</a>
 
