@@ -76,7 +76,7 @@
 &lt;h2 id=&quot;dockerfile&quot; tabindex=&quot;-1&quot;&gt;Dockerfile을 정의하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/nginx-with-docker-compose/#dockerfile&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;🐋: &lt;code&gt;docker&lt;/code&gt;의 역할은 &lt;code&gt;nginx&lt;/code&gt;와 &lt;code&gt;node.js&lt;/code&gt;의 이미지를 가져와 일정한 &lt;code&gt;Container&lt;/code&gt; 환경을 구축하는 것입니다.
-이번 글에서 &lt;code&gt;node.js&lt;/code&gt;를 적극 사용하지 않으나 프로젝트의 골자가 되어줄 &lt;code&gt;WAS&lt;/code&gt;가 되어줄 것이기에 초반부터 &lt;code&gt;Dockerfile&lt;/code&gt; 세팅이 섞어두는 것이 좋습니다.&lt;/li&gt;
+이번 글에서 &lt;code&gt;node.js&lt;/code&gt;를 적극 사용하지 않으나 프로젝트의 골자가 되어줄 &lt;code&gt;WAS&lt;/code&gt;가 되어줄 것이기에 초반부터 &lt;code&gt;Dockerfile&lt;/code&gt; 세팅에 섞어두는 것이 좋습니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&quot;language-Dockerfile&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-Dockerfile&quot;&gt;# node.js image를 받아옵니다.
 # 원하는 언어를 취향에 맞게 세팅해도 좋겠습니다.
@@ -97,15 +97,15 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # nginx가 제공할 file들을 nginx/html로 복사합니다.
 COPY --from=build-stage /app /usr/share/nginx/html
 
-# 원하는 포트를 열어주세요 443은 https를 위해 열어줍니다.
+# 8080 혹은 원하는 포트를 열어주세요 443은 https를 위해 열어줍니다.
 EXPOSE 8080 443
 
 # 이제 세팅이 끝났으니 nginx를 실행합니다.
 CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;Docker&lt;/code&gt;에는 정말 필요한 부분만 작성되어 있습니다.
 &lt;code&gt;node.js&lt;/code&gt; 환경을 설치했지만 따로 &lt;code&gt;node&lt;/code&gt;를 사용하는 곳이 전혀 없는데요&lt;/p&gt;
-&lt;p&gt;하지만 &lt;code&gt;node&lt;/code&gt; 자체는 설치되어 있으므로 이 프로젝트를 기반으로 &lt;code&gt;node&lt;/code&gt;를 원하는대로 사용하면 됩니다.
-&lt;code&gt;python&lt;/code&gt;이 필요하다면 &lt;code&gt;python&lt;/code&gt;을 설치하면 되겠습니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;node&lt;/code&gt; 자체는 설치되어 있으므로 추후에 이 프로젝트를 기반으로 &lt;code&gt;node&lt;/code&gt;를 원하는대로 사용하면 됩니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;python&lt;/code&gt;이 필요하다면 &lt;code&gt;python&lt;/code&gt;을 설치하면 되겠습니다.&lt;/p&gt;
 &lt;h2 id=&quot;docker-compose-yml&quot; tabindex=&quot;-1&quot;&gt;docker-compose.yml 파일 정의하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/nginx-with-docker-compose/#docker-compose-yml&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;docker-compose.yml&lt;/code&gt; 파일은 &lt;code&gt;Dockerfile&lt;/code&gt;을 원하는 옵션으로 실행시켜주기 위한 &lt;code&gt;config&lt;/code&gt;가 설정되어 있습니다.
 주석으로 각 용도를 간단히 설명했습니다.&lt;/p&gt;
@@ -176,7 +176,8 @@ CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]&lt;/code&gt;&lt
 &lt;p&gt;&lt;code&gt;http://localhost:8080/&lt;/code&gt;에 접속해보면 잘 접속되는 것을 확인해볼 수 있습니다.
 &lt;code&gt;clone&lt;/code&gt; 받은 파일의 &lt;code&gt;root/index.html&lt;/code&gt; 파일을 수정 후 저장해보면 바로 바로 반영이 되는 것도 확인 할 수 있습니다.&lt;/p&gt;
 &lt;h2 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;정리하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/temp/nginx-with-docker-compose/#-3&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;docker, nginx, git&lt;/code&gt;의 만만세입니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker, nginx, docker-compose&lt;/code&gt;를 이용해봤습니다.
+nginx로 http 요청에 대한 헤더 설정, https등의 설정, redirect등 다루지 못한 내용들도 정리해보고 싶네요..&lt;/p&gt;
 &lt;p&gt;다음에 기회가 되면 node 기반의 front, backend project들을 docker로 말아두고
 OCI에 배포해보겠습니다.&lt;/p&gt;
 &lt;p&gt;감사합니다.&lt;/p&gt;
