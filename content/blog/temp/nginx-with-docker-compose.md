@@ -56,7 +56,7 @@ git clone https://github.com/zerozoo-a/nginx-docker-setting-1
 ## Dockerfile을 정의하기
 
 - 🐋: `docker`의 역할은 `nginx`와 `node.js`의 이미지를 가져와 일정한 `Container` 환경을 구축하는 것입니다.
-이번 글에서 `node.js`를 적극 사용하지 않으나 프로젝트의 골자가 되어줄 `WAS`가 되어줄 것이기에 초반부터 `Dockerfile` 세팅이 섞어두는 것이 좋습니다.
+이번 글에서 `node.js`를 적극 사용하지 않으나 프로젝트의 골자가 되어줄 `WAS`가 되어줄 것이기에 초반부터 `Dockerfile` 세팅에 섞어두는 것이 좋습니다.
 
 
 ```Dockerfile
@@ -79,7 +79,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # nginx가 제공할 file들을 nginx/html로 복사합니다.
 COPY --from=build-stage /app /usr/share/nginx/html
 
-# 원하는 포트를 열어주세요 443은 https를 위해 열어줍니다.
+# 8080 혹은 원하는 포트를 열어주세요 443은 https를 위해 열어줍니다.
 EXPOSE 8080 443
 
 # 이제 세팅이 끝났으니 nginx를 실행합니다.
@@ -89,7 +89,8 @@ CMD ["nginx", "-g", "daemon off;"]
 `Docker`에는 정말 필요한 부분만 작성되어 있습니다.
 `node.js` 환경을 설치했지만 따로 `node`를 사용하는 곳이 전혀 없는데요
 
-하지만 `node` 자체는 설치되어 있으므로 이 프로젝트를 기반으로 `node`를 원하는대로 사용하면 됩니다.
+`node` 자체는 설치되어 있으므로 추후에 이 프로젝트를 기반으로 `node`를 원하는대로 사용하면 됩니다.
+
 `python`이 필요하다면 `python`을 설치하면 되겠습니다.
 
 ## docker-compose.yml 파일 정의하기
@@ -176,7 +177,8 @@ git clone https://github.com/zerozoo-a/nginx-docker-setting-1
 
 ## 정리하기
 
-`docker, nginx, git`의 만만세입니다.
+`docker, nginx, docker-compose`를 이용해봤습니다.
+nginx로 http 요청에 대한 헤더 설정, https등의 설정, redirect등 다루지 못한 내용들도 정리해보고 싶네요..
 
 다음에 기회가 되면 node 기반의 front, backend project들을 docker로 말아두고
 OCI에 배포해보겠습니다.
