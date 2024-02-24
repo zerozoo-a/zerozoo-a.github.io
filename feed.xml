@@ -22,7 +22,23 @@
 &lt;blockquote&gt;
 &lt;p&gt;ssh -i &amp;quot;your-ssh-key-file.key&amp;quot; name@ip&amp;quot;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;ssh의 key 파일은 잘 보관해두어야 합니다.&lt;/p&gt;
+&lt;p&gt;ssh의 개인키 파일은 잘 보관해두어야 합니다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://velog.io/@dldhk97/%EC%98%A4%EB%9D%BC%ED%81%B4-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C%EC%97%90-%EB%8F%84%EC%BB%A4-MYSQL-%EC%84%A4%EC%B9%98%ED%95%B4%EB%B3%B4%EA%B8%B0&quot;&gt;링크&lt;/a&gt;에서 OCI 설정을 잘 설명해주고 있습니다.&lt;/p&gt;
+&lt;h2 id=&quot;password&quot; tabindex=&quot;-1&quot;&gt;개인키 대신 password로 접근 가능하게 변경 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/wiki/infra/ssh-commands/#password&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ssh -i &amp;quot;your-ssh-key-file.key&amp;quot; name@ip&amp;quot;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;을 통해 원격에 접속합니다.
+ubuntu를 기준으로합니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/ssh&lt;/code&gt;에서 &lt;code&gt;sshd_config&lt;/code&gt; 파일을 수정합니다.&lt;/p&gt;
+&lt;pre class=&quot;language-sh&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# /etc/ssh&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;vim&lt;/span&gt; sshd_config&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;PasswordAuthentication&lt;/code&gt; 설정을 &lt;code&gt;no&lt;/code&gt;에서 &lt;code&gt;yes&lt;/code&gt;로 변경합니다.&lt;/p&gt;
+&lt;pre class=&quot;language-sh&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# /etc/ssh/sshd_config file&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# PasswordAuthentication no&lt;/span&gt;
+PasswordAuthentication &lt;span class=&quot;token function&quot;&gt;yes&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
   <entry>

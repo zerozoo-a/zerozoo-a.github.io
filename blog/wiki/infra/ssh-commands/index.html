@@ -3183,6 +3183,12 @@ pre[class*="language-diff-"] {
 </ul>
 
 
+		<aside>
+			<nav class="toc" >
+        <ol><li><a href="#password">개인키 대신 password로 접근 가능하게 변경</a></li></ol>
+      </nav>
+		</aside>
+
 
 	<section class="post-content markdown-body" data-pagefind-body>
 		<br />
@@ -3192,7 +3198,23 @@ pre[class*="language-diff-"] {
 <blockquote>
 <p>ssh -i &quot;your-ssh-key-file.key&quot; name@ip&quot;</p>
 </blockquote>
-<p>ssh의 key 파일은 잘 보관해두어야 합니다.</p>
+<p>ssh의 개인키 파일은 잘 보관해두어야 합니다.</p>
+<p><a href="https://velog.io/@dldhk97/%EC%98%A4%EB%9D%BC%ED%81%B4-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C%EC%97%90-%EB%8F%84%EC%BB%A4-MYSQL-%EC%84%A4%EC%B9%98%ED%95%B4%EB%B3%B4%EA%B8%B0">링크</a>에서 OCI 설정을 잘 설명해주고 있습니다.</p>
+<h2 id="password" tabindex="-1">개인키 대신 password로 접근 가능하게 변경 <a class="header-anchor" href="#password">#</a></h2>
+<blockquote>
+<p>ssh -i &quot;your-ssh-key-file.key&quot; name@ip&quot;</p>
+</blockquote>
+<p>을 통해 원격에 접속합니다.
+ubuntu를 기준으로합니다.</p>
+<p><code>/etc/ssh</code>에서 <code>sshd_config</code> 파일을 수정합니다.</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token comment"># /etc/ssh</span>
+
+<span class="token function">sudo</span> <span class="token function">vim</span> sshd_config</code></pre>
+<p><code>PasswordAuthentication</code> 설정을 <code>no</code>에서 <code>yes</code>로 변경합니다.</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token comment"># /etc/ssh/sshd_config file</span>
+
+<span class="token comment"># PasswordAuthentication no</span>
+PasswordAuthentication <span class="token function">yes</span></code></pre>
 
 	</section>
 <br>
