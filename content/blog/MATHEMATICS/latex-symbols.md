@@ -98,11 +98,6 @@ $$
 
 <br>
 
-{% image "./images/binary-operation-relation-symbols-4.png", "binary-operation-relation-symbols-4 symbols"%}
-
-<br>
-
-
 ## Arrow symbols
 <br>
 
