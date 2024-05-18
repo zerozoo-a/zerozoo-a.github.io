@@ -1,5 +1,5 @@
 ---
-title: 1 2 Identities & Inverses | 항등원과 역원
+title: 1.2 Identities & Inverses | 항등원과 역원
 date: 2024-05-18 23:36:13
 coverURL: 
 ---
