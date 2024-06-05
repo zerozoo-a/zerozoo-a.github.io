@@ -1,0 +1,50 @@
+---
+title: Usage of sets | 집합의 사용
+date: 2024-06-05 23:06:26
+coverURL: 
+---
+<br />
+<br />
+<br />
+
+### Common Number Sets | 수의 집합
+
+- Natural Numbers | 자연수: $\N=\{1,2,3\cdots\}=\{x|x is \ Natural\}$
+- Whole Number | 0을 포함한 자연수: $W =\{0,1,2\cdots\}=\{x|x is\ 0 \lor x is\ Natural\}$
+- Integers | 정수: $\Z=\{ \cdots,-2,-1,0,1,2,\cdots \}=\{x|x is \ Integers\}$
+- Rational Numbers | 유리수: $Q = \{\frac{1}{2},\frac{1}{3},\frac{2}{3},\cdots\}=\{x|x is\ Rational Numbers\}=\{x|x=\frac{p}{q}\ (p,\ q\ are\ integers \land q \ne 0)\}$
+- Irrational Numbers | 무리수: $I = \{\pi, e,\sqrt{2},\cdots\}=\{x|x is\ Irrational Numbers\}=\{x|\neg(x is\ Irrational Numbers)\}$
+
+- Real Numbers | 실수: $\R=\{x|x\ is\ Real Numbers\}=\{x|(x is\ Rational Numbers)\lor(x is\ Irrational Numbers)\}$
+- Complex Numbers | 복소수: $C=\{x|(x is\ Complex Numbers)\}=\{a+j\cdot b\ |\ (a, b is \ Real Numbers) \}$
+
+### Functions | 함수
+
+- Domain | 정의역: 정의역은 함수에 input으로 들어갈 값을 정의역이라고 한다.
+예를 들어 $f(x)$에서 $x$의 값에 해당한다.
+- Codomain | 공역: 공역은 함수 $f$에 대해 $f(x)$에 해당한다.
+$x$에 어떤 값이 오면 output으로 나오는 $y$값인 $f(x)$ 집합 전체를 가리킨다.
+- Range | 치역: 치역은 함수에서 $f(x)$의 값의 집합을 치역이라 한다.
+예를 들어 $f(x)=x+1$이라고 할 때, $f(1) = 2$이다. 이 때 2는 치역에 속한다.
+
+### Lines and Planes | 직선과 평면
+
+- 관계식 $y=ax+b$가 있다고 할 때, 해당 관계식을 만족하는 모든 점들을 모은 집합을 선이라고 한다.
+    - $L=\{(x,y)|y=ax+b\}$
+    - $n(r-r_0)=0$ (평면의 벡터 방정식)
+
+### Intersection | 교점
+
+- no intersection | 교점이 없음
+- Point | 교점이 하나
+- Line contained in plane | 직선의 모든 점이 교점
+
+### Solution set of Equations | 방정식, Solution set of Inequalities | 부등식
+
+- $(x-2)(x+3)=0$ → $S=\{2,-3\}$
+- $(x-2)(x+3)<0$ → $S=\{x|-3<x<2\}$
+- 
+
+### Linear Algebra
+
+- Vector space | 벡터들을 모은 집합
