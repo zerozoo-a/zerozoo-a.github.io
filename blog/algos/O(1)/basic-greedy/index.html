@@ -1,0 +1,3517 @@
+<!doctype html>
+<html lang="kr">
+	<head>
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-WJ6H692D');</script>
+	<!-- End Google Tag Manager -->
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PQXWR4K22C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PQXWR4K22C');
+</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>개미 군단 기초적인 그리디 알고리즘 풀이 greedy | zerozoo-a의 블로그</title>
+		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
+		<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://zerozoo-a.github.io/#website",
+      "url": "https://zerozoo-a.github.io/",
+      "name": "zerozoo-a의 블로그",
+      "description": "안녕하세요 반갑습니다. 건강하고 행복하세요",
+      "inLanguage": "ko-KR"
+    },
+    {
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage"
+      },
+      "isPartOf": {
+        "@id": "https://zerozoo-a.github.io/#website"
+      },
+      "headline": "개미 군단 기초적인 그리디 알고리즘 풀이 greedy",
+      "description": "안녕하세요 반갑습니다. 건강하고 행복하세요",
+      "image": "",
+      "inLanguage": "ko-KR",
+      "publisher": {
+        "@type": "Organization",
+        "name": "zerozoo-a의 블로그",
+        "url": "https://zerozoo-a.github.io/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "zerozoo-a"
+      },
+      "keywords": "posts",
+      "datePublished": "2024-06-09T13:26:36.000Z"
+    }
+  ]
+}</script>
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+		<meta property="og:title" content=개미 군단 기초적인 그리디 알고리즘 풀이 greedy/>
+		<meta property="og:url" content=/blog/algos/O(1)/basic-greedy/ />
+		<meta property="og:description" content= />
+		<meta property="og:image" content="/static/img/logo.png" />
+		<meta property="og:type" content="article" />
+		<link rel="canonical" href=/blog/algos/O(1)/basic-greedy/ />
+		<meta name="robots" content="index, follow" />
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
+		<meta name="google-site-verification" content="FzIp87nE_pk-4x5nXeKcIX-x1rqYcjlabzuH1EqXFYs" />
+    	<meta name="naver-site-verification" content="6cf39493d46e888e46dfc3a608270980215dbca5" />
+		<meta name="generator" content="Eleventy v2.0.1">
+		
+		<style>/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+.markdown-body {
+    color-scheme: dark;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    margin: 0;
+    color: #c9d1d9;
+    background-color: #0d1117;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+  
+  .markdown-body .octicon {
+    display: inline-block;
+    fill: currentColor;
+    vertical-align: text-bottom;
+  }
+  
+  .markdown-body h1:hover .anchor .octicon-link:before,
+  .markdown-body h2:hover .anchor .octicon-link:before,
+  .markdown-body h3:hover .anchor .octicon-link:before,
+  .markdown-body h4:hover .anchor .octicon-link:before,
+  .markdown-body h5:hover .anchor .octicon-link:before,
+  .markdown-body h6:hover .anchor .octicon-link:before {
+    width: 16px;
+    height: 16px;
+    content: ' ';
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+  }
+  
+  .markdown-body details,
+  .markdown-body figcaption,
+  .markdown-body figure {
+    display: block;
+  }
+  
+  .markdown-body summary {
+    display: list-item;
+  }
+  
+  .markdown-body [hidden] {
+    display: none !important;
+  }
+  
+  .markdown-body a {
+    background-color: transparent;
+    color: #58a6ff;
+    text-decoration: none;
+  }
+  
+  .markdown-body abbr[title] {
+    border-bottom: none;
+  }
+  
+  .markdown-body b,
+  .markdown-body strong {
+    font-weight: 600;
+  }
+  
+  .markdown-body dfn {
+    font-style: italic;
+  }
+  
+  .markdown-body h1 {
+    margin: .67em 0;
+    font-weight: 600;
+    padding-bottom: .3em;
+    font-size: 2em;
+    border-bottom: 1px solid #21262d;
+  }
+  
+  .markdown-body mark {
+    background-color: rgba(187,128,9,0.15);
+    color: #c9d1d9;
+  }
+  
+  .markdown-body small {
+    font-size: 90%;
+  }
+  
+  .markdown-body sub,
+  .markdown-body sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  
+  .markdown-body sub {
+    bottom: -0.25em;
+  }
+  
+  .markdown-body sup {
+    top: -0.5em;
+  }
+  
+  .markdown-body img {
+    border-style: none;
+    box-sizing: content-box;
+    /* aspect-ratio: 608 / 389; */
+    background-color: #0d1117;
+  }
+  
+  /* .markdown-body code, */
+  .markdown-body kbd,
+  /* .markdown-body pre, */
+  .markdown-body samp {
+    font-family: monospace;
+    font-size: 1em;
+  }
+  
+  .markdown-body figure {
+    margin: 1em 40px;
+  }
+  
+  .markdown-body hr {
+    box-sizing: content-box;
+    overflow: hidden;
+    background: transparent;
+    border-bottom: 1px solid #21262d;
+    height: .25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #30363d;
+    border: 0;
+  }
+  
+  .markdown-body input {
+    font: inherit;
+    margin: 0;
+    overflow: visible;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  
+  .markdown-body [type=button],
+  .markdown-body [type=reset],
+  .markdown-body [type=submit] {
+    -webkit-appearance: button;
+  }
+  
+  .markdown-body [type=checkbox],
+  .markdown-body [type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+  
+  .markdown-body [type=number]::-webkit-inner-spin-button,
+  .markdown-body [type=number]::-webkit-outer-spin-button {
+    height: auto;
+  }
+  
+  .markdown-body [type=search]::-webkit-search-cancel-button,
+  .markdown-body [type=search]::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  
+  .markdown-body ::-webkit-input-placeholder {
+    color: inherit;
+    opacity: .54;
+  }
+  
+  .markdown-body ::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit;
+  }
+  
+  .markdown-body a:hover {
+    text-decoration: underline;
+  }
+  
+  .markdown-body ::placeholder {
+    color: #6e7681;
+    opacity: 1;
+  }
+  
+  .markdown-body hr::before {
+    display: table;
+    content: "";
+  }
+  
+  .markdown-body hr::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .markdown-body table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+  }
+  
+  .markdown-body td,
+  .markdown-body th {
+    padding: 0;
+  }
+  
+  .markdown-body details summary {
+    cursor: pointer;
+  }
+  
+  .markdown-body details:not([open])>*:not(summary) {
+    display: none !important;
+  }
+  
+  .markdown-body a:focus,
+  .markdown-body [role=button]:focus,
+  .markdown-body input[type=radio]:focus,
+  .markdown-body input[type=checkbox]:focus {
+    outline: 2px solid #58a6ff;
+    outline-offset: -2px;
+    box-shadow: none;
+  }
+  
+  .markdown-body a:focus:not(:focus-visible),
+  .markdown-body [role=button]:focus:not(:focus-visible),
+  .markdown-body input[type=radio]:focus:not(:focus-visible),
+  .markdown-body input[type=checkbox]:focus:not(:focus-visible) {
+    outline: solid 1px transparent;
+  }
+  
+  .markdown-body a:focus-visible,
+  .markdown-body [role=button]:focus-visible,
+  .markdown-body input[type=radio]:focus-visible,
+  .markdown-body input[type=checkbox]:focus-visible {
+    outline: 2px solid #58a6ff;
+    outline-offset: -2px;
+    box-shadow: none;
+  }
+  
+  .markdown-body a:not([class]):focus,
+  .markdown-body a:not([class]):focus-visible,
+  .markdown-body input[type=radio]:focus,
+  .markdown-body input[type=radio]:focus-visible,
+  .markdown-body input[type=checkbox]:focus,
+  .markdown-body input[type=checkbox]:focus-visible {
+    outline-offset: 0;
+  }
+  
+  .markdown-body kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font: 11px ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    line-height: 10px;
+    color: #c9d1d9;
+    vertical-align: middle;
+    background-color: #161b22;
+    border: solid 1px rgba(110,118,129,0.4);
+    border-bottom-color: rgba(110,118,129,0.4);
+    border-radius: 6px;
+    box-shadow: inset 0 -1px 0 rgba(110,118,129,0.4);
+  }
+  
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  
+  .markdown-body h2 {
+    font-weight: 600;
+    padding-bottom: .3em;
+    font-size: 1.5em;
+    border-bottom: 1px solid #21262d;
+  }
+  
+  .markdown-body h3 {
+    font-weight: 600;
+    font-size: 1.25em;
+  }
+  
+  .markdown-body h4 {
+    font-weight: 600;
+    font-size: 1em;
+  }
+  
+  .markdown-body h5 {
+    font-weight: 600;
+    font-size: .875em;
+  }
+  
+  .markdown-body h6 {
+    font-weight: 600;
+    font-size: .85em;
+    color: #8b949e;
+  }
+  
+  .markdown-body p {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .markdown-body blockquote {
+    margin: 0;
+    padding: 0 1em;
+    color: #8b949e;
+    border-left: .25em solid #30363d;
+  }
+  
+  .markdown-body ul,
+  .markdown-body ol {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 2em;
+  }
+  
+  .markdown-body ol ol,
+  .markdown-body ul ol {
+    list-style-type: lower-roman;
+  }
+  
+  .markdown-body ul ul ol,
+  .markdown-body ul ol ol,
+  .markdown-body ol ul ol,
+  .markdown-body ol ol ol {
+    list-style-type: lower-alpha;
+  }
+  
+  .markdown-body dd {
+    margin-left: 0;
+  }
+  
+  .markdown-body tt,
+  /* .markdown-body code, */
+  .markdown-body samp {
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    font-size: 12px;
+  }
+  
+  /* .markdown-body pre {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    font-size: 12px;
+    word-wrap: normal;
+  } */
+  
+  .markdown-body .octicon {
+    display: inline-block;
+    overflow: visible !important;
+    vertical-align: text-bottom;
+    fill: currentColor;
+  }
+  
+  .markdown-body input::-webkit-outer-spin-button,
+  .markdown-body input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .markdown-body::before {
+    display: table;
+    content: "";
+  }
+  
+  .markdown-body::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .markdown-body>*:first-child {
+    margin-top: 0 !important;
+  }
+  
+  .markdown-body>*:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .markdown-body a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .markdown-body .absent {
+    color: #f85149;
+  }
+  
+  .markdown-body .anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+    line-height: 1;
+  }
+  
+  .markdown-body .anchor:focus {
+    outline: none;
+  }
+  
+  .markdown-body p,
+  .markdown-body blockquote,
+  .markdown-body ul,
+  .markdown-body ol,
+  .markdown-body dl,
+  .markdown-body table,
+  /* .markdown-body pre, */
+  .markdown-body details {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body blockquote>:first-child {
+    margin-top: 0;
+  }
+  
+  .markdown-body blockquote>:last-child {
+    margin-bottom: 0;
+  }
+  
+  .markdown-body h1 .octicon-link,
+  .markdown-body h2 .octicon-link,
+  .markdown-body h3 .octicon-link,
+  .markdown-body h4 .octicon-link,
+  .markdown-body h5 .octicon-link,
+  .markdown-body h6 .octicon-link {
+    color: #c9d1d9;
+    vertical-align: middle;
+    visibility: hidden;
+  }
+  
+  .markdown-body h1:hover .anchor,
+  .markdown-body h2:hover .anchor,
+  .markdown-body h3:hover .anchor,
+  .markdown-body h4:hover .anchor,
+  .markdown-body h5:hover .anchor,
+  .markdown-body h6:hover .anchor {
+    text-decoration: none;
+  }
+  
+  .markdown-body h1:hover .anchor .octicon-link,
+  .markdown-body h2:hover .anchor .octicon-link,
+  .markdown-body h3:hover .anchor .octicon-link,
+  .markdown-body h4:hover .anchor .octicon-link,
+  .markdown-body h5:hover .anchor .octicon-link,
+  .markdown-body h6:hover .anchor .octicon-link {
+    visibility: visible;
+  }
+  
+  .markdown-body h1 tt,
+  /* .markdown-body h1 code, */
+  .markdown-body h2 tt,
+  /* .markdown-body h2 code, */
+  .markdown-body h3 tt,
+  /* .markdown-body h3 code, */
+  .markdown-body h4 tt,
+  /* .markdown-body h4 code, */
+  .markdown-body h5 tt,
+  /* .markdown-body h5 code, */
+  .markdown-body h6 tt {
+  /* .markdown-body h6 code  */
+    padding: 0 .2em;
+    font-size: inherit;
+  }
+  
+  .markdown-body summary h1,
+  .markdown-body summary h2,
+  .markdown-body summary h3,
+  .markdown-body summary h4,
+  .markdown-body summary h5,
+  .markdown-body summary h6 {
+    display: inline-block;
+  }
+  
+  .markdown-body summary h1 .anchor,
+  .markdown-body summary h2 .anchor,
+  .markdown-body summary h3 .anchor,
+  .markdown-body summary h4 .anchor,
+  .markdown-body summary h5 .anchor,
+  .markdown-body summary h6 .anchor {
+    margin-left: -40px;
+  }
+  
+  .markdown-body summary h1,
+  .markdown-body summary h2 {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  
+  .markdown-body ul.no-list,
+  .markdown-body ol.no-list {
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .markdown-body ol[type=a] {
+    list-style-type: lower-alpha;
+  }
+  
+  .markdown-body ol[type=A] {
+    list-style-type: upper-alpha;
+  }
+  
+  .markdown-body ol[type=i] {
+    list-style-type: lower-roman;
+  }
+  
+  .markdown-body ol[type=I] {
+    list-style-type: upper-roman;
+  }
+  
+  .markdown-body ol[type="1"] {
+    list-style-type: decimal;
+  }
+  
+  .markdown-body div>ol:not([type]) {
+    list-style-type: decimal;
+  }
+  
+  .markdown-body ul ul,
+  .markdown-body ul ol,
+  .markdown-body ol ol,
+  .markdown-body ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .markdown-body li>p {
+    margin-top: 16px;
+  }
+  
+  .markdown-body li+li {
+    margin-top: .25em;
+  }
+  
+  .markdown-body dl {
+    padding: 0;
+  }
+  
+  .markdown-body dl dt {
+    padding: 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: 600;
+  }
+  
+  .markdown-body dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body table th {
+    font-weight: 600;
+  }
+  
+  .markdown-body table th,
+  .markdown-body table td {
+    padding: 6px 13px;
+    border: 1px solid #30363d;
+  }
+  
+  .markdown-body table tr {
+    background-color: #0d1117;
+    border-top: 1px solid #21262d;
+  }
+  
+  .markdown-body table tr:nth-child(2n) {
+    background-color: #161b22;
+  }
+  
+  .markdown-body table img {
+    background-color: transparent;
+  }
+  
+  .markdown-body img[align=right] {
+    padding-left: 20px;
+  }
+  
+  .markdown-body img[align=left] {
+    padding-right: 20px;
+  }
+  
+  .markdown-body .emoji {
+    max-width: none;
+    vertical-align: text-top;
+    background-color: transparent;
+  }
+  
+  .markdown-body span.frame {
+    display: block;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.frame>span {
+    display: block;
+    float: left;
+    width: auto;
+    padding: 7px;
+    margin: 13px 0 0;
+    overflow: hidden;
+    border: 1px solid #30363d;
+  }
+  
+  .markdown-body span.frame span img {
+    display: block;
+    float: left;
+  }
+  
+  .markdown-body span.frame span span {
+    display: block;
+    padding: 5px 0 0;
+    clear: both;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body span.align-center {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+  
+  .markdown-body span.align-center>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .markdown-body span.align-center span img {
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .markdown-body span.align-right {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+  
+  .markdown-body span.align-right>span {
+    display: block;
+    margin: 13px 0 0;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .markdown-body span.align-right span img {
+    margin: 0;
+    text-align: right;
+  }
+  
+  .markdown-body span.float-left {
+    display: block;
+    float: left;
+    margin-right: 13px;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.float-left span {
+    margin: 13px 0 0;
+  }
+  
+  .markdown-body span.float-right {
+    display: block;
+    float: right;
+    margin-left: 13px;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.float-right>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .markdown-body code,
+  .markdown-body tt {
+    padding: .2em .4em;
+    margin: 0;
+    font-size: 85%;
+    white-space: break-spaces;
+    /* background-color: rgba(110,118,129,0.4); */
+    background-color: #272822;
+    border-radius: 6px;
+  }
+  
+  /* .markdown-body code br, */
+  .markdown-body tt br {
+    display: none;
+  }
+  
+  /* .markdown-body del code {
+    text-decoration: inherit;
+  } */
+  
+  .markdown-body samp {
+    font-size: 85%;
+  }
+  
+  /* .markdown-body pre code {
+    font-size: 100%;
+  } */
+  
+  /* .markdown-body pre>code {
+    padding: 0;
+    margin: 0;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  } */
+  
+  /* .markdown-body .highlight {
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body .highlight pre {
+    margin-bottom: 0;
+    word-break: normal;
+  }
+  
+  .markdown-body .highlight pre,
+  .markdown-body pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #161b22;
+    border-radius: 6px;
+  }
+  
+  .markdown-body pre code,
+  .markdown-body pre tt {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  } */
+  
+  .markdown-body .csv-data td,
+  .markdown-body .csv-data th {
+    padding: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1;
+    text-align: left;
+    white-space: nowrap;
+  }
+  
+  .markdown-body .csv-data .blob-num {
+    padding: 10px 8px 9px;
+    text-align: right;
+    background: #0d1117;
+    border: 0;
+  }
+  
+  .markdown-body .csv-data tr {
+    border-top: 0;
+  }
+  
+  .markdown-body .csv-data th {
+    font-weight: 600;
+    background: #161b22;
+    border-top: 0;
+  }
+  
+  .markdown-body [data-footnote-ref]::before {
+    content: "[";
+  }
+  
+  .markdown-body [data-footnote-ref]::after {
+    content: "]";
+  }
+  
+  .markdown-body .footnotes {
+    font-size: 12px;
+    color: #8b949e;
+    border-top: 1px solid #30363d;
+  }
+  
+  .markdown-body .footnotes ol {
+    padding-left: 16px;
+  }
+  
+  .markdown-body .footnotes ol ul {
+    display: inline-block;
+    padding-left: 16px;
+    margin-top: 16px;
+  }
+  
+  .markdown-body .footnotes li {
+    position: relative;
+  }
+  
+  .markdown-body .footnotes li:target::before {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    bottom: -8px;
+    left: -24px;
+    pointer-events: none;
+    content: "";
+    border: 2px solid #1f6feb;
+    border-radius: 6px;
+  }
+  
+  .markdown-body .footnotes li:target {
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .footnotes .data-footnote-backref g-emoji {
+    font-family: monospace;
+  }
+  
+  .markdown-body .pl-c {
+    color: #8b949e;
+  }
+  
+  .markdown-body .pl-c1,
+  .markdown-body .pl-s .pl-v {
+    color: #79c0ff;
+  }
+  
+  .markdown-body .pl-e,
+  .markdown-body .pl-en {
+    color: #d2a8ff;
+  }
+  
+  .markdown-body .pl-smi,
+  .markdown-body .pl-s .pl-s1 {
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-ent {
+    color: #7ee787;
+  }
+  
+  .markdown-body .pl-k {
+    color: #ff7b72;
+  }
+  
+  .markdown-body .pl-s,
+  .markdown-body .pl-pds,
+  .markdown-body .pl-s .pl-pse .pl-s1,
+  .markdown-body .pl-sr,
+  .markdown-body .pl-sr .pl-cce,
+  .markdown-body .pl-sr .pl-sre,
+  .markdown-body .pl-sr .pl-sra {
+    color: #a5d6ff;
+  }
+  
+  .markdown-body .pl-v,
+  .markdown-body .pl-smw {
+    color: #ffa657;
+  }
+  
+  .markdown-body .pl-bu {
+    color: #f85149;
+  }
+  
+  .markdown-body .pl-ii {
+    color: #f0f6fc;
+    background-color: #8e1519;
+  }
+  
+  .markdown-body .pl-c2 {
+    color: #f0f6fc;
+    background-color: #b62324;
+  }
+  
+  .markdown-body .pl-sr .pl-cce {
+    font-weight: bold;
+    color: #7ee787;
+  }
+  
+  .markdown-body .pl-ml {
+    color: #f2cc60;
+  }
+  
+  .markdown-body .pl-mh,
+  .markdown-body .pl-mh .pl-en,
+  .markdown-body .pl-ms {
+    font-weight: bold;
+    color: #1f6feb;
+  }
+  
+  .markdown-body .pl-mi {
+    font-style: italic;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-mb {
+    font-weight: bold;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-md {
+    color: #ffdcd7;
+    background-color: #67060c;
+  }
+  
+  .markdown-body .pl-mi1 {
+    color: #aff5b4;
+    background-color: #033a16;
+  }
+  
+  .markdown-body .pl-mc {
+    color: #ffdfb6;
+    background-color: #5a1e02;
+  }
+  
+  .markdown-body .pl-mi2 {
+    color: #c9d1d9;
+    background-color: #1158c7;
+  }
+  
+  .markdown-body .pl-mdr {
+    font-weight: bold;
+    color: #d2a8ff;
+  }
+  
+  .markdown-body .pl-ba {
+    color: #8b949e;
+  }
+  
+  .markdown-body .pl-sg {
+    color: #484f58;
+  }
+  
+  .markdown-body .pl-corl {
+    text-decoration: underline;
+    color: #a5d6ff;
+  }
+  
+  .markdown-body g-emoji {
+    display: inline-block;
+    min-width: 1ch;
+    font-family: "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 1em;
+    font-style: normal !important;
+    font-weight: 400;
+    line-height: 1;
+    vertical-align: -0.075em;
+  }
+  
+  .markdown-body g-emoji img {
+    width: 1em;
+    height: 1em;
+  }
+  
+  .markdown-body .task-list-item {
+    list-style-type: none;
+  }
+  
+  .markdown-body .task-list-item label {
+    font-weight: 400;
+  }
+  
+  .markdown-body .task-list-item.enabled label {
+    cursor: pointer;
+  }
+  
+  .markdown-body .task-list-item+.task-list-item {
+    margin-top: 4px;
+  }
+  
+  .markdown-body .task-list-item .handle {
+    display: none;
+  }
+  
+  .markdown-body .task-list-item-checkbox {
+    margin: 0 .2em .25em -1.4em;
+    vertical-align: middle;
+  }
+  
+  .markdown-body .contains-task-list:dir(rtl) .task-list-item-checkbox {
+    margin: 0 -1.6em .25em .2em;
+  }
+  
+  .markdown-body .contains-task-list {
+    position: relative;
+  }
+  
+  .markdown-body .contains-task-list:hover .task-list-item-convert-container,
+  .markdown-body .contains-task-list:focus-within .task-list-item-convert-container {
+    display: block;
+    width: auto;
+    height: 24px;
+    overflow: visible;
+    clip: auto;
+  }
+  
+  .markdown-body ::-webkit-calendar-picker-indicator {
+    filter: invert(50%);
+  }
+
+  .markdown-body ol{
+    list-style: decimal ;
+
+  } 
+  .markdown-body ul {
+    list-style: disc;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+ code[class*="language-"],
+ pre[class*="language-"] {
+     color: #f8f8f2;
+     text-shadow: 0px 1px rgba(0,0,0,0.3);
+     font-family: Consolas, Monaco, 'Andale Mono', monospace;
+     direction: ltr;
+     text-align: left;
+     white-space: pre;
+     word-spacing: normal;
+     
+     -moz-tab-size: 4;
+     -o-tab-size: 4;
+     tab-size: 4;
+     
+     -webkit-hyphens: none;
+     -moz-hyphens: none;
+     -ms-hyphens: none;
+     hyphens: none;
+    border-radius: 12px;
+ }
+ 
+ /* Code blocks */
+ pre[class*="language-"] {
+     padding: 1em;
+     margin: .5em 0;
+     overflow: auto;	
+ }
+ 
+ :not(pre) > code[class*="language-"],
+ pre[class*="language-"] {
+     background: #272822;
+ }
+ 
+ /* Inline code */
+ :not(pre) > code[class*="language-"] {
+     padding: .1em;
+     border-radius: .3em;
+ }
+ 
+ .token.comment,
+ .token.prolog,
+ .token.doctype,
+ .token.cdata {
+     color: slategray;
+ }
+ 
+ .token.punctuation {
+     color: #f8f8f2;
+ }
+ 
+ .namespace {
+     opacity: .7;
+ }
+ 
+ .token.property,
+ .token.tag {
+     color: #f92672;
+ }
+ 
+ .token.boolean,
+ .token.number{
+     color: #ae81ff;
+ }
+ 
+ .token.selector,
+ .token.attr-name,
+ .token.string {
+     color: #a6e22e;
+ }
+ 
+ 
+ .token.operator,
+ .token.entity,
+ .token.url,
+ .language-css .token.string,
+ .style .token.string {
+     color: #f8f8f2;
+ }
+ 
+ .token.atrule,
+ .token.attr-value
+ {
+     color: #e6db74;
+ }
+ 
+ 
+ .token.keyword{
+ color: #f92672;
+ }
+ 
+ .token.regex,
+ .token.important {
+     color: #fd971f;
+ }
+ 
+ .token.important {
+     font-weight: bold;
+ }
+ 
+ .token.entity {
+     cursor: help;
+ }
+* { box-sizing: border-box; }
+.Box,.color-bg-default{background-color:var(--color-canvas-default)!important}.home-link,.postlist-item-active .postlist-link,.postlist-link{font-weight:700}#drawerMenu ul,.flex-list,.nav,.post-metadata,.postlist,ol,ul{list-style:none}#drawerMenu,#openDrawerBtn{background-color:#24292e;color:#fff}HTML5 display-role reset for older browsers .appear-dim{position:sticky;position:-webkit-sticky;top:0;width:100%;height:100vh;z-index:1;background-color:var(--color-scale-black);opacity:.5;transition:.3s ease-in-out}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}.nav,header{display:flex}body{line-height:1;transition:margin-left .3s ease-in-out}:root{--font-family:-apple-system,system-ui,sans-serif;--font-family-monospace:Consolas,Menlo,Monaco,Andale Mono WT,Andale Mono,Lucida Console,Lucida Sans Typewriter,DejaVu Sans Mono,Bitstream Vera Sans Mono,Liberation Mono,Nimbus Mono L,Courier New,Courier,monospace;--img-max-width:607px;--boxShadow-thin:inset 0 0 0 max(1px, 0.0625rem);--boxShadow-thick:inset 0 0 0 max(2px, 0.125rem);--boxShadow-thicker:inset 0 0 0 max(4px, 0.25rem);--borderWidth-thin:max(1px, 0.0625rem);--borderWidth-thick:max(2px, 0.125rem);--borderWidth-thicker:max(4px, 0.25rem);--borderRadius-small:3px;--borderRadius-medium:6px;--borderRadius-large:12px;--borderRadius-full:100vh;--outline-focus-offset:-0.125rem;--outline-focus-width:0.125rem;--breakpoint-xsmall:20rem;--breakpoint-small:34rem;--breakpoint-medium:48rem;--breakpoint-large:63.25rem;--breakpoint-xlarge:80rem;--breakpoint-xxlarge:90rem;--color-gray-20:#e0e0e0;--color-gray-50:#C0C0C0;--color-gray-90:#333;--color-canvas-default:#0d1117;--text-color:var(--color-gray-90);--text-color-link:#082840;--text-color-link-active:#5f2b48;--text-color-link-visited:#17050F;--adaptiveGrey50:#f9fafb;--adaptiveGrey100:#f2f4f6;--adaptiveGrey200:#e5e8eb;--adaptiveGrey300:#d1d6db;--adaptiveGrey400:#b0b8c1;--adaptiveGrey500:#8b95a1;--adaptiveGrey600:#6b7684;--adaptiveGrey700:#4e5968;--adaptiveGrey800:#333d4b;--adaptiveGrey900:#191f28;--syntax-tab-size:2;--color-canvas-default-transparent:rgba(13,17,23,0);--color-page-header-bg:#0d1117;--color-marketing-icon-primary:#79c0ff;--color-marketing-icon-secondary:#1f6feb;--color-diff-blob-addition-num-text:#e6edf3;--color-diff-blob-addition-fg:#e6edf3;--color-diff-blob-addition-num-bg:rgba(63,185,80,0.3);--color-diff-blob-addition-line-bg:rgba(46,160,67,0.15);--color-diff-blob-addition-word-bg:rgba(46,160,67,0.4);--color-diff-blob-deletion-num-text:#e6edf3;--color-diff-blob-deletion-fg:#e6edf3;--color-diff-blob-deletion-num-bg:rgba(248,81,73,0.3);--color-diff-blob-deletion-line-bg:rgba(248,81,73,0.1);--color-diff-blob-deletion-word-bg:rgba(248,81,73,0.4);--color-diff-blob-hunk-num-bg:rgba(56,139,253,0.4);--color-diff-blob-expander-icon:#7d8590;--color-diff-blob-selected-line-highlight-mix-blend-mode:screen;--color-diffstat-deletion-border:rgba(240,246,252,0.1);--color-diffstat-addition-border:rgba(240,246,252,0.1);--color-diffstat-addition-bg:#3fb950;--color-search-keyword-hl:rgba(210,153,34,0.4);--color-prettylights-syntax-comment:#8b949e;--color-prettylights-syntax-constant:#79c0ff;--color-prettylights-syntax-entity:#d2a8ff;--color-prettylights-syntax-storage-modifier-import:#c9d1d9;--color-prettylights-syntax-entity-tag:#7ee787;--color-prettylights-syntax-keyword:#ff7b72;--color-prettylights-syntax-string:#a5d6ff;--color-prettylights-syntax-variable:#ffa657;--color-prettylights-syntax-brackethighlighter-unmatched:#f85149;--color-prettylights-syntax-invalid-illegal-text:#f0f6fc;--color-prettylights-syntax-invalid-illegal-bg:#8e1519;--color-prettylights-syntax-carriage-return-text:#f0f6fc;--color-prettylights-syntax-carriage-return-bg:#b62324;--color-prettylights-syntax-string-regexp:#7ee787;--color-prettylights-syntax-markup-list:#f2cc60;--color-prettylights-syntax-markup-heading:#1f6feb;--color-prettylights-syntax-markup-italic:#c9d1d9;--color-prettylights-syntax-markup-bold:#c9d1d9;--color-prettylights-syntax-markup-deleted-text:#ffdcd7;--color-prettylights-syntax-markup-deleted-bg:#67060c;--color-prettylights-syntax-markup-inserted-text:#aff5b4;--color-prettylights-syntax-markup-inserted-bg:#033a16;--color-prettylights-syntax-markup-changed-text:#ffdfb6;--color-prettylights-syntax-markup-changed-bg:#5a1e02;--color-prettylights-syntax-markup-ignored-text:#c9d1d9;--color-prettylights-syntax-markup-ignored-bg:#1158c7;--color-prettylights-syntax-meta-diff-range:#d2a8ff;--color-prettylights-syntax-brackethighlighter-angle:#8b949e;--color-prettylights-syntax-sublimelinter-gutter-mark:#484f58;--color-prettylights-syntax-constant-other-reference-link:#a5d6ff;--color-codemirror-text:#e6edf3;--color-codemirror-bg:#0d1117;--color-codemirror-gutters-bg:#0d1117;--color-codemirror-guttermarker-text:#0d1117;--color-codemirror-guttermarker-subtle-text:#6e7681;--color-codemirror-linenumber-text:#7d8590;--color-codemirror-cursor:#e6edf3;--color-codemirror-selection-bg:rgba(56,139,253,0.4);--color-codemirror-activeline-bg:rgba(110,118,129,0.1);--color-codemirror-matchingbracket-text:#e6edf3;--color-codemirror-lines-bg:#0d1117;--color-codemirror-syntax-comment:#8b949e;--color-codemirror-syntax-constant:#79c0ff;--color-codemirror-syntax-entity:#d2a8ff;--color-codemirror-syntax-keyword:#ff7b72;--color-codemirror-syntax-storage:#ff7b72;--color-codemirror-syntax-string:#a5d6ff;--color-codemirror-syntax-support:#79c0ff;--color-codemirror-syntax-variable:#ffa657;--color-checks-bg:#010409;--color-checks-run-border-width:1px;--color-checks-container-border-width:1px;--color-checks-text-primary:#e6edf3;--color-checks-text-secondary:#7d8590;--color-checks-text-link:#2f81f7;--color-checks-btn-icon:#7d8590;--color-checks-btn-hover-icon:#e6edf3;--color-checks-btn-hover-bg:rgba(110,118,129,0.1);--color-checks-input-text:#7d8590;--color-checks-input-placeholder-text:#6e7681;--color-checks-input-focus-text:#e6edf3;--color-checks-input-bg:#161b22;--color-checks-input-shadow:0 0 0 1px (obj) => (0, get_1.default) (obj, path);--color-checks-donut-error:#f85149;--color-checks-donut-pending:#d29922;--color-checks-donut-success:#2ea043;--color-checks-donut-neutral:#8b949e;--color-checks-dropdown-text:#e6edf3;--color-checks-dropdown-bg:#161b22;--color-checks-dropdown-border:#30363d;--color-checks-dropdown-shadow:rgba(1,4,9,0.3);--color-checks-dropdown-hover-text:#e6edf3;--color-checks-dropdown-hover-bg:rgba(110,118,129,0.1);--color-checks-dropdown-btn-hover-text:#e6edf3;--color-checks-dropdown-btn-hover-bg:rgba(110,118,129,0.1);--color-checks-scrollbar-thumb-bg:rgba(110,118,129,0.4);--color-checks-header-label-text:#7d8590;--color-checks-header-label-open-text:#e6edf3;--color-checks-header-border:#21262d;--color-checks-header-icon:#7d8590;--color-checks-line-text:#7d8590;--color-checks-line-num-text:#6e7681;--color-checks-line-timestamp-text:#6e7681;--color-checks-line-hover-bg:rgba(110,118,129,0.1);--color-checks-line-selected-bg:rgba(56,139,253,0.1);--color-checks-line-selected-num-text:#2f81f7;--color-checks-line-dt-fm-text:#ffffff;--color-checks-line-dt-fm-bg:#9e6a03;--color-checks-gate-bg:rgba(187,128,9,0.15);--color-checks-gate-text:#7d8590;--color-checks-gate-waiting-text:#d29922;--color-checks-step-header-open-bg:#161b22;--color-checks-step-error-text:#f85149;--color-checks-step-warning-text:#d29922;--color-checks-logline-text:#7d8590;--color-checks-logline-num-text:#6e7681;--color-checks-logline-debug-text:#a371f7;--color-checks-logline-error-text:#7d8590;--color-checks-logline-error-num-text:#6e7681;--color-checks-logline-error-bg:rgba(248,81,73,0.1);--color-checks-logline-warning-text:#7d8590;--color-checks-logline-warning-num-text:#d29922;--color-checks-logline-warning-bg:rgba(187,128,9,0.15);--color-checks-logline-command-text:#2f81f7;--color-checks-logline-section-text:#3fb950;--color-checks-ansi-black:#0d1117;--color-checks-ansi-black-bright:#161b22;--color-checks-ansi-white:#b1bac4;--color-checks-ansi-white-bright:#b1bac4;--color-checks-ansi-gray:#6e7681;--color-checks-ansi-red:#ff7b72;--color-checks-ansi-red-bright:#ffa198;--color-checks-ansi-green:#3fb950;--color-checks-ansi-green-bright:#56d364;--color-checks-ansi-yellow:#d29922;--color-checks-ansi-yellow-bright:#e3b341;--color-checks-ansi-blue:#58a6ff;--color-checks-ansi-blue-bright:#79c0ff;--color-checks-ansi-magenta:#bc8cff;--color-checks-ansi-magenta-bright:#d2a8ff;--color-checks-ansi-cyan:#76e3ea;--color-checks-ansi-cyan-bright:#b3f0ff;--color-project-header-bg:#0d1117;--color-project-sidebar-bg:#161b22;--color-project-gradient-in:#161b22;--color-project-gradient-out:rgba(22,27,34,0);--color-mktg-btn-bg:#f6f8fa;--color-mktg-btn-shadow-outline:rgb(255 255 255 / 25%) 0 0 0 1px inset;--color-mktg-btn-shadow-focus:rgb(255 255 255 / 25%) 0 0 0 4px;--color-mktg-btn-shadow-hover:0 4px 7px rgba(0, 0, 0, 0.15),0 100px 80px rgba(255, 255, 255, 0.02),0 42px 33px rgba(255, 255, 255, 0.024),0 22px 18px rgba(255, 255, 255, 0.028),0 12px 10px rgba(255, 255, 255, 0.034),0 7px 5px rgba(255, 255, 255, 0.04),0 3px 2px rgba(255, 255, 255, 0.07);--color-mktg-btn-shadow-hover-muted:rgb(255 255 255) 0 0 0 2px inset;--color-control-border-color-emphasis:#606771;--color-avatar-bg:rgba(255,255,255,0.1);--color-avatar-border:rgba(240,246,252,0.1);--color-avatar-stack-fade:#30363d;--color-avatar-stack-fade-more:#21262d;--color-avatar-child-shadow:0 0 0 2px #0d1117;--color-topic-tag-border:rgba(0,0,0,0);--color-counter-border:rgba(0,0,0,0);--color-select-menu-backdrop-border:#484f58;--color-select-menu-tap-highlight:rgba(48,54,61,0.5);--color-select-menu-tap-focus-bg:#0c2d6b;--color-overlay-shadow:0 0 0 1px #30363d,0 16px 32px rgba(1,4,9,0.85);--color-header-text:rgba(255,255,255,0.7);--color-header-bg:#161b22;--color-header-divider:#8b949e;--color-header-logo:#f0f6fc;--color-header-search-bg:#0d1117;--color-header-search-border:#30363d;--color-sidenav-selected-bg:#21262d;--color-menu-bg-active:#161b22;--color-input-disabled-bg:rgba(110,118,129,0);--color-timeline-badge-bg:#21262d;--color-ansi-black:#484f58;--color-ansi-black-bright:#6e7681;--color-ansi-white:#b1bac4;--color-ansi-white-bright:#ffffff;--color-ansi-gray:#6e7681;--color-ansi-red:#ff7b72;--color-ansi-red-bright:#ffa198;--color-ansi-green:#3fb950;--color-ansi-green-bright:#56d364;--color-ansi-yellow:#d29922;--color-ansi-yellow-bright:#e3b341;--color-ansi-blue:#58a6ff;--color-ansi-blue-bright:#79c0ff;--color-ansi-magenta:#bc8cff;--color-ansi-magenta-bright:#d2a8ff;--color-ansi-cyan:#39c5cf;--color-ansi-cyan-bright:#56d4dd;--color-btn-text:#c9d1d9;--color-btn-bg:#21262d;--color-btn-border:rgba(240,246,252,0.1);--color-btn-shadow:0 0 transparent;--color-btn-inset-shadow:0 0 transparent;--color-btn-hover-bg:#30363d;--color-btn-hover-border:#8b949e;--color-btn-active-bg:hsla(212,12%,18%,1);--color-btn-active-border:#6e7681;--color-btn-selected-bg:#161b22;--color-btn-counter-bg:#30363d;--color-btn-primary-text:#ffffff;--color-btn-primary-bg:#238636;--color-btn-primary-border:rgba(240,246,252,0.1);--color-btn-primary-shadow:0 0 transparent;--color-btn-primary-inset-shadow:0 0 transparent;--color-btn-primary-hover-bg:#2ea043;--color-btn-primary-hover-border:rgba(240,246,252,0.1);--color-btn-primary-selected-bg:#238636;--color-btn-primary-selected-shadow:0 0 transparent;--color-btn-primary-disabled-text:rgba(255,255,255,0.5);--color-btn-primary-disabled-bg:rgba(35,134,54,0.6);--color-btn-primary-disabled-border:rgba(240,246,252,0.1);--color-btn-primary-icon:#ffffff;--color-btn-primary-counter-bg:rgba(255,255,255,0.2);--color-btn-outline-text:#58a6ff;--color-btn-outline-hover-text:#58a6ff;--color-btn-outline-hover-bg:#30363d;--color-btn-outline-hover-border:rgba(240,246,252,0.1);--color-btn-outline-hover-shadow:0 1px 0 rgba(1,4,9,0.1);--color-btn-outline-hover-inset-shadow:inset 0 1px 0 rgba(255,255,255,0.03);--color-btn-outline-hover-counter-bg:rgba(255,255,255,0.2);--color-btn-outline-selected-text:#ffffff;--color-btn-outline-selected-bg:#0d419d;--color-btn-outline-selected-border:rgba(240,246,252,0.1);--color-btn-outline-selected-shadow:0 0 transparent;--color-btn-outline-disabled-text:rgba(88,166,255,0.5);--color-btn-outline-disabled-bg:#0d1117;--color-btn-outline-disabled-counter-bg:rgba(31,111,235,0.05);--color-btn-outline-counter-bg:rgba(31,111,235,0.1);--color-btn-danger-text:#f85149;--color-btn-danger-hover-text:#ffffff;--color-btn-danger-hover-bg:#da3633;--color-btn-danger-hover-border:#f85149;--color-btn-danger-hover-shadow:0 0 transparent;--color-btn-danger-hover-inset-shadow:0 0 transparent;--color-btn-danger-hover-icon:#ffffff;--color-btn-danger-hover-counter-bg:rgba(255,255,255,0.2);--color-btn-danger-selected-text:#ffffff;--color-btn-danger-selected-bg:#b62324;--color-btn-danger-selected-border:#ff7b72;--color-btn-danger-selected-shadow:0 0 transparent;--color-btn-danger-disabled-text:rgba(248,81,73,0.5);--color-btn-danger-disabled-bg:#0d1117;--color-btn-danger-disabled-counter-bg:rgba(218,54,51,0.05);--color-btn-danger-counter-bg:rgba(218,54,51,0.1);--color-btn-danger-icon:#f85149;--color-underlinenav-icon:#6e7681;--color-underlinenav-border-hover:rgba(110,118,129,0.4);--color-action-list-item-inline-divider:rgba(48,54,61,0.48);--color-action-list-item-default-hover-bg:rgba(177,186,196,0.12);--color-action-list-item-default-hover-border:rgba(0,0,0,0);--color-action-list-item-default-active-bg:rgba(177,186,196,0.2);--color-action-list-item-default-active-border:rgba(0,0,0,0);--color-action-list-item-default-selected-bg:rgba(177,186,196,0.08);--color-action-list-item-danger-hover-bg:rgba(248,81,73,0.16);--color-action-list-item-danger-active-bg:rgba(248,81,73,0.24);--color-action-list-item-danger-hover-text:#ff7b72;--color-switch-track-bg:rgba(110,118,129,0.1);--color-switch-track-hover-bg:hsla(215,8%,72%,0.1);--color-switch-track-active-bg:rgba(110,118,129,0.4);--color-switch-track-disabled-bg:#21262d;--color-switch-track-fg:#7d8590;--color-switch-track-disabled-fg:#010409;--color-switch-track-border:rgba(0,0,0,0);--color-switch-track-checked-bg:rgba(31,111,235,0.35);--color-switch-track-checked-hover-bg:rgba(31,111,235,0.5);--color-switch-track-checked-active-bg:rgba(31,111,235,0.65);--color-switch-track-checked-fg:#ffffff;--color-switch-track-checked-disabled-fg:#010409;--color-switch-track-checked-border:rgba(0,0,0,0);--color-switch-knob-bg:#0d1117;--color-switch-knob-border:#606771;--color-switch-knob-disabled-bg:#161b22;--color-switch-knob-checked-bg:#0d1117;--color-switch-knob-checked-disabled-bg:#161b22;--color-switch-knob-checked-border:rgba(31,111,235,0.35);--color-segmented-control-bg:rgba(110,118,129,0.1);--color-segmented-control-button-bg:#0d1117;--color-segmented-control-button-hover-bg:#30363d;--color-segmented-control-button-active-bg:#21262d;--color-segmented-control-button-selected-border:#6e7681;--color-tree-view-item-chevron-hover-bg:rgba(177,186,196,0.12);--color-tree-view-item-directory-fill:#7d8590;--color-fg-default:#e6edf3;--color-fg-muted:#7d8590;--color-fg-subtle:#6e7681;--color-fg-on-emphasis:#ffffff;--color-canvas-default:#0d1117;--color-canvas-overlay:#161b22;--color-canvas-inset:#010409;--color-canvas-subtle:#161b22;--color-border-default:#30363d;--color-border-muted:#21262d;--color-border-subtle:rgba(240,246,252,0.1);--color-shadow-small:0 0 transparent;--color-shadow-medium:0 3px 6px #010409;--color-shadow-large:0 8px 24px #010409;--color-shadow-extra-large:0 12px 48px #010409;--color-neutral-emphasis-plus:#6e7681;--color-neutral-emphasis:#6e7681;--color-neutral-muted:rgba(110,118,129,0.4);--color-neutral-subtle:rgba(110,118,129,0.1);--color-accent-fg:#2f81f7;--color-accent-emphasis:#1f6feb;--color-accent-muted:rgba(56,139,253,0.4);--color-accent-subtle:rgba(56,139,253,0.1);--color-success-fg:#3fb950;--color-success-emphasis:#238636;--color-success-muted:rgba(46,160,67,0.4);--color-success-subtle:rgba(46,160,67,0.15);--color-attention-fg:#d29922;--color-attention-emphasis:#9e6a03;--color-attention-muted:rgba(187,128,9,0.4);--color-attention-subtle:rgba(187,128,9,0.15);--color-severe-fg:#db6d28;--color-severe-emphasis:#bd561d;--color-severe-muted:rgba(219,109,40,0.4);--color-severe-subtle:rgba(219,109,40,0.1);--color-danger-fg:#f85149;--color-danger-emphasis:#da3633;--color-danger-muted:rgba(248,81,73,0.4);--color-danger-subtle:rgba(248,81,73,0.1);--color-open-fg:#3fb950;--color-open-emphasis:#238636;--color-open-muted:rgba(46,160,67,0.4);--color-open-subtle:rgba(46,160,67,0.15);--color-closed-fg:#f85149;--color-closed-emphasis:#da3633;--color-closed-muted:rgba(248,81,73,0.4);--color-closed-subtle:rgba(248,81,73,0.15);--color-done-fg:#a371f7;--color-done-emphasis:#8957e5;--color-done-muted:rgba(163,113,247,0.4);--color-done-subtle:rgba(163,113,247,0.1);--color-sponsors-fg:#db61a2;--color-sponsors-emphasis:#bf4b8a;--color-sponsors-muted:rgba(219,97,162,0.4);--color-sponsors-subtle:rgba(219,97,162,0.1);--color-primer-fg-disabled:#484f58;--color-primer-canvas-backdrop:rgba(1,4,9,0.8);--color-primer-canvas-sticky:rgba(13,17,23,0.95);--color-primer-border-active:#f78166;--color-primer-border-contrast:rgba(255,255,255,0.2);--color-primer-shadow-highlight:0 0 transparent;--color-primer-shadow-inset:0 0 transparent;--color-scale-black:#010409;--color-scale-white:#ffffff;--color-scale-gray-0:#f0f6fc;--color-scale-gray-1:#c9d1d9;--color-scale-gray-2:#b1bac4;--color-scale-gray-3:#8b949e;--color-scale-gray-4:#6e7681;--color-scale-gray-5:#484f58;--color-scale-gray-6:#30363d;--color-scale-gray-7:#21262d;--color-scale-gray-8:#161b22;--color-scale-gray-9:#0d1117;--color-scale-blue-0:#cae8ff;--color-scale-blue-1:#a5d6ff;--color-scale-blue-2:#79c0ff;--color-scale-blue-3:#58a6ff;--color-scale-blue-4:#388bfd;--color-scale-blue-5:#1f6feb;--color-scale-blue-6:#1158c7;--color-scale-blue-7:#0d419d;--color-scale-blue-8:#0c2d6b;--color-scale-blue-9:#051d4d;--color-scale-green-0:#aff5b4;--color-scale-green-1:#7ee787;--color-scale-green-2:#56d364;--color-scale-green-3:#3fb950;--color-scale-green-4:#2ea043;--color-scale-green-5:#238636;--color-scale-green-6:#196c2e;--color-scale-green-7:#0f5323;--color-scale-green-8:#033a16;--color-scale-green-9:#04260f;--color-scale-yellow-0:#f8e3a1;--color-scale-yellow-1:#f2cc60;--color-scale-yellow-2:#e3b341;--color-scale-yellow-3:#d29922;--color-scale-yellow-4:#bb8009;--color-scale-yellow-5:#9e6a03;--color-scale-yellow-6:#845306;--color-scale-yellow-7:#693e00;--color-scale-yellow-8:#4b2900;--color-scale-yellow-9:#341a00;--color-scale-orange-0:#ffdfb6;--color-scale-orange-1:#ffc680;--color-scale-orange-2:#ffa657;--color-scale-orange-3:#f0883e;--color-scale-orange-4:#db6d28;--color-scale-orange-5:#bd561d;--color-scale-orange-6:#9b4215;--color-scale-orange-7:#762d0a;--color-scale-orange-8:#5a1e02;--color-scale-orange-9:#3d1300;--color-scale-red-0:#ffdcd7;--color-scale-red-1:#ffc1ba;--color-scale-red-2:#ffa198;--color-scale-red-3:#ff7b72;--color-scale-red-4:#f85149;--color-scale-red-5:#da3633;--color-scale-red-6:#b62324;--color-scale-red-7:#8e1519;--color-scale-red-8:#67060c;--color-scale-red-9:#490202;--color-scale-purple-0:#eddeff;--color-scale-purple-1:#e2c5ff;--color-scale-purple-2:#d2a8ff;--color-scale-purple-3:#bc8cff;--color-scale-purple-4:#a371f7;--color-scale-purple-5:#8957e5;--color-scale-purple-6:#6e40c9;--color-scale-purple-7:#553098;--color-scale-purple-8:#3c1e70;--color-scale-purple-9:#271052;--color-scale-pink-0:#ffdaec;--color-scale-pink-1:#ffbedd;--color-scale-pink-2:#ff9bce;--color-scale-pink-3:#f778ba;--color-scale-pink-4:#db61a2;--color-scale-pink-5:#bf4b8a;--color-scale-pink-6:#9e3670;--color-scale-pink-7:#7d2457;--color-scale-pink-8:#5e103e;--color-scale-pink-9:#42062a;--color-scale-coral-0:#ffddd2;--color-scale-coral-1:#ffc2b2;--color-scale-coral-2:#ffa28b;--color-scale-coral-3:#f78166;--color-scale-coral-4:#ea6045;--color-scale-coral-5:#cf462d;--color-scale-coral-6:#ac3220;--color-scale-coral-7:#872012;--color-scale-coral-8:#640d04;--base-size-4:0.25rem;--base-size-8:0.5rem;--base-size-12:0.75rem;--base-size-16:1rem;--base-size-20:1.25rem;--base-size-24:1.5rem;--base-size-28:1.75rem;--base-size-32:2rem;--base-size-36:2.25rem;--base-size-40:2.5rem;--base-size-44:2.75rem;--base-size-48:3rem;--base-size-64:4rem;--base-size-80:5rem;--base-size-96:6rem;--base-size-112:7rem;--base-size-128:8rem}@media (prefers-color-scheme:dark){:root{--color-gray-20:#e0e0e0;--color-gray-50:#C0C0C0;--color-gray-90:#dad8d8;--text-color-link:#3780e7;--text-color-link-active:#E6EDF3;--text-color-link-visited:rgb(125, 133, 144);--button:#0a306a;--button-hover:#2662bb}}*{box-sizing:border-box}body,html{padding:0;margin:0 auto;font-family:var(--font-family);color:var(--text-color);background-color:#0e1116}html{overflow-y:scroll}.visually-hidden{clip:rect(0 0 0 0);clip-path:inset(50%);height:1px;overflow:hidden;position:absolute;white-space:nowrap;width:1px}p:last-child{margin-bottom:0}li,p{line-height:1.5}.a-tag,.home-link:link:not(:hover),.nav-item a[href]:not(:hover),.wrapper>ul a,a{text-decoration:none}.nav>a[href]{color:var(--fgColor-default),var(--color-fg-default)}a[href]{color:var(--text-color-link)}a[href]:visited{color:var(--color-prettylights-syntax-constant-other-reference-link),var(--color-fg-default)}a[href]:active,a[href]:hover{color:var(--text-color-link-active)}main article a[href]:visited{color:var(--color-prettylights-syntax-constant-other-reference-link)}main{padding:1rem}main :first-child{margin-top:0}header:after{content:"";display:table;clear:both}table{margin:1em 0}table td,table th{padding-right:1em;border:1px solid #ddd;border-collapse:collapse}table tr:nth-child(2n){background-color:#454545}table tr:hover{background-color:#152f40}.Box{border-color:var(--color-border-default);border-radius:var(--borderRadius-medium,6px);border-style:solid;border-width:var(--borderWidth-thin,1px)}.color-border-default{border-color:var(--borderColor-default,var(--color-border-default))!important}.rounded-2{border-radius:var(--borderRadius-medium,6px)!important}code,pre{font-family:var(--font-family-monospace)}pre:not([class*=language-]){margin:.5em 0;line-height:1.375;-moz-tab-size:var(--syntax-tab-size);-o-tab-size:var(--syntax-tab-size);tab-size:var(--syntax-tab-size);-webkit-hyphens:none;-ms-hyphens:none;hyphens:none;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal}code{word-break:break-all}header{gap:1em .5em;flex-wrap:wrap;align-items:center;padding:1em}.home-link{font-size:1em;margin-right:2em}.nav{padding:0;margin:0}.nav-item,.post-metadata time{margin-right:1em}.nav-item{display:inline-block}.nav a[href][aria-current=page],a[href].header-anchor:focus,a[href].header-anchor:hover{text-decoration:underline}.postlist{padding:0 0 0 1.5rem;overflow:hidden}.postlist-item{display:flex;text-overflow:ellipsis;flex-wrap:wrap;align-items:baseline;counter-increment:start-from -1;margin-bottom:1em}.postlist-item:before{display:inline-block;pointer-events:none;content:"" counter(start-from,decimal-leading-zero) ". ";line-height:100%;text-align:right;margin-left:-1.5rem}.postlist-date{font-size:.8125em;color:var(--color-fg-default);word-spacing:-0.5px}.postlist-link{font-size:1.1875em;flex-basis:calc(100% - 1.5rem);padding-left:.25em;padding-right:.5em;text-underline-position:from-font;text-underline-offset:0;text-decoration-thickness:1px}.post-tag{display:inline-flex;align-items:center;justify-content:center;text-transform:capitalize;font-style:italic}.header-anchor,.pagination-links{text-decoration:none;font-style:normal}.postlist-item>.post-tag{align-self:center}.post-metadata{display:inline-flex;flex-wrap:wrap;gap:.5em;padding:0;margin:0}.flex-list,.post-wrapper,.wrapper>ul{display:flex}.post-content{font-size:large}.post-content>img{max-width:var(--img-max-width);border-style:none;box-sizing:content-box;background-color:#0d1117}.pt-2{padding:2rem}.header-anchor{font-size:1em;margin-left:.1em}a[href].header-anchor,a[href].header-anchor:visited{color:transparent}:hover>a[href].header-anchor,a[href].header-anchor:focus{color:#aaa}h2+.header-anchor{font-size:1.5em}.flex-list{margin:0 auto;margin-block-start:0em;margin-block-end:0em;margin-inline-start:0;margin-inline-end:0;padding-inline-start:0px}.pagination-links{font-size:1.4em;margin-left:.1em}.space{padding-top:10%}.sticky-bottom-nav{bottom:0;left:0;width:100%;background-color:#0e1116}a.disabled{pointer-events:none;opacity:.5}.responsive-image{display:flex;max-width:100%;height:auto;justify-content:center;margin:0 auto}.wrapper>ul{padding:8px;justify-content:center;align-items:center}.wrapper>ul li{text-align:center;font-size:18px;font-weight:600;cursor:pointer;margin:10px;border-radius:50px;padding:10px}.wrapper ul li.btn{line-height:60px;font-size:22px}.wrapper ul a li.active{color:var(--text-color);background-color:#32323a}.post-cover{position:relative;padding:0;margin:0;max-height:500px;background-color:#fafafa;overflow:hidden}.p-3{padding:var(--base-size-8,8px)!important}.pl-3{padding-left:var(--base-size-16,16px)!important}.pt-3{padding-top:var(--base-size-16,16px)!important}.pb-3{padding-bottom:var(--base-size-16,16px)!important}.pr-3{padding-right:var(--base-size-16,16px)!important}.p-6{padding:var(--base-size-24,24px)!important}.mt-12{margin:12px 0 0}.m-3{margin:16px 0}.m-3p{margin:16% 0}.d-flex{display:flex!important}.flex-justify-between{justify-content:space-between!important}.flex-items-center{align-items:center!important}.m-0{margin:0!important}.Truncate{display:inline-flex;max-width:100%;min-width:0}.flex-direction-col{flex-direction:column}.cover-img{border-radius:8px;aspect-ratio:1/1;width:78px;height:78px}.big-cover-img{border-radius:12px;aspect-ratio:544/262;width:100%;max-height:262px;object-fit:cover;margin-bottom:16px}.flex-center,.img-container{display:flex;justify-content:center;align-items:center}.about-img{object-fit:cover;width:192px;height:192px;border-radius:8px}.contact .contact-title{position:relative;color:var(--color-gray-90);font-weight:400;font-size:12px;margin:0 0 5px;text-transform:uppercase;text-align:center}.btn,.numb{padding:10px;margin:5px}.active{background-color:var(--color-btn-outline-selected-bg);color:var(--adaptiveGrey100)!important;border-radius:8px}.border-radius10{border-radius:10px}.posts-container{max-width:600px;margin:0 auto}.posts-container>li,.posts-container>ol,.posts-container>ul{margin:0;padding:0;border:0;font-size:100%;vertical-align:baseline}.post-container{max-height:112px}.post-title-container{min-width:128px}.post-title{overflow:hidden;text-overflow:ellipsis}.katex-html{display:none}.border{border:var(--borderWidth-thin,1px) solid var(--borderColor-default,var(--color-border-default))!important}.container img{max-width:100%;max-height:100%}#drawerMenu{position:fixed;top:0;left:-280px;width:280px;height:100%;transition:left .3s ease-in-out;box-shadow:0 0 10px rgba(0,0,0,.1);overflow:auto;z-index:2}#drawerMenu ul{padding:20px}#drawerMenu li{margin-bottom:10px;cursor:pointer}#drawerMenu li:hover{color:#f1f1f1}@media screen and (min-width:768px){body{margin-left:290px}#drawerMenu{left:0;z-index:0}}#openDrawerBtn{position:inherit;top:20px;cursor:pointer;border:none;border-radius:4px;font-size:x-large}#openDrawerBtn:hover{background-color:#3e444b}#openDrawerBtn:focus{outline:0}#drawerMenu::-webkit-scrollbar{width:8px}#drawerMenu::-webkit-scrollbar-thumb{background-color:#3e444b}#drawerMenu::-webkit-scrollbar-thumb:hover{background-color:#555b62}#drawerMenu summary{font-style:oblique}.opacity-0{opacity:0;height:100%;min-height:300px;transition:opacity 1s}.opacity-0.active-mermaid{opacity:1;display:grid;align-items:center;justify-items:center}</style>
+		<style>
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--pagefind-ui-primary: #eeeeee;
+					--pagefind-ui-text: #eeeeee;
+					--pagefind-ui-background: #152028;
+					--pagefind-ui-border: #152028;
+					--pagefind-ui-tag: #152028;
+				}
+			}
+		</style>
+
+	</head>
+	<body>
+		<div id="dimLayer"></div>
+			<header>
+				<button id="openDrawerBtn">
+					🌳
+				</button>
+			<a href="/" class="home-link">zerozoo-a의 블로그</a>
+			<div id="pagefind-search" class="search"></div>
+			<nav>
+				<ul id="drawerMenu"class="nav">
+					<ul>
+						<li><a href="/">home</a></li>
+						<li><a href="https://www.yellow-turban.n-e.kr/">개인 프로젝트</a></li>
+						<li><a href="/about">about</a></li>
+						<li><a href="/feed.xml">RSS</a></li>
+						
+
+						
+
+						
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>CS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>ALGORITHMS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>BOOKS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>JONGMAN</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/BOOKS/JONGMAN/문제풀이_과정을_나누자">
+													문제풀이_과정을_나누자
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>OPTIMIZATION</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/OPTIMIZATION/TOC in kotlin">
+													TOC in kotlin
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>PROBLEMS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>PRINGTING_STARS</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing star stair 1">
+													printing star stair 1
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing star stair 2 and pyramid">
+													printing star stair 2 and pyramid
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/PROBLEMS/card">
+													card
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm">
+													Richard_Feynman_alogorithm
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>SEARCH</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/SEARCH/binarySearch JS">
+													binarySearch JS
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/SEARCH/findMaxDivideAndConquer">
+													findMaxDivideAndConquer
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/SEARCH/leetcode 704. binarySearch">
+													leetcode 704. binarySearch
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/SEARCH/merge-sort-nlogn">
+													merge-sort-nlogn
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp">
+													[coin-change]basic-greedy-with-dp
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>BOOK</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>JONGMAN</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/BOOK/JONGMAN/입문자를_위한_커리큘럼">
+													입문자를_위한_커리큘럼
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>BROWSER</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/BROWSER/While handling an `&lt;iframe&gt;`, I found out something">
+													While handling an `&lt;iframe&gt;`, I found out something
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/BROWSER/deem effect를 처리하자">
+													deem effect를 처리하자
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>DATA_STRUCTURE</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>TREE</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/BST">
+													BST
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/Tree_inorder">
+													Tree_inorder
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/Tree_preorder">
+													Tree_preorder
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/basic-of-recursive">
+													basic-of-recursive
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/recursive_traversal">
+													recursive_traversal
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>ETC</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ETC/operator &lt;의 성질">
+													operator &lt;의 성질
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>LOGIC</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/LOGIC/exclusive-or">
+													exclusive-or
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/LOGIC/logical-implication">
+													logical-implication
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/LOGIC/p and q">
+													p and q
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/LOGIC/permutation">
+													permutation
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>RECURSIVE</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/RECURSIVE/recursive-hanoi-tower">
+													recursive-hanoi-tower
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/RECURSIVE/recursive-power">
+													recursive-power
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/RECURSIVE/tower-of-hanoi">
+													tower-of-hanoi
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Engineer-Information-Processing</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/CSP-CCS-LOTOS-Z-VDM-Petri">
+													CSP-CCS-LOTOS-Z-VDM-Petri
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/DDL-DML-DCL">
+													DDL-DML-DCL
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/DDL-Domain-Schema-Table-View-Index">
+													DDL-Domain-Schema-Table-View-Index
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Data-modeling-normalization">
+													Data-modeling-normalization
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/FSM-Decision-Table-ER-Modeling-State-Chart-Use-Case">
+													FSM-Decision-Table-ER-Modeling-State-Chart-Use-Case
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Functional-Dependent-attribute">
+													Functional-Dependent-attribute
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Logical-Database-Design">
+													Logical-Database-Design
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-Layer">
+													OSI-7-Layer
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-layer-L1-switch">
+													OSI-7-layer-L1-switch
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-layer-L2-switch">
+													OSI-7-layer-L2-switch
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-layer-L3-router">
+													OSI-7-layer-L3-router
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS">
+													Relational-algebra-in-DBMS
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Relational-database-atomicity">
+													Relational-database-atomicity
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/SQL-Cross-join">
+													SQL-Cross-join
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/SQL-Inner-join">
+													SQL-Inner-join
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/SQL-Outer-join">
+													SQL-Outer-join
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/SQL-Self-join">
+													SQL-Self-join
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Super-key">
+													Super-key
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Transitive-Dependency">
+													Transitive-Dependency
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-diagram-4">
+													UML-class-diagram-4
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-diagram-5">
+													UML-class-diagram-5
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-digram-1">
+													UML-class-digram-1
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-digram-2">
+													UML-class-digram-2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-digram-3">
+													UML-class-digram-3
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/concept-of-Operating-System">
+													concept-of-Operating-System
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/gof-flyweight-pattern">
+													gof-flyweight-pattern
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/impl-postfix-javascript">
+													impl-postfix-javascript
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>network</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/IP-subnet">
+													IP-subnet
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/IPSec">
+													IPSec
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/IPv4-address">
+													IPv4-address
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/IPv4-class">
+													IPv4-class
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/end-system-of-network">
+													end-system-of-network
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/lan-man-wan">
+													lan-man-wan
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-address-translation">
+													os-address-translation
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-control-programs">
+													os-control-programs
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-management-memory">
+													os-management-memory
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-memory-page-and-segment">
+													os-memory-page-and-segment
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-process-scheduling">
+													os-process-scheduling
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-process-status">
+													os-process-status
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/relational-model">
+													relational-model
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/sliding-window">
+													sliding-window
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>JAVA</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JAVA/Deque">
+													Deque
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/List-queue">
+													List-queue
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/change-tree-set-compare-fn">
+													change-tree-set-compare-fn
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/compareTo-method">
+													compareTo-method
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/java bubble sort">
+													java bubble sort
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/java hash set">
+													java hash set
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/lambda-and-annotation">
+													lambda-and-annotation
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>leet-code</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/backtrack-algorithm">
+													backtrack-algorithm
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/coin-change-problem-bottom-up">
+													coin-change-problem-bottom-up
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/coin-change-problem">
+													coin-change-problem
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/decision-tree-of-backtracking">
+													decision-tree-of-backtracking
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/n-queen">
+													n-queen
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/solve-the-Fibonacci-problem-using-a-dynamic-programming-approach">
+													solve-the-Fibonacci-problem-using-a-dynamic-programming-approach
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/thread-pool-basic-1">
+													thread-pool-basic-1
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/thread-pool-basic-2">
+													thread-pool-basic-2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/volatile keyword">
+													volatile keyword
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>JS</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/about-reduce">
+													about-reduce
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/binary-search-tree-with-iterator">
+													binary-search-tree-with-iterator
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>browser</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/browser/embedded-worker-2">
+													embedded-worker-2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/browser/embedded-worker-for-main-thread">
+													embedded-worker-for-main-thread
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/browser/when-to-use-worker">
+													when-to-use-worker
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/contains">
+													contains
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/iterator-protocol">
+													iterator-protocol
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>libs</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/libs/flat">
+													flat
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/libs/secret-of-json">
+													secret-of-json
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>node</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/node/increase-libuv-threadpool">
+													increase-libuv-threadpool
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/play-with-generator">
+													play-with-generator
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>server</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>nest</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/server/nest/get-header-property">
+													get-header-property
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/server/nest/nest.js-using-IOC">
+													nest.js-using-IOC
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/server/nest/nestjs-env-setting">
+													nestjs-env-setting
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/server/nest/using-dto-in-nest-js">
+													using-dto-in-nest-js
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>MATHEMATICS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>Algebraic</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Exponential-Expansion-negative-integer">
+													Exponential-Expansion-negative-integer
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Exponential-Expansion-rational">
+													Exponential-Expansion-rational
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Funcitons</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/(x+&#92;frac{1}{x})^2">
+													(x+&#92;frac{1}{x})^2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/inverse-function">
+													inverse-function
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/log-function">
+													log-function
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/monotonic-function">
+													monotonic-function
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/product-rule-of-logarithms">
+													product-rule-of-logarithms
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/rational-function-graph-2">
+													rational-function-graph-2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/rational-function-graph">
+													rational-function-graph
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/square-number">
+													square-number
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Sets</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/Identities-and-Inverses">
+													Identities-and-Inverses
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/Sets">
+													Sets
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/binary-operations-set-differences">
+													binary-operations-set-differences
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/cardinality-of-sets">
+													cardinality-of-sets
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/sufficiency-and-necessity">
+													sufficiency-and-necessity
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/rational-expression">
+													rational-expression
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>FreeFromMath</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>Algebric_properties</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Algebric_properties/1-1-Commutative,-Associative,-Distributive">
+													1-1-Commutative,-Associative,-Distributive
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Algebric_properties/1-2-Identities">
+													1-2-Identities
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Algebric_properties/1-3-Equations">
+													1-3-Equations
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Sets</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Sets/2.1-Definition-and-Notations-of-Sets-집합의-정의와-표기">
+													2.1-Definition-and-Notations-of-Sets-집합의-정의와-표기
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Sets/2.2-Usage-of-sets">
+													2.2-Usage-of-sets
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Sets/2.3-cardinality-of-sets">
+													2.3-cardinality-of-sets
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/latex-symbols">
+													latex-symbols
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>algos</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>O(1)</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/O(1)/basic-greedy">
+													basic-greedy
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/O(1)/sum-of-even">
+													sum-of-even
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>O(n)</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/O(n)/find-missing-number">
+													find-missing-number
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>convert</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/convert/decimal-to-binary">
+													decimal-to-binary
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>dfs</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/dfs/find-subsets">
+													find-subsets
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/dfs/iterative-dfs">
+													iterative-dfs
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/dfs/maze">
+													maze
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>reduce</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/reduce/create-deep-object">
+													create-deep-object
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/reduce/deep-merge">
+													deep-merge
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>traversal</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/traversal/DFS-recursive-iterable">
+													DFS-recursive-iterable
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>babylons</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/babylons/scene">
+													scene
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>data-structure</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/data-structure/reference-of-stack">
+													reference-of-stack
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>env</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/env/docker-compose-nestjs-typescript">
+													docker-compose-nestjs-typescript
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>erros</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>db</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/erros/db/Cannot-delete-or-update-a-parent-row:-a-foreign-key">
+													Cannot-delete-or-update-a-parent-row:-a-foreign-key
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/erros/db/Error-Code:-1175-SQL-Editor-and-reconnect.Cannot-delete-or-update-a-parent-row:-a-foreign-key">
+													Error-Code:-1175-SQL-Editor-and-reconnect.Cannot-delete-or-update-a-parent-row:-a-foreign-key
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/erros/db/QueryFailedError-Duplicate-key-name">
+													QueryFailedError-Duplicate-key-name
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>git</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/git/git-revert-with-head">
+													git-revert-with-head
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>life</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/life/2023-infcon-review">
+													2023-infcon-review
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>rust</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/rust/rust-analyzer-for-vscode">
+													rust-analyzer-for-vscode
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>temp</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/temp/ERROR:-for-mysql-Cannot-start-service-mysql-network-IP-not-found">
+													ERROR:-for-mysql-Cannot-start-service-mysql-network-IP-not-found
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/temp/good-table">
+													good-table
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/temp/java-with-vscode">
+													java-with-vscode
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>web_gpu</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/web_gpu/hello-web-gpu">
+													hello-web-gpu
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>wiki</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>11ty</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/11ty/css_config">
+													css_config
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/wiki/11ty/folder_and_config">
+													folder_and_config
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/wiki/11ty/new_blog">
+													new_blog
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/wiki/11ty/use-latext-in-11ty">
+													use-latext-in-11ty
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Http</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/Http/post-man에-authorization-token-심기">
+													post-man에-authorization-token-심기
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>db</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/db/schema-model">
+													schema-model
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>infra</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/infra/nginx-with-docker-compose">
+													nginx-with-docker-compose
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/wiki/infra/ssh-commands">
+													ssh-commands
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>install</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/install/install-mysql-using-home-brew">
+													install-mysql-using-home-brew
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>operating-system</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/operating-system/lsof-kill">
+													lsof-kill
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>examples</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>babylons</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>introductions</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/examples/babylons/introductions/maze">
+													maze
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/examples/babylons/introductions/sphere">
+													sphere
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/examples/babylons/introductions/square">
+													square
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+					</ul>
+			</nav>
+		</header>
+		<main>
+			
+<article>
+	
+    <img class="big-cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
+	
+
+<h1>개미 군단 기초적인 그리디 알고리즘 풀이 greedy</h1>
+
+<ul class="post-metadata pt-2">
+	<li><time datetime="2024-06-09">09 June 2024</time></li>
+</ul>
+
+
+		<aside>
+			<nav class="toc" >
+        <ol><li><a href="#-1">풀이</a></li><li><a href="#-2">후술</a></li></ol>
+      </nav>
+		</aside>
+
+
+	<section class="post-content markdown-body" data-pagefind-body>
+		<br />
+<br />
+<br />
+<h2 id="" tabindex="-1">문제 <a class="header-anchor" href="#">#</a></h2>
+<p>개미 군단은 아래와 같이 3 종류입니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> ants <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">장군개미</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">병정개미</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">일개미</span><span class="token operator">:</span> <span class="token number">1</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<ul>
+<li>적군의 체력이 인자로 주어집니다.</li>
+<li>개미를 가장 적게 사용해 체력을 0으로 만들어야 합니다.</li>
+</ul>
+<p>체력이 6 주어진다면 대략 아래와 같이 개미들을 출동시킬 수 있습니다.</p>
+<ul>
+<li>장군개미 하나, 일개미 하나</li>
+<li>병정개미 둘,</li>
+<li>일개미 여섯</li>
+</ul>
+<p>위 예시들 중 개미의 수가 가정 적은 <code>장군개미 하나, 일개미 하나</code>를 선택하면 됩니다.</p>
+<h2 id="-1" tabindex="-1">풀이 <a class="header-anchor" href="#-1">#</a></h2>
+<p>필요한 개미의 수를 누산하는 count 변수를 생성합니다. -&gt; <code>let count = 0;</code>
+개미들을 공격력이 높은 순서대로 배열로 만들고 -&gt; <code>[5, 3, 1]</code>
+배열을 순회하며 인자로 주어지는 hp에 대해 나눗셈 연산을 진행합니다.</p>
+<ul>
+<li>배열은 내림차순 정렬이 되어 있어 최소한의 필요 개미를 골라낼 수 있습니다.</li>
+<li>배열이 주어지고 배열을 정렬해야 하는 경우 <code>O(1)</code>이 아닌 <code>O(log)</code>의 시간을 가질 것입니다.</li>
+</ul>
+<p>인자로 체력 6이 주어질 경우</p>
+<p><code>6 / 5</code>에 대한 연산이 진행됩니다.
+hp에 대해 장군 개미가 몇이 필요한지 알 수 있게됩니다.</p>
+<p>count라는 변수에 누산해줍니다.</p>
+<p>이제 남은 hp는 1이 되어야합니다. hp의 값을 초기화해줍니다. -&gt; <code>hp = hp % ant;</code></p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">function</span> <span class="token function">solution</span><span class="token punctuation">(</span><span class="token parameter">hp</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> ants <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> ant <span class="token keyword">of</span> ants<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>hp<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> mountOfAnt <span class="token operator">=</span> <span class="token operator">~</span><span class="token operator">~</span><span class="token punctuation">(</span>hp <span class="token operator">/</span> ant<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    count <span class="token operator">+=</span> mountOfAnt<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> restHp <span class="token operator">=</span> hp <span class="token operator">%</span> ant<span class="token punctuation">;</span>
+    hp <span class="token operator">=</span> restHp<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">solution</span><span class="token punctuation">(</span><span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 5</span></code></pre>
+<h2 id="-2" tabindex="-1">후술 <a class="header-anchor" href="#-2">#</a></h2>
+<ul>
+<li>
+<p>주어지는 인자의 hp 값에 따라 고정길이 3인 배열을 순회하므로
+해당 알고리즘의 <code>Big O notation은 O(1)</code>입니다.</p>
+</li>
+<li>
+<p>고정길이의 배열을 순회하면서 매번 세 개미들 중 최적의 선택을 합니다.</p>
+<ul>
+<li>해당 선택은 이전 선택과 이후 선택을 고려하지 않습니다.</li>
+</ul>
+</li>
+<li>
+<p>예전에 풀었던 <a href="https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/">동전 문제도 위 문제와 같은 방식입니다.</a></p>
+</li>
+</ul>
+
+	</section>
+<br>
+<br>
+<br>
+<ul><li>이전 글: <a href="/blog/algos/O(1)/sum-of-even/">정수 n 이하의 짝수를 모두 더한 값을 구하시오</a></li>
+</ul>
+
+</article>
+<script type="module" async>import mermaid from "https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({"loadOnSave":true}));</script>
+<script 
+type="text/javascript"
+src="/js/lib/mutationObserver.js"
+async
+></script>
+<script type="text/javascript"
+src="/js/lib/getReadTime.js"
+async
+></script>
+		</main>
+		<script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
+		<script type="text/javascript" async>
+		const openDrawerBtn = document.getElementById('openDrawerBtn');
+		const drawerMenu = document.getElementById('drawerMenu');
+		const dimLayer = document.getElementById("dimLayer");
+		const body = document.getElementsByTagName("body")[0];
+
+
+		const isDrawerMenuOpen = () => {
+			return drawerMenu.style.left === '' || drawerMenu.style.left === '0px';
+			}
+		const isPc = () => window.outerWidth > 768;
+
+
+		openDrawerBtn.addEventListener('click', () => {
+			if(isPc() && isDrawerMenuOpen()) {
+			/** insert menu */
+			    drawerMenu.style.left = '-280px';
+				body.style.marginLeft = '0';
+				return
+			} else if(isPc() && !isDrawerMenuOpen()) {
+			/** draw menu */
+				drawerMenu.style.left = '0';
+				body.style.marginLeft = '290px';
+				return
+			} else {
+			/** mobile **/
+			dimLayer.classList.add('appear-dim');
+			drawerMenu.style.left = '0';
+			}
+		})
+
+		dimLayer.addEventListener('click', () => {
+			console.log('isPc?', isPc())
+			if(isDrawerMenuOpen()) return
+
+			dimLayer.classList.remove('appear-dim')
+   		    drawerMenu.style.left = '-280px';
+		})
+
+		document.addEventListener('click', (event) => {
+			if(isPc()) {
+			   dimLayer.classList.remove('appear-dim')
+			   return;
+			}
+			/**
+			* drawerMenu의 하위 메뉴면서, 이벤트 타겟이 drawerMenu인 경우
+			* 이는 카테고리의 하위 메뉴들이 선택 되었을 때 해당되지 않습니다.
+			* 하위메뉴이지만 drawerMenu자체는 아니기 때문입니다.
+			*/
+			if(drawerMenu.contains(event.target) && event.target === drawerMenu) {
+				dimLayer.classList.remove('appear-dim')
+   		        drawerMenu.style.left = '-280px';
+				return;
+			}
+
+			/**
+			 * drawerMenu가 아니면 menu를 닫습니다.
+			*/
+			if (
+			event.target !== drawerMenu 
+			&& event.target !== openDrawerBtn
+			&& !drawerMenu.contains(event.target)
+			) {
+				dimLayer.classList.remove('appear-dim')
+				drawerMenu.style.left = '-280px';
+			}
+		});
+		</script>
+	</body>
+	<footer>
+				<p>Disclaimer: This blog is for informational purposes only. 
+					this site's images from <a href="https://unsplash.com">unsplash</a>
+				</p>
+	<p>&copy; 2023 zerozoo-a blog. All rights reserved.</p>
+</footer>
+</html>

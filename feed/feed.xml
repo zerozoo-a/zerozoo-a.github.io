@@ -4,12 +4,84 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2024-06-07T17:36:07Z</updated>
+	<updated>2024-06-09T13:26:36Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>개미 군단 기초적인 그리디 알고리즘 풀이 greedy</title>
+		<link href="https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/"/>
+		<updated>2024-06-09T13:26:36Z</updated>
+		<id>https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;문제 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;개미 군단은 아래와 같이 3 종류입니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; ants &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;장군개미&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;병정개미&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;일개미&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;적군의 체력이 인자로 주어집니다.&lt;/li&gt;
+&lt;li&gt;개미를 가장 적게 사용해 체력을 0으로 만들어야 합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;체력이 6 주어진다면 대략 아래와 같이 개미들을 출동시킬 수 있습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;장군개미 하나, 일개미 하나&lt;/li&gt;
+&lt;li&gt;병정개미 둘,&lt;/li&gt;
+&lt;li&gt;일개미 여섯&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;위 예시들 중 개미의 수가 가정 적은 &lt;code&gt;장군개미 하나, 일개미 하나&lt;/code&gt;를 선택하면 됩니다.&lt;/p&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;풀이 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;필요한 개미의 수를 누산하는 count 변수를 생성합니다. -&amp;gt; &lt;code&gt;let count = 0;&lt;/code&gt;
+개미들을 공격력이 높은 순서대로 배열로 만들고 -&amp;gt; &lt;code&gt;[5, 3, 1]&lt;/code&gt;
+배열을 순회하며 인자로 주어지는 hp에 대해 나눗셈 연산을 진행합니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;배열은 내림차순 정렬이 되어 있어 최소한의 필요 개미를 골라낼 수 있습니다.&lt;/li&gt;
+&lt;li&gt;배열이 주어지고 배열을 정렬해야 하는 경우 &lt;code&gt;O(1)&lt;/code&gt;이 아닌 &lt;code&gt;O(log)&lt;/code&gt;의 시간을 가질 것입니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;인자로 체력 6이 주어질 경우&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;6 / 5&lt;/code&gt;에 대한 연산이 진행됩니다.
+hp에 대해 장군 개미가 몇이 필요한지 알 수 있게됩니다.&lt;/p&gt;
+&lt;p&gt;count라는 변수에 누산해줍니다.&lt;/p&gt;
+&lt;p&gt;이제 남은 hp는 1이 되어야합니다. hp의 값을 초기화해줍니다. -&amp;gt; &lt;code&gt;hp = hp % ant;&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;hp&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; count &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; ants &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; ant &lt;span class=&quot;token keyword&quot;&gt;of&lt;/span&gt; ants&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;hp&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; mountOfAnt &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;hp &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; ant&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    count &lt;span class=&quot;token operator&quot;&gt;+=&lt;/span&gt; mountOfAnt&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; restHp &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; hp &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; ant&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    hp &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; restHp&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; count&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;23&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 5&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;후술 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;주어지는 인자의 hp 값에 따라 고정길이 3인 배열을 순회하므로
+해당 알고리즘의 &lt;code&gt;Big O notation은 O(1)&lt;/code&gt;입니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;고정길이의 배열을 순회하면서 매번 세 개미들 중 최적의 선택을 합니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;해당 선택은 이전 선택과 이후 선택을 고려하지 않습니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;예전에 풀었던 &lt;a href=&quot;https://zerozoo-a.github.io/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp/&quot;&gt;동전 문제도 위 문제와 같은 방식입니다.&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>정수 n 이하의 짝수를 모두 더한 값을 구하시오</title>
