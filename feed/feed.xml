@@ -19,16 +19,14 @@
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;문제 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;개미 군단은 아래와 같이 3 종류입니다.&lt;/p&gt;
-&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; ants &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;token literal-property property&quot;&gt;장군개미&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;token literal-property property&quot;&gt;병정개미&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;token literal-property property&quot;&gt;일개미&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;문제 설명 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;목표: 주어진 hp를 가장 적은 수의 개미를 사용해 0으로 만드는 것입니다. 사용할 수 있는 개미는 다음과 같습니다:&lt;/p&gt;
+&lt;p&gt;장군개미: 5
+병정개미: 3
+일개미: 1&lt;/p&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;문제 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;적군의 체력이 인자로 주어집니다.&lt;/li&gt;
-&lt;li&gt;개미를 가장 적게 사용해 체력을 0으로 만들어야 합니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;체력이 6 주어진다면 대략 아래와 같이 개미들을 출동시킬 수 있습니다.&lt;/p&gt;
 &lt;ul&gt;
@@ -37,7 +35,16 @@
 &lt;li&gt;일개미 여섯&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;위 예시들 중 개미의 수가 가정 적은 &lt;code&gt;장군개미 하나, 일개미 하나&lt;/code&gt;를 선택하면 됩니다.&lt;/p&gt;
-&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;풀이 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;접근법과 풀이 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;접근법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;이 문제는 &lt;code&gt;주어진 체력에 대해 얼마나 효율이 좋은 개미를 몇마리 투입 할 수 있는가?&lt;/code&gt;
+에 대한 질문으로 다시 생각해볼 수 있습니다.&lt;/p&gt;
+&lt;p&gt;주어진 체력이 30인 경우, 30 / 5라는 나눗셈에 의해 장군개미 6마리로 체력을 0으로 만들 수 있습니다.
+31인 경우, 31 / 5 = 6이고 남은 체력은 1입니다.&lt;/p&gt;
+&lt;p&gt;이제 반복되는 패턴이 보이게 됩니다.
+주어진 개미들을 배열로 세워두고 &lt;code&gt;[5, 3, 1]&lt;/code&gt;
+배열에 대해 반복문을 순회하면서 각 개미가 얼만큼 체력을 나눌 수 있는가?를 계산하면 됩니다.&lt;/p&gt;
+&lt;h3 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;풀이 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;필요한 개미의 수를 누산하는 count 변수를 생성합니다. -&amp;gt; &lt;code&gt;let count = 0;&lt;/code&gt;
 개미들을 공격력이 높은 순서대로 배열로 만들고 -&amp;gt; &lt;code&gt;[5, 3, 1]&lt;/code&gt;
 배열을 순회하며 인자로 주어지는 hp에 대해 나눗셈 연산을 진행합니다.&lt;/p&gt;
@@ -64,7 +71,7 @@ hp에 대해 장군 개미가 몇이 필요한지 알 수 있게됩니다.&lt;/p
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;token function&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;23&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 5&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;후술 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;-5&quot; tabindex=&quot;-1&quot;&gt;후술 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(1)/basic-greedy/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;주어지는 인자의 hp 값에 따라 고정길이 3인 배열을 순회하므로

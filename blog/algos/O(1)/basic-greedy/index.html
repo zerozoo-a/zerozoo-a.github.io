@@ -3348,7 +3348,7 @@ pre[class*="language-diff-"] {
 
 		<aside>
 			<nav class="toc" >
-        <ol><li><a href="#-1">풀이</a></li><li><a href="#-2">후술</a></li></ol>
+        <ol><li><a href="#-1">문제</a></li><li><a href="#-2">접근법과 풀이</a><ol><li><a href="#-3">접근법</a></li><li><a href="#-4">풀이</a></li></ol></li><li><a href="#-5">후술</a></li></ol>
       </nav>
 		</aside>
 
@@ -3357,16 +3357,14 @@ pre[class*="language-diff-"] {
 		<br />
 <br />
 <br />
-<h2 id="" tabindex="-1">문제 <a class="header-anchor" href="#">#</a></h2>
-<p>개미 군단은 아래와 같이 3 종류입니다.</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> ants <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token literal-property property">장군개미</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">병정개미</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">일개미</span><span class="token operator">:</span> <span class="token number">1</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h2 id="" tabindex="-1">문제 설명 <a class="header-anchor" href="#">#</a></h2>
+<p>목표: 주어진 hp를 가장 적은 수의 개미를 사용해 0으로 만드는 것입니다. 사용할 수 있는 개미는 다음과 같습니다:</p>
+<p>장군개미: 5
+병정개미: 3
+일개미: 1</p>
+<h2 id="-1" tabindex="-1">문제 <a class="header-anchor" href="#-1">#</a></h2>
 <ul>
 <li>적군의 체력이 인자로 주어집니다.</li>
-<li>개미를 가장 적게 사용해 체력을 0으로 만들어야 합니다.</li>
 </ul>
 <p>체력이 6 주어진다면 대략 아래와 같이 개미들을 출동시킬 수 있습니다.</p>
 <ul>
@@ -3375,7 +3373,16 @@ pre[class*="language-diff-"] {
 <li>일개미 여섯</li>
 </ul>
 <p>위 예시들 중 개미의 수가 가정 적은 <code>장군개미 하나, 일개미 하나</code>를 선택하면 됩니다.</p>
-<h2 id="-1" tabindex="-1">풀이 <a class="header-anchor" href="#-1">#</a></h2>
+<h2 id="-2" tabindex="-1">접근법과 풀이 <a class="header-anchor" href="#-2">#</a></h2>
+<h3 id="-3" tabindex="-1">접근법 <a class="header-anchor" href="#-3">#</a></h3>
+<p>이 문제는 <code>주어진 체력에 대해 얼마나 효율이 좋은 개미를 몇마리 투입 할 수 있는가?</code>
+에 대한 질문으로 다시 생각해볼 수 있습니다.</p>
+<p>주어진 체력이 30인 경우, 30 / 5라는 나눗셈에 의해 장군개미 6마리로 체력을 0으로 만들 수 있습니다.
+31인 경우, 31 / 5 = 6이고 남은 체력은 1입니다.</p>
+<p>이제 반복되는 패턴이 보이게 됩니다.
+주어진 개미들을 배열로 세워두고 <code>[5, 3, 1]</code>
+배열에 대해 반복문을 순회하면서 각 개미가 얼만큼 체력을 나눌 수 있는가?를 계산하면 됩니다.</p>
+<h3 id="-4" tabindex="-1">풀이 <a class="header-anchor" href="#-4">#</a></h3>
 <p>필요한 개미의 수를 누산하는 count 변수를 생성합니다. -&gt; <code>let count = 0;</code>
 개미들을 공격력이 높은 순서대로 배열로 만들고 -&gt; <code>[5, 3, 1]</code>
 배열을 순회하며 인자로 주어지는 hp에 대해 나눗셈 연산을 진행합니다.</p>
@@ -3402,7 +3409,7 @@ hp에 대해 장군 개미가 몇이 필요한지 알 수 있게됩니다.</p>
 <span class="token punctuation">}</span>
 
 <span class="token function">solution</span><span class="token punctuation">(</span><span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 5</span></code></pre>
-<h2 id="-2" tabindex="-1">후술 <a class="header-anchor" href="#-2">#</a></h2>
+<h2 id="-5" tabindex="-1">후술 <a class="header-anchor" href="#-5">#</a></h2>
 <ul>
 <li>
 <p>주어지는 인자의 hp 값에 따라 고정길이 3인 배열을 순회하므로
