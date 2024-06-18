@@ -18,11 +18,12 @@ coverURL: https://images.unsplash.com/photo-1581544291234-31340be4b1b8?q=80&w=28
 
 ### 입출력 예
 
-|s|	result|
-------
-|"abcabcadc"|	"d"|
-|"abdc"	| "abcd" |
-|"hello"	| "eho" |
+| s           | result |
+|-------------|--------|
+| "abcabcadc" | "d"    |
+| "abdc"      | "abcd" |
+| "hello"     | "eho"  |
+
 
 
 ## 풀이
