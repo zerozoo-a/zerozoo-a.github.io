@@ -12,13 +12,18 @@
 	</author>
 	
 	<entry>
-		<title>유클리드 호제법을 통해 두 수의 최대공배수를 구하기</title>
+		<title>유클리드 호제법을 통해 두 수의 최대공배수, 서로소, 기약분수 구하기</title>
 		<link href="https://zerozoo-a.github.io/blog/algos/O(log)/Euclidean-algorithm/"/>
 		<updated>2024-07-01T23:24:48Z</updated>
 		<id>https://zerozoo-a.github.io/blog/algos/O(log)/Euclidean-algorithm/</id>
 		<content type="html">&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
+&lt;ul&gt;
+&lt;li&gt;최대공배수 gcd&lt;/li&gt;
+&lt;li&gt;서로소 disjoint&lt;/li&gt;
+&lt;li&gt;기약분수 reduced fraction&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;유클리드 호제법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(log)/Euclidean-algorithm/&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;최대공약수: 두 수가 공통으로 가지는 가장 큰 약수
@@ -57,23 +62,25 @@
 &lt;li&gt;6과 4의 나머지를 구하기&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;여기 아래에 6칸, 4칸짜리 나무토막이 있습니다. 이는 위의 수를 대신 할 것입니다.&lt;/p&gt;
-&lt;p&gt;|-|-|-|-|-|-| (6)
-|-|-|-|-| (4)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;|-|-|-|-|-|-| (6)&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;|-|-|-|-| (4)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;6칸짜리 나무토막을 4칸짜리 나무토막으로 나눈 나머지를 구하겠습니다.&lt;/p&gt;
-&lt;p&gt;2칸이 나왔습니다.
-|-|-| (2)&lt;/p&gt;
+&lt;p&gt;2칸이 나왔습니다.&lt;br&gt;
+&lt;code&gt;|-|-| (2)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;이제 6칸짜리 나무토막은 냅두고,&lt;/p&gt;
 &lt;p&gt;4칸과 2칸짜리만 생각하겠습니다.&lt;/p&gt;
-&lt;p&gt;|-|-|-|-| (4)
-|-|-| (2)&lt;/p&gt;
-&lt;p&gt;2칸짜리로 4칸짜리 나무토막을 나누면 나누어 떨어집니다.&lt;/p&gt;
-&lt;p&gt;|-|-| (2) |-|-| (2)
-|-|-| (2)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;|-|-|-|-| (4)&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;|-|-| (2)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;2칸짜리로 4칸짜리 나무토막을 나누면, 나누어 떨어집니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;|-|-| (2) |-|-| (2)&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;|-|-| (2)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;여기서 나누어 떨어지게끔 하는 약수인 2가 6과 4의 최대공약수입니다.
 최대공약수인 2는 두 나무토막 (6), (4)를 나누어 떨어지게 하는 최대공약수입니다.&lt;/p&gt;
-&lt;p&gt;따라서, 두 수를 서로 나누어 나머지를 구하는 것은
-나누어 떨어질때까지 나눌 수 있는 약수를 찾기 위해 나눈 것입니다.&lt;/p&gt;
-&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;gcd&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;a&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; b&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;p&gt;따라서, &lt;code&gt;두 수를 서로 나누어 나머지를 구하는 것은 나누어 떨어질때까지 나눌 수 있는 약수를 찾기 위해 나눈 것입니다.&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;/** 
+ * a에는 b를, b에는 a % b를 b가 나누어 떨어질때까지..
+*/&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;gcd&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;a&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; b&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;b &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; a&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
@@ -91,6 +98,23 @@
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;이 알고리즘의 시간복잡도는&lt;/p&gt;
 &lt;p&gt;&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;O&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mo separator=&quot;true&quot;&gt;,&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;O(log(min(a,b)))&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.02778em;&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.01968em;&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.03588em;&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;mpunct&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.16666666666666666em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;입니다.&lt;/p&gt;
+&lt;h3 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;유클리드 호제법을 통해 서로소 구하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(log)/Euclidean-algorithm/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;서로소는 두 수의 약수가 1인 두 수를 의미합니다.&lt;/p&gt;
+&lt;p&gt;위에서 구한 최대공약수를 통해, 두 수의 최대공약수가 1인 경우 두 수는 서로소입니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;isDisjoint&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;a&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; b&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;gcd&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;a&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; b&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;-5&quot; tabindex=&quot;-1&quot;&gt;유클리드 호제법을 통해 기약분수 구하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/O(log)/Euclidean-algorithm/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;기약분수는 분모 분자의 최대공약수가 1인 분수입니다.
+예를 들어 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mi mathvariant=&quot;normal&quot;&gt;/&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;4 / 2&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; 라는 분모는 둘의 최대공약수가 2이므로 기약분수가 아닙니다.&lt;/p&gt;
+&lt;p&gt;약분을 통해 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi mathvariant=&quot;normal&quot;&gt;/&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;2 / 1&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;로 나타낸다면 이제 기약분수라고 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;기약분수를 구하는 과정에도 유클리드 호제법으로 구한 최대공약수가 사용되었습니다.
+이를 코드로 나타내면 아래와 같습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;reducedFraction&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;a&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; b&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; divisor &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;gcd&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;a&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; b&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;a &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; divisor&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;b &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; divisor&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 </content>
 	</entry>
 	
