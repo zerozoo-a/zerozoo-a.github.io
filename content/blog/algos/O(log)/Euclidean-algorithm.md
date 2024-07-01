@@ -1,5 +1,5 @@
 ---
-title: 유클리드 호제법을 통해 두 수의 최대공배수, 서로소, 기약분수 구하기
+title: 유클리드 호제법을 통해 두 수의 최대공배수, 서로소, 기약분수, 유한소수 판별하기
 date: 2024-07-01 23:24:48
 coverURL: https://images.unsplash.com/photo-1569237938828-3750d3400701?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGllY2UlMjBvZiUyMHdvb2RzfGVufDB8fDB8fHww
 ---
@@ -139,7 +139,47 @@ function isDisjoint(a, b){
 ```js
 function reducedFraction(a, b){
     const divisor = gcd(a, b);
-    return (a / divisor) / (b / divisor)
+
+    return {
+        numerator: numerator / divisor,
+        denominator: denominator / divisor
+    };
 }
 ```
 
+### 유클리드 호제법을 통해 유한소수 판별하기
+
+- 소인수분해의 소인수란 자연수의 약수중 소수인 수를 가리킵니다.
+
+- 소인수분해는 1보다 큰 자연수를 소인수들의 곱으로 나타내는 것입니다.
+예를 들어 합성수인 6을 소인수분해하면 2 * 3으로 나타낼 수 있습니다.
+
+- 유한소수와 무한소수
+  - 유한소수는 분모의 소인수가 2, 5인 경우입니다.
+  - 무한소수는 분모의 소인수가 2, 5가 아닌 경우입니다.
+
+  - 예를 들어 1 / 3을 소수로 표현하면 0.3333...입니다.
+    - 분수를 소수로 치환할 때, 1을 10의 자리로 맞추고 3으로 나누면 나누어 떨어지지 않습니다.
+      - 이는 10진수의 특성으로 이로인해 1 / 3은 무한소수입니다. 
+  - 1 / 2의 경우 0.5입니다. 
+
+
+
+```js
+
+function isFiniteDecimal(a, b){
+   const reduced = reducedFraction(a, b);
+   let denom = reduced.denominator;
+
+    while (denom % 2 === 0) {
+        denom /= 2;
+    }
+
+    while (denom % 5 === 0) {
+        denom /= 5;
+    }
+
+     return denom === 1;
+}
+```
+2나 5로 계속 나누어 분모가 1이 되었다면 소인수가 2나 5만 있다는 것입니다.
