@@ -141,8 +141,8 @@ function reducedFraction(a, b){
     const divisor = gcd(a, b);
 
     return {
-        numerator: numerator / divisor,
-        denominator: denominator / divisor
+        numerator: a / divisor,
+        denominator: b / divisor
     };
 }
 ```
