@@ -79,7 +79,7 @@
 &lt;li&gt;visited: 한번 방문한 좌표는 또 방문 할 필요가 없기에 이를 체크하기 위한 변수&lt;/li&gt;
 &lt;li&gt;stack: 이동 경로를 저장하기 위한 3차원 배열 변수
 &lt;ul&gt;
-&lt;li&gt;초기값으로 [0, 0] 좌표를 저장합니다.&lt;/li&gt;
+&lt;li&gt;초기값으로 [0, 0] 좌표를 &lt;strong&gt;저장합니다&lt;/strong&gt;.&lt;/li&gt;
 &lt;li&gt;그동안 축적될 좌표를 저장할 빈 배열도 함께 저장합니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -99,23 +99,25 @@
 해당 좌표에서는 &lt;code&gt;up, down, right, left&lt;/code&gt;의 근접 좌표를 방문합니다.&lt;/p&gt;
 &lt;h3 id=&quot;4-while&quot; tabindex=&quot;-1&quot;&gt;4. while 반복문 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/dfs-bfs-2DArray/#4-while&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;h3 id=&quot;4-1-stack&quot; tabindex=&quot;-1&quot;&gt;4-1. stack에서 값 꺼내오기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/dfs-bfs-2DArray/#4-1-stack&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;시작점인 row 0, col 0의 좌표를 방문한 좌표로 체크합니다.&lt;/p&gt;
 &lt;p&gt;stack의 길이가 존재하는 경우
 stack에서 현재 좌표, 그동안 이동한 path를 꺼내옵니다.&lt;/p&gt;
 &lt;p&gt;최초의 currentX, currentY는 각각 0,
 path는 빈 배열입니다.&lt;/p&gt;
-&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;  &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;stack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentX&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; currentY&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; path&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; stack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;  visited&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
-    &lt;span class=&quot;token comment&quot;&gt;// if (array[currentX][currentY] === 1) {&lt;/span&gt;
-    &lt;span class=&quot;token comment&quot;&gt;//   return [...path, [currentX, currentY]];&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;stack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentRow&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; currentCol&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; path&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; stack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// if (array[currentRow][currentCol] === 1) {&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;//   return [...path, [currentRow, currentCol]];&lt;/span&gt;
     &lt;span class=&quot;token comment&quot;&gt;// }&lt;/span&gt;
 
     &lt;span class=&quot;token comment&quot;&gt;// ...&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
   &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
-&lt;li&gt;currentX: 현재 방문한 좌표의 row 값&lt;/li&gt;
-&lt;li&gt;currentY: 현재 방문한 좌표의 column 값&lt;/li&gt;
+&lt;li&gt;currentRow: 현재 방문한 좌표의 row 값&lt;/li&gt;
+&lt;li&gt;currentCol: 현재 방문한 좌표의 column 값&lt;/li&gt;
 &lt;li&gt;path: 축적된 좌표들의 배열 즉, 경로&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&quot;4-2&quot; tabindex=&quot;-1&quot;&gt;4-2. 현재 방문한 좌표가 당첨인지 확인하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/dfs-bfs-2DArray/#4-2&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
@@ -123,12 +125,13 @@ path는 빈 배열입니다.&lt;/p&gt;
 &lt;p&gt;우리의 경우 값이 1이면 당첨인 경우입니다.&lt;/p&gt;
 &lt;p&gt;그동안 축적한 path와 현재 방문 좌표를 배열에 담아 반환하고 함수는 종료됩니다.&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;  &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;stack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;token comment&quot;&gt;// const [[currentX, currentY], path] = stack.pop();&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// const [[currentRow, currentCol], path] = stack.pop();&lt;/span&gt;
 
-    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentX&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentY&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-       &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentX&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; currentY&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentRow&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentCol&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentRow&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; currentCol&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;token comment&quot;&gt;// for ([dx, dy] of directions) { ... }&lt;/span&gt;
+
+    &lt;span class=&quot;token comment&quot;&gt;// for ([dRow, dCol] of directions) { ... }&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
   &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;4-3-directions&quot; tabindex=&quot;-1&quot;&gt;4-3. 방문한 좌표에서 directions만큼 탐색하기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/dfs-bfs-2DArray/#4-3-directions&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
@@ -136,36 +139,58 @@ path는 빈 배열입니다.&lt;/p&gt;
 탐색의 조건은 if문에 의해 더 탐색이 가능한 곳인지를 확인합니다.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;newX, newY: 현재 방문한 좌표에 새 좌표값을 더합니다.&lt;/p&gt;
+&lt;p&gt;newRow, newCol: 현재 방문한 좌표에 새 좌표값을 더합니다.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;if문에 대해: 새로 정의된 좌표의 값이 0 미만이거나 rows, cols의 값을 넘는다면 배열의 인덱스 범위를 벗어나므로 무시합니다.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;!visited[newX][newY]&lt;/code&gt;: 방문한적 있다면 무시합니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;!visited[newRow][newCol]&lt;/code&gt;: 방문한적 있다면 무시합니다.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;//   while (stack.length &gt; 0) {&lt;/span&gt;
 &lt;span class=&quot;token comment&quot;&gt;// ...&lt;/span&gt;
-    &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;dx&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dy&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;of&lt;/span&gt; directions&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; newX &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; currentX &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; dx&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; newY &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; currentY &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; dy&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;dRow&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dCol&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;of&lt;/span&gt; directions&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; newRow &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; currentRow &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; dRow&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; newCol &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; currentCol &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; dCol&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
       &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
-        newX &lt;span class=&quot;token operator&quot;&gt;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
-        newX &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; rows &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
-        newY &lt;span class=&quot;token operator&quot;&gt;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
-        newY &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; cols &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
-        &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;visited&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newX&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newY&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+        newRow &lt;span class=&quot;token operator&quot;&gt;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 이동 할 좌표가 row의 최소값 보다 큰지 &lt;/span&gt;
+        newRow &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; rows &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 이동 할 좌표가 row의 최대값 보다 큰지 &lt;/span&gt;
+        newCol &lt;span class=&quot;token operator&quot;&gt;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 이동 할 좌표가 col의 최소값 보다 큰지&lt;/span&gt;
+        newCol &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; cols &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 이동 할 좌표가 col의 최대값 보다 작은지&lt;/span&gt;
+        &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;visited&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newRow&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newCol&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 이미 방문한 적 있는지&lt;/span&gt;
       &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;// 위 모든 if조건을 만족하면 [[다음 이동 할 row 좌표, 다음 이동 할 col 좌표], [현재까지 이동한 좌표들, [현재 row 좌표, 현재 col 좌표 ]]] 를 저장합니다.&lt;/span&gt;
         stack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
-          &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newX&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; newY&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 새 좌표는 이동 가능하다는 판정&lt;/span&gt;
-          &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentX&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; currentY&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 그동안의 좌표와 현재 좌표를 path에 추가&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newRow&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; newCol&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;currentRow&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; currentCol&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
         &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-        visited&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newX&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newY&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        visited&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newRow&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;newCol&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 이동 할 좌표의 방문을 체크&lt;/span&gt;
       &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token comment&quot;&gt;// }&lt;/span&gt;
 &lt;span class=&quot;token comment&quot;&gt;// return null // 만약 못찾았다면 null을 반환&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;dfs-1&quot; tabindex=&quot;-1&quot;&gt;DFS의 이차원배열 탐색 요약 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/dfs/dfs-bfs-2DArray/#dfs-1&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;img src=&quot;https://zerozoo-a.github.io/img/blog/dfs-bfs-2DArray/tdr3.png&quot; alt=&quot;이차원배열-3&quot;&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;2차원 배열의 시작점인 &lt;code&gt;(0, 0)&lt;/code&gt;에서 상하좌우 각 이동 가능한 루트를 탐색합니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;탐색이 가능한 루트가 발견되면 예를 들어 &lt;code&gt;(0, 0)&lt;/code&gt;에선 우측으로 탐색이 불가능 할 때까지 나아갑니다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;img src=&quot;https://zerozoo-a.github.io/img/blog/dfs-bfs-2DArray/tdr4.png&quot; alt=&quot;이차원배열-4&quot;&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;출발점이 &lt;code&gt;(0, 0)&lt;/code&gt;일 때, 우측 뿐아니라 아래로도 길이 열려 있습니다. 그런데도 우측으로만 나아가는 이유는 현재 좌표에서 나아갈 방향을 정하는 directions와 stack에 이유가 있습니다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;directions는 순서대로 &lt;code&gt;(0, 0)&lt;/code&gt;에서 이동 가능한 다음 좌표를 탐색합니다. 상하좌우에서 이동 가능한 영역은 directions 배열 순서대로 하, 우 입니다. 즉 아래와 우측을 이동 할 수 있다고 스택에 저장합니다. &lt;code&gt;[하, 우].pop() // 우&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;스택은 pop으로 다음 행선지를 꺼내오기 때문에 우측 이동을 그 다음 행선지로 선택하게 됩니다.&lt;/code&gt;&lt;/p&gt;
+&lt;img src=&quot;https://zerozoo-a.github.io/img/blog/dfs-bfs-2DArray/tdr5.png&quot; alt=&quot;이차원배열-5&quot;&gt;
+&lt;p&gt;위와 같은 상황에서 stack은 pop이 되므로 다음 행선지는 &lt;code&gt;(0, 1)&lt;/code&gt;이 됩니다.&lt;/p&gt;
+&lt;p&gt;만약 &lt;code&gt;(0, 1)&lt;/code&gt;에 이동한 뒤 이동 경로가 모두 적절하지 않을 경우
+반복문에 의해 stack은 pop되어 &lt;code&gt;(1, 0)&lt;/code&gt;으로 돌아와 다음 행선지를 살펴보게 됩니다.&lt;/p&gt;
 </content>
   </entry>
   <entry>
