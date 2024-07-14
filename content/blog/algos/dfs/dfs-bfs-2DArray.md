@@ -91,7 +91,7 @@ function dfs(){
 
 - visited: 한번 방문한 좌표는 또 방문 할 필요가 없기에 이를 체크하기 위한 변수
 - stack: 이동 경로를 저장하기 위한 3차원 배열 변수
-  - 초기값으로 [0, 0] 좌표를 저장합니다.
+  - 초기값으로 [0, 0] 좌표를 **저장합니다**.
   - 그동안 축적될 좌표를 저장할 빈 배열도 함께 저장합니다.
 
 
@@ -116,18 +116,22 @@ function dfs(){
 
 ### 4-1. stack에서 값 꺼내오기
 
+시작점인 row 0, col 0의 좌표를 방문한 좌표로 체크합니다.
+
 stack의 길이가 존재하는 경우
 stack에서 현재 좌표, 그동안 이동한 path를 꺼내옵니다.
 
 최초의 currentX, currentY는 각각 0,
 path는 빈 배열입니다.
 
-```js
-  while (stack.length > 0) {
-    const [[currentX, currentY], path] = stack.pop();
 
-    // if (array[currentX][currentY] === 1) {
-    //   return [...path, [currentX, currentY]];
+```js
+  visited[0][0] = true;
+
+  while (stack.length > 0) {
+    const [[currentRow, currentCol], path] = stack.pop();
+    // if (array[currentRow][currentCol] === 1) {
+    //   return [...path, [currentRow, currentCol]];
     // }
 
     // ...
@@ -135,8 +139,8 @@ path는 빈 배열입니다.
   return null;
 ```
 
-- currentX: 현재 방문한 좌표의 row 값
-- currentY: 현재 방문한 좌표의 column 값
+- currentRow: 현재 방문한 좌표의 row 값
+- currentCol: 현재 방문한 좌표의 column 값
 - path: 축적된 좌표들의 배열 즉, 경로
 
 ### 4-2. 현재 방문한 좌표가 당첨인지 확인하기
@@ -149,12 +153,13 @@ stack에서 꺼내온 현재 방문한 2차원 배열의 좌표가 원하는 값
 
 ```js
   while (stack.length > 0) {
-    // const [[currentX, currentY], path] = stack.pop();
+    // const [[currentRow, currentCol], path] = stack.pop();
 
-    if (array[currentX][currentY] === 1) {
-       return [...path, [currentX, currentY]];
+    if (array[currentRow][currentCol] === 1) {
+      return [...path, [currentRow, currentCol]];
     }
-    // for ([dx, dy] of directions) { ... }
+
+    // for ([dRow, dCol] of directions) { ... }
   }
   return null;
 ```
@@ -164,34 +169,61 @@ stack에서 꺼내온 현재 방문한 2차원 배열의 좌표가 원하는 값
 DFS는 방문한 좌표(vertex, node 등)에서 주변을 탐색합니다.
 탐색의 조건은 if문에 의해 더 탐색이 가능한 곳인지를 확인합니다.
 
-- newX, newY: 현재 방문한 좌표에 새 좌표값을 더합니다.
+- newRow, newCol: 현재 방문한 좌표에 새 좌표값을 더합니다.
 
 - if문에 대해: 새로 정의된 좌표의 값이 0 미만이거나 rows, cols의 값을 넘는다면 배열의 인덱스 범위를 벗어나므로 무시합니다.
-- `!visited[newX][newY]`: 방문한적 있다면 무시합니다.
+- `!visited[newRow][newCol]`: 방문한적 있다면 무시합니다.
 
 ```js
 //   while (stack.length > 0) {
 // ...
-    for ([dx, dy] of directions) {
-      const newX = currentX + dx;
-      const newY = currentY + dy;
+    for ([dRow, dCol] of directions) {
+      const newRow = currentRow + dRow;
+      const newCol = currentCol + dCol;
       if (
-        newX >= 0 &&
-        newX < rows &&
-        newY >= 0 &&
-        newY < cols &&
-        !visited[newX][newY]
+        newRow >= 0 && // 이동 할 좌표가 row의 최소값 보다 큰지 
+        newRow < rows && // 이동 할 좌표가 row의 최대값 보다 큰지 
+        newCol >= 0 && // 이동 할 좌표가 col의 최소값 보다 큰지
+        newCol < cols && // 이동 할 좌표가 col의 최대값 보다 작은지
+        !visited[newRow][newCol] // 이미 방문한 적 있는지
       ) {
+        // 위 모든 if조건을 만족하면 [[다음 이동 할 row 좌표, 다음 이동 할 col 좌표], [현재까지 이동한 좌표들, [현재 row 좌표, 현재 col 좌표 ]]] 를 저장합니다.
         stack.push([
-          [newX, newY], // 새 좌표는 이동 가능하다는 판정
-          [...path, [currentX, currentY]], // 그동안의 좌표와 현재 좌표를 path에 추가
+          [newRow, newCol],
+          [...path, [currentRow, currentCol]],
         ]);
-        visited[newX][newY] = true;
+        visited[newRow][newCol] = true; // 이동 할 좌표의 방문을 체크
       }
     }
 // }
 // return null // 만약 못찾았다면 null을 반환
 ```
 
+
+## DFS의 이차원배열 탐색 요약
+
+
+<img src='/img/blog/dfs-bfs-2DArray/tdr3.png' alt='이차원배열-3' >
+
+1. 2차원 배열의 시작점인 `(0, 0)`에서 상하좌우 각 이동 가능한 루트를 탐색합니다. 
+
+2. 탐색이 가능한 루트가 발견되면 예를 들어 `(0, 0)`에선 우측으로 탐색이 불가능 할 때까지 나아갑니다.
+
+--- 
+
+<img src='/img/blog/dfs-bfs-2DArray/tdr4.png' alt='이차원배열-4' >
+
+3. 출발점이 `(0, 0)`일 때, 우측 뿐아니라 아래로도 길이 열려 있습니다. 그런데도 우측으로만 나아가는 이유는 현재 좌표에서 나아갈 방향을 정하는 directions와 stack에 이유가 있습니다.
+
+directions는 순서대로 `(0, 0)`에서 이동 가능한 다음 좌표를 탐색합니다. 상하좌우에서 이동 가능한 영역은 directions 배열 순서대로 하, 우 입니다. 즉 아래와 우측을 이동 할 수 있다고 스택에 저장합니다. `[하, 우].pop() // 우`
+
+`스택은 pop으로 다음 행선지를 꺼내오기 때문에 우측 이동을 그 다음 행선지로 선택하게 됩니다.`
+
+<img src='/img/blog/dfs-bfs-2DArray/tdr5.png' alt='이차원배열-5' >
+
+위와 같은 상황에서 stack은 pop이 되므로 다음 행선지는 `(0, 1)`이 됩니다. 
+
+만약 `(0, 1)`에 이동한 뒤 이동 경로가 모두 적절하지 않을 경우
+반복문에 의해 stack은 pop되어 `(1, 0)`으로 돌아와 다음 행선지를 살펴보게 됩니다.
 
 
