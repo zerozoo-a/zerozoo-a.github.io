@@ -4,12 +4,191 @@
   <subtitle>Hola!, World</subtitle>
   <link href="https://zerozoo-a.github.io/feed.xml" rel="self"/>
   <link href="https://zerozoo-a.github.io/"/>
-  <updated>2024-07-16T21:27:40Z</updated>
+  <updated>2024-07-21T12:52:21Z</updated>
   <id>https://zerozoo-a.github.io/</id>
   <author>
     <name>zerozoo-a</name>
     <email>zerozoo385@gmail.com</email>
   </author>
+  <entry>
+    <title>움직이는 볼</title>
+    <link href="https://zerozoo-a.github.io/blog/p5/bounce-ball/"/>
+    <updated>2024-07-21T12:52:21Z</updated>
+    <id>https://zerozoo-a.github.io/blog/p5/bounce-ball/</id>
+    <content xml:lang="kr" type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js&quot;&gt;&lt;/script&gt;
+&lt;h1 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;움직이는 볼 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/p5/bounce-ball/#&quot;&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;p5를 이용해 움직이는 볼을 그려보겠습니다.
+결과물은 아래와 같습니다.&lt;/p&gt;
+&lt;div id=&quot;can&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+    class Vec3 {
+        constructor(x, y, r){
+            this.x = x; 
+            this.y = y;
+            this.r = r;
+        }
+    }
+    class Vec2 {
+        constructor(x, y){
+            this.x = x; 
+            this.y = y;
+        }
+    }
+    class Ball {
+        constructor(p, v){
+            this.p = p;
+            this.v = v;
+        }
+    }
+
+
+    let ball;
+
+    function setup(){
+        const can = createCanvas(250, 250);
+        can.parent(&#39;can&#39;);
+        ball = new Ball(new Vec3(10, 10, 20), new Vec2(90, 60));
+    }
+
+    function draw(){
+        ball.p.x = ball.p.x + ball.v.x / 60;
+        ball.p.y = ball.p.y + ball.v.y / 60;
+
+        if(ball.p.x &lt; 10 || ball.p.x &gt; 240) {
+            ball.v.x = -ball.v.x;
+        } 
+        if(ball.p.y &lt; 10 || ball.p.y &gt; 240) {
+            ball.v.y = -ball.v.y;
+        } 
+
+        background(250);
+        circle(ball.p.x, ball.p.y, ball.p.r);
+    }
+&lt;/script&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;코드 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/p5/bounce-ball/#-1&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;p5는 전역에 정의된 setup, draw 함수를 실행해 canvas를 만들고
+그 위에 정의된 내용을 60 frame 단위로 draw 함수를 그려냅니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Vec3&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;x&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; y&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; r&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; x&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; 
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; y&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;r &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; r&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Vec2&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;x&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; y&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; x&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; 
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; y&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Ball&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;p&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; v&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; p&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; v&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+
+    &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; can &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;createCanvas&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        can&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;can&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        ball &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Ball&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Vec3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Vec2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;90&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;||&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;240&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; 
+        &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;||&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;240&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; 
+
+        &lt;span class=&quot;token function&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;circle&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;r&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위 코드를 하나씩 뜯어보겠습니다.&lt;/p&gt;
+&lt;h3 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;볼을 그리기 위한 위치 벡터 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/p5/bounce-ball/#-2&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Vec3&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;x&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; y&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; r&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; x&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; 
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; y&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;r &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; r&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;볼을 좌표평면 위에 그리기 위해서는 세가지 값이 필요합니다.&lt;/p&gt;
+&lt;p&gt;그것은 바로 &lt;code&gt;(x, y, r)&lt;/code&gt;입니다.
+x, y는 좌표값이며, r은 반지름입니다.&lt;/p&gt;
+&lt;p&gt;이 값들을 p5에서 정의해놓은 circle 함수에 인자로 주어주면
+canvas에 볼이 그려지게 됩니다.&lt;/p&gt;
+&lt;h3 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;볼을 움직이기 위한 속도 벡터 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/p5/bounce-ball/#-3&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Vec2&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;x&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; y&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; x&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; 
+            &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; y&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;볼을 그리기만하고 움직이지 못하면 안되겠습니다.&lt;/p&gt;
+&lt;p&gt;볼을 움직이기 위해서는 벡터가 필요합니다.
+위에서 언급한대로 1 프레임마다 draw 함수가 재실행되므로&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ball.p.x&lt;/code&gt;와 &lt;code&gt;ball.p.y&lt;/code&gt;를 &lt;code&gt;ball.v.x&lt;/code&gt;, &lt;code&gt;ball.v.y&lt;/code&gt;만큼 이동시켜주면 되는 것입니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;+=&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// vector 만큼의 거리를 60만큼 나눠서&lt;/span&gt;
+        ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;+=&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;token comment&quot;&gt;// if(ball.p.x &amp;lt; 10 || ball.p.x &gt; 240) {&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;//     ball.v.x = -ball.v.x;&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;// } &lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;// if(ball.p.y &amp;lt; 10 || ball.p.y &gt; 240) {&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;//     ball.v.y = -ball.v.y;&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;// } &lt;/span&gt;
+
+
+        &lt;span class=&quot;token function&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;circle&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;r&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;볼이 벽에 부딪힌 경우 계산될 반사 벡터 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/p5/bounce-ball/#-4&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;볼이 벽에 부딪힌 경우,&lt;/p&gt;
+&lt;p&gt;아래의 그래프로 설명할 수 있습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;u: 벽&lt;/li&gt;
+&lt;li&gt;v: 공의 이동 벡터&lt;/li&gt;
+&lt;li&gt;rv: 공의 이동 벡터에 대해 - 곱셈&lt;/li&gt;
+&lt;li&gt;rvv: v + rvv&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;와 같이 설명됩니다.&lt;/p&gt;
+&lt;img src=&quot;https://zerozoo-a.github.io/img/blog/p5/bounceball/bounce-ball.png&quot; alt=&quot;vectors&quot;&gt;
+&lt;p&gt;코드로는 아래와 같이 -를 곱해주면 됩니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;240은 캔버스의 크기 - 볼의 반지름&lt;/li&gt;
+&lt;li&gt;10은 볼의 반지름입니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;+=&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// vector 만큼의 거리를 60만큼 나눠서&lt;/span&gt;
+        ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;+=&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;||&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;240&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; 
+        &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;||&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;240&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;v&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; 
+
+        &lt;span class=&quot;token function&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;circle&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;x&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;y&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; ball&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;r&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
   <entry>
     <title>프로그래머스 안전지대</title>
     <link href="https://zerozoo-a.github.io/blog/algos/O(n^2)/safe-area/"/>
