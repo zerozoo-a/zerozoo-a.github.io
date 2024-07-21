@@ -1,5 +1,5 @@
 ---
-title: safe area
+title: 프로그래머스 안전지대
 date: 2024-07-16 21:27:40
 coverURL: 
 ---

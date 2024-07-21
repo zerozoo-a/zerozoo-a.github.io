@@ -1,5 +1,5 @@
 ---
-title: add binary
+title: 프로그래머스 이진수 더하기
 date: 2024-06-19 22:38:13
 coverURL: https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 ---
