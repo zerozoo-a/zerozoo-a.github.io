@@ -1,0 +1,3733 @@
+<!doctype html>
+<html lang="kr">
+	<head>
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-WJ6H692D');</script>
+	<!-- End Google Tag Manager -->
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PQXWR4K22C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PQXWR4K22C');
+</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Sweep Line Algorithm | 스위핑 라인 알고리즘 | zerozoo-a의 블로그</title>
+		<meta name="description" content="안녕하세요 반갑습니다. 건강하고 행복하세요">
+		<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://zerozoo-a.github.io/#website",
+      "url": "https://zerozoo-a.github.io/",
+      "name": "zerozoo-a의 블로그",
+      "description": "안녕하세요 반갑습니다. 건강하고 행복하세요",
+      "inLanguage": "ko-KR"
+    },
+    {
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage"
+      },
+      "isPartOf": {
+        "@id": "https://zerozoo-a.github.io/#website"
+      },
+      "headline": "Sweep Line Algorithm | 스위핑 라인 알고리즘",
+      "description": "안녕하세요 반갑습니다. 건강하고 행복하세요",
+      "image": "",
+      "inLanguage": "ko-KR",
+      "publisher": {
+        "@type": "Organization",
+        "name": "zerozoo-a의 블로그",
+        "url": "https://zerozoo-a.github.io/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "zerozoo-a"
+      },
+      "keywords": "posts",
+      "datePublished": "2024-07-22T22:34:17.000Z"
+    }
+  ]
+}</script>
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+		<meta property="og:title" content=Sweep Line Algorithm | 스위핑 라인 알고리즘/>
+		<meta property="og:url" content=/blog/temp/sweep-line/ />
+		<meta property="og:description" content= />
+		<meta property="og:image" content="/static/img/logo.png" />
+		<meta property="og:type" content="article" />
+		<link rel="canonical" href=/blog/temp/sweep-line/ />
+		<meta name="robots" content="index, follow" />
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="zerozoo-a의 블로그">
+		<link rel="alternate" href="/feed/feed.json" type="application/json" title="zerozoo-a의 블로그">
+		<meta name="google-site-verification" content="FzIp87nE_pk-4x5nXeKcIX-x1rqYcjlabzuH1EqXFYs" />
+    	<meta name="naver-site-verification" content="6cf39493d46e888e46dfc3a608270980215dbca5" />
+		<meta name="generator" content="Eleventy v2.0.1">
+		
+		<style>/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+.markdown-body {
+    color-scheme: dark;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    margin: 0;
+    color: #c9d1d9;
+    background-color: #0d1117;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+  
+  .markdown-body .octicon {
+    display: inline-block;
+    fill: currentColor;
+    vertical-align: text-bottom;
+  }
+  
+  .markdown-body h1:hover .anchor .octicon-link:before,
+  .markdown-body h2:hover .anchor .octicon-link:before,
+  .markdown-body h3:hover .anchor .octicon-link:before,
+  .markdown-body h4:hover .anchor .octicon-link:before,
+  .markdown-body h5:hover .anchor .octicon-link:before,
+  .markdown-body h6:hover .anchor .octicon-link:before {
+    width: 16px;
+    height: 16px;
+    content: ' ';
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+  }
+  
+  .markdown-body details,
+  .markdown-body figcaption,
+  .markdown-body figure {
+    display: block;
+  }
+  
+  .markdown-body summary {
+    display: list-item;
+  }
+  
+  .markdown-body [hidden] {
+    display: none !important;
+  }
+  
+  .markdown-body a {
+    background-color: transparent;
+    color: #58a6ff;
+    text-decoration: none;
+  }
+  
+  .markdown-body abbr[title] {
+    border-bottom: none;
+  }
+  
+  .markdown-body b,
+  .markdown-body strong {
+    font-weight: 600;
+  }
+  
+  .markdown-body dfn {
+    font-style: italic;
+  }
+  
+  .markdown-body h1 {
+    margin: .67em 0;
+    font-weight: 600;
+    padding-bottom: .3em;
+    font-size: 2em;
+    border-bottom: 1px solid #21262d;
+  }
+  
+  .markdown-body mark {
+    background-color: rgba(187,128,9,0.15);
+    color: #c9d1d9;
+  }
+  
+  .markdown-body small {
+    font-size: 90%;
+  }
+  
+  .markdown-body sub,
+  .markdown-body sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  
+  .markdown-body sub {
+    bottom: -0.25em;
+  }
+  
+  .markdown-body sup {
+    top: -0.5em;
+  }
+  
+  .markdown-body img {
+    border-style: none;
+    box-sizing: content-box;
+    /* aspect-ratio: 608 / 389; */
+    background-color: #0d1117;
+  }
+  
+  /* .markdown-body code, */
+  .markdown-body kbd,
+  /* .markdown-body pre, */
+  .markdown-body samp {
+    font-family: monospace;
+    font-size: 1em;
+  }
+  
+  .markdown-body figure {
+    margin: 1em 40px;
+  }
+  
+  .markdown-body hr {
+    box-sizing: content-box;
+    overflow: hidden;
+    background: transparent;
+    border-bottom: 1px solid #21262d;
+    height: .25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #30363d;
+    border: 0;
+  }
+  
+  .markdown-body input {
+    font: inherit;
+    margin: 0;
+    overflow: visible;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  
+  .markdown-body [type=button],
+  .markdown-body [type=reset],
+  .markdown-body [type=submit] {
+    -webkit-appearance: button;
+  }
+  
+  .markdown-body [type=checkbox],
+  .markdown-body [type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+  
+  .markdown-body [type=number]::-webkit-inner-spin-button,
+  .markdown-body [type=number]::-webkit-outer-spin-button {
+    height: auto;
+  }
+  
+  .markdown-body [type=search]::-webkit-search-cancel-button,
+  .markdown-body [type=search]::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  
+  .markdown-body ::-webkit-input-placeholder {
+    color: inherit;
+    opacity: .54;
+  }
+  
+  .markdown-body ::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit;
+  }
+  
+  .markdown-body a:hover {
+    text-decoration: underline;
+  }
+  
+  .markdown-body ::placeholder {
+    color: #6e7681;
+    opacity: 1;
+  }
+  
+  .markdown-body hr::before {
+    display: table;
+    content: "";
+  }
+  
+  .markdown-body hr::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .markdown-body table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+  }
+  
+  .markdown-body td,
+  .markdown-body th {
+    padding: 0;
+  }
+  
+  .markdown-body details summary {
+    cursor: pointer;
+  }
+  
+  .markdown-body details:not([open])>*:not(summary) {
+    display: none !important;
+  }
+  
+  .markdown-body a:focus,
+  .markdown-body [role=button]:focus,
+  .markdown-body input[type=radio]:focus,
+  .markdown-body input[type=checkbox]:focus {
+    outline: 2px solid #58a6ff;
+    outline-offset: -2px;
+    box-shadow: none;
+  }
+  
+  .markdown-body a:focus:not(:focus-visible),
+  .markdown-body [role=button]:focus:not(:focus-visible),
+  .markdown-body input[type=radio]:focus:not(:focus-visible),
+  .markdown-body input[type=checkbox]:focus:not(:focus-visible) {
+    outline: solid 1px transparent;
+  }
+  
+  .markdown-body a:focus-visible,
+  .markdown-body [role=button]:focus-visible,
+  .markdown-body input[type=radio]:focus-visible,
+  .markdown-body input[type=checkbox]:focus-visible {
+    outline: 2px solid #58a6ff;
+    outline-offset: -2px;
+    box-shadow: none;
+  }
+  
+  .markdown-body a:not([class]):focus,
+  .markdown-body a:not([class]):focus-visible,
+  .markdown-body input[type=radio]:focus,
+  .markdown-body input[type=radio]:focus-visible,
+  .markdown-body input[type=checkbox]:focus,
+  .markdown-body input[type=checkbox]:focus-visible {
+    outline-offset: 0;
+  }
+  
+  .markdown-body kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font: 11px ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    line-height: 10px;
+    color: #c9d1d9;
+    vertical-align: middle;
+    background-color: #161b22;
+    border: solid 1px rgba(110,118,129,0.4);
+    border-bottom-color: rgba(110,118,129,0.4);
+    border-radius: 6px;
+    box-shadow: inset 0 -1px 0 rgba(110,118,129,0.4);
+  }
+  
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  
+  .markdown-body h2 {
+    font-weight: 600;
+    padding-bottom: .3em;
+    font-size: 1.5em;
+    border-bottom: 1px solid #21262d;
+  }
+  
+  .markdown-body h3 {
+    font-weight: 600;
+    font-size: 1.25em;
+  }
+  
+  .markdown-body h4 {
+    font-weight: 600;
+    font-size: 1em;
+  }
+  
+  .markdown-body h5 {
+    font-weight: 600;
+    font-size: .875em;
+  }
+  
+  .markdown-body h6 {
+    font-weight: 600;
+    font-size: .85em;
+    color: #8b949e;
+  }
+  
+  .markdown-body p {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .markdown-body blockquote {
+    margin: 0;
+    padding: 0 1em;
+    color: #8b949e;
+    border-left: .25em solid #30363d;
+  }
+  
+  .markdown-body ul,
+  .markdown-body ol {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 2em;
+  }
+  
+  .markdown-body ol ol,
+  .markdown-body ul ol {
+    list-style-type: lower-roman;
+  }
+  
+  .markdown-body ul ul ol,
+  .markdown-body ul ol ol,
+  .markdown-body ol ul ol,
+  .markdown-body ol ol ol {
+    list-style-type: lower-alpha;
+  }
+  
+  .markdown-body dd {
+    margin-left: 0;
+  }
+  
+  .markdown-body tt,
+  /* .markdown-body code, */
+  .markdown-body samp {
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    font-size: 12px;
+  }
+  
+  /* .markdown-body pre {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    font-size: 12px;
+    word-wrap: normal;
+  } */
+  
+  .markdown-body .octicon {
+    display: inline-block;
+    overflow: visible !important;
+    vertical-align: text-bottom;
+    fill: currentColor;
+  }
+  
+  .markdown-body input::-webkit-outer-spin-button,
+  .markdown-body input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .markdown-body::before {
+    display: table;
+    content: "";
+  }
+  
+  .markdown-body::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .markdown-body>*:first-child {
+    margin-top: 0 !important;
+  }
+  
+  .markdown-body>*:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .markdown-body a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .markdown-body .absent {
+    color: #f85149;
+  }
+  
+  .markdown-body .anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+    line-height: 1;
+  }
+  
+  .markdown-body .anchor:focus {
+    outline: none;
+  }
+  
+  .markdown-body p,
+  .markdown-body blockquote,
+  .markdown-body ul,
+  .markdown-body ol,
+  .markdown-body dl,
+  .markdown-body table,
+  /* .markdown-body pre, */
+  .markdown-body details {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body blockquote>:first-child {
+    margin-top: 0;
+  }
+  
+  .markdown-body blockquote>:last-child {
+    margin-bottom: 0;
+  }
+  
+  .markdown-body h1 .octicon-link,
+  .markdown-body h2 .octicon-link,
+  .markdown-body h3 .octicon-link,
+  .markdown-body h4 .octicon-link,
+  .markdown-body h5 .octicon-link,
+  .markdown-body h6 .octicon-link {
+    color: #c9d1d9;
+    vertical-align: middle;
+    visibility: hidden;
+  }
+  
+  .markdown-body h1:hover .anchor,
+  .markdown-body h2:hover .anchor,
+  .markdown-body h3:hover .anchor,
+  .markdown-body h4:hover .anchor,
+  .markdown-body h5:hover .anchor,
+  .markdown-body h6:hover .anchor {
+    text-decoration: none;
+  }
+  
+  .markdown-body h1:hover .anchor .octicon-link,
+  .markdown-body h2:hover .anchor .octicon-link,
+  .markdown-body h3:hover .anchor .octicon-link,
+  .markdown-body h4:hover .anchor .octicon-link,
+  .markdown-body h5:hover .anchor .octicon-link,
+  .markdown-body h6:hover .anchor .octicon-link {
+    visibility: visible;
+  }
+  
+  .markdown-body h1 tt,
+  /* .markdown-body h1 code, */
+  .markdown-body h2 tt,
+  /* .markdown-body h2 code, */
+  .markdown-body h3 tt,
+  /* .markdown-body h3 code, */
+  .markdown-body h4 tt,
+  /* .markdown-body h4 code, */
+  .markdown-body h5 tt,
+  /* .markdown-body h5 code, */
+  .markdown-body h6 tt {
+  /* .markdown-body h6 code  */
+    padding: 0 .2em;
+    font-size: inherit;
+  }
+  
+  .markdown-body summary h1,
+  .markdown-body summary h2,
+  .markdown-body summary h3,
+  .markdown-body summary h4,
+  .markdown-body summary h5,
+  .markdown-body summary h6 {
+    display: inline-block;
+  }
+  
+  .markdown-body summary h1 .anchor,
+  .markdown-body summary h2 .anchor,
+  .markdown-body summary h3 .anchor,
+  .markdown-body summary h4 .anchor,
+  .markdown-body summary h5 .anchor,
+  .markdown-body summary h6 .anchor {
+    margin-left: -40px;
+  }
+  
+  .markdown-body summary h1,
+  .markdown-body summary h2 {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  
+  .markdown-body ul.no-list,
+  .markdown-body ol.no-list {
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .markdown-body ol[type=a] {
+    list-style-type: lower-alpha;
+  }
+  
+  .markdown-body ol[type=A] {
+    list-style-type: upper-alpha;
+  }
+  
+  .markdown-body ol[type=i] {
+    list-style-type: lower-roman;
+  }
+  
+  .markdown-body ol[type=I] {
+    list-style-type: upper-roman;
+  }
+  
+  .markdown-body ol[type="1"] {
+    list-style-type: decimal;
+  }
+  
+  .markdown-body div>ol:not([type]) {
+    list-style-type: decimal;
+  }
+  
+  .markdown-body ul ul,
+  .markdown-body ul ol,
+  .markdown-body ol ol,
+  .markdown-body ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .markdown-body li>p {
+    margin-top: 16px;
+  }
+  
+  .markdown-body li+li {
+    margin-top: .25em;
+  }
+  
+  .markdown-body dl {
+    padding: 0;
+  }
+  
+  .markdown-body dl dt {
+    padding: 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: 600;
+  }
+  
+  .markdown-body dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body table th {
+    font-weight: 600;
+  }
+  
+  .markdown-body table th,
+  .markdown-body table td {
+    padding: 6px 13px;
+    border: 1px solid #30363d;
+  }
+  
+  .markdown-body table tr {
+    background-color: #0d1117;
+    border-top: 1px solid #21262d;
+  }
+  
+  .markdown-body table tr:nth-child(2n) {
+    background-color: #161b22;
+  }
+  
+  .markdown-body table img {
+    background-color: transparent;
+  }
+  
+  .markdown-body img[align=right] {
+    padding-left: 20px;
+  }
+  
+  .markdown-body img[align=left] {
+    padding-right: 20px;
+  }
+  
+  .markdown-body .emoji {
+    max-width: none;
+    vertical-align: text-top;
+    background-color: transparent;
+  }
+  
+  .markdown-body span.frame {
+    display: block;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.frame>span {
+    display: block;
+    float: left;
+    width: auto;
+    padding: 7px;
+    margin: 13px 0 0;
+    overflow: hidden;
+    border: 1px solid #30363d;
+  }
+  
+  .markdown-body span.frame span img {
+    display: block;
+    float: left;
+  }
+  
+  .markdown-body span.frame span span {
+    display: block;
+    padding: 5px 0 0;
+    clear: both;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body span.align-center {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+  
+  .markdown-body span.align-center>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .markdown-body span.align-center span img {
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .markdown-body span.align-right {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+  
+  .markdown-body span.align-right>span {
+    display: block;
+    margin: 13px 0 0;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .markdown-body span.align-right span img {
+    margin: 0;
+    text-align: right;
+  }
+  
+  .markdown-body span.float-left {
+    display: block;
+    float: left;
+    margin-right: 13px;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.float-left span {
+    margin: 13px 0 0;
+  }
+  
+  .markdown-body span.float-right {
+    display: block;
+    float: right;
+    margin-left: 13px;
+    overflow: hidden;
+  }
+  
+  .markdown-body span.float-right>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: right;
+  }
+  
+  .markdown-body code,
+  .markdown-body tt {
+    padding: .2em .4em;
+    margin: 0;
+    font-size: 85%;
+    white-space: break-spaces;
+    /* background-color: rgba(110,118,129,0.4); */
+    background-color: #272822;
+    border-radius: 6px;
+  }
+  
+  /* .markdown-body code br, */
+  .markdown-body tt br {
+    display: none;
+  }
+  
+  /* .markdown-body del code {
+    text-decoration: inherit;
+  } */
+  
+  .markdown-body samp {
+    font-size: 85%;
+  }
+  
+  /* .markdown-body pre code {
+    font-size: 100%;
+  } */
+  
+  /* .markdown-body pre>code {
+    padding: 0;
+    margin: 0;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  } */
+  
+  /* .markdown-body .highlight {
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body .highlight pre {
+    margin-bottom: 0;
+    word-break: normal;
+  }
+  
+  .markdown-body .highlight pre,
+  .markdown-body pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #161b22;
+    border-radius: 6px;
+  }
+  
+  .markdown-body pre code,
+  .markdown-body pre tt {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  } */
+  
+  .markdown-body .csv-data td,
+  .markdown-body .csv-data th {
+    padding: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1;
+    text-align: left;
+    white-space: nowrap;
+  }
+  
+  .markdown-body .csv-data .blob-num {
+    padding: 10px 8px 9px;
+    text-align: right;
+    background: #0d1117;
+    border: 0;
+  }
+  
+  .markdown-body .csv-data tr {
+    border-top: 0;
+  }
+  
+  .markdown-body .csv-data th {
+    font-weight: 600;
+    background: #161b22;
+    border-top: 0;
+  }
+  
+  .markdown-body [data-footnote-ref]::before {
+    content: "[";
+  }
+  
+  .markdown-body [data-footnote-ref]::after {
+    content: "]";
+  }
+  
+  .markdown-body .footnotes {
+    font-size: 12px;
+    color: #8b949e;
+    border-top: 1px solid #30363d;
+  }
+  
+  .markdown-body .footnotes ol {
+    padding-left: 16px;
+  }
+  
+  .markdown-body .footnotes ol ul {
+    display: inline-block;
+    padding-left: 16px;
+    margin-top: 16px;
+  }
+  
+  .markdown-body .footnotes li {
+    position: relative;
+  }
+  
+  .markdown-body .footnotes li:target::before {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    bottom: -8px;
+    left: -24px;
+    pointer-events: none;
+    content: "";
+    border: 2px solid #1f6feb;
+    border-radius: 6px;
+  }
+  
+  .markdown-body .footnotes li:target {
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .footnotes .data-footnote-backref g-emoji {
+    font-family: monospace;
+  }
+  
+  .markdown-body .pl-c {
+    color: #8b949e;
+  }
+  
+  .markdown-body .pl-c1,
+  .markdown-body .pl-s .pl-v {
+    color: #79c0ff;
+  }
+  
+  .markdown-body .pl-e,
+  .markdown-body .pl-en {
+    color: #d2a8ff;
+  }
+  
+  .markdown-body .pl-smi,
+  .markdown-body .pl-s .pl-s1 {
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-ent {
+    color: #7ee787;
+  }
+  
+  .markdown-body .pl-k {
+    color: #ff7b72;
+  }
+  
+  .markdown-body .pl-s,
+  .markdown-body .pl-pds,
+  .markdown-body .pl-s .pl-pse .pl-s1,
+  .markdown-body .pl-sr,
+  .markdown-body .pl-sr .pl-cce,
+  .markdown-body .pl-sr .pl-sre,
+  .markdown-body .pl-sr .pl-sra {
+    color: #a5d6ff;
+  }
+  
+  .markdown-body .pl-v,
+  .markdown-body .pl-smw {
+    color: #ffa657;
+  }
+  
+  .markdown-body .pl-bu {
+    color: #f85149;
+  }
+  
+  .markdown-body .pl-ii {
+    color: #f0f6fc;
+    background-color: #8e1519;
+  }
+  
+  .markdown-body .pl-c2 {
+    color: #f0f6fc;
+    background-color: #b62324;
+  }
+  
+  .markdown-body .pl-sr .pl-cce {
+    font-weight: bold;
+    color: #7ee787;
+  }
+  
+  .markdown-body .pl-ml {
+    color: #f2cc60;
+  }
+  
+  .markdown-body .pl-mh,
+  .markdown-body .pl-mh .pl-en,
+  .markdown-body .pl-ms {
+    font-weight: bold;
+    color: #1f6feb;
+  }
+  
+  .markdown-body .pl-mi {
+    font-style: italic;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-mb {
+    font-weight: bold;
+    color: #c9d1d9;
+  }
+  
+  .markdown-body .pl-md {
+    color: #ffdcd7;
+    background-color: #67060c;
+  }
+  
+  .markdown-body .pl-mi1 {
+    color: #aff5b4;
+    background-color: #033a16;
+  }
+  
+  .markdown-body .pl-mc {
+    color: #ffdfb6;
+    background-color: #5a1e02;
+  }
+  
+  .markdown-body .pl-mi2 {
+    color: #c9d1d9;
+    background-color: #1158c7;
+  }
+  
+  .markdown-body .pl-mdr {
+    font-weight: bold;
+    color: #d2a8ff;
+  }
+  
+  .markdown-body .pl-ba {
+    color: #8b949e;
+  }
+  
+  .markdown-body .pl-sg {
+    color: #484f58;
+  }
+  
+  .markdown-body .pl-corl {
+    text-decoration: underline;
+    color: #a5d6ff;
+  }
+  
+  .markdown-body g-emoji {
+    display: inline-block;
+    min-width: 1ch;
+    font-family: "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 1em;
+    font-style: normal !important;
+    font-weight: 400;
+    line-height: 1;
+    vertical-align: -0.075em;
+  }
+  
+  .markdown-body g-emoji img {
+    width: 1em;
+    height: 1em;
+  }
+  
+  .markdown-body .task-list-item {
+    list-style-type: none;
+  }
+  
+  .markdown-body .task-list-item label {
+    font-weight: 400;
+  }
+  
+  .markdown-body .task-list-item.enabled label {
+    cursor: pointer;
+  }
+  
+  .markdown-body .task-list-item+.task-list-item {
+    margin-top: 4px;
+  }
+  
+  .markdown-body .task-list-item .handle {
+    display: none;
+  }
+  
+  .markdown-body .task-list-item-checkbox {
+    margin: 0 .2em .25em -1.4em;
+    vertical-align: middle;
+  }
+  
+  .markdown-body .contains-task-list:dir(rtl) .task-list-item-checkbox {
+    margin: 0 -1.6em .25em .2em;
+  }
+  
+  .markdown-body .contains-task-list {
+    position: relative;
+  }
+  
+  .markdown-body .contains-task-list:hover .task-list-item-convert-container,
+  .markdown-body .contains-task-list:focus-within .task-list-item-convert-container {
+    display: block;
+    width: auto;
+    height: 24px;
+    overflow: visible;
+    clip: auto;
+  }
+  
+  .markdown-body ::-webkit-calendar-picker-indicator {
+    filter: invert(50%);
+  }
+
+  .markdown-body ol{
+    list-style: decimal ;
+
+  } 
+  .markdown-body ul {
+    list-style: disc;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+ code[class*="language-"],
+ pre[class*="language-"] {
+     color: #f8f8f2;
+     text-shadow: 0px 1px rgba(0,0,0,0.3);
+     font-family: Consolas, Monaco, 'Andale Mono', monospace;
+     direction: ltr;
+     text-align: left;
+     white-space: pre;
+     word-spacing: normal;
+     
+     -moz-tab-size: 4;
+     -o-tab-size: 4;
+     tab-size: 4;
+     
+     -webkit-hyphens: none;
+     -moz-hyphens: none;
+     -ms-hyphens: none;
+     hyphens: none;
+    border-radius: 12px;
+ }
+ 
+ /* Code blocks */
+ pre[class*="language-"] {
+     padding: 1em;
+     margin: .5em 0;
+     overflow: auto;	
+ }
+ 
+ :not(pre) > code[class*="language-"],
+ pre[class*="language-"] {
+     background: #272822;
+ }
+ 
+ /* Inline code */
+ :not(pre) > code[class*="language-"] {
+     padding: .1em;
+     border-radius: .3em;
+ }
+ 
+ .token.comment,
+ .token.prolog,
+ .token.doctype,
+ .token.cdata {
+     color: slategray;
+ }
+ 
+ .token.punctuation {
+     color: #f8f8f2;
+ }
+ 
+ .namespace {
+     opacity: .7;
+ }
+ 
+ .token.property,
+ .token.tag {
+     color: #f92672;
+ }
+ 
+ .token.boolean,
+ .token.number{
+     color: #ae81ff;
+ }
+ 
+ .token.selector,
+ .token.attr-name,
+ .token.string {
+     color: #a6e22e;
+ }
+ 
+ 
+ .token.operator,
+ .token.entity,
+ .token.url,
+ .language-css .token.string,
+ .style .token.string {
+     color: #f8f8f2;
+ }
+ 
+ .token.atrule,
+ .token.attr-value
+ {
+     color: #e6db74;
+ }
+ 
+ 
+ .token.keyword{
+ color: #f92672;
+ }
+ 
+ .token.regex,
+ .token.important {
+     color: #fd971f;
+ }
+ 
+ .token.important {
+     font-weight: bold;
+ }
+ 
+ .token.entity {
+     cursor: help;
+ }
+
+ img {
+    width: 100%;
+ }
+* { box-sizing: border-box; }
+.Box,.color-bg-default{background-color:var(--color-canvas-default)!important}.home-link,.postlist-item-active .postlist-link,.postlist-link{font-weight:700}#drawerMenu ul,.flex-list,.nav,.post-metadata,.postlist,ol,ul{list-style:none}#drawerMenu,#openDrawerBtn{background-color:#24292e;color:#fff}HTML5 display-role reset for older browsers .appear-dim{position:sticky;position:-webkit-sticky;top:0;width:100%;height:100vh;z-index:1;background-color:var(--color-scale-black);opacity:.5;transition:.3s ease-in-out}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}.nav,header{display:flex}body{line-height:1;transition:margin-left .3s ease-in-out}:root{--font-family:-apple-system,system-ui,sans-serif;--font-family-monospace:Consolas,Menlo,Monaco,Andale Mono WT,Andale Mono,Lucida Console,Lucida Sans Typewriter,DejaVu Sans Mono,Bitstream Vera Sans Mono,Liberation Mono,Nimbus Mono L,Courier New,Courier,monospace;--img-max-width:607px;--boxShadow-thin:inset 0 0 0 max(1px, 0.0625rem);--boxShadow-thick:inset 0 0 0 max(2px, 0.125rem);--boxShadow-thicker:inset 0 0 0 max(4px, 0.25rem);--borderWidth-thin:max(1px, 0.0625rem);--borderWidth-thick:max(2px, 0.125rem);--borderWidth-thicker:max(4px, 0.25rem);--borderRadius-small:3px;--borderRadius-medium:6px;--borderRadius-large:12px;--borderRadius-full:100vh;--outline-focus-offset:-0.125rem;--outline-focus-width:0.125rem;--breakpoint-xsmall:20rem;--breakpoint-small:34rem;--breakpoint-medium:48rem;--breakpoint-large:63.25rem;--breakpoint-xlarge:80rem;--breakpoint-xxlarge:90rem;--color-gray-20:#e0e0e0;--color-gray-50:#C0C0C0;--color-gray-90:#333;--color-canvas-default:#0d1117;--text-color:var(--color-gray-90);--text-color-link:#082840;--text-color-link-active:#5f2b48;--text-color-link-visited:#17050F;--adaptiveGrey50:#f9fafb;--adaptiveGrey100:#f2f4f6;--adaptiveGrey200:#e5e8eb;--adaptiveGrey300:#d1d6db;--adaptiveGrey400:#b0b8c1;--adaptiveGrey500:#8b95a1;--adaptiveGrey600:#6b7684;--adaptiveGrey700:#4e5968;--adaptiveGrey800:#333d4b;--adaptiveGrey900:#191f28;--syntax-tab-size:2;--color-canvas-default-transparent:rgba(13,17,23,0);--color-page-header-bg:#0d1117;--color-marketing-icon-primary:#79c0ff;--color-marketing-icon-secondary:#1f6feb;--color-diff-blob-addition-num-text:#e6edf3;--color-diff-blob-addition-fg:#e6edf3;--color-diff-blob-addition-num-bg:rgba(63,185,80,0.3);--color-diff-blob-addition-line-bg:rgba(46,160,67,0.15);--color-diff-blob-addition-word-bg:rgba(46,160,67,0.4);--color-diff-blob-deletion-num-text:#e6edf3;--color-diff-blob-deletion-fg:#e6edf3;--color-diff-blob-deletion-num-bg:rgba(248,81,73,0.3);--color-diff-blob-deletion-line-bg:rgba(248,81,73,0.1);--color-diff-blob-deletion-word-bg:rgba(248,81,73,0.4);--color-diff-blob-hunk-num-bg:rgba(56,139,253,0.4);--color-diff-blob-expander-icon:#7d8590;--color-diff-blob-selected-line-highlight-mix-blend-mode:screen;--color-diffstat-deletion-border:rgba(240,246,252,0.1);--color-diffstat-addition-border:rgba(240,246,252,0.1);--color-diffstat-addition-bg:#3fb950;--color-search-keyword-hl:rgba(210,153,34,0.4);--color-prettylights-syntax-comment:#8b949e;--color-prettylights-syntax-constant:#79c0ff;--color-prettylights-syntax-entity:#d2a8ff;--color-prettylights-syntax-storage-modifier-import:#c9d1d9;--color-prettylights-syntax-entity-tag:#7ee787;--color-prettylights-syntax-keyword:#ff7b72;--color-prettylights-syntax-string:#a5d6ff;--color-prettylights-syntax-variable:#ffa657;--color-prettylights-syntax-brackethighlighter-unmatched:#f85149;--color-prettylights-syntax-invalid-illegal-text:#f0f6fc;--color-prettylights-syntax-invalid-illegal-bg:#8e1519;--color-prettylights-syntax-carriage-return-text:#f0f6fc;--color-prettylights-syntax-carriage-return-bg:#b62324;--color-prettylights-syntax-string-regexp:#7ee787;--color-prettylights-syntax-markup-list:#f2cc60;--color-prettylights-syntax-markup-heading:#1f6feb;--color-prettylights-syntax-markup-italic:#c9d1d9;--color-prettylights-syntax-markup-bold:#c9d1d9;--color-prettylights-syntax-markup-deleted-text:#ffdcd7;--color-prettylights-syntax-markup-deleted-bg:#67060c;--color-prettylights-syntax-markup-inserted-text:#aff5b4;--color-prettylights-syntax-markup-inserted-bg:#033a16;--color-prettylights-syntax-markup-changed-text:#ffdfb6;--color-prettylights-syntax-markup-changed-bg:#5a1e02;--color-prettylights-syntax-markup-ignored-text:#c9d1d9;--color-prettylights-syntax-markup-ignored-bg:#1158c7;--color-prettylights-syntax-meta-diff-range:#d2a8ff;--color-prettylights-syntax-brackethighlighter-angle:#8b949e;--color-prettylights-syntax-sublimelinter-gutter-mark:#484f58;--color-prettylights-syntax-constant-other-reference-link:#a5d6ff;--color-codemirror-text:#e6edf3;--color-codemirror-bg:#0d1117;--color-codemirror-gutters-bg:#0d1117;--color-codemirror-guttermarker-text:#0d1117;--color-codemirror-guttermarker-subtle-text:#6e7681;--color-codemirror-linenumber-text:#7d8590;--color-codemirror-cursor:#e6edf3;--color-codemirror-selection-bg:rgba(56,139,253,0.4);--color-codemirror-activeline-bg:rgba(110,118,129,0.1);--color-codemirror-matchingbracket-text:#e6edf3;--color-codemirror-lines-bg:#0d1117;--color-codemirror-syntax-comment:#8b949e;--color-codemirror-syntax-constant:#79c0ff;--color-codemirror-syntax-entity:#d2a8ff;--color-codemirror-syntax-keyword:#ff7b72;--color-codemirror-syntax-storage:#ff7b72;--color-codemirror-syntax-string:#a5d6ff;--color-codemirror-syntax-support:#79c0ff;--color-codemirror-syntax-variable:#ffa657;--color-checks-bg:#010409;--color-checks-run-border-width:1px;--color-checks-container-border-width:1px;--color-checks-text-primary:#e6edf3;--color-checks-text-secondary:#7d8590;--color-checks-text-link:#2f81f7;--color-checks-btn-icon:#7d8590;--color-checks-btn-hover-icon:#e6edf3;--color-checks-btn-hover-bg:rgba(110,118,129,0.1);--color-checks-input-text:#7d8590;--color-checks-input-placeholder-text:#6e7681;--color-checks-input-focus-text:#e6edf3;--color-checks-input-bg:#161b22;--color-checks-input-shadow:0 0 0 1px (obj) => (0, get_1.default) (obj, path);--color-checks-donut-error:#f85149;--color-checks-donut-pending:#d29922;--color-checks-donut-success:#2ea043;--color-checks-donut-neutral:#8b949e;--color-checks-dropdown-text:#e6edf3;--color-checks-dropdown-bg:#161b22;--color-checks-dropdown-border:#30363d;--color-checks-dropdown-shadow:rgba(1,4,9,0.3);--color-checks-dropdown-hover-text:#e6edf3;--color-checks-dropdown-hover-bg:rgba(110,118,129,0.1);--color-checks-dropdown-btn-hover-text:#e6edf3;--color-checks-dropdown-btn-hover-bg:rgba(110,118,129,0.1);--color-checks-scrollbar-thumb-bg:rgba(110,118,129,0.4);--color-checks-header-label-text:#7d8590;--color-checks-header-label-open-text:#e6edf3;--color-checks-header-border:#21262d;--color-checks-header-icon:#7d8590;--color-checks-line-text:#7d8590;--color-checks-line-num-text:#6e7681;--color-checks-line-timestamp-text:#6e7681;--color-checks-line-hover-bg:rgba(110,118,129,0.1);--color-checks-line-selected-bg:rgba(56,139,253,0.1);--color-checks-line-selected-num-text:#2f81f7;--color-checks-line-dt-fm-text:#ffffff;--color-checks-line-dt-fm-bg:#9e6a03;--color-checks-gate-bg:rgba(187,128,9,0.15);--color-checks-gate-text:#7d8590;--color-checks-gate-waiting-text:#d29922;--color-checks-step-header-open-bg:#161b22;--color-checks-step-error-text:#f85149;--color-checks-step-warning-text:#d29922;--color-checks-logline-text:#7d8590;--color-checks-logline-num-text:#6e7681;--color-checks-logline-debug-text:#a371f7;--color-checks-logline-error-text:#7d8590;--color-checks-logline-error-num-text:#6e7681;--color-checks-logline-error-bg:rgba(248,81,73,0.1);--color-checks-logline-warning-text:#7d8590;--color-checks-logline-warning-num-text:#d29922;--color-checks-logline-warning-bg:rgba(187,128,9,0.15);--color-checks-logline-command-text:#2f81f7;--color-checks-logline-section-text:#3fb950;--color-checks-ansi-black:#0d1117;--color-checks-ansi-black-bright:#161b22;--color-checks-ansi-white:#b1bac4;--color-checks-ansi-white-bright:#b1bac4;--color-checks-ansi-gray:#6e7681;--color-checks-ansi-red:#ff7b72;--color-checks-ansi-red-bright:#ffa198;--color-checks-ansi-green:#3fb950;--color-checks-ansi-green-bright:#56d364;--color-checks-ansi-yellow:#d29922;--color-checks-ansi-yellow-bright:#e3b341;--color-checks-ansi-blue:#58a6ff;--color-checks-ansi-blue-bright:#79c0ff;--color-checks-ansi-magenta:#bc8cff;--color-checks-ansi-magenta-bright:#d2a8ff;--color-checks-ansi-cyan:#76e3ea;--color-checks-ansi-cyan-bright:#b3f0ff;--color-project-header-bg:#0d1117;--color-project-sidebar-bg:#161b22;--color-project-gradient-in:#161b22;--color-project-gradient-out:rgba(22,27,34,0);--color-mktg-btn-bg:#f6f8fa;--color-mktg-btn-shadow-outline:rgb(255 255 255 / 25%) 0 0 0 1px inset;--color-mktg-btn-shadow-focus:rgb(255 255 255 / 25%) 0 0 0 4px;--color-mktg-btn-shadow-hover:0 4px 7px rgba(0, 0, 0, 0.15),0 100px 80px rgba(255, 255, 255, 0.02),0 42px 33px rgba(255, 255, 255, 0.024),0 22px 18px rgba(255, 255, 255, 0.028),0 12px 10px rgba(255, 255, 255, 0.034),0 7px 5px rgba(255, 255, 255, 0.04),0 3px 2px rgba(255, 255, 255, 0.07);--color-mktg-btn-shadow-hover-muted:rgb(255 255 255) 0 0 0 2px inset;--color-control-border-color-emphasis:#606771;--color-avatar-bg:rgba(255,255,255,0.1);--color-avatar-border:rgba(240,246,252,0.1);--color-avatar-stack-fade:#30363d;--color-avatar-stack-fade-more:#21262d;--color-avatar-child-shadow:0 0 0 2px #0d1117;--color-topic-tag-border:rgba(0,0,0,0);--color-counter-border:rgba(0,0,0,0);--color-select-menu-backdrop-border:#484f58;--color-select-menu-tap-highlight:rgba(48,54,61,0.5);--color-select-menu-tap-focus-bg:#0c2d6b;--color-overlay-shadow:0 0 0 1px #30363d,0 16px 32px rgba(1,4,9,0.85);--color-header-text:rgba(255,255,255,0.7);--color-header-bg:#161b22;--color-header-divider:#8b949e;--color-header-logo:#f0f6fc;--color-header-search-bg:#0d1117;--color-header-search-border:#30363d;--color-sidenav-selected-bg:#21262d;--color-menu-bg-active:#161b22;--color-input-disabled-bg:rgba(110,118,129,0);--color-timeline-badge-bg:#21262d;--color-ansi-black:#484f58;--color-ansi-black-bright:#6e7681;--color-ansi-white:#b1bac4;--color-ansi-white-bright:#ffffff;--color-ansi-gray:#6e7681;--color-ansi-red:#ff7b72;--color-ansi-red-bright:#ffa198;--color-ansi-green:#3fb950;--color-ansi-green-bright:#56d364;--color-ansi-yellow:#d29922;--color-ansi-yellow-bright:#e3b341;--color-ansi-blue:#58a6ff;--color-ansi-blue-bright:#79c0ff;--color-ansi-magenta:#bc8cff;--color-ansi-magenta-bright:#d2a8ff;--color-ansi-cyan:#39c5cf;--color-ansi-cyan-bright:#56d4dd;--color-btn-text:#c9d1d9;--color-btn-bg:#21262d;--color-btn-border:rgba(240,246,252,0.1);--color-btn-shadow:0 0 transparent;--color-btn-inset-shadow:0 0 transparent;--color-btn-hover-bg:#30363d;--color-btn-hover-border:#8b949e;--color-btn-active-bg:hsla(212,12%,18%,1);--color-btn-active-border:#6e7681;--color-btn-selected-bg:#161b22;--color-btn-counter-bg:#30363d;--color-btn-primary-text:#ffffff;--color-btn-primary-bg:#238636;--color-btn-primary-border:rgba(240,246,252,0.1);--color-btn-primary-shadow:0 0 transparent;--color-btn-primary-inset-shadow:0 0 transparent;--color-btn-primary-hover-bg:#2ea043;--color-btn-primary-hover-border:rgba(240,246,252,0.1);--color-btn-primary-selected-bg:#238636;--color-btn-primary-selected-shadow:0 0 transparent;--color-btn-primary-disabled-text:rgba(255,255,255,0.5);--color-btn-primary-disabled-bg:rgba(35,134,54,0.6);--color-btn-primary-disabled-border:rgba(240,246,252,0.1);--color-btn-primary-icon:#ffffff;--color-btn-primary-counter-bg:rgba(255,255,255,0.2);--color-btn-outline-text:#58a6ff;--color-btn-outline-hover-text:#58a6ff;--color-btn-outline-hover-bg:#30363d;--color-btn-outline-hover-border:rgba(240,246,252,0.1);--color-btn-outline-hover-shadow:0 1px 0 rgba(1,4,9,0.1);--color-btn-outline-hover-inset-shadow:inset 0 1px 0 rgba(255,255,255,0.03);--color-btn-outline-hover-counter-bg:rgba(255,255,255,0.2);--color-btn-outline-selected-text:#ffffff;--color-btn-outline-selected-bg:#0d419d;--color-btn-outline-selected-border:rgba(240,246,252,0.1);--color-btn-outline-selected-shadow:0 0 transparent;--color-btn-outline-disabled-text:rgba(88,166,255,0.5);--color-btn-outline-disabled-bg:#0d1117;--color-btn-outline-disabled-counter-bg:rgba(31,111,235,0.05);--color-btn-outline-counter-bg:rgba(31,111,235,0.1);--color-btn-danger-text:#f85149;--color-btn-danger-hover-text:#ffffff;--color-btn-danger-hover-bg:#da3633;--color-btn-danger-hover-border:#f85149;--color-btn-danger-hover-shadow:0 0 transparent;--color-btn-danger-hover-inset-shadow:0 0 transparent;--color-btn-danger-hover-icon:#ffffff;--color-btn-danger-hover-counter-bg:rgba(255,255,255,0.2);--color-btn-danger-selected-text:#ffffff;--color-btn-danger-selected-bg:#b62324;--color-btn-danger-selected-border:#ff7b72;--color-btn-danger-selected-shadow:0 0 transparent;--color-btn-danger-disabled-text:rgba(248,81,73,0.5);--color-btn-danger-disabled-bg:#0d1117;--color-btn-danger-disabled-counter-bg:rgba(218,54,51,0.05);--color-btn-danger-counter-bg:rgba(218,54,51,0.1);--color-btn-danger-icon:#f85149;--color-underlinenav-icon:#6e7681;--color-underlinenav-border-hover:rgba(110,118,129,0.4);--color-action-list-item-inline-divider:rgba(48,54,61,0.48);--color-action-list-item-default-hover-bg:rgba(177,186,196,0.12);--color-action-list-item-default-hover-border:rgba(0,0,0,0);--color-action-list-item-default-active-bg:rgba(177,186,196,0.2);--color-action-list-item-default-active-border:rgba(0,0,0,0);--color-action-list-item-default-selected-bg:rgba(177,186,196,0.08);--color-action-list-item-danger-hover-bg:rgba(248,81,73,0.16);--color-action-list-item-danger-active-bg:rgba(248,81,73,0.24);--color-action-list-item-danger-hover-text:#ff7b72;--color-switch-track-bg:rgba(110,118,129,0.1);--color-switch-track-hover-bg:hsla(215,8%,72%,0.1);--color-switch-track-active-bg:rgba(110,118,129,0.4);--color-switch-track-disabled-bg:#21262d;--color-switch-track-fg:#7d8590;--color-switch-track-disabled-fg:#010409;--color-switch-track-border:rgba(0,0,0,0);--color-switch-track-checked-bg:rgba(31,111,235,0.35);--color-switch-track-checked-hover-bg:rgba(31,111,235,0.5);--color-switch-track-checked-active-bg:rgba(31,111,235,0.65);--color-switch-track-checked-fg:#ffffff;--color-switch-track-checked-disabled-fg:#010409;--color-switch-track-checked-border:rgba(0,0,0,0);--color-switch-knob-bg:#0d1117;--color-switch-knob-border:#606771;--color-switch-knob-disabled-bg:#161b22;--color-switch-knob-checked-bg:#0d1117;--color-switch-knob-checked-disabled-bg:#161b22;--color-switch-knob-checked-border:rgba(31,111,235,0.35);--color-segmented-control-bg:rgba(110,118,129,0.1);--color-segmented-control-button-bg:#0d1117;--color-segmented-control-button-hover-bg:#30363d;--color-segmented-control-button-active-bg:#21262d;--color-segmented-control-button-selected-border:#6e7681;--color-tree-view-item-chevron-hover-bg:rgba(177,186,196,0.12);--color-tree-view-item-directory-fill:#7d8590;--color-fg-default:#e6edf3;--color-fg-muted:#7d8590;--color-fg-subtle:#6e7681;--color-fg-on-emphasis:#ffffff;--color-canvas-default:#0d1117;--color-canvas-overlay:#161b22;--color-canvas-inset:#010409;--color-canvas-subtle:#161b22;--color-border-default:#30363d;--color-border-muted:#21262d;--color-border-subtle:rgba(240,246,252,0.1);--color-shadow-small:0 0 transparent;--color-shadow-medium:0 3px 6px #010409;--color-shadow-large:0 8px 24px #010409;--color-shadow-extra-large:0 12px 48px #010409;--color-neutral-emphasis-plus:#6e7681;--color-neutral-emphasis:#6e7681;--color-neutral-muted:rgba(110,118,129,0.4);--color-neutral-subtle:rgba(110,118,129,0.1);--color-accent-fg:#2f81f7;--color-accent-emphasis:#1f6feb;--color-accent-muted:rgba(56,139,253,0.4);--color-accent-subtle:rgba(56,139,253,0.1);--color-success-fg:#3fb950;--color-success-emphasis:#238636;--color-success-muted:rgba(46,160,67,0.4);--color-success-subtle:rgba(46,160,67,0.15);--color-attention-fg:#d29922;--color-attention-emphasis:#9e6a03;--color-attention-muted:rgba(187,128,9,0.4);--color-attention-subtle:rgba(187,128,9,0.15);--color-severe-fg:#db6d28;--color-severe-emphasis:#bd561d;--color-severe-muted:rgba(219,109,40,0.4);--color-severe-subtle:rgba(219,109,40,0.1);--color-danger-fg:#f85149;--color-danger-emphasis:#da3633;--color-danger-muted:rgba(248,81,73,0.4);--color-danger-subtle:rgba(248,81,73,0.1);--color-open-fg:#3fb950;--color-open-emphasis:#238636;--color-open-muted:rgba(46,160,67,0.4);--color-open-subtle:rgba(46,160,67,0.15);--color-closed-fg:#f85149;--color-closed-emphasis:#da3633;--color-closed-muted:rgba(248,81,73,0.4);--color-closed-subtle:rgba(248,81,73,0.15);--color-done-fg:#a371f7;--color-done-emphasis:#8957e5;--color-done-muted:rgba(163,113,247,0.4);--color-done-subtle:rgba(163,113,247,0.1);--color-sponsors-fg:#db61a2;--color-sponsors-emphasis:#bf4b8a;--color-sponsors-muted:rgba(219,97,162,0.4);--color-sponsors-subtle:rgba(219,97,162,0.1);--color-primer-fg-disabled:#484f58;--color-primer-canvas-backdrop:rgba(1,4,9,0.8);--color-primer-canvas-sticky:rgba(13,17,23,0.95);--color-primer-border-active:#f78166;--color-primer-border-contrast:rgba(255,255,255,0.2);--color-primer-shadow-highlight:0 0 transparent;--color-primer-shadow-inset:0 0 transparent;--color-scale-black:#010409;--color-scale-white:#ffffff;--color-scale-gray-0:#f0f6fc;--color-scale-gray-1:#c9d1d9;--color-scale-gray-2:#b1bac4;--color-scale-gray-3:#8b949e;--color-scale-gray-4:#6e7681;--color-scale-gray-5:#484f58;--color-scale-gray-6:#30363d;--color-scale-gray-7:#21262d;--color-scale-gray-8:#161b22;--color-scale-gray-9:#0d1117;--color-scale-blue-0:#cae8ff;--color-scale-blue-1:#a5d6ff;--color-scale-blue-2:#79c0ff;--color-scale-blue-3:#58a6ff;--color-scale-blue-4:#388bfd;--color-scale-blue-5:#1f6feb;--color-scale-blue-6:#1158c7;--color-scale-blue-7:#0d419d;--color-scale-blue-8:#0c2d6b;--color-scale-blue-9:#051d4d;--color-scale-green-0:#aff5b4;--color-scale-green-1:#7ee787;--color-scale-green-2:#56d364;--color-scale-green-3:#3fb950;--color-scale-green-4:#2ea043;--color-scale-green-5:#238636;--color-scale-green-6:#196c2e;--color-scale-green-7:#0f5323;--color-scale-green-8:#033a16;--color-scale-green-9:#04260f;--color-scale-yellow-0:#f8e3a1;--color-scale-yellow-1:#f2cc60;--color-scale-yellow-2:#e3b341;--color-scale-yellow-3:#d29922;--color-scale-yellow-4:#bb8009;--color-scale-yellow-5:#9e6a03;--color-scale-yellow-6:#845306;--color-scale-yellow-7:#693e00;--color-scale-yellow-8:#4b2900;--color-scale-yellow-9:#341a00;--color-scale-orange-0:#ffdfb6;--color-scale-orange-1:#ffc680;--color-scale-orange-2:#ffa657;--color-scale-orange-3:#f0883e;--color-scale-orange-4:#db6d28;--color-scale-orange-5:#bd561d;--color-scale-orange-6:#9b4215;--color-scale-orange-7:#762d0a;--color-scale-orange-8:#5a1e02;--color-scale-orange-9:#3d1300;--color-scale-red-0:#ffdcd7;--color-scale-red-1:#ffc1ba;--color-scale-red-2:#ffa198;--color-scale-red-3:#ff7b72;--color-scale-red-4:#f85149;--color-scale-red-5:#da3633;--color-scale-red-6:#b62324;--color-scale-red-7:#8e1519;--color-scale-red-8:#67060c;--color-scale-red-9:#490202;--color-scale-purple-0:#eddeff;--color-scale-purple-1:#e2c5ff;--color-scale-purple-2:#d2a8ff;--color-scale-purple-3:#bc8cff;--color-scale-purple-4:#a371f7;--color-scale-purple-5:#8957e5;--color-scale-purple-6:#6e40c9;--color-scale-purple-7:#553098;--color-scale-purple-8:#3c1e70;--color-scale-purple-9:#271052;--color-scale-pink-0:#ffdaec;--color-scale-pink-1:#ffbedd;--color-scale-pink-2:#ff9bce;--color-scale-pink-3:#f778ba;--color-scale-pink-4:#db61a2;--color-scale-pink-5:#bf4b8a;--color-scale-pink-6:#9e3670;--color-scale-pink-7:#7d2457;--color-scale-pink-8:#5e103e;--color-scale-pink-9:#42062a;--color-scale-coral-0:#ffddd2;--color-scale-coral-1:#ffc2b2;--color-scale-coral-2:#ffa28b;--color-scale-coral-3:#f78166;--color-scale-coral-4:#ea6045;--color-scale-coral-5:#cf462d;--color-scale-coral-6:#ac3220;--color-scale-coral-7:#872012;--color-scale-coral-8:#640d04;--base-size-4:0.25rem;--base-size-8:0.5rem;--base-size-12:0.75rem;--base-size-16:1rem;--base-size-20:1.25rem;--base-size-24:1.5rem;--base-size-28:1.75rem;--base-size-32:2rem;--base-size-36:2.25rem;--base-size-40:2.5rem;--base-size-44:2.75rem;--base-size-48:3rem;--base-size-64:4rem;--base-size-80:5rem;--base-size-96:6rem;--base-size-112:7rem;--base-size-128:8rem}@media (prefers-color-scheme:dark){:root{--color-gray-20:#e0e0e0;--color-gray-50:#C0C0C0;--color-gray-90:#dad8d8;--text-color-link:#3780e7;--text-color-link-active:#E6EDF3;--text-color-link-visited:rgb(125, 133, 144);--button:#0a306a;--button-hover:#2662bb}}*{box-sizing:border-box}body,html{padding:0;margin:0 auto;font-family:var(--font-family);color:var(--text-color);background-color:#0e1116}html{overflow-y:scroll}.visually-hidden{clip:rect(0 0 0 0);clip-path:inset(50%);height:1px;overflow:hidden;position:absolute;white-space:nowrap;width:1px}p:last-child{margin-bottom:0}li,p{line-height:1.5}.a-tag,.home-link:link:not(:hover),.nav-item a[href]:not(:hover),.wrapper>ul a,a{text-decoration:none}.nav>a[href]{color:var(--fgColor-default),var(--color-fg-default)}a[href]{color:var(--text-color-link)}a[href]:visited{color:var(--color-prettylights-syntax-constant-other-reference-link),var(--color-fg-default)}a[href]:active,a[href]:hover{color:var(--text-color-link-active)}main article a[href]:visited{color:var(--color-prettylights-syntax-constant-other-reference-link)}main{padding:1rem}main :first-child{margin-top:0}header:after{content:"";display:table;clear:both}table{margin:1em 0}table td,table th{padding-right:1em;border:1px solid #ddd;border-collapse:collapse}table tr:nth-child(2n){background-color:#454545}table tr:hover{background-color:#152f40}.Box{border-color:var(--color-border-default);border-radius:var(--borderRadius-medium,6px);border-style:solid;border-width:var(--borderWidth-thin,1px)}.color-border-default{border-color:var(--borderColor-default,var(--color-border-default))!important}.rounded-2{border-radius:var(--borderRadius-medium,6px)!important}code,pre{font-family:var(--font-family-monospace)}pre:not([class*=language-]){margin:.5em 0;line-height:1.375;-moz-tab-size:var(--syntax-tab-size);-o-tab-size:var(--syntax-tab-size);tab-size:var(--syntax-tab-size);-webkit-hyphens:none;-ms-hyphens:none;hyphens:none;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal}code{word-break:break-all}header{gap:1em .5em;flex-wrap:wrap;align-items:center;padding:1em}.home-link{font-size:1em;margin-right:2em}.nav{padding:0;margin:0}.nav-item,.post-metadata time{margin-right:1em}.nav-item{display:inline-block}.nav a[href][aria-current=page],a[href].header-anchor:focus,a[href].header-anchor:hover{text-decoration:underline}.postlist{padding:0 0 0 1.5rem;overflow:hidden}.postlist-item{display:flex;text-overflow:ellipsis;flex-wrap:wrap;align-items:baseline;counter-increment:start-from -1;margin-bottom:1em}.postlist-item:before{display:inline-block;pointer-events:none;content:"" counter(start-from,decimal-leading-zero) ". ";line-height:100%;text-align:right;margin-left:-1.5rem}.postlist-date{font-size:.8125em;color:var(--color-fg-default);word-spacing:-0.5px}.postlist-link{font-size:1.1875em;flex-basis:calc(100% - 1.5rem);padding-left:.25em;padding-right:.5em;text-underline-position:from-font;text-underline-offset:0;text-decoration-thickness:1px}.post-tag{display:inline-flex;align-items:center;justify-content:center;text-transform:capitalize;font-style:italic}.header-anchor,.pagination-links{text-decoration:none;font-style:normal}.postlist-item>.post-tag{align-self:center}.post-metadata{display:inline-flex;flex-wrap:wrap;gap:.5em;padding:0;margin:0}.flex-list,.post-wrapper,.wrapper>ul{display:flex}.post-content{font-size:large}.post-content>img{max-width:var(--img-max-width);border-style:none;box-sizing:content-box;background-color:#0d1117}.pt-2{padding:2rem}.header-anchor{font-size:1em;margin-left:.1em}a[href].header-anchor,a[href].header-anchor:visited{color:transparent}:hover>a[href].header-anchor,a[href].header-anchor:focus{color:#aaa}h2+.header-anchor{font-size:1.5em}.flex-list{margin:0 auto;margin-block-start:0em;margin-block-end:0em;margin-inline-start:0;margin-inline-end:0;padding-inline-start:0px}.pagination-links{font-size:1.4em;margin-left:.1em}.space{padding-top:10%}.sticky-bottom-nav{bottom:0;left:0;width:100%;background-color:#0e1116}a.disabled{pointer-events:none;opacity:.5}.responsive-image{display:flex;max-width:100%;height:auto;justify-content:center;margin:0 auto}.wrapper>ul{padding:8px;justify-content:center;align-items:center}.wrapper>ul li{text-align:center;font-size:18px;font-weight:600;cursor:pointer;margin:10px;border-radius:50px;padding:10px}.wrapper ul li.btn{line-height:60px;font-size:22px}.wrapper ul a li.active{color:var(--text-color);background-color:#32323a}.post-cover{position:relative;padding:0;margin:0;max-height:500px;background-color:#fafafa;overflow:hidden}.p-3{padding:var(--base-size-8,8px)!important}.pl-3{padding-left:var(--base-size-16,16px)!important}.pt-3{padding-top:var(--base-size-16,16px)!important}.pb-3{padding-bottom:var(--base-size-16,16px)!important}.pr-3{padding-right:var(--base-size-16,16px)!important}.p-6{padding:var(--base-size-24,24px)!important}.mt-12{margin:12px 0 0}.m-3{margin:16px 0}.m-3p{margin:16% 0}.d-flex{display:flex!important}.flex-justify-between{justify-content:space-between!important}.flex-items-center{align-items:center!important}.m-0{margin:0!important}.Truncate{display:inline-flex;max-width:100%;min-width:0}.flex-direction-col{flex-direction:column}.cover-img{border-radius:8px;aspect-ratio:1/1;width:78px;height:78px}.big-cover-img{border-radius:12px;aspect-ratio:544/262;width:100%;max-height:262px;object-fit:cover;margin-bottom:16px}.flex-center,.img-container{display:flex;justify-content:center;align-items:center}.about-img{object-fit:cover;width:192px;height:192px;border-radius:8px}.contact .contact-title{position:relative;color:var(--color-gray-90);font-weight:400;font-size:12px;margin:0 0 5px;text-transform:uppercase;text-align:center}.btn,.numb{padding:10px;margin:5px}.active{background-color:var(--color-btn-outline-selected-bg);color:var(--adaptiveGrey100)!important;border-radius:8px}.border-radius10{border-radius:10px}.posts-container{max-width:600px;margin:0 auto}.posts-container>li,.posts-container>ol,.posts-container>ul{margin:0;padding:0;border:0;font-size:100%;vertical-align:baseline}.post-container{max-height:112px}.post-title-container{min-width:128px}.post-title{overflow:hidden;text-overflow:ellipsis}.katex-html{display:none}.border{border:var(--borderWidth-thin,1px) solid var(--borderColor-default,var(--color-border-default))!important}.container img{max-width:100%;max-height:100%}#drawerMenu{position:fixed;top:0;left:-280px;width:280px;height:100%;transition:left .3s ease-in-out;box-shadow:0 0 10px rgba(0,0,0,.1);overflow:auto;z-index:2}#drawerMenu ul{padding:20px}#drawerMenu li{margin-bottom:10px;cursor:pointer}#drawerMenu li:hover{color:#f1f1f1}@media screen and (min-width:768px){body{margin-left:290px}#drawerMenu{left:0;z-index:0}}#openDrawerBtn{position:inherit;top:20px;cursor:pointer;border:none;border-radius:4px;font-size:x-large}#openDrawerBtn:hover{background-color:#3e444b}#openDrawerBtn:focus{outline:0}#drawerMenu::-webkit-scrollbar{width:8px}#drawerMenu::-webkit-scrollbar-thumb{background-color:#3e444b}#drawerMenu::-webkit-scrollbar-thumb:hover{background-color:#555b62}#drawerMenu summary{font-style:oblique}.opacity-0{opacity:0;height:100%;min-height:300px;transition:opacity 1s}.opacity-0.active-mermaid{opacity:1;display:grid;align-items:center;justify-items:center}</style>
+		<style>
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--pagefind-ui-primary: #eeeeee;
+					--pagefind-ui-text: #eeeeee;
+					--pagefind-ui-background: #152028;
+					--pagefind-ui-border: #152028;
+					--pagefind-ui-tag: #152028;
+				}
+			}
+		</style>
+
+	</head>
+	<body>
+		<div id="dimLayer"></div>
+			<header>
+				<button id="openDrawerBtn">
+					🌳
+				</button>
+			<a href="/" class="home-link">zerozoo-a의 블로그</a>
+			<div id="pagefind-search" class="search"></div>
+			<nav>
+				<ul id="drawerMenu"class="nav">
+					<ul>
+						<li><a href="/">home</a></li>
+						<li><a href="https://yellow-turban.n-e.kr/">개인 프로젝트</a></li>
+						<li><a href="/about">about</a></li>
+						<li><a href="/feed.xml">RSS</a></li>
+						
+
+						
+
+						
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>CS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>ALGORITHMS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>BOOKS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>JONGMAN</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/BOOKS/JONGMAN/문제풀이_과정을_나누자">
+													문제풀이_과정을_나누자
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>OPTIMIZATION</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/OPTIMIZATION/TOC in kotlin">
+													TOC in kotlin
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>PROBLEMS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>PRINGTING_STARS</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing star stair 1">
+													printing star stair 1
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/PROBLEMS/PRINGTING_STARS/printing star stair 2 and pyramid">
+													printing star stair 2 and pyramid
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/PROBLEMS/card">
+													card
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/Richard_Feynman_alogorithm">
+													Richard_Feynman_alogorithm
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>SEARCH</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/SEARCH/binarySearch JS">
+													binarySearch JS
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/SEARCH/findMaxDivideAndConquer">
+													findMaxDivideAndConquer
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/SEARCH/leetcode 704. binarySearch">
+													leetcode 704. binarySearch
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/SEARCH/merge-sort-nlogn">
+													merge-sort-nlogn
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/ALGORITHMS/[coin-change]basic-greedy-with-dp">
+													[coin-change]basic-greedy-with-dp
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>BOOK</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>JONGMAN</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/BOOK/JONGMAN/입문자를_위한_커리큘럼">
+													입문자를_위한_커리큘럼
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>BROWSER</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/BROWSER/While handling an `&lt;iframe&gt;`, I found out something">
+													While handling an `&lt;iframe&gt;`, I found out something
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/BROWSER/deem effect를 처리하자">
+													deem effect를 처리하자
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>DATA_STRUCTURE</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>TREE</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/BST">
+													BST
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/Tree_inorder">
+													Tree_inorder
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/Tree_preorder">
+													Tree_preorder
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/basic-of-recursive">
+													basic-of-recursive
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/DATA_STRUCTURE/TREE/recursive_traversal">
+													recursive_traversal
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>ETC</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/ETC/operator &lt;의 성질">
+													operator &lt;의 성질
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>LOGIC</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/LOGIC/exclusive-or">
+													exclusive-or
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/LOGIC/logical-implication">
+													logical-implication
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/LOGIC/p and q">
+													p and q
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/LOGIC/permutation">
+													permutation
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>RECURSIVE</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/CS/RECURSIVE/recursive-hanoi-tower">
+													recursive-hanoi-tower
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/RECURSIVE/recursive-power">
+													recursive-power
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/CS/RECURSIVE/tower-of-hanoi">
+													tower-of-hanoi
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Engineer-Information-Processing</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/CSP-CCS-LOTOS-Z-VDM-Petri">
+													CSP-CCS-LOTOS-Z-VDM-Petri
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/DDL-DML-DCL">
+													DDL-DML-DCL
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/DDL-Domain-Schema-Table-View-Index">
+													DDL-Domain-Schema-Table-View-Index
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Data-modeling-normalization">
+													Data-modeling-normalization
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/FSM-Decision-Table-ER-Modeling-State-Chart-Use-Case">
+													FSM-Decision-Table-ER-Modeling-State-Chart-Use-Case
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Functional-Dependent-attribute">
+													Functional-Dependent-attribute
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Logical-Database-Design">
+													Logical-Database-Design
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-Layer">
+													OSI-7-Layer
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-layer-L1-switch">
+													OSI-7-layer-L1-switch
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-layer-L2-switch">
+													OSI-7-layer-L2-switch
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/OSI-7-layer-L3-router">
+													OSI-7-layer-L3-router
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Relational-algebra-in-DBMS">
+													Relational-algebra-in-DBMS
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Relational-database-atomicity">
+													Relational-database-atomicity
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/SQL-Cross-join">
+													SQL-Cross-join
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/SQL-Inner-join">
+													SQL-Inner-join
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/SQL-Outer-join">
+													SQL-Outer-join
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/SQL-Self-join">
+													SQL-Self-join
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Super-key">
+													Super-key
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/Transitive-Dependency">
+													Transitive-Dependency
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-diagram-4">
+													UML-class-diagram-4
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-diagram-5">
+													UML-class-diagram-5
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-digram-1">
+													UML-class-digram-1
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-digram-2">
+													UML-class-digram-2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/UML-class-digram-3">
+													UML-class-digram-3
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/concept-of-Operating-System">
+													concept-of-Operating-System
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/gof-flyweight-pattern">
+													gof-flyweight-pattern
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/impl-postfix-javascript">
+													impl-postfix-javascript
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>network</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/IP-subnet">
+													IP-subnet
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/IPSec">
+													IPSec
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/IPv4-address">
+													IPv4-address
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/IPv4-class">
+													IPv4-class
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/end-system-of-network">
+													end-system-of-network
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/network/lan-man-wan">
+													lan-man-wan
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-address-translation">
+													os-address-translation
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-control-programs">
+													os-control-programs
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-management-memory">
+													os-management-memory
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-memory-page-and-segment">
+													os-memory-page-and-segment
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-process-scheduling">
+													os-process-scheduling
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/os-process-status">
+													os-process-status
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/relational-model">
+													relational-model
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/Engineer-Information-Processing/sliding-window">
+													sliding-window
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>JAVA</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JAVA/Deque">
+													Deque
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/List-queue">
+													List-queue
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/change-tree-set-compare-fn">
+													change-tree-set-compare-fn
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/compareTo-method">
+													compareTo-method
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/java bubble sort">
+													java bubble sort
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/java hash set">
+													java hash set
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/lambda-and-annotation">
+													lambda-and-annotation
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>leet-code</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/backtrack-algorithm">
+													backtrack-algorithm
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/coin-change-problem-bottom-up">
+													coin-change-problem-bottom-up
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/coin-change-problem">
+													coin-change-problem
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/decision-tree-of-backtracking">
+													decision-tree-of-backtracking
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/n-queen">
+													n-queen
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/leet-code/solve-the-Fibonacci-problem-using-a-dynamic-programming-approach">
+													solve-the-Fibonacci-problem-using-a-dynamic-programming-approach
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/thread-pool-basic-1">
+													thread-pool-basic-1
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/thread-pool-basic-2">
+													thread-pool-basic-2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JAVA/volatile keyword">
+													volatile keyword
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>JS</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/about-reduce">
+													about-reduce
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/binary-search-tree-with-iterator">
+													binary-search-tree-with-iterator
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>browser</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/browser/embedded-worker-2">
+													embedded-worker-2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/browser/embedded-worker-for-main-thread">
+													embedded-worker-for-main-thread
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/browser/when-to-use-worker">
+													when-to-use-worker
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/contains">
+													contains
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/iterator-protocol">
+													iterator-protocol
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>libs</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/libs/flat">
+													flat
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/libs/secret-of-json">
+													secret-of-json
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>node</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/node/increase-libuv-threadpool">
+													increase-libuv-threadpool
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/play-with-generator">
+													play-with-generator
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>server</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>nest</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/JS/server/nest/get-header-property">
+													get-header-property
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/server/nest/nest.js-using-IOC">
+													nest.js-using-IOC
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/server/nest/nestjs-env-setting">
+													nestjs-env-setting
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/JS/server/nest/using-dto-in-nest-js">
+													using-dto-in-nest-js
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>MATHEMATICS</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>Algebraic</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Exponential-Expansion-negative-integer">
+													Exponential-Expansion-negative-integer
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Exponential-Expansion-rational">
+													Exponential-Expansion-rational
+												</a>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Funcitons</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/(x+&#92;frac{1}{x})^2">
+													(x+&#92;frac{1}{x})^2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/inverse-function">
+													inverse-function
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/log-function">
+													log-function
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/monotonic-function">
+													monotonic-function
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/product-rule-of-logarithms">
+													product-rule-of-logarithms
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/rational-function-graph-2">
+													rational-function-graph-2
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/rational-function-graph">
+													rational-function-graph
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Funcitons/square-number">
+													square-number
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Sets</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/Identities-and-Inverses">
+													Identities-and-Inverses
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/Sets">
+													Sets
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/binary-operations-set-differences">
+													binary-operations-set-differences
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/cardinality-of-sets">
+													cardinality-of-sets
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/Sets/sufficiency-and-necessity">
+													sufficiency-and-necessity
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/Algebraic/rational-expression">
+													rational-expression
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>FreeFromMath</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>Algebric_properties</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Algebric_properties/1-1-Commutative,-Associative,-Distributive">
+													1-1-Commutative,-Associative,-Distributive
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Algebric_properties/1-2-Identities">
+													1-2-Identities
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Algebric_properties/1-3-Equations">
+													1-3-Equations
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Sets</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Sets/2.1-Definition-and-Notations-of-Sets-집합의-정의와-표기">
+													2.1-Definition-and-Notations-of-Sets-집합의-정의와-표기
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Sets/2.2-Usage-of-sets">
+													2.2-Usage-of-sets
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Sets/2.4-cardinality-of-sets">
+													2.4-cardinality-of-sets
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/FreeFromMath/Sets/2.5-Operations-on-sets">
+													2.5-Operations-on-sets
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/MATHEMATICS/latex-symbols">
+													latex-symbols
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>algos</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>O(1)</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/O(1)/basic-greedy">
+													basic-greedy
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/O(1)/sum-of-even">
+													sum-of-even
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/O(1)/throw-ball">
+													throw-ball
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>O(log)</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/O(log)/Euclidean-algorithm">
+													Euclidean-algorithm
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>O(n)</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/O(n)/character-that-appears-only-once">
+													character-that-appears-only-once
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/O(n)/find-missing-number">
+													find-missing-number
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>O(n^2)</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/O(n^2)/add-binary">
+													add-binary
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/O(n^2)/define-diagnosis-order">
+													define-diagnosis-order
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/O(n^2)/safe-area">
+													safe-area
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>convert</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/convert/decimal-to-binary">
+													decimal-to-binary
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>dfs</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/dfs/dfs-bfs-2DArray">
+													dfs-bfs-2DArray
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/dfs/find-subsets">
+													find-subsets
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/dfs/iterative-dfs">
+													iterative-dfs
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/dfs/maze">
+													maze
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>reduce</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/reduce/create-deep-object">
+													create-deep-object
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/algos/reduce/deep-merge">
+													deep-merge
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>traversal</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/algos/traversal/DFS-recursive-iterable">
+													DFS-recursive-iterable
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>babylons</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/babylons/scene">
+													scene
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>data-structure</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/data-structure/reference-of-stack">
+													reference-of-stack
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>env</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/env/docker-compose-nestjs-typescript">
+													docker-compose-nestjs-typescript
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>erros</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>db</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/erros/db/Cannot-delete-or-update-a-parent-row:-a-foreign-key">
+													Cannot-delete-or-update-a-parent-row:-a-foreign-key
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/erros/db/Error-Code:-1175-SQL-Editor-and-reconnect.Cannot-delete-or-update-a-parent-row:-a-foreign-key">
+													Error-Code:-1175-SQL-Editor-and-reconnect.Cannot-delete-or-update-a-parent-row:-a-foreign-key
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/erros/db/QueryFailedError-Duplicate-key-name">
+													QueryFailedError-Duplicate-key-name
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>git</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/git/git-revert-with-head">
+													git-revert-with-head
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>life</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/life/2023-infcon-review">
+													2023-infcon-review
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>p5</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/p5/bounce-ball">
+													bounce-ball
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>rust</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/rust/rust-analyzer-for-vscode">
+													rust-analyzer-for-vscode
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>temp</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/temp/ERROR:-for-mysql-Cannot-start-service-mysql-network-IP-not-found">
+													ERROR:-for-mysql-Cannot-start-service-mysql-network-IP-not-found
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/temp/Inclusion-and-Exclusion">
+													Inclusion-and-Exclusion
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/temp/good-table">
+													good-table
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/temp/java-with-vscode">
+													java-with-vscode
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/temp/normal-vector">
+													normal-vector
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/temp/sweep-line">
+													sweep-line
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>web_gpu</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/web_gpu/hello-web-gpu">
+													hello-web-gpu
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>wiki</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>11ty</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/11ty/css_config">
+													css_config
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/wiki/11ty/folder_and_config">
+													folder_and_config
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/wiki/11ty/new_blog">
+													new_blog
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/wiki/11ty/use-latext-in-11ty">
+													use-latext-in-11ty
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>Http</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/Http/post-man에-authorization-token-심기">
+													post-man에-authorization-token-심기
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>db</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/db/schema-model">
+													schema-model
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>infra</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/infra/nginx-with-docker-compose">
+													nginx-with-docker-compose
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/blog/wiki/infra/ssh-commands">
+													ssh-commands
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>install</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/install/install-mysql-using-home-brew">
+													install-mysql-using-home-brew
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>operating-system</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/blog/wiki/operating-system/lsof-kill">
+													lsof-kill
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+									<li>
+											
+											<details>
+												<summary>examples</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>babylons</summary>
+													
+							<ul>
+								
+									<li>
+											
+											<details>
+												<summary>introductions</summary>
+													
+							<ul>
+								
+									<li>
+											
+												<a href="/examples/babylons/introductions/maze">
+													maze
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/examples/babylons/introductions/sphere">
+													sphere
+												</a>
+											
+									</li>
+								
+									<li>
+											
+												<a href="/examples/babylons/introductions/square">
+													square
+												</a>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+											</details>
+											
+									</li>
+								
+							</ul>
+						
+					</ul>
+			</nav>
+		</header>
+		<main>
+			
+<article>
+	
+    <img class="big-cover-img" src=data:image/png;base64,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 alt="cover image" height="auto" />
+	
+
+<h1>Sweep Line Algorithm | 스위핑 라인 알고리즘</h1>
+
+<ul class="post-metadata pt-2">
+	<li><time datetime="2024-07-22">22 July 2024</time></li>
+</ul>
+
+
+		<aside>
+			<nav class="toc" >
+        <ol><li><a href="#-2">풀이</a><ol><li><a href="#-3">인자를 기반으로 생성하는 새로운 배열</a></li><li><a href="#1">1.에서 생성한 배열의 정렬</a></li><li><a href="#2">2.에서 정렬한 배열을 순회하며 카운트</a></li></ol></li></ol>
+      </nav>
+		</aside>
+
+
+	<section class="post-content markdown-body" data-pagefind-body>
+		<br />
+<br />
+<br />
+<h1 id="" tabindex="-1">유형: 이 알고리즘이 풀고자 하는 문제 <a class="header-anchor" href="#">#</a></h1>
+<p>Sweep Line Algorithm 알고리즘은 2차원 평면에서 여러 구간의 라인을 효율적으로 처리합니다.</p>
+<p>예를 들어 타임 테이블이 있고 같은 시간에 근무하는 파트타임 시간은
+얼마나 되는지 알아본다고 하겠습니다.</p>
+<p>예를 들어 아래와 같이 직원 A, B, C가 근무하고</p>
+<p>B는 풀타임, A, C는 파트타임이라고 하겠습니다.</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>A</td>
+<td>A</td>
+<td></td>
+<td>C</td>
+<td>C</td>
+<td>C</td>
+</tr>
+<tr>
+<td></td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
+<p>세 직원들 중 근무시간이 겹치는 시간을 구한다고 했을 때,
+Sweep Line Algorithm이 사용될 수 있습니다.</p>
+<h1 id="-1" tabindex="-1">문제로 해석하기 <a class="header-anchor" href="#-1">#</a></h1>
+<p>위 테이블을 약간 수정하여 자료구조로 변형해보면 아래와 같이 정의 할 수 있습니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> lines <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// A, B, C의 [근무 시작, 종료시간]</span></code></pre>
+<p>근무 시작 시간과 종료 시간이 주어진다고 했을 때, 근무 시간이 겹치는 즉, 최대 코어 근무 시간은 총 몇시간인지 구하는 문제로 만들 수 있습니다.</p>
+<h2 id="-2" tabindex="-1">풀이 <a class="header-anchor" href="#-2">#</a></h2>
+<p>풀이는 크게 세가지 부분으로 나뉩니다.</p>
+<ol>
+<li>인자를 기반으로 생성하는 새로운 배열</li>
+<li>1.에서 생성한 배열의 정렬</li>
+<li>2.에서 정렬한 배열을 순회하며 카운트</li>
+</ol>
+<hr>
+<h3 id="-3" tabindex="-1">인자를 기반으로 생성하는 새로운 배열 <a class="header-anchor" href="#-3">#</a></h3>
+<p>인자로 주어진 시작 및 종료시간에 대응되는 배열 객체를 생성합니다.
+이 배열은 시간과 시작, 끝을 표시합니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> points <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'start'</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'end'</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">/** ... */</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="1" tabindex="-1">1.에서 생성한 배열의 정렬 <a class="header-anchor" href="#1">#</a></h3>
+<p>이제 이렇게 생성된 <code>points</code>를 time을 기준으로 정렬합니다.</p>
+<ul>
+<li>정렬시에 비교군 a, b의 시간이 같을 경우 end를 먼저 앞으로 오게끔합니다.</li>
+</ul>
+<pre class="language-js" tabindex="0"><code class="language-js"> <span class="token keyword">const</span> points <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'start'</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'end'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+ points<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+     <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>time <span class="token operator">===</span> b<span class="token punctuation">.</span>time<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> a<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'start'</span> <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+     <span class="token keyword">return</span> a<span class="token punctuation">.</span>time <span class="token operator">-</span> b<span class="token punctuation">.</span>time<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>이 정렬은 시간순으로 오름차순 정렬을 하되,
+서로 시간이 같을 경우 end를 더 앞에 두게 됩니다.</p>
+<p>배열을 정렬함으로써 시간순으로 일의 시작, 끝이 늘어서게 되었습니다.
+아래와 같은 식입니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token punctuation">[</span><span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"start"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"start"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"end"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"start"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"end"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span><span class="token literal-property property">time</span><span class="token operator">:</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"end"</span><span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>
+<h3 id="2" tabindex="-1">2.에서 정렬한 배열을 순회하며 카운트 <a class="header-anchor" href="#2">#</a></h3>
+<p>이 상태에서 세가지 상태가 더 추가됩니다.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">let</span> max <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// 최대 이벤트</span>
+<span class="token keyword">let</span> cur <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// 현재 진행중인 이벤트</span>
+<span class="token keyword">let</span> prev <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// 직전 근무 시간</span></code></pre>
+<ul>
+<li>
+<p>최대 이벤트는 근무자끼리의 근무 시간이 겹치는 코어 근무 시간을 카운트합니다.</p>
+</li>
+<li>
+<p>현재 진행중인 이벤트는 현재 진행중인 이벤트가 끝날경우 감소합니다.</p>
+</li>
+<li>
+<p>직전 근무시간을 기록합니다.</p>
+</li>
+</ul>
+<p>따라서 느낌적으로 배열을 순회하면서 start, start가 연속으로 나오면 cur = 2가 되겠죠,</p>
+<p>이 때,</p>
+<ul>
+<li>max 변수를 하나 올려주는 그런 느낌입니다.</li>
+<li>cur는 2 이상이여야 합니다. 그래야만 같은 시간에 둘이 일을 하고 있다는 의미입니다.</li>
+</ul>
+<pre class="language-js" tabindex="0"><code class="language-js">  <span class="token keyword">let</span> max <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> cur <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> prev <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+  points<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">p</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>p<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">"start"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      cur<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      cur<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>prev <span class="token operator">&amp;&amp;</span> cur <span class="token operator">>=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      max <span class="token operator">+=</span> p<span class="token punctuation">.</span>time <span class="token operator">-</span> prev<span class="token punctuation">;</span> <span class="token comment">// 새로 온 사람의 근무시간 - 직전 근무시간 시간순으로 정렬 되어 있으므로 큰값 - 작은값임이 확정됨</span>
+    <span class="token punctuation">}</span>
+    prev <span class="token operator">=</span> p<span class="token punctuation">.</span>time<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> max<span class="token punctuation">;</span></code></pre>
+<p>이 부분이 가장 어렵기 때문에 한 줄씩 뜯어보겠습니다.</p>
+<ol>
+<li></li>
+</ol>
+<pre class="language-js" tabindex="0"><code class="language-js">    <span class="token keyword">if</span> <span class="token punctuation">(</span>prev <span class="token operator">&amp;&amp;</span> cur <span class="token operator">>=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token punctuation">}</span> </code></pre>
+<p>prev가 있어야 하는 이유는 forEach의 첫 순환은
+첫 근무자의 근무 시작입니다.</p>
+<p>(이 때는 함께 근무 할 수가 없는데요
+만약 같은 근무 시작 시간을 가지더라도 배열을 동시에 접근하지 않으므로
+순차적으로 생각해보면 그렇다는 것입니다.)</p>
+<ol start="2">
+<li></li>
+</ol>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">if</span> <span class="token punctuation">(</span>prev <span class="token operator">&amp;&amp;</span> cur <span class="token operator">>=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+    max <span class="token operator">+=</span> p<span class="token punctuation">.</span>time <span class="token operator">-</span> prev<span class="token punctuation">;</span> <span class="token comment">// 새로 온 사람의 근무시간 - 직전 근무시간 시간순으로 정렬 되어 있으므로 큰값 - 작은값임이 확정됨</span>
+<span class="token punctuation">}</span></code></pre>
+<p>이전 근무시간을 기록해둔 prev가 존재하면서 cur &gt;= 2는 현재 근무자가 최소 2명은 존재한다는 것입니다.</p>
+<p>이제 누적된 max를 반환하는 것으로 완료됩니다.</p>
+
+	</section>
+<br>
+<br>
+<br>
+<ul><li>이전 글: <a href="/blog/temp/normal-vector/">2차원에서의 법선 벡터</a></li>
+</ul>
+
+</article>
+<script type="module" async>import mermaid from "https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs";document.addEventListener('DOMContentLoaded', mermaid.initialize({"loadOnSave":true}));</script>
+<script 
+type="text/javascript"
+src="/js/lib/mutationObserver.js"
+async
+></script>
+<script type="text/javascript"
+src="/js/lib/getReadTime.js"
+async
+></script>
+		</main>
+		<script src="/pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#pagefind-search', showImages: false });"></script>
+		<script type="text/javascript" async>
+		const openDrawerBtn = document.getElementById('openDrawerBtn');
+		const drawerMenu = document.getElementById('drawerMenu');
+		const dimLayer = document.getElementById("dimLayer");
+		const body = document.getElementsByTagName("body")[0];
+
+
+		const isDrawerMenuOpen = () => {
+			return drawerMenu.style.left === '' || drawerMenu.style.left === '0px';
+			}
+		const isPc = () => window.outerWidth > 768;
+
+
+		openDrawerBtn.addEventListener('click', () => {
+			if(isPc() && isDrawerMenuOpen()) {
+			/** insert menu */
+			    drawerMenu.style.left = '-280px';
+				body.style.marginLeft = '0';
+				return
+			} else if(isPc() && !isDrawerMenuOpen()) {
+			/** draw menu */
+				drawerMenu.style.left = '0';
+				body.style.marginLeft = '290px';
+				return
+			} else {
+			/** mobile **/
+			dimLayer.classList.add('appear-dim');
+			drawerMenu.style.left = '0';
+			}
+		})
+
+		dimLayer.addEventListener('click', () => {
+			console.log('isPc?', isPc())
+			if(isDrawerMenuOpen()) return
+
+			dimLayer.classList.remove('appear-dim')
+   		    drawerMenu.style.left = '-280px';
+		})
+
+		document.addEventListener('click', (event) => {
+			if(isPc()) {
+			   dimLayer.classList.remove('appear-dim')
+			   return;
+			}
+			/**
+			* drawerMenu의 하위 메뉴면서, 이벤트 타겟이 drawerMenu인 경우
+			* 이는 카테고리의 하위 메뉴들이 선택 되었을 때 해당되지 않습니다.
+			* 하위메뉴이지만 drawerMenu자체는 아니기 때문입니다.
+			*/
+			if(drawerMenu.contains(event.target) && event.target === drawerMenu) {
+				dimLayer.classList.remove('appear-dim')
+   		        drawerMenu.style.left = '-280px';
+				return;
+			}
+
+			/**
+			 * drawerMenu가 아니면 menu를 닫습니다.
+			*/
+			if (
+			event.target !== drawerMenu 
+			&& event.target !== openDrawerBtn
+			&& !drawerMenu.contains(event.target)
+			) {
+				dimLayer.classList.remove('appear-dim')
+				drawerMenu.style.left = '-280px';
+			}
+		});
+		</script>
+	</body>
+	<footer>
+				<p>Disclaimer: This blog is for informational purposes only. 
+					this site's images from <a href="https://unsplash.com">unsplash</a>
+				</p>
+	<p>&copy; 2023 zerozoo-a blog. All rights reserved.</p>
+</footer>
+</html>
