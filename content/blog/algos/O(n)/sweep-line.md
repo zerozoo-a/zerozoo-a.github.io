@@ -159,8 +159,49 @@ if (prev && cur >= 2) {
 
 이제 누적된 max를 반환하는 것으로 완료됩니다.
 
+전체 코드는 아래와 같습니다.
 
+```js
+/** O(n log n) */
+function maxConcurrentEvent(events) {
+  const points = [];
 
+  events.forEach((e) => {
+    points.push({ time: e[0], type: "start" }, { time: e[1], type: "end" });
+  });
+
+  points.sort((a, b) => {
+    if (a.time === b.time) {
+      return a.type === "start" ? 1 : -1;
+    }
+    return a.time - b.time;
+  });
+
+  let max = 0;
+  let cur = 0;
+  let prev = null;
+
+  points.forEach((p) => {
+    if (p.type === "start") {
+      cur++;
+    } else {
+      cur--;
+    }
+
+    if (prev && cur >= 2) {
+      max += p.time - prev;
+    }
+    prev = p.time;
+  });
+  return console.log(max);
+}
+
+maxConcurrentEvent([
+  [1, 3],
+  [2, 7],
+  [5, 7],
+]);
+```
 
 
 
