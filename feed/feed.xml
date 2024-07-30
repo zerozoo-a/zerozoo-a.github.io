@@ -4,12 +4,81 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2024-07-22T22:34:17Z</updated>
+	<updated>2024-07-30T22:59:07Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>문자열의 분할과 처리</title>
+		<link href="https://zerozoo-a.github.io/blog/algos/any/manipulate-string/"/>
+		<updated>2024-07-30T22:59:07Z</updated>
+		<id>https://zerozoo-a.github.io/blog/algos/any/manipulate-string/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;문자열을 나눈다는것 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/any/manipulate-string/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;제수를 기준으로 둘로 나누기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/any/manipulate-string/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;예제는 자바스크립트입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; dividend &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ayayewoo&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;문자열을 나눈다면 제수와 피제수가 있어야합니다.
+단, 숫자가 아니고 문자다보니 제수와 피제수는 당연히 숫자가 아닌 문자입니다.&lt;/p&gt;
+&lt;p&gt;아래와 같은 방식입니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; dividend &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ayayewoo&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; divisor &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ye&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이를 나눈다면 어떻게 나뉘어야 할까요?
+정말 단순하게 &lt;code&gt;divisor&lt;/code&gt;를 기준으로 &lt;code&gt;aya&lt;/code&gt;, &lt;code&gt;woo&lt;/code&gt;로 나뉠 수 있겠습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;dividend&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;divisor&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// [&quot;aya&quot;, &quot;woo&quot;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이런 식입니다.&lt;/p&gt;
+&lt;h3 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;제수를 기준으로 나누되 나뉘어진 몫을 빼버리기 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/any/manipulate-string/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; dividend &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ayayewoo&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; divisor &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ye&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;dividend&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;divisor&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39; &#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// aya woo&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;replace로 해당 위치를 적절한 구분자가 되어줄 문자로 대체합니다.&lt;/p&gt;
+&lt;h2 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;이런걸 하는 이유 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/algos/any/manipulate-string/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;어떤 문자열이 주어졌을 때, 해당 문자열에 포함되면 안되는 문자를 선별해야 한다고 가정하겠습니다.
+예를 들어 아래는 프로그래머스 옹알이 문제의 일부를 예로 사용하겠습니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; babbling &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;ayayewoowoo&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;babbling&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; sounds &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;aya&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;ye&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;woo&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;ma&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; bab &lt;span class=&quot;token keyword&quot;&gt;of&lt;/span&gt; babbling&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// &#39;ayayewoowoo&#39;&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; temp &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; bab&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// &#39;ayayewoowoo&#39;&lt;/span&gt;
+
+        &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; sound &lt;span class=&quot;token keyword&quot;&gt;of&lt;/span&gt; sounds&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// &#39;aya&#39;, &#39;ye&#39;, &#39;woo&#39;, &#39;ma&#39;&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;bab&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;includes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;sound&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// true&lt;/span&gt;
+                temp &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; temp&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;sound&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39; &#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// &#39; yewwoowoo&#39;&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;temp&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;trim&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;bab&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;은 sounds의 조합만으로 이루어졌습니다.&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;babbling&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위의 예제는 검사 할 대상인 변수 &lt;code&gt;bab&lt;/code&gt;을 피제수
+&lt;code&gt;sounds&lt;/code&gt; 배열의 각 인자를 제수로 생각한다면&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ayayewoowoo&lt;/code&gt;에 대해 &lt;code&gt;aya&lt;/code&gt;로 나누면 -&amp;gt; &lt;code&gt; yewoowoo&lt;/code&gt;
+이를 변수 &lt;code&gt;temp&lt;/code&gt;에 초기화&lt;/p&gt;
+&lt;p&gt;다시 &lt;code&gt; yewoowoo&lt;/code&gt;에 대해 &lt;code&gt;ye&lt;/code&gt;로 나누면 -&amp;gt; &lt;code&gt;  woowoo&lt;/code&gt;
+이를 변수 &lt;code&gt;temp&lt;/code&gt;에 초기화&lt;/p&gt;
+&lt;p&gt;다시 &lt;code&gt;  woowoo&lt;/code&gt;에 대해 &lt;code&gt;woo&lt;/code&gt;로 나누면 -&amp;gt; &lt;code&gt;   woo&lt;/code&gt;
+이를 변수 &lt;code&gt;temp&lt;/code&gt;에 초기화&lt;/p&gt;
+&lt;p&gt;다시 &lt;code&gt;   woo&lt;/code&gt;에 대해 &lt;code&gt;ma&lt;/code&gt;로 나누면 -&amp;gt; &lt;code&gt;   woo&lt;/code&gt;
+이를 변수 &lt;code&gt;temp&lt;/code&gt;에 초기화&lt;/p&gt;
+&lt;p&gt;이제 &lt;code&gt;sounds&lt;/code&gt; 배열의 순회가 종료되었습니다.
+완전히 나누어 떨어지지 않고 나머지인 &lt;code&gt;woo&lt;/code&gt;가 남았습니다.&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>Sweep Line Algorithm | 스위핑 라인 알고리즘</title>
