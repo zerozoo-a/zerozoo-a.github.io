@@ -1,5 +1,5 @@
 ---
-title: 문자열의 나눗셈
+title: 문자열의 분할과 처리
 date: 2024-07-30 22:59:07
 coverURL: https://images.unsplash.com/photo-1693278615695-0e8e74d52bdb?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 ---
