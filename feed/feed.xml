@@ -4,12 +4,69 @@
 	<subtitle>안녕하세요 반갑습니다. 건강하고 행복하세요</subtitle>
 	<link href="https://zerozoo-a.github.io/feed/feed.xml" rel="self"/>
 	<link href="https://zerozoo-a.github.io/"/>
-	<updated>2024-07-30T22:59:07Z</updated>
+	<updated>2024-08-17T21:30:21Z</updated>
 	<id>https://zerozoo-a.github.io/</id>
 	<author>
 		<name>zerozoo-a</name>
 		<email>zerozoo385@gmail.com</email>
 	</author>
+	
+	<entry>
+		<title>how to get nested object using js</title>
+		<link href="https://zerozoo-a.github.io/blog/JS/get-nested-object/"/>
+		<updated>2024-08-17T21:30:21Z</updated>
+		<id>https://zerozoo-a.github.io/blog/JS/get-nested-object/</id>
+		<content type="html">&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;h2 id=&quot;&quot; tabindex=&quot;-1&quot;&gt;개요 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/get-nested-object/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;nested-object&quot; tabindex=&quot;-1&quot;&gt;nested object란? &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/get-nested-object/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;nested object는 중첩된 객체를 의미합니다.&lt;/p&gt;
+&lt;p&gt;이 글에서 중첩된 객체는 이런 객체를 의미합니다.&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; nested &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token literal-property property&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token literal-property property&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token literal-property property&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;-1&quot; tabindex=&quot;-1&quot;&gt;개요 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/get-nested-object/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;js를 이용해 중첩된 객체를 만들어보겠습니다.&lt;/p&gt;
+&lt;h2 id=&quot;-2&quot; tabindex=&quot;-1&quot;&gt;방법 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/get-nested-object/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;
+&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;getNestedObject&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; strs &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; str&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; res &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; cur &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; res&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; i &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; i &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; strs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; i&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        cur&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;strs&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// (1) 객체를 생성&lt;/span&gt;
+        cur &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; cur&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;strs&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// (2) 생성한 객체를 가리킴&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; res&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;getNestedObject&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;a/b/c&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// {a: {b: {c: {}}}}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위 코드를 이용해 중첩된 객체를 동적으로 생성 할 수 있습니다.&lt;/p&gt;
+&lt;h2 id=&quot;-3&quot; tabindex=&quot;-1&quot;&gt;설명 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/get-nested-object/&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;res는 객체를 저장 할 메모리 주소를 고정시키기 위해 선언합니다.&lt;/p&gt;
+&lt;p&gt;객체를 파고들어 nested하게 만들어주는 과정은 cur변수와 반복문이 이용됩니다.&lt;/p&gt;
+&lt;h3 id=&quot;-4&quot; tabindex=&quot;-1&quot;&gt;순서 &lt;a class=&quot;header-anchor&quot; href=&quot;https://zerozoo-a.github.io/blog/JS/get-nested-object/&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;cur[strs[i]] = {}&lt;/code&gt;로 인해
+&lt;code&gt;res = {a: {}}&lt;/code&gt;로 업데이트 됩니다.&lt;/p&gt;
+&lt;p&gt;저희는 이제 cur를 다음 작업에 필요한 포인터로 사용 할 것입니다.
+다음 작업은 객체 b를 생성하는 것입니다. (a/b/c 이기에..)&lt;/p&gt;
+&lt;p&gt;객체 b는 a의 값의 객체 안에 생성되어야 합니다.
+그 주소값을 알 수 있는 때는 그 변수가 생성될 때가 가장 좋을 것입니다.&lt;/p&gt;
+&lt;p&gt;그 변수는 바로 cur입니다.&lt;/p&gt;
+&lt;p&gt;cur는 객체를 생성하고, 이제 그 객체를 가리키게됩니다.
+&lt;code&gt;cur = cur[strs[i]];&lt;/code&gt; 방금 생성한 객체를 다시 가리키게 되면&lt;/p&gt;
+&lt;p&gt;cur는 res.a를 가리킵니다.&lt;/p&gt;
+&lt;p&gt;위 과정을 반복하면 res 객체에&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;key a, 값으로 {}를 생성,&lt;/li&gt;
+&lt;li&gt;생성한 값을 가리킴,&lt;/li&gt;
+&lt;li&gt;생성한 값에 key b, 값으로 {}를 생성,&lt;/li&gt;
+&lt;li&gt;생성한 값을 가리킴...&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;이렇게 반복하면 중첩된 객체가 생성됩니다.&lt;/p&gt;
+</content>
+	</entry>
 	
 	<entry>
 		<title>문자열의 분할과 처리</title>
