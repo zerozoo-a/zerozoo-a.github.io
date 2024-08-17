@@ -81,7 +81,7 @@ const merged = deepMerge(a, b); // {a: 1, b: {c:3, d: 4}}
 
 ```js
 function deepMerge(obj1, obj2) {
-	const result = { ...obj1 }; // Create a copy of obj1
+	const result = { ...obj1 }; // obj1의 복사본
 
 	Object.keys(obj2).forEach((key) => {
 		if (obj2[key] && typeof obj2[key] === "object") {
